@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategorimk;
+use App\Models\Divisi;
 use Illuminate\Http\Request;
 
-class KategorimkController extends Controller
+class DivisiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class KategorimkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kategorimk $kategorimk)
+    public function show(Divisi $divisi)
     {
         //
     }
@@ -42,7 +42,7 @@ class KategorimkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kategorimk $kategorimk)
+    public function edit(Divisi $divisi)
     {
         //
     }
@@ -50,7 +50,7 @@ class KategorimkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategorimk $kategorimk)
+    public function update(Request $request, Divisi $divisi)
     {
         //
     }
@@ -58,7 +58,7 @@ class KategorimkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategorimk $kategorimk)
+    public function destroy(Divisi $divisi)
     {
         //
     }

@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('staff_depts', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->string('kategori');
-            $table->string('foto');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');            
+            $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
+            $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
+            $table->string('foto')->nullable();
             $table->string('nama');
-            $table->string('nip');
-            $table->string('jabatan');
-            $table->string('email');
+            $table->string('tanggal_lahir')->nullable();
+            $table->string('nip')->unique();
+            $table->string('jabatan')->nullable();
+            $table->string('email')->nullable();
             $table->text('keahlian')->nullable();
             $table->string('sinta')->nullable();
             $table->string('google_scholar')->nullable();

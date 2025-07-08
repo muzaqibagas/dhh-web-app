@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mata_kuliahs', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_kategorimk')->constrained('kategorimks')->onDelete('cascade');
-            $table->string('kode');
+            $table->id('id');            
+            $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
+            $table->string('kode')->unique();
             $table->string('nama');
-            $table->integer('sks');
+            $table->integer('sks')->nullable();
             $table->string('kredit')->nullable();
             $table->string('prasyarat')->nullable();
             $table->text('deskripsi')->nullable();

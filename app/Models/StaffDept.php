@@ -9,7 +9,8 @@ class StaffDept extends Model
     protected $table = 'staff_depts';
     protected $fillable = [
         'id_user', 
-        'kategori', 
+        'id_kategori', 
+        'id_divisi',
         'foto', 
         'nama', 
         'nip', 

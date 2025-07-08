@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- HALAMAN KURIKULUM -->
-     <strong>HALAMAN DAFTAR KURIKULUM</strong>
     <h1>Daftar Kurikulum</h1>
 
     {{-- Form Pencarian --}}

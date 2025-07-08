@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kurikulum_details', function (Blueprint $table) {
-            $table->id();            
+        Schema::create('kurikulum_details', function (Blueprint $table) {            
+            $table->id('id');          
             $table->foreignId('id_kurikulum')->constrained('kurikulums')->onDelete('cascade');
             $table->string('judul')->nullable();
             $table->text('deskripsi')->nullable();

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->unique();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
-            $table->string('role');
+            $table->enum('role', ['Admin', 'Mahasiswa']);
             $table->string('foto')->nullable();
             $table->timestamps();
         });
