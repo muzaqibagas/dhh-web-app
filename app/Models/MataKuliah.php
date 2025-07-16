@@ -13,6 +13,7 @@ class MataKuliah extends Model
         'kode', 
         'nama', 
         'sks', 
+        'kredit', 
         'prasyarat', 
         'deskripsi',
     ];

@@ -27,7 +27,7 @@ class KategoriSeeder extends Seeder
             ['nama' => 'Fasilitas', 'tipe' => 'galeri'],
             ['nama' => 'Prestasi', 'tipe' => 'galeri'],
             ['nama' => 'Kegiatan', 'tipe' => 'galeri'],
-            ['nama' => 'SGDS', 'tipe' => 'galeri'],
+            ['nama' => 'SDGS', 'tipe' => 'galeri'],
 
             //staffdept
             ['nama' => 'Struktur Organisasi', 'tipe' => 'staffdept'],
@@ -36,11 +36,11 @@ class KategoriSeeder extends Seeder
             ['nama' => 'Tenaga Kependidikan', 'tipe' => 'staffdept'],
 
             //artikel
-            ['nama' => 'Prestasi', 'tipe' => 'staffdept'],
-            ['nama' => 'Berita', 'tipe' => 'staffdept'],
-            ['nama' => 'Akademik', 'tipe' => 'staffdept'],
-            ['nama' => 'Karir', 'tipe' => 'staffdept'],
-            ['nama' => 'SDGS', 'tipe' => 'staffdept'],
+            ['nama' => 'Prestasi', 'tipe' => 'artikel'],
+            ['nama' => 'Berita', 'tipe' => 'artikel'],
+            ['nama' => 'Akademik', 'tipe' => 'artikel'],
+            ['nama' => 'Karir', 'tipe' => 'artikel'],
+            ['nama' => 'SDGS', 'tipe' => 'artikel'],
         ]);     
     }
 }
