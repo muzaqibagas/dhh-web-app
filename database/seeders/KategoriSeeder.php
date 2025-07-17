@@ -13,34 +13,38 @@ class KategoriSeeder extends Seeder
      */
     public function run(): void
     {
+        // Ambil semua tipe dari tabel 'tipes' dalam bentuk ['nama' => id]
+        $tipes = DB::table('tipes')->pluck('id', 'nama');
+
+        // Masukkan data kategoris berdasarkan id_tipe
         DB::table('kategoris')->insert([
-            //matakuliah
-            ['nama' => 'Kompetensi Umum', 'tipe' => 'matakuliah'],
-            ['nama' => 'Kompetensi Dasar Program Studi', 'tipe' => 'matakuliah'],
-            ['nama' => 'Kompetensi Program Studi', 'tipe' => 'matakuliah'],
-            ['nama' => 'Minat Program Studi', 'tipe' => 'matakuliah'],
-            ['nama' => 'Pengayaan', 'tipe' => 'matakuliah'],
-            ['nama' => 'Tugas Akhir', 'tipe' => 'matakuliah'],
+            // matakuliah
+            ['nama' => 'Kompetensi Umum', 'id_tipe' => $tipes['matakuliah']],
+            ['nama' => 'Kompetensi Dasar Program Studi', 'id_tipe' => $tipes['matakuliah']],
+            ['nama' => 'Kompetensi Program Studi', 'id_tipe' => $tipes['matakuliah']],
+            ['nama' => 'Minat Program Studi', 'id_tipe' => $tipes['matakuliah']],
+            ['nama' => 'Pengayaan', 'id_tipe' => $tipes['matakuliah']],
+            ['nama' => 'Tugas Akhir', 'id_tipe' => $tipes['matakuliah']],
 
-            //galeri
-            ['nama' => 'Akademik', 'tipe' => 'galeri'],
-            ['nama' => 'Fasilitas', 'tipe' => 'galeri'],
-            ['nama' => 'Prestasi', 'tipe' => 'galeri'],
-            ['nama' => 'Kegiatan', 'tipe' => 'galeri'],
-            ['nama' => 'SDGS', 'tipe' => 'galeri'],
+            // galeri
+            ['nama' => 'Akademik', 'id_tipe' => $tipes['galeri']],
+            ['nama' => 'Fasilitas', 'id_tipe' => $tipes['galeri']],
+            ['nama' => 'Prestasi', 'id_tipe' => $tipes['galeri']],
+            ['nama' => 'Kegiatan', 'id_tipe' => $tipes['galeri']],
+            ['nama' => 'SDGS', 'id_tipe' => $tipes['galeri']],
 
-            //staffdept
-            ['nama' => 'Struktur Organisasi', 'tipe' => 'staffdept'],
-            ['nama' => 'divisi', 'tipe' => 'staffdept'],
-            ['nama' => 'Tenaga Pendidik/Dosen', 'tipe' => 'staffdept'],
-            ['nama' => 'Tenaga Kependidikan', 'tipe' => 'staffdept'],
+            // staffdept
+            ['nama' => 'Struktur Organisasi', 'id_tipe' => $tipes['staffdept']],
+            ['nama' => 'divisi', 'id_tipe' => $tipes['staffdept']],
+            ['nama' => 'Tenaga Pendidik/Dosen', 'id_tipe' => $tipes['staffdept']],
+            ['nama' => 'Tenaga Kependidikan', 'id_tipe' => $tipes['staffdept']],
 
-            //artikel
-            ['nama' => 'Prestasi', 'tipe' => 'artikel'],
-            ['nama' => 'Berita', 'tipe' => 'artikel'],
-            ['nama' => 'Akademik', 'tipe' => 'artikel'],
-            ['nama' => 'Karir', 'tipe' => 'artikel'],
-            ['nama' => 'SDGS', 'tipe' => 'artikel'],
-        ]);     
+            // artikel
+            ['nama' => 'Prestasi', 'id_tipe' => $tipes['artikel']],
+            ['nama' => 'Berita', 'id_tipe' => $tipes['artikel']],
+            ['nama' => 'Akademik', 'id_tipe' => $tipes['artikel']],
+            ['nama' => 'Karir', 'id_tipe' => $tipes['artikel']],
+            ['nama' => 'SDGS', 'id_tipe' => $tipes['artikel']],
+        ]);    
     }
 }

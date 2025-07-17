@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('konten_depts', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->string('judul');
+            $table->string('judul')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

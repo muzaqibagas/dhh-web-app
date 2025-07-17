@@ -1,3 +1,3 @@
 <header>
-    <strong>INI HEADER</strong>
+    <strong class="bg-warning">INI HEADER</strong>
 </header>

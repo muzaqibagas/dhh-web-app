@@ -20,6 +20,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $fillable = [
+        'jenjang_id',
         'nim', 
         'nama', 
         'no_hp', 
@@ -33,7 +34,7 @@ class User extends Authenticatable
         'jenis_kelamin', 
         'role', 
         'foto',
-    ];
+    ];    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,5 +57,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }    
+
+    public function jenjang()
+    {
+        return $this->belongsTo(Jenjang::class, 'id_jenjang');
+    }
+
+    public function kontenDept() {
+        return $this->hasMany(KontenDept::class, 'id_user');
+    }
+
+    public function reviewAlumni() {
+        return $this->hasMany(ReviewAlumni::class, 'id_user');
     }
 }

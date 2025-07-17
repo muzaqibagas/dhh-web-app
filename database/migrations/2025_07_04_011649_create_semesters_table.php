@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('semesters', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_kurikulum')->constrained('kurikulums')->onDelete('cascade');
-            $table->string('tingkat_semester');
+            $table->id('id');            
+            $table->integer('tingkat_semester');
             $table->timestamps();
         });
     }

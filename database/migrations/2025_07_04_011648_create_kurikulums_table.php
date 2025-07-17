@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kurikulums', function (Blueprint $table) {
-            $table->id('id');        
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->id('id');                    
             $table->foreignId('id_jenjang')->constrained('jenjangs')->onDelete('cascade');
-            $table->string('nama');
+            $table->string('nama')->nullable(); 
             $table->string('tahun')->nullable(); 
             $table->timestamps();
         });

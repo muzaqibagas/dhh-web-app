@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Semester extends Model  
 {
     protected $table = 'semester';
-    protected $fillable = [
-        'id_kurikulum', 
+    protected $fillable = [        
         'tingkat_semester',
     ];
-
-    public function kurikulum() {
-        return $this->belongsTo(Kurikulum::class, 'id_kurikulum');
+    
+    public function jenjang()
+    {
+        return $this->belongsTo(Jenjang::class, 'id_jenjang');
     }
 }

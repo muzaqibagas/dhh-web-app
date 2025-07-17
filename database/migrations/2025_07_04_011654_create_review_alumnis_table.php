@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('review_alumnis', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->string('angkatan')->nullable();
             $table->text('review')->nullable();
             $table->string('foto')->nullable();

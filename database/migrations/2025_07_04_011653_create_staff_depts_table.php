@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
             $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
             $table->string('foto')->nullable();
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->string('tanggal_lahir')->nullable();
             $table->string('nip')->unique();
             $table->string('jabatan')->nullable();

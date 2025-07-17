@@ -13,6 +13,7 @@ class StaffDept extends Model
         'id_divisi',
         'foto', 
         'nama', 
+        'tanggal_lahir',
         'nip', 
         'jabatan', 
         'email',
@@ -29,5 +30,15 @@ class StaffDept extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'id_divisi');
     }
 }

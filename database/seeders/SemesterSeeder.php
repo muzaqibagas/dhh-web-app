@@ -14,13 +14,12 @@ class SemesterSeeder extends Seeder
     public function run(): void
     {
         $semesters = [
-            'semester1', 'semester2', 'semester3', 'semester4',
-            'semester5', 'semester6', 'semester7', 'semester8',
+            '1', '2', '3', '4',
+            '5', '6', '7', '8',
         ];
 
         foreach ($semesters as $semester) {
-            DB::table('semesters')->insert([
-                'id_kurikulum' => 1,
+            DB::table('semesters')->insert([                
                 'tingkat_semester' => $semester,
                 'created_at' => now(),
                 'updated_at' => now(),

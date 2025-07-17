@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
-            $table->string('judul');            
-            $table->string('tanggal');            
+            $table->string('judul')->nullable();
+            $table->string('tanggal')->nullable();
             $table->enum('tipe', ['gambar', 'video'])->default('gambar');
             $table->string('video')->nullable();
             $table->string('gambar')->nullable();

@@ -12,13 +12,18 @@ class MataKuliah extends Model
         'id_kategorimk', 
         'kode', 
         'nama', 
-        'sks', 
-        'kredit', 
+        'sks',          
         'prasyarat', 
         'deskripsi',
     ];
-
-    public function semester() {
-        return $this->belongsTo(Semester::class, 'id_semester');
+    
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+    
+    public function smk()
+    {
+        return $this->hasMany(Smk::class, 'id_matakuliah');
     }
 }

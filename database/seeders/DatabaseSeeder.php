@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             JenjangSeeder::class,
             KurikulumSeeder::class,
-            SemesterSeeder::class, 
-            KategoriSeeder::class,
-            DivisiSeeder::class,                      
+            SemesterSeeder::class,             
+            DivisiSeeder::class,    
+            TipeSeeder::class,     
+            KategoriSeeder::class,             
         ]);
     }
 }

@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id('id');            
             $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
             $table->string('kode')->unique();
-            $table->string('nama');
-            $table->integer('sks')->nullable();
-            $table->string('kredit')->nullable();
+            $table->string('nama')->nullable();
+            $table->integer('sks')->nullable();            
             $table->string('prasyarat')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();

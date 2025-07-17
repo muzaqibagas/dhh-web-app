@@ -1,3 +1,3 @@
 <footer>
-    <strong>INI FOOTER</strong>
+    <strong class="bg-danger">INI FOOTER</strong>
 </footer>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('divisis', function (Blueprint $table) {
             $table->id('id');
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class Galeri extends Model
         'id_user', 
         'id_kategori', 
         'judul', 
-        'deskripsi', 
+        'tanggal', 
         'tipe', 
         'video', 
         'gambar',
