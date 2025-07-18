@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AcaraAkademik extends Model
 {
+    use HasFactory;
+
     protected $table = 'acara_akademiks';
 
     protected $fillable = [

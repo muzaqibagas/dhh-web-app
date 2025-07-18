@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StaffDept extends Model
 {
+    use HasFactory;
+
     protected $table = 'staff_depts';
     protected $fillable = [
         'id_user', 

@@ -24,11 +24,20 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'id_jenjang' => \App\Models\Jenjang::factory(),
+            'nim' => fake()->unique()->numerify('20####'),
+            'nama' => fake()->name(),
+            'no_hp' => fake()->phoneNumber(),
+            'alamat' => fake()->address(),
+            'tanggal_lahir' => fake()->date('Y-m-d'),
+            'angkatan' => fake()->year(),
+            'status' => fake()->randomElement(['Aktif', 'Cuti', 'Lulus']),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'jenis_kelamin' => fake()->randomElement(['Laki-laki', 'Perempuan']),
+            'role' => fake()->randomElement(['Admin', 'Mahasiswa']),
+            'foto' => fake()->imageUrl(),
         ];
     }
 

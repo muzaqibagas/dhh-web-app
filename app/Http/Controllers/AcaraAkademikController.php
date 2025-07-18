@@ -28,7 +28,16 @@ class AcaraAkademikController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_mahasiswa' => 'required|exists:users,id',
+            'id_staffdept' => 'required|exists:staff_depts,id',
+            'id_kolokium' => 'nullable|exists:kolokiums,id',
+            'id_seminar' => 'required|exists:seminars,id',
+            'id_sidang' => 'required|exists:sidangs,id',
+            // field lain...
+        ]);
+        AcaraAkademik::create($data);
+        return redirect()->route('acara-akademik.index');
     }
 
     /**
@@ -52,7 +61,16 @@ class AcaraAkademikController extends Controller
      */
     public function update(Request $request, AcaraAkademik $acaraAkademik)
     {
-        //
+        $data = $request->validate([
+            'id_mahasiswa' => 'required|exists:users,id',
+            'id_staffdept' => 'required|exists:staff_depts,id',
+            'id_kolokium' => 'nullable|exists:kolokiums,id',
+            'id_seminar' => 'required|exists:seminars,id',
+            'id_sidang' => 'required|exists:sidangs,id',
+            // field lain...
+        ]);
+        $acaraAkademik->update($data);
+        return redirect()->route('acara-akademik.index');
     }
 
     /**
@@ -60,6 +78,7 @@ class AcaraAkademikController extends Controller
      */
     public function destroy(AcaraAkademik $acaraAkademik)
     {
-        //
+        $acaraAkademik->delete();
+        return redirect()->route('acara-akademik.index');
     }
 }
