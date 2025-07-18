@@ -12,7 +12,8 @@ class SidangController extends Controller
      */
     public function index()
     {
-        //
+        $sidangs = Sidang::all();
+        return view('sidang.index', compact('sidangs'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SidangController extends Controller
      */
     public function create()
     {
-        //
+        return view('sidang.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class SidangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_tugasakhir' => 'required|string|max:255',
+        ]);
+        $insert = Sidang::create($data);
+        if ($insert)
+            return redirect()->route('sidang.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +48,7 @@ class SidangController extends Controller
      */
     public function show(Sidang $sidang)
     {
-        //
+        return view('sidang.show', compact('sidang'));
     }
 
     /**
@@ -44,7 +56,7 @@ class SidangController extends Controller
      */
     public function edit(Sidang $sidang)
     {
-        //
+        return view('sidang.edit', compact('sidang'));
     }
 
     /**
@@ -52,7 +64,18 @@ class SidangController extends Controller
      */
     public function update(Request $request, Sidang $sidang)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_tugasakhir' => 'required|string|max:255',
+        ]);
+        $update = $sidang->update($data);
+        if ($update)
+            return redirect()->route('sidang.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +83,7 @@ class SidangController extends Controller
      */
     public function destroy(Sidang $sidang)
     {
-        //
+        $sidang->delete();
+        return redirect()->route('sidang.index');
     }
 }

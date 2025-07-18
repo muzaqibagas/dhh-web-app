@@ -12,7 +12,8 @@ class KategoriKompetensiController extends Controller
      */
     public function index()
     {
-        //
+        $kompetensis = KategoriKompetensi::all();
+        return view('kategorikompetensi.index', compact('kompetensis'));
     }
 
     /**
@@ -20,7 +21,7 @@ class KategoriKompetensiController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategorikompetensi.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class KategoriKompetensiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+        $insert = KategoriKompetensi::create($data);
+        if ($insert)
+            return redirect()->route('kategorikompetensi.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +44,7 @@ class KategoriKompetensiController extends Controller
      */
     public function show(KategoriKompetensi $kategoriKompetensi)
     {
-        //
+        return view('kategorikompetensi.show', compact('kategoriKompetensi'));
     }
 
     /**
@@ -44,7 +52,7 @@ class KategoriKompetensiController extends Controller
      */
     public function edit(KategoriKompetensi $kategoriKompetensi)
     {
-        //
+        return view('kategorikompetensi.edit', compact('kategoriKompetensi'));
     }
 
     /**
@@ -52,7 +60,14 @@ class KategoriKompetensiController extends Controller
      */
     public function update(Request $request, KategoriKompetensi $kategoriKompetensi)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+        $update = $kategoriKompetensi->update($data);
+        if ($update)
+            return redirect()->route('kategorikompetensi.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +75,7 @@ class KategoriKompetensiController extends Controller
      */
     public function destroy(KategoriKompetensi $kategoriKompetensi)
     {
-        //
+        $kategoriKompetensi->delete();
+        return redirect()->route('kategorikompetensi.index');
     }
 }

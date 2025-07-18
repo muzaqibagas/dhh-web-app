@@ -12,7 +12,8 @@ class SemesterController extends Controller
      */
     public function index()
     {
-        //
+        $semesters = Semester::all();
+        return view('semester.index', compact('semesters'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SemesterController extends Controller
      */
     public function create()
     {
-        //
+        return view('semester.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class SemesterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'tingkat_semester' => 'required|integer',
+        ]);
+        $insert = Semester::create($data);
+        if ($insert)
+            return redirect()->route('semester.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +44,7 @@ class SemesterController extends Controller
      */
     public function show(Semester $semester)
     {
-        //
+        return view('semester.show', compact('semester'));
     }
 
     /**
@@ -44,7 +52,7 @@ class SemesterController extends Controller
      */
     public function edit(Semester $semester)
     {
-        //
+        return view('semester.edit', compact('semester'));
     }
 
     /**
@@ -52,7 +60,14 @@ class SemesterController extends Controller
      */
     public function update(Request $request, Semester $semester)
     {
-        //
+        $data = $request->validate([
+            'tingkat_semester' => 'required|integer',
+        ]);
+        $update = $semester->update($data);
+        if ($update)
+            return redirect()->route('semester.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +75,7 @@ class SemesterController extends Controller
      */
     public function destroy(Semester $semester)
     {
-        //
+        $semester->delete();
+        return redirect()->route('semester.index');
     }
 }

@@ -12,7 +12,8 @@ class ReviewAlumniController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = ReviewAlumni::all();
+        return view('reviewalumni.index', compact('reviews'));
     }
 
     /**
@@ -20,7 +21,7 @@ class ReviewAlumniController extends Controller
      */
     public function create()
     {
-        //
+        return view('reviewalumni.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class ReviewAlumniController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'nama' => 'nullable|string|max:255',
+            'angkatan' => 'nullable|string|max:255',
+            'review' => 'nullable|string',
+            'foto' => 'nullable|string|max:255',
+        ]);
+        $insert = ReviewAlumni::create($data);
+        if ($insert)
+            return redirect()->route('reviewalumni.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +48,7 @@ class ReviewAlumniController extends Controller
      */
     public function show(ReviewAlumni $reviewAlumni)
     {
-        //
+        return view('reviewalumni.show', compact('reviewAlumni'));
     }
 
     /**
@@ -44,7 +56,7 @@ class ReviewAlumniController extends Controller
      */
     public function edit(ReviewAlumni $reviewAlumni)
     {
-        //
+        return view('reviewalumni.edit', compact('reviewAlumni'));
     }
 
     /**
@@ -52,7 +64,18 @@ class ReviewAlumniController extends Controller
      */
     public function update(Request $request, ReviewAlumni $reviewAlumni)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'nama' => 'nullable|string|max:255',
+            'angkatan' => 'nullable|string|max:255',
+            'review' => 'nullable|string',
+            'foto' => 'nullable|string|max:255',
+        ]);
+        $update = $reviewAlumni->update($data);
+        if ($update)
+            return redirect()->route('reviewalumni.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +83,7 @@ class ReviewAlumniController extends Controller
      */
     public function destroy(ReviewAlumni $reviewAlumni)
     {
-        //
+        $reviewAlumni->delete();
+        return redirect()->route('reviewalumni.index');
     }
 }

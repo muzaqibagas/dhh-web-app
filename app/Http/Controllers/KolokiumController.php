@@ -12,7 +12,8 @@ class KolokiumController extends Controller
      */
     public function index()
     {
-        //
+        $kolokiums = Kolokium::all();
+        return view('kolokium.index', compact('kolokiums'));
     }
 
     /**
@@ -20,7 +21,7 @@ class KolokiumController extends Controller
      */
     public function create()
     {
-        //
+        return view('kolokium.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class KolokiumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_kolokium' => 'required|string|max:255',
+        ]);
+        $insert = Kolokium::create($data);
+        if ($insert)
+            return redirect()->route('kolokium.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +48,7 @@ class KolokiumController extends Controller
      */
     public function show(Kolokium $kolokium)
     {
-        //
+        return view('kolokium.show', compact('kolokium'));
     }
 
     /**
@@ -44,7 +56,7 @@ class KolokiumController extends Controller
      */
     public function edit(Kolokium $kolokium)
     {
-        //
+        return view('kolokium.edit', compact('kolokium'));
     }
 
     /**
@@ -52,7 +64,18 @@ class KolokiumController extends Controller
      */
     public function update(Request $request, Kolokium $kolokium)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_kolokium' => 'required|string|max:255',
+        ]);
+        $update = $kolokium->update($data);
+        if ($update)
+            return redirect()->route('kolokium.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +83,7 @@ class KolokiumController extends Controller
      */
     public function destroy(Kolokium $kolokium)
     {
-        //
+        $kolokium->delete();
+        return redirect()->route('kolokium.index');
     }
 }

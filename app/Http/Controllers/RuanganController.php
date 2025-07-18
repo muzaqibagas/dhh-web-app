@@ -12,7 +12,8 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        //
+        $ruangans = Ruangan::all();
+        return view('ruangan.index', compact('ruangans'));
     }
 
     /**
@@ -20,7 +21,7 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('ruangan.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+        $insert = Ruangan::create($data);
+        if ($insert)
+            return redirect()->route('ruangan.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +44,7 @@ class RuanganController extends Controller
      */
     public function show(Ruangan $ruangan)
     {
-        //
+        return view('ruangan.show', compact('ruangan'));
     }
 
     /**
@@ -44,7 +52,7 @@ class RuanganController extends Controller
      */
     public function edit(Ruangan $ruangan)
     {
-        //
+        return view('ruangan.edit', compact('ruangan'));
     }
 
     /**
@@ -52,7 +60,14 @@ class RuanganController extends Controller
      */
     public function update(Request $request, Ruangan $ruangan)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+        $update = $ruangan->update($data);
+        if ($update)
+            return redirect()->route('ruangan.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +75,7 @@ class RuanganController extends Controller
      */
     public function destroy(Ruangan $ruangan)
     {
-        //
+        $ruangan->delete();
+        return redirect()->route('ruangan.index');
     }
 }

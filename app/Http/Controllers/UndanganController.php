@@ -12,7 +12,8 @@ class UndanganController extends Controller
      */
     public function index()
     {
-        //
+        $undangans = Undangan::all();
+        return view('undangan.index', compact('undangans'));
     }
 
     /**
@@ -20,7 +21,7 @@ class UndanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('undangan.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class UndanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_acara_akademik' => 'required|exists:acara_akademiks,id',
+            'id_pembimbing' => 'required|exists:pembimbings,id',
+        ]);
+        $insert = Undangan::create($data);
+        if ($insert)
+            return redirect()->route('undangan.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +45,7 @@ class UndanganController extends Controller
      */
     public function show(Undangan $undangan)
     {
-        //
+        return view('undangan.show', compact('undangan'));
     }
 
     /**
@@ -44,7 +53,7 @@ class UndanganController extends Controller
      */
     public function edit(Undangan $undangan)
     {
-        //
+        return view('undangan.edit', compact('undangan'));
     }
 
     /**
@@ -52,7 +61,15 @@ class UndanganController extends Controller
      */
     public function update(Request $request, Undangan $undangan)
     {
-        //
+        $data = $request->validate([
+            'id_acara_akademik' => 'required|exists:acara_akademiks,id',
+            'id_pembimbing' => 'required|exists:pembimbings,id',
+        ]);
+        $update = $undangan->update($data);
+        if ($update)
+            return redirect()->route('undangan.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +77,7 @@ class UndanganController extends Controller
      */
     public function destroy(Undangan $undangan)
     {
-        //
+        $undangan->delete();
+        return redirect()->route('undangan.index');
     }
 }

@@ -12,7 +12,8 @@ class DivisiController extends Controller
      */
     public function index()
     {
-        //
+        $divisis = Divisi::all();
+        return view('divisi.index', compact('divisis'));
     }
 
     /**
@@ -20,7 +21,7 @@ class DivisiController extends Controller
      */
     public function create()
     {
-        //
+        return view('divisi.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'nullable|string|max:255',
+        ]);
+        $insert = Divisi::create($data);
+        if ($insert)
+            return redirect()->route('divisi.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +44,7 @@ class DivisiController extends Controller
      */
     public function show(Divisi $divisi)
     {
-        //
+        return view('divisi.show', compact('divisi'));
     }
 
     /**
@@ -44,7 +52,7 @@ class DivisiController extends Controller
      */
     public function edit(Divisi $divisi)
     {
-        //
+        return view('divisi.edit', compact('divisi'));
     }
 
     /**
@@ -52,7 +60,14 @@ class DivisiController extends Controller
      */
     public function update(Request $request, Divisi $divisi)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'nullable|string|max:255',
+        ]);
+        $update = $divisi->update($data);
+        if ($update)
+            return redirect()->route('divisi.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +75,7 @@ class DivisiController extends Controller
      */
     public function destroy(Divisi $divisi)
     {
-        //
+        $divisi->delete();
+        return redirect()->route('divisi.index');
     }
 }

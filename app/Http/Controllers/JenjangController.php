@@ -38,15 +38,17 @@ class JenjangController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([            
+        $request->validate([
             'nama' => 'required|string|max:255',
         ]);
 
-        $insert = Jenjang::create($request->all());
+        $insert = Jenjang::create([
+            'nama' => $request->nama,
+        ]);
 
-        if ($insert) 
+        if ($insert)
             return redirect()->route('jenjang.index')->with('success', 'Berhasil disimpan.');
-        else 
+        else
             return back()->with('error', 'Gagal disimpan.');
     }
 
@@ -72,12 +74,12 @@ class JenjangController extends Controller
      */
     public function update(Request $request, Jenjang $jenjang)
     {
-
         $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-        
-        $update = $jenjang->update($request->all());
+        $update = $jenjang->update([
+            'nama' => $request->nama,
+        ]);
 
         if ($update)
             return redirect()->route('jenjang.index')->with('success', 'Data berhasil diperbarui.');

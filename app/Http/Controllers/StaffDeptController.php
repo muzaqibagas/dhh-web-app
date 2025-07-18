@@ -12,7 +12,8 @@ class StaffDeptController extends Controller
      */
     public function index()
     {
-        //
+        $staffdepts = StaffDept::all();
+        return view('staffdept.index', compact('staffdepts'));
     }
 
     /**
@@ -20,7 +21,7 @@ class StaffDeptController extends Controller
      */
     public function create()
     {
-        //
+        return view('staffdept.create');
     }
 
     /**
@@ -28,7 +29,30 @@ class StaffDeptController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'id_divisi' => 'nullable|exists:divisis,id',
+            'foto' => 'nullable|string|max:255',
+            'nama' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|string|max:255',
+            'nip' => 'required|string|unique:staff_depts,nip',
+            'jabatan' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'keahlian' => 'nullable|string',
+            'sinta' => 'nullable|string|max:255',
+            'google_scholar' => 'nullable|string|max:255',
+            'scopus' => 'nullable|string|max:255',
+            'researchgate' => 'nullable|string|max:255',
+            'website' => 'nullable|string|max:255',
+            'minat_penelitian' => 'nullable|string',
+            'riwayat_pendidikan' => 'nullable|string',
+        ]);
+        $insert = StaffDept::create($data);
+        if ($insert)
+            return redirect()->route('staffdept.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +60,7 @@ class StaffDeptController extends Controller
      */
     public function show(StaffDept $staffDept)
     {
-        //
+        return view('staffdept.show', compact('staffDept'));
     }
 
     /**
@@ -44,7 +68,7 @@ class StaffDeptController extends Controller
      */
     public function edit(StaffDept $staffDept)
     {
-        //
+        return view('staffdept.edit', compact('staffDept'));
     }
 
     /**
@@ -52,7 +76,30 @@ class StaffDeptController extends Controller
      */
     public function update(Request $request, StaffDept $staffDept)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'id_divisi' => 'nullable|exists:divisis,id',
+            'foto' => 'nullable|string|max:255',
+            'nama' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|string|max:255',
+            'nip' => 'required|string|unique:staff_depts,nip,' . $staffDept->id,
+            'jabatan' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'keahlian' => 'nullable|string',
+            'sinta' => 'nullable|string|max:255',
+            'google_scholar' => 'nullable|string|max:255',
+            'scopus' => 'nullable|string|max:255',
+            'researchgate' => 'nullable|string|max:255',
+            'website' => 'nullable|string|max:255',
+            'minat_penelitian' => 'nullable|string',
+            'riwayat_pendidikan' => 'nullable|string',
+        ]);
+        $update = $staffDept->update($data);
+        if ($update)
+            return redirect()->route('staffdept.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +107,7 @@ class StaffDeptController extends Controller
      */
     public function destroy(StaffDept $staffDept)
     {
-        //
+        $staffDept->delete();
+        return redirect()->route('staffdept.index');
     }
 }

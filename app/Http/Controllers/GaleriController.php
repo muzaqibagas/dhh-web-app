@@ -12,7 +12,8 @@ class GaleriController extends Controller
      */
     public function index()
     {
-        //
+        $galeris = Galeri::all();
+        return view('galeri.index', compact('galeris'));
     }
 
     /**
@@ -20,7 +21,7 @@ class GaleriController extends Controller
      */
     public function create()
     {
-        //
+        return view('galeri.create');
     }
 
     /**
@@ -28,7 +29,20 @@ class GaleriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'judul' => 'nullable|string|max:255',
+            'tanggal' => 'nullable|string|max:255',
+            'tipe' => 'required|in:gambar,video',
+            'video' => 'nullable|string|max:255',
+            'gambar' => 'nullable|string|max:255',
+        ]);
+        $insert = Galeri::create($data);
+        if ($insert)
+            return redirect()->route('galeri.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +50,7 @@ class GaleriController extends Controller
      */
     public function show(Galeri $galeri)
     {
-        //
+        return view('galeri.show', compact('galeri'));
     }
 
     /**
@@ -44,7 +58,7 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        //
+        return view('galeri.edit', compact('galeri'));
     }
 
     /**
@@ -52,7 +66,20 @@ class GaleriController extends Controller
      */
     public function update(Request $request, Galeri $galeri)
     {
-        //
+        $data = $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'id_kategori' => 'required|exists:kategoris,id',
+            'judul' => 'nullable|string|max:255',
+            'tanggal' => 'nullable|string|max:255',
+            'tipe' => 'required|in:gambar,video',
+            'video' => 'nullable|string|max:255',
+            'gambar' => 'nullable|string|max:255',
+        ]);
+        $update = $galeri->update($data);
+        if ($update)
+            return redirect()->route('galeri.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +87,7 @@ class GaleriController extends Controller
      */
     public function destroy(Galeri $galeri)
     {
-        //
+        $galeri->delete();
+        return redirect()->route('galeri.index');
     }
 }

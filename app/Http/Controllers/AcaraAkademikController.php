@@ -12,7 +12,8 @@ class AcaraAkademikController extends Controller
      */
     public function index()
     {
-        //
+        $acaras = AcaraAkademik::all();
+        return view('acaraakademik.index', compact('acaras'));
     }
 
     /**
@@ -20,7 +21,7 @@ class AcaraAkademikController extends Controller
      */
     public function create()
     {
-        //
+        return view('acaraakademik.create');
     }
 
     /**
@@ -33,11 +34,13 @@ class AcaraAkademikController extends Controller
             'id_staffdept' => 'required|exists:staff_depts,id',
             'id_kolokium' => 'nullable|exists:kolokiums,id',
             'id_seminar' => 'required|exists:seminars,id',
-            'id_sidang' => 'required|exists:sidangs,id',
-            // field lain...
+            'id_sidang' => 'required|exists:sidangs,id',            
         ]);
-        AcaraAkademik::create($data);
-        return redirect()->route('acara-akademik.index');
+        $insert = AcaraAkademik::create($data);
+        if ($insert)
+            return redirect()->route('acara-akademik.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -45,7 +48,7 @@ class AcaraAkademikController extends Controller
      */
     public function show(AcaraAkademik $acaraAkademik)
     {
-        //
+        return view('acaraakademik.show', compact('acaraAkademik'));
     }
 
     /**
@@ -53,7 +56,7 @@ class AcaraAkademikController extends Controller
      */
     public function edit(AcaraAkademik $acaraAkademik)
     {
-        //
+        return view('acaraakademik.edit', compact('acaraAkademik'));
     }
 
     /**
@@ -67,10 +70,12 @@ class AcaraAkademikController extends Controller
             'id_kolokium' => 'nullable|exists:kolokiums,id',
             'id_seminar' => 'required|exists:seminars,id',
             'id_sidang' => 'required|exists:sidangs,id',
-            // field lain...
         ]);
-        $acaraAkademik->update($data);
-        return redirect()->route('acara-akademik.index');
+        $update = $acaraAkademik->update($data);
+        if ($update)
+            return redirect()->route('acara-akademik.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**

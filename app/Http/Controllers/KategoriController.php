@@ -12,82 +12,58 @@ class KategoriController extends Controller
     // GET /api/kategori
     public function index()
     {
-        try {
-            $kategoris = Kategori::with('tipe')->latest()->get();
-            return response()->json($kategoris);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Gagal mengambil data kategori', 'message' => $e->getMessage()], 500);
-        }
+        $kategoris = Kategori::all();
+        return view('kategori.index', compact('kategoris'));
+    }
+
+    public function create()
+    {
+        return view('kategori.create');
     }
 
     // POST /api/kategori
     public function store(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'id_tipe' => 'required|exists:tipes,id',
-                'nama' => 'nullable|string|max:255',
-            ]);
-
-            $kategori = Kategori::create($validated);
-
-            return response()->json([
-                'message' => 'Kategori berhasil dibuat',
-                'data' => $kategori
-            ], 201);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Gagal membuat kategori', 'message' => $e->getMessage()], 500);
-        }
+        $data = $request->validate([
+            'id_tipe' => 'required|exists:tipes,id',
+            'nama' => 'nullable|string|max:255',
+        ]);
+        $insert = Kategori::create($data);
+        if ($insert)
+            return redirect()->route('kategori.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     // GET /api/kategori/{id}
-    public function show($id)
+    public function show(Kategori $kategori)
     {
-        try {
-            $kategori = Kategori::with('tipe')->findOrFail($id);
-            return response()->json($kategori);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Gagal mengambil detail kategori', 'message' => $e->getMessage()], 500);
-        }
+        return view('kategori.show', compact('kategori'));
+    }
+
+    public function edit(Kategori $kategori)
+    {
+        return view('kategori.edit', compact('kategori'));
     }
 
     // PUT /api/kategori/{id}
-    public function update(Request $request, $id)
+    public function update(Request $request, Kategori $kategori)
     {
-        try {
-            $validated = $request->validate([
-                'id_tipe' => 'required|exists:tipes,id',
-                'nama' => 'nullable|string|max:255',
-            ]);
-
-            $kategori = Kategori::findOrFail($id);
-            $kategori->update($validated);
-
-            return response()->json([
-                'message' => 'Kategori berhasil diperbarui',
-                'data' => $kategori
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Gagal memperbarui kategori', 'message' => $e->getMessage()], 500);
-        }
+        $data = $request->validate([
+            'id_tipe' => 'required|exists:tipes,id',
+            'nama' => 'nullable|string|max:255',
+        ]);
+        $update = $kategori->update($data);
+        if ($update)
+            return redirect()->route('kategori.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     // DELETE /api/kategori/{id}
-    public function destroy($id)
+    public function destroy(Kategori $kategori)
     {
-        try {
-            $kategori = Kategori::findOrFail($id);
-            $kategori->delete();
-
-            return response()->json(['message' => 'Kategori berhasil dihapus']);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Gagal menghapus kategori', 'message' => $e->getMessage()], 500);
-        }
+        $kategori->delete();
+        return redirect()->route('kategori.index');
     }
 }

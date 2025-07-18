@@ -12,7 +12,8 @@ class SmkController extends Controller
      */
     public function index()
     {
-        //
+        $smks = Smk::all();
+        return view('smk.index', compact('smks'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SmkController extends Controller
      */
     public function create()
     {
-        //
+        return view('smk.create');
     }
 
     /**
@@ -28,7 +29,16 @@ class SmkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_jenjang' => 'required|exists:jenjangs,id',
+            'id_semester' => 'required|exists:semesters,id',
+            'id_matakuliah' => 'required|exists:mata_kuliahs,id',
+        ]);
+        $insert = Smk::create($data);
+        if ($insert)
+            return redirect()->route('smk.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +46,7 @@ class SmkController extends Controller
      */
     public function show(Smk $smk)
     {
-        //
+        return view('smk.show', compact('smk'));
     }
 
     /**
@@ -44,7 +54,7 @@ class SmkController extends Controller
      */
     public function edit(Smk $smk)
     {
-        //
+        return view('smk.edit', compact('smk'));
     }
 
     /**
@@ -52,7 +62,16 @@ class SmkController extends Controller
      */
     public function update(Request $request, Smk $smk)
     {
-        //
+        $data = $request->validate([
+            'id_jenjang' => 'required|exists:jenjangs,id',
+            'id_semester' => 'required|exists:semesters,id',
+            'id_matakuliah' => 'required|exists:mata_kuliahs,id',
+        ]);
+        $update = $smk->update($data);
+        if ($update)
+            return redirect()->route('smk.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +79,7 @@ class SmkController extends Controller
      */
     public function destroy(Smk $smk)
     {
-        //
+        $smk->delete();
+        return redirect()->route('smk.index');
     }
 }

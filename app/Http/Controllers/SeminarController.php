@@ -12,7 +12,8 @@ class SeminarController extends Controller
      */
     public function index()
     {
-        //
+        $seminars = Seminar::all();
+        return view('seminar.index', compact('seminars'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SeminarController extends Controller
      */
     public function create()
     {
-        //
+        return view('seminar.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class SeminarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_seminar' => 'required|string|max:255',
+        ]);
+        $insert = Seminar::create($data);
+        if ($insert)
+            return redirect()->route('seminar.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +48,7 @@ class SeminarController extends Controller
      */
     public function show(Seminar $seminar)
     {
-        //
+        return view('seminar.show', compact('seminar'));
     }
 
     /**
@@ -44,7 +56,7 @@ class SeminarController extends Controller
      */
     public function edit(Seminar $seminar)
     {
-        //
+        return view('seminar.edit', compact('seminar'));
     }
 
     /**
@@ -52,7 +64,18 @@ class SeminarController extends Controller
      */
     public function update(Request $request, Seminar $seminar)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'tanggal' => 'required|date',
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
+            'judul_seminar' => 'required|string|max:255',
+        ]);
+        $update = $seminar->update($data);
+        if ($update)
+            return redirect()->route('seminar.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +83,7 @@ class SeminarController extends Controller
      */
     public function destroy(Seminar $seminar)
     {
-        //
+        $seminar->delete();
+        return redirect()->route('seminar.index');
     }
 }

@@ -12,7 +12,8 @@ class PembimbingController extends Controller
      */
     public function index()
     {
-        //
+        $pembimbings = Pembimbing::all();
+        return view('pembimbing.index', compact('pembimbings'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PembimbingController extends Controller
      */
     public function create()
     {
-        //
+        return view('pembimbing.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class PembimbingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_mahasiswa' => 'required|exists:users,id',
+            'id_staffdept' => 'required|exists:staff_depts,id',
+        ]);
+        $insert = Pembimbing::create($data);
+        if ($insert)
+            return redirect()->route('pembimbing.index')->with('success', 'Data berhasil disimpan!');
+        else
+            return back()->with('error', 'Gagal menyimpan data!');
     }
 
     /**
@@ -36,7 +45,7 @@ class PembimbingController extends Controller
      */
     public function show(Pembimbing $pembimbing)
     {
-        //
+        return view('pembimbing.show', compact('pembimbing'));
     }
 
     /**
@@ -44,7 +53,7 @@ class PembimbingController extends Controller
      */
     public function edit(Pembimbing $pembimbing)
     {
-        //
+        return view('pembimbing.edit', compact('pembimbing'));
     }
 
     /**
@@ -52,7 +61,15 @@ class PembimbingController extends Controller
      */
     public function update(Request $request, Pembimbing $pembimbing)
     {
-        //
+        $data = $request->validate([
+            'id_mahasiswa' => 'required|exists:users,id',
+            'id_staffdept' => 'required|exists:staff_depts,id',
+        ]);
+        $update = $pembimbing->update($data);
+        if ($update)
+            return redirect()->route('pembimbing.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +77,7 @@ class PembimbingController extends Controller
      */
     public function destroy(Pembimbing $pembimbing)
     {
-        //
+        $pembimbing->delete();
+        return redirect()->route('pembimbing.index');
     }
 }
