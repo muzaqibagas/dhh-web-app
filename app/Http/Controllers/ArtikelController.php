@@ -30,13 +30,23 @@ class ArtikelController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_kategori' => 'required|exists:kategoris,id',
+            'id_user' => 'nullable|exists:users,id',
+            'id_kategori' => 'nullable|exists:kategoris,id',
             'foto' => 'nullable|string|max:255',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'deskripsi' => 'nullable|string',
         ]);
+
+        // Isi id_user dengan user login jika ada, atau default 1
+        if (empty($data['id_user'])) {
+            $data['id_user'] = auth()->id() ?? 1;
+        }
+        // Isi id_kategori dengan kategori pertama jika tidak ada
+        if (empty($data['id_kategori'])) {
+            $data['id_kategori'] = \App\Models\Kategori::query()->first()?->id ?? 1;
+        }
+
         $insert = Artikel::create($data);
         if ($insert)
             return redirect()->route('artikel.index')->with('success', 'Data berhasil disimpan!');

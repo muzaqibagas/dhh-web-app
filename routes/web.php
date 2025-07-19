@@ -69,28 +69,28 @@ Route::delete('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class,
 Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');
 Route::get('artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
 Route::post('artikel', [ArtikelController::class, 'store'])->name('artikel.store');
-Route::get('artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
-Route::get('artikel/{id}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
-Route::put('artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
-Route::delete('artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+Route::get('artikel/{artikel}', [ArtikelController::class, 'show'])->name('artikel.show');
+Route::get('artikel/{artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+Route::put('artikel/{artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+Route::delete('artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
 
 // Divisi
 Route::get('divisi', [DivisiController::class, 'index'])->name('divisi.index');
 Route::get('divisi/create', [DivisiController::class, 'create'])->name('divisi.create');
 Route::post('divisi', [DivisiController::class, 'store'])->name('divisi.store');
-Route::get('divisi/{id}', [DivisiController::class, 'show'])->name('divisi.show');
-Route::get('divisi/{id}/edit', [DivisiController::class, 'edit'])->name('divisi.edit');
-Route::put('divisi/{id}', [DivisiController::class, 'update'])->name('divisi.update');
-Route::delete('divisi/{id}', [DivisiController::class, 'destroy'])->name('divisi.destroy');
+Route::get('divisi/{divisi}', [DivisiController::class, 'show'])->name('divisi.show');
+Route::get('divisi/{divisi}/edit', [DivisiController::class, 'edit'])->name('divisi.edit');
+Route::put('divisi/{divisi}', [DivisiController::class, 'update'])->name('divisi.update');
+Route::delete('divisi/{divisi}', [DivisiController::class, 'destroy'])->name('divisi.destroy');
 
 // Galeri
 Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 Route::post('galeri', [GaleriController::class, 'store'])->name('galeri.store');
-Route::get('galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
-Route::get('galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
-Route::put('galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
-Route::delete('galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+Route::get('galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.show');
+Route::get('galeri/{galeri}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
+Route::put('galeri/{galeri}', [GaleriController::class, 'update'])->name('galeri.update');
+Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
 
 // Jenjang
 Route::get('jenjang', [JenjangController::class, 'index'])->name('jenjang.index');

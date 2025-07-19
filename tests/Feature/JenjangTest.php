@@ -51,8 +51,7 @@ class JenjangTest extends TestCase
     {
         $jenjang = Jenjang::factory()->create();
         $data = [
-            'nama' => 'Jenjang Updated',
-            // tambahkan field lain sesuai kebutuhan
+            'nama' => 'Jenjang Updated',            
         ];
         $response = $this->put('/jenjang/' . $jenjang->id, $data);
         $response->assertStatus(302);

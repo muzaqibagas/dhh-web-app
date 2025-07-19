@@ -11,7 +11,12 @@ class ArtikelFactory extends Factory
     public function definition()
     {
         return [
-            'judul' => $this->faker->sentence(4),
+            'id_user' => \App\Models\User::factory(),
+            'id_kategori' => \App\Models\Kategori::factory(),
+            'foto' => $this->faker->imageUrl(640, 480, 'artikel', true),
+            'judul' => $this->faker->sentence(6),
+            'tanggal' => $this->faker->date(),
+            'deskripsi' => $this->faker->paragraph(3),
         ];
     }
 }

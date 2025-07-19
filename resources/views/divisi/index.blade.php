@@ -9,7 +9,7 @@
         <th>Nama</th>
         <th>Aksi</th>
     </tr>
-    @foreach($data as $item)
+    @foreach($divisis as $item)
     <tr>
         <td>{{ $item->id }}</td>
         <td>{{ $item->nama }}</td>

@@ -9,7 +9,7 @@
         <th>Nama</th>
         <th>Aksi</th>
     </tr>
-    @foreach($data as $item)
+    @foreach($acaras as $item)
     <tr>
         <td>{{ $item->id }}</td>
         <td>{{ $item->nama }}</td>

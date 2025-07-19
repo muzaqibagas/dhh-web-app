@@ -9,7 +9,7 @@
         <th>Judul</th>
         <th>Aksi</th>
     </tr>
-    @foreach($data as $item)
+@foreach($artikels as $item)
     <tr>
         <td>{{ $item->id }}</td>
         <td>{{ $item->judul }}</td>

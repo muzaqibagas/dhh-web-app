@@ -48,7 +48,9 @@ class DivisiTest extends TestCase
     public function test_update_divisi()
     {
         $divisi = Divisi::factory()->create();
-        $data = ['nama' => 'Divisi Updated'];
+        $data = [
+            'nama' => 'Divisi Updated'
+        ];
         $response = $this->put('/divisi/' . $divisi->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('divisis', ['nama' => 'Divisi Updated']);

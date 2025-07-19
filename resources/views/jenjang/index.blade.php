@@ -23,8 +23,8 @@
 @foreach($data as $item)
     <li>
         {{ $item->nama }}
-        <a href="{{ route('jenjang.edit', $item->jenjang ?? $item->id) }}">Edit</a>
-        <form action="{{ route('jenjang.destroy', $item->jenjang ?? $item->id) }}" method="POST" style="display:inline;">
+        <a href="{{ route('jenjang.edit', $item->id) }}">Edit</a>
+        <form action="{{ route('jenjang.destroy', $item->id) }}" method="POST" style="display:inline;">
             @csrf
             @method('DELETE')            
             <button type="submit" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>

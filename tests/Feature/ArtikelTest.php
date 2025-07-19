@@ -23,8 +23,15 @@ class ArtikelTest extends TestCase
 
     public function test_store_artikel()
     {
+        $user = \App\Models\User::factory()->create();
+        $kategori = \App\Models\Kategori::factory()->create();
         $data = [
+            'id_user' => $user->id,
+            'id_kategori' => $kategori->id,
             'judul' => 'Artikel Test',
+            'foto' => 'foto.jpg',
+            'tanggal' => now()->toDateString(),
+            'deskripsi' => 'Deskripsi test',
         ];
         $response = $this->post('/artikel', $data);
         $response->assertStatus(302);
@@ -48,7 +55,16 @@ class ArtikelTest extends TestCase
     public function test_update_artikel()
     {
         $artikel = Artikel::factory()->create();
-        $data = ['judul' => 'Artikel Updated'];
+        $user = \App\Models\User::factory()->create();
+        $kategori = \App\Models\Kategori::factory()->create();
+        $data = [
+            'id_user' => $user->id,
+            'id_kategori' => $kategori->id,
+            'judul' => 'Artikel Updated',
+            'foto' => 'foto2.jpg',
+            'tanggal' => now()->toDateString(),
+            'deskripsi' => 'Deskripsi update',
+        ];
         $response = $this->put('/artikel/' . $artikel->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('artikels', ['judul' => 'Artikel Updated']);
