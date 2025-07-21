@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seminar;
+use App\Models\Ruangan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SeminarController extends Controller
@@ -21,7 +23,9 @@ class SeminarController extends Controller
      */
     public function create()
     {
-        return view('seminar.create');
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('seminar.create', compact('ruangans', 'mahasiswas'));
     }
 
     /**
@@ -31,9 +35,9 @@ class SeminarController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_seminar' => 'required|string|max:255',
         ]);
         $insert = Seminar::create($data);
@@ -56,7 +60,9 @@ class SeminarController extends Controller
      */
     public function edit(Seminar $seminar)
     {
-        return view('seminar.edit', compact('seminar'));
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('seminar.edit', compact('seminar', 'ruangans', 'mahasiswas'));
     }
 
     /**
@@ -67,8 +73,7 @@ class SeminarController extends Controller
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_seminar' => 'required|string|max:255',
         ]);
         $update = $seminar->update($data);

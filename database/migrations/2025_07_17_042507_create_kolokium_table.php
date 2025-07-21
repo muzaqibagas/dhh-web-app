@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('kolokiums', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('id_ruangan')->constrained('ruangans')->onDelete('cascade');
+            $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->date('tanggal');
-            $table->time('waktu');
-            $table->string('tempat');
+            $table->time('waktu');            
             $table->string('judul_kolokium');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kolokia');
+        Schema::dropIfExists('kolokiums');
     }
 };

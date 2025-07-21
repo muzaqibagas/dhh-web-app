@@ -3,6 +3,7 @@
 @section('content')
 <h1>Daftar Divisi</h1>
 <a href="{{ url('divisi/create') }}">Tambah Divisi</a>
+
 <table border="1">
     <tr>
         <th>ID</th>

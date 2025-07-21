@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Galeri;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class GaleriController extends Controller
@@ -21,7 +22,8 @@ class GaleriController extends Controller
      */
     public function create()
     {
-        return view('galeri.create');
+        $kategori = Kategori::all();
+        return view('galeri.create', compact('kategori'));
     }
 
     /**
@@ -58,7 +60,8 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        return view('galeri.edit', compact('galeri'));
+        $kategori = Kategori::all();
+        return view('galeri.edit', compact('galeri', 'kategori'));
     }
 
     /**

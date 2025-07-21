@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             // Admin
             [
+                'id_jenjang' => null,
                 'nim' => 'Admin1',
                 'nama' => 'Admin',
                 'no_hp' => '081380716742',
@@ -36,6 +37,7 @@ class UserSeeder extends Seeder
 
             // Mahasiswa
             [
+                'id_jenjang' => 3,
                 'nim' => 'J0403221096',
                 'nama' => 'Muzaqi Bagas',
                 'no_hp' => '081234567890',

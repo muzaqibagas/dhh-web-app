@@ -12,5 +12,5 @@
     <p>Deskripsi: {{ $galeri->deskripsi }}</p>
     <p>User ID: {{ $galeri->id_user }}</p>
     <p>Kategori ID: {{ $galeri->id_kategori }}</p>
-    <a href="{{ route('galeri.edit', $galeri->id) }}">Edit</a>
+    <a href="{{ url('galeri') }}">kembali</a>
 @endsection

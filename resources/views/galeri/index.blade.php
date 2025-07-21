@@ -1,23 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Daftar Galeri</h1>
-
-    <a href="{{ route('galeri.create') }}">Tambah Galeri</a>
-
-    <ul>
-        @foreach($galeris as $galeri)
-            <li>
-                <a href="{{ route('galeri.show', $galeri->id) }}">
-                    {{ $galeri->judul }}
-                </a>
-                | <a href="{{ route('galeri.edit', $galeri->id) }}">Edit</a>
-                <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Hapus</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
+<h1>Daftar Galeri</h1>
+<a href="{{ url('galeri/create') }}">Tambah Galeri</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Aksi</th>
+    </tr>
+    @foreach($galeris as $item)
+    <tr>
+        <td>{{ $item->id }}</td>
+        <td>{{ $item->judul }}</td>
+        <td>
+            <a href="{{ url('galeri/' . $item->id) }}">Show</a>
+            <a href="{{ url('galeri/' . $item->id . '/edit') }}">Edit</a>
+            <form action="{{ url('galeri/' . $item->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    @endforeach
+</table>
 @endsection
