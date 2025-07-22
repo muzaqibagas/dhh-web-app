@@ -13,6 +13,13 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangans = Ruangan::all();
+    
+        $query = Ruangan::query();
+        if (request()->has('search')) {
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+        $ruangans = $query->get();
         return view('ruangan.index', compact('ruangans'));
     }
 
@@ -21,7 +28,8 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        return view('ruangan.create');
+        $ruangans = Ruangan::all();
+        return view('ruangan.create', compact('ruangans'));
     }
 
     /**
@@ -29,10 +37,13 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-        $insert = Ruangan::create($data);
+        $insert = Ruangan::create([
+            'nama' => $request->nama,
+        ]);
+
         if ($insert)
             return redirect()->route('ruangan.index')->with('success', 'Data berhasil disimpan!');
         else
@@ -60,10 +71,13 @@ class RuanganController extends Controller
      */
     public function update(Request $request, Ruangan $ruangan)
     {
-        $data = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-        $update = $ruangan->update($data);
+        $update = $ruangan->update([
+            'nama' => $request->nama,
+        ]);         
+         
         if ($update)
             return redirect()->route('ruangan.index')->with('success', 'Data berhasil diperbarui!');
         else
@@ -76,6 +90,6 @@ class RuanganController extends Controller
     public function destroy(Ruangan $ruangan)
     {
         $ruangan->delete();
-        return redirect()->route('ruangan.index');
+        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dihapus.');;
     }
 }

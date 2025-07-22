@@ -13,11 +13,16 @@ class Sidang extends Model
 
     protected $fillable = [
         'id_ruangan',
+        'id_mahasiswa',
         'tanggal',
-        'waktu',
-        'tempat',
+        'waktu',        
         'judul_tugasakhir',
     ];
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(User::class, 'id_mahasiswa');
+    }
 
     public function ruangan()
     {

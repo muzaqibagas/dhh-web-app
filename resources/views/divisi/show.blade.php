@@ -6,5 +6,5 @@
     <li>ID: {{ $divisi->id }}</li>
     <li>Nama: {{ $divisi->nama }}</li>    
 </ul>
-<a href="{{ url('divisi') }}">Kembali</a>
+<a href="{{ url('divisi.index') }}">Kembali</a>
 @endsection

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\AcaraAkademik;
+use App\Models\user;
+use App\Models\StaffDept;
+use App\Models\Kolokium;
+use App\Models\Seminar;
+use App\Models\Sidang;  
 use Illuminate\Http\Request;
 
 class AcaraAkademikController extends Controller
@@ -11,8 +16,8 @@ class AcaraAkademikController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $acaras = AcaraAkademik::all();
+    {        
+        $acaras = AcaraAkademik::with(['id_mahasiswa', 'id_staffdept', 'id_kolokium', 'id_seminar', 'id_sidang'])->get();
         return view('acaraakademik.index', compact('acaras'));
     }
 
@@ -21,7 +26,12 @@ class AcaraAkademikController extends Controller
      */
     public function create()
     {
-        return view('acaraakademik.create');
+        $kolokiums = Kolokium::with(['mahasiswa', 'ruangan'])->get();
+        $seminars = Seminar::with(['mahasiswa', 'ruangan'])->get();
+        $sidangs = Sidang::with(['mahasiswa', 'ruangan'])->get();
+        $staffdepts = StaffDept::all();
+
+        return view('acaraakademik.create', compact('kolokiums', 'seminars', 'sidangs', 'staffdepts'));
     }
 
     /**
@@ -73,7 +83,7 @@ class AcaraAkademikController extends Controller
         ]);
         $update = $acaraAkademik->update($data);
         if ($update)
-            return redirect()->route('acara-akademik.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('acaraakademik.index')->with('success', 'Data berhasil diperbarui!');
         else
             return back()->with('error', 'Gagal memperbarui data!');
     }
@@ -84,6 +94,6 @@ class AcaraAkademikController extends Controller
     public function destroy(AcaraAkademik $acaraAkademik)
     {
         $acaraAkademik->delete();
-        return redirect()->route('acara-akademik.index');
+        return redirect()->route('acaraakademik.index');
     }
 }

@@ -13,12 +13,17 @@ class Kolokium extends Model
 
     protected $fillable = [
         'id_ruangan',
+        'id_mahasiswa',
         'tanggal',
-        'waktu',
-        'tempat',
+        'waktu',        
         'judul_kolokium',
     ];
 
+    public function mahasiswa()
+    {
+        return $this->belongsTo(User::class, 'id_mahasiswa');
+    }
+    
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'id_ruangan');

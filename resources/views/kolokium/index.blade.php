@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Daftar Kolokum</h1>
+    <h1>Daftar Kolokium</h1>
 
     <a href="{{ url('kolokium/create') }}">Tambah Kolokium</a>
     @if(session('success'))

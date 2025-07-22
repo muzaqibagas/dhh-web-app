@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sidang;
+use App\Models\Ruangan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SidangController extends Controller
@@ -21,7 +23,9 @@ class SidangController extends Controller
      */
     public function create()
     {
-        return view('sidang.create');
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('sidang.create', compact('ruangans', 'mahasiswas'));
     }
 
     /**
@@ -31,9 +35,9 @@ class SidangController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_tugasakhir' => 'required|string|max:255',
         ]);
         $insert = Sidang::create($data);
@@ -56,7 +60,9 @@ class SidangController extends Controller
      */
     public function edit(Sidang $sidang)
     {
-        return view('sidang.edit', compact('sidang'));
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('sidang.edit', compact('sidang', 'ruangans', 'mahasiswas'));
     }
 
     /**
@@ -66,9 +72,9 @@ class SidangController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_tugasakhir' => 'required|string|max:255',
         ]);
         $update = $sidang->update($data);

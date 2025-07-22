@@ -24,7 +24,8 @@ class SeminarController extends Controller
     public function create()
     {
         $ruangans = Ruangan::all();
-        $users = User::where('role', 'mahasiswa')->get();
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
         return view('seminar.create', compact('ruangans', 'users'));
     }
 
@@ -35,9 +36,9 @@ class SeminarController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_seminar' => 'required|string|max:255',
         ]);
         $insert = Seminar::create($data);
@@ -60,7 +61,9 @@ class SeminarController extends Controller
      */
     public function edit(Seminar $seminar)
     {
-        return view('seminar.edit', compact('seminar'));
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('seminar.edit', compact('seminar', 'ruangans', 'mahasiswas'));
     }
 
     /**
@@ -70,9 +73,9 @@ class SeminarController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',
-            'tempat' => 'required|string|max:255',
+            'waktu' => 'required',            
             'judul_seminar' => 'required|string|max:255',
         ]);
         $update = $seminar->update($data);

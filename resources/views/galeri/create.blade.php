@@ -13,7 +13,7 @@
         <input type="date" name="tanggal" id="tanggal"><br>
 
         <label for="tipe">Tipe:</label>
-        <select name="tipe" id="tipe" onchange="toggleMediaInput()">
+        <select name="tipe" id="tipe" onchange="toggleMediaInput()">        
             <option value="gambar">Gambar</option>
             <option value="video">Video</option>
         </select><br>
