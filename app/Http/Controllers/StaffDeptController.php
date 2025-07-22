@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\StaffDept;
+use App\Models\KategoriStaff;
+use App\Models\Divisi;
 use Illuminate\Http\Request;
 
 class StaffDeptController extends Controller
@@ -21,7 +23,9 @@ class StaffDeptController extends Controller
      */
     public function create()
     {
-        return view('staffdept.create');
+        $kategoriStaffs = \App\Models\Kategori::all();
+        $divisis = \App\Models\Divisi::all();
+        return view('staffdept.create', compact('kategoriStaffs', 'divisis'));
     }
 
     /**

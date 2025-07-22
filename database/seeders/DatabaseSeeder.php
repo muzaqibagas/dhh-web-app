@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             TipeSeeder::class,     
             KategoriSeeder::class,           
             RuanganSeeder::class,  
+            KategoriStaffSeeder::class,
         ]);
     }
 }

@@ -13,13 +13,6 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangans = Ruangan::all();
-
-        $query = Ruangan::query();
-        if (request()->has('search')) {
-            $search = request()->search;
-            $query->where('nama', 'like', "%$search%");
-        }
-        $ruangans = $query->get();
         return view('ruangan.index', compact('ruangans'));
     }
 
@@ -28,8 +21,7 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        $ruangans = Ruangan::all();
-        return view('ruangan.create', compact('ruangans'));
+        return view('ruangan.create');
     }
 
     /**
@@ -37,13 +29,10 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-        $insert = Ruangan::create([
-            'nama' => $request->nama,
-        ]);
-
+        $insert = Ruangan::create($data);
         if ($insert)
             return redirect()->route('ruangan.index')->with('success', 'Data berhasil disimpan!');
         else
@@ -71,13 +60,10 @@ class RuanganController extends Controller
      */
     public function update(Request $request, Ruangan $ruangan)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama' => 'required|string|max:255',
         ]);
-        $update = $ruangan->update([
-            'nama' => $request->nama,
-        ]);         
-         
+        $update = $ruangan->update($data);
         if ($update)
             return redirect()->route('ruangan.index')->with('success', 'Data berhasil diperbarui!');
         else
@@ -90,6 +76,6 @@ class RuanganController extends Controller
     public function destroy(Ruangan $ruangan)
     {
         $ruangan->delete();
-        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dihapus.');;
+        return redirect()->route('ruangan.index');
     }
 }

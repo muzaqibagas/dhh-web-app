@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kolokium;
-use App\Models\Ruangan;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class KolokiumController extends Controller
@@ -23,9 +21,7 @@ class KolokiumController extends Controller
      */
     public function create()
     {
-        $ruangans = Ruangan::all();
-        $mahasiswas = User::where('role', 'mahasiswa')->get();
-        return view('kolokium.create', compact('ruangans', 'mahasiswas'));
+        return view('kolokium.create');
     }
 
     /**
@@ -35,9 +31,9 @@ class KolokiumController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
-            'id_mahasiswa' => 'required|exists:users,id',
             'tanggal' => 'required|date',
-            'waktu' => 'required',            
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
             'judul_kolokium' => 'required|string|max:255',
         ]);
         $insert = Kolokium::create($data);
@@ -60,9 +56,7 @@ class KolokiumController extends Controller
      */
     public function edit(Kolokium $kolokium)
     {
-        $ruangans = Ruangan::all();
-        $mahasiswas = User::where('role', 'mahasiswa')->get();
-        return view('kolokium.edit', compact('kolokium', 'ruangans', 'mahasiswas'));
+        return view('kolokium.edit', compact('kolokium'));
     }
 
     /**
@@ -72,9 +66,9 @@ class KolokiumController extends Controller
     {
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
-            'id_mahasiswa' => 'required|exists:users,id', 
             'tanggal' => 'required|date',
-            'waktu' => 'required',            
+            'waktu' => 'required',
+            'tempat' => 'required|string|max:255',
             'judul_kolokium' => 'required|string|max:255',
         ]);
         $update = $kolokium->update($data);

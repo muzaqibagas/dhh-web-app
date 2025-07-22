@@ -2,9 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Jenjang;
+use App\Models\AcaraAkademik;
+use App\Models\Artikel;
+use App\Models\Divisi;
+use App\Models\Galeri;
+use App\Models\jenjang;
+use App\Models\Kategori;
+use App\Models\KategoriKompetensi;
+use App\Models\Kolokium;
+use App\Models\KontenDept;
 use App\Models\Kurikulum;
+use App\Models\KurikulumDetail;
+use App\Models\Matakuliah;
+use App\Models\Pembimbing;
+use App\Models\Review;
+use App\Models\Ruangan;
+use App\Models\Semester;
+use App\Models\Seminar;
+use App\Models\Sidang;
+use App\Models\Smk;
+use App\Models\StaffDept; 
+use App\Models\Tipe; 
+use App\Models\Undangan; 
+use App\Models\user;
 use Illuminate\Http\Request;
 
 class KurikulumController extends Controller

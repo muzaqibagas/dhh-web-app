@@ -30,7 +30,7 @@ class DivisiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama' => 'nullable|string|max:255',
         ]);
         $insert = Divisi::create($data);
         if ($insert)
@@ -61,7 +61,7 @@ class DivisiController extends Controller
     public function update(Request $request, Divisi $divisi)
     {
         $data = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama' => 'nullable|string|max:255',
         ]);
         $update = $divisi->update($data);
         if ($update)
