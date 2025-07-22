@@ -4,7 +4,7 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-semibold">Kategori Staff</h2>
-        <a href="{{ route('kategoriStaff.create') }}" class="btn btn-outline-primary">
+        <a href="{{ route('kategoristaff.create') }}" class="btn btn-outline-primary">
             <i class="bi bi-plus-circle"></i> Tambah
         </a>
     </div>
@@ -32,13 +32,13 @@
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->nama }}</td>
                             <td class="text-end">
-                                <a href="{{ route('kategoriStaff.show', $item->id) }}" class="btn btn-sm btn-outline-info me-1">
+                                <a href="{{ route('kategoristaff.show', $item->id) }}" class="btn btn-sm btn-outline-info me-1">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <a href="{{ route('kategoriStaff.edit', $item->id) }}" class="btn btn-sm btn-outline-warning me-1">
+                                <a href="{{ route('kategoristaff.edit', $item->id) }}" class="btn btn-sm btn-outline-warning me-1">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <form action="{{ route('kategoriStaff.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus ruangan ini?')">
+                                <form action="{{ route('kategoristaff.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus ruangan ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">

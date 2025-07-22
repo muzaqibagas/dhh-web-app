@@ -23,10 +23,9 @@ class SeminarController extends Controller
      */
     public function create()
     {
-        $ruangans = Ruangan::all();
-        $ruangans = Ruangan::all();
+        $ruangans = Ruangan::all();        
         $mahasiswas = User::where('role', 'mahasiswa')->get();
-        return view('seminar.create', compact('ruangans', 'users'));
+        return view('seminar.create', compact('ruangans', 'mahasiswas'));
     }
 
     /**

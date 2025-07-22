@@ -5,7 +5,7 @@
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Detail Kategori Staff</h5>
-            <a href="{{ route('kategoriStaff.index') }}" class="btn btn-sm btn-outline-secondary">
+            <a href="{{ route('kategoristaff.index') }}" class="btn btn-sm btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
         </div>

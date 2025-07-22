@@ -7,7 +7,7 @@
             <h5 class="mb-0">Tambah Kategori Staff </h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('kategoriStaff.store') }}" method="POST">
+            <form action="{{ route('kategoristaff.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama Kategori Staff</label>
@@ -17,7 +17,7 @@
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-save"></i> Simpan
                     </button>
-                    <a href="{{ route('kategoriStaff.index') }}" class="btn btn-secondary">
+                    <a href="{{ route('kategoristaff.index') }}" class="btn btn-secondary">
                         <i class="bi bi-x-circle"></i> Batal
                     </a>
                 </div>
