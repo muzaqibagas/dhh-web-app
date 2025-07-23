@@ -1,0 +1,258 @@
+/* === KOLOKIUM WRAPPER === */
+.kolokium-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 850px; /* batas maksimal biar gak terlalu lebar */
+  margin: 30px auto; /* auto center */
+  min-height: calc(100vh - 100px); /* biar gak terlalu pendek */
+}
+
+/* === JUDUL FORM === */
+.kolokium-card .page-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #800000; /* merah marun */
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+.kolokium-card .page-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #FFD700; /* kuning emas */
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* === FORM GROUP === */
+.kolokium-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+.form-group {
+  display: grid;
+  grid-template-columns: 200px 1fr; 
+  margin-bottom: 15px;
+  gap: 10px;
+}
+.kolokium-card {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.form-group label {
+  font-weight: bold;
+  text-align: left; /* bisa diganti right kalau mau rata kanan */
+}
+.kolokium-card ,
+.kolokium-card ,
+.kolokium-card {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  transition: border-color 0.3s ease;
+  background: #fff;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.kolokium-card  {
+  min-height: 80px;
+  resize: vertical;
+}
+.form-group textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+/* Efek focus */
+.kolokium-card .form-group input:focus,
+.kolokium-card .form-group select:focus,
+.kolokium-card .form-group textarea:focus {
+  border-color: #0066cc;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 102, 204, 0.3);
+}
+
+/* === TOMBOL SUBMIT === */
+.kolokium-card .form-actions {
+  margin-top: 20px;
+}
+.kolokium-card .btn-submit {
+  width: 100%;
+  background: #1BA943;
+  color: #fff;
+  padding: 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.kolokium-card .btn-submit:hover {
+  background: #148a36;
+}
+
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  .kolokium-card {
+    padding: 30px 20px;
+    max-width: 95%;
+  }
+}
+@media (max-width: 768px) {
+  .kolokium-card {
+    padding: 25px 15px;
+    max-width: 100%;
+    margin: 15px;
+  }
+  .kolokium-card .page-title {
+    font-size: 18px;
+  }
+}
+@media (max-width: 480px) {
+  .kolokium-card .form-group label {
+    font-size: 13px;
+  }
+  
+  .kolokium-card .form-group input,
+  .kolokium-card .form-group select,
+  .kolokium-card .form-group textarea {
+    font-size: 12px;
+    padding: 10px;
+  }
+  .kolokium-card .btn-submit {
+    font-size: 13px;
+    padding: 12px;
+  }
+}
+
+/* Default Desktop */
+.sidebar {
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile hidden */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -260px; /* geser keluar layar */
+    top: 62;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  }
+  .sidebar.active {
+    left: 0; /* muncul saat aktif */
+  }
+
+  /* Konten biar full lebar */
+  .content {
+    flex-grow: 1;
+    width: 100%;
+  }
+}
+
+/* Supaya submenu aktif langsung highlight abu */
+.submenu-link.active-submenu {
+  background: #f0f0f0;  /* abu terang */
+  color: #333;          /* teks lebih gelap */
+  font-weight: 600;
+}
+
+/* === CARD SYARAT KOLOKIUM === */
+.syarat-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto; /* center di tengah */
+}
+
+/* List syarat */
+.syarat-list {
+  list-style: decimal;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+.syarat-list li {
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Upload section */
+.upload-section h4 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+}
+
+.upload-section .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.upload-section .form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.upload-section input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* Tombol simpan */
+.upload-section .btn-submit {
+  background: #1BA943;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.upload-section .btn-submit:hover {
+  background: #148a36;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .syarat-card {
+    padding: 20px;
+  }
+
+  .upload-section .btn-submit {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

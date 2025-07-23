@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profilemhs;
+use App\Models\SyaratKolokiummhs;
 use Illuminate\Http\Request;
 
-class ProfilemhsController extends Controller
+class SyaratKolokiummhsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('profilemhs.index');
+        return view('syaratKolokiummhs.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class ProfilemhsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Profilemhs $profilemhs)
+    public function show(SyaratKolokiummhs $syaratKolokiummhs)
     {
         //
     }
@@ -42,7 +42,7 @@ class ProfilemhsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profilemhs $profilemhs)
+    public function edit(SyaratKolokiummhs $syaratKolokiummhs)
     {
         //
     }
@@ -50,7 +50,7 @@ class ProfilemhsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Profilemhs $profilemhs)
+    public function update(Request $request, SyaratKolokiummhs $syaratKolokiummhs)
     {
         //
     }
@@ -58,7 +58,7 @@ class ProfilemhsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Profilemhs $profilemhs)
+    public function destroy(SyaratKolokiummhs $syaratKolokiummhs)
     {
         //
     }

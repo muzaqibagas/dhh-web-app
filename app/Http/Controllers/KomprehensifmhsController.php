@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profilemhs;
+use App\Models\Komprehensifmhs;
 use Illuminate\Http\Request;
 
-class ProfilemhsController extends Controller
+class KomprehensifmhsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('profilemhs.index');
+        return view('komprehensifmhs.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class ProfilemhsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Profilemhs $profilemhs)
+    public function show(Komprehensifmhs $komprehensifmhs)
     {
         //
     }
@@ -42,7 +42,7 @@ class ProfilemhsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profilemhs $profilemhs)
+    public function edit(Komprehensifmhs $komprehensifmhs)
     {
         //
     }
@@ -50,7 +50,7 @@ class ProfilemhsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Profilemhs $profilemhs)
+    public function update(Request $request, Komprehensifmhs $komprehensifmhs)
     {
         //
     }
@@ -58,7 +58,7 @@ class ProfilemhsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Profilemhs $profilemhs)
+    public function destroy(Komprehensifmhs $komprehensifmhs)
     {
         //
     }
