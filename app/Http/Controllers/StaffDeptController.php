@@ -33,7 +33,7 @@ class StaffDeptController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $staffdepts = $request->validate([
             'id_user' => 'required|exists:users,id',
             'id_kategori' => 'required|exists:kategoris,id',
             'id_divisi' => 'nullable|exists:divisis,id',
@@ -52,7 +52,7 @@ class StaffDeptController extends Controller
             'minat_penelitian' => 'nullable|string',
             'riwayat_pendidikan' => 'nullable|string',
         ]);
-        $insert = StaffDept::create($data);
+        $insert = StaffDept::create($staffdepts);
         if ($insert)
             return redirect()->route('staffdept.index')->with('success', 'Data berhasil disimpan!');
         else
@@ -80,7 +80,7 @@ class StaffDeptController extends Controller
      */
     public function update(Request $request, StaffDept $staffDept)
     {
-        $data = $request->validate([
+        $staffdepts = $request->validate([
             'id_user' => 'required|exists:users,id',
             'id_kategori' => 'required|exists:kategoris,id',
             'id_divisi' => 'nullable|exists:divisis,id',
@@ -99,7 +99,7 @@ class StaffDeptController extends Controller
             'minat_penelitian' => 'nullable|string',
             'riwayat_pendidikan' => 'nullable|string',
         ]);
-        $update = $staffDept->update($data);
+        $update = $staffDept->update($staffdepts);
         if ($update)
             return redirect()->route('staffdept.index')->with('success', 'Data berhasil diperbarui!');
         else

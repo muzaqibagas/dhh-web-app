@@ -31,13 +31,7 @@ class KategoriSeeder extends Seeder
             ['nama' => 'Fasilitas', 'id_tipe' => $tipes['galeri']],
             ['nama' => 'Prestasi', 'id_tipe' => $tipes['galeri']],
             ['nama' => 'Kegiatan', 'id_tipe' => $tipes['galeri']],
-            ['nama' => 'SDGS', 'id_tipe' => $tipes['galeri']],
-
-            // staffdept
-            ['nama' => 'Struktur Organisasi', 'id_tipe' => $tipes['staffdept']],
-            ['nama' => 'divisi', 'id_tipe' => $tipes['staffdept']],
-            ['nama' => 'Tenaga Pendidik/Dosen', 'id_tipe' => $tipes['staffdept']],
-            ['nama' => 'Tenaga Kependidikan', 'id_tipe' => $tipes['staffdept']],
+            ['nama' => 'SDGS', 'id_tipe' => $tipes['galeri']],            
 
             // artikel
             ['nama' => 'Prestasi', 'id_tipe' => $tipes['artikel']],
