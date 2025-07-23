@@ -30,7 +30,18 @@ use App\Http\Controllers\UserController;
 
 
 // ROUTE MAHASISWA
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginmhsController;
 use App\Http\Controllers\DashboardmhsController;
+use App\Http\Controllers\ProfilemhsController;
+use App\Http\Controllers\FormulirlayananakademikmhsController;
+use App\Http\Controllers\KolokiummhsController;
+use App\Http\Controllers\SyaratKolokiummhsController;
+use App\Http\Controllers\SeminarmhsController;
+use App\Http\Controllers\SyaratSeminarmhsController;
+use App\Http\Controllers\KomprehensifmhsController;
+use App\Http\Controllers\SyaratKomprehensifmhsController;
+
 
 // ROUTE ADMIN
 Route::get('/', function () {
@@ -64,7 +75,18 @@ Route::get('/', function () {
 
 
 // ROUTE MAHASISWA
-Route::resource('dashboardmhs', DashboardmhsController::class);
+Route::get('home', [HomeController::class, 'index'])->name('home.index');
+Route::get('loginmhs', [LoginmhsController::class, 'index'])->name('loginmhs.index');
+Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
+Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
+Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
+Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
+Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
+Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
+Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
+Route::get('komprehensifmhs', [KomprehensifmhsController::class, 'index'])->name('komprehensifmhs.index');
+Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
+
 // ROUTE MAHASISWA END
 
 
@@ -76,6 +98,7 @@ Route::get('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 's
 Route::get('acara-akademik/{acaraAkademik}/edit', [AcaraAkademikController::class, 'edit'])->name('acaraakademik.edit');
 Route::put('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'update'])->name('acaraakademik.update');
 Route::delete('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'destroy'])->name('acaraakademik.destroy');
+
 
 // Artikel
 Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');

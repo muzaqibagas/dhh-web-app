@@ -2,15 +2,15 @@
 
 @section('content')
 <!-- SIDEBAR -->
-  <div class="main-container">
+    <div class="main-container">
     <aside class="sidebar">
       <a href="#" class="menu-image-only">
         <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
       
-      <a href="/dashboardmhs" class="menu active"><i class="bi bi-house-door-fill"></i> Beranda</a>
+      <a href="/dashboardmhs" class="menu"><i class="bi bi-house-door-fill"></i> Beranda</a>
       <a href="/profilemhs" class="menu"><i class="bi bi-person"></i> Profil Mahasiswa</a>
-      <a href="/formulirlayananakademikmhs" class="menu"><i class="bi bi-file-earmark-text"></i> Formulir Layanan Akademik</a>
+      <a href="" class="menu active"><i class="bi bi-file-earmark-text"></i> Formulir Layanan Akademik</a>
       <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
       <a href="" class="menu" id="dropdownToggle">
           <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
@@ -39,50 +39,52 @@
       </script>
 
     </aside>
-    
-    <main class="content">
-      <div class="welcome-card">
-        <h2>Halo, Muzaqi!</h2>
-        <p class="welcome-text">
-          Selamat datang di <b>Layanan Akademik Departemen Hasil Hutan</b>.  
-          Pantau status akademikmu, ajukan kolokium dan seminar, serta unduh dokumen penting secara mudah dan cepat.
-        </p>
-      </div>
+<!-- CONTENT -->
+<div class="content">
 
-      <!-- Pengumuman -->
-      <div class="pengumuman">
-        <h4><i class="bi bi-megaphone"></i> Pengumuman Terbaru</h4>
-        <ul>
-          <li>Deadline pendaftaran kolokium: <b>20 Juli 2025</b></li>
-          <li>Deadline pendaftaran seminar: <b>20 Juli 2025</b></li>
-          <li>Sidang Akhir dimulai <b>10 Agustus 2025</b></li>
-        </ul>
-      </div>
-      
-      <!-- Status Cards -->
-      <div class="status-cards">
-        <div class="card waiting">
-          <i class="bi bi-envelope"></i>
-          <h5>Surat Undangan</h5>
-          <p class="status">Menunggu Verifikasi</p>
-        </div>
-        <div class="card success">
-          <i class="bi bi-journal-check"></i>
-          <h5>Kolokium</h5>
-          <p class="status">Sudah Mendaftar</p>
-        </div>
-        <div class="card danger">
-          <i class="bi bi-calendar-event"></i>
-          <h5>Seminar</h5>
-          <p class="status">Belum Mendaftar</p>
-        </div>
-        <div class="card neutral">
-          <i class="bi bi-file-earmark-text"></i>
-          <h5>Sidang Akhir</h5>
-          <p class="status">Belum Dijadwalkan</p>
-        </div>
-      </div>
-    </main>
-  </div>
+  <!-- Judul Halaman -->
+  <h2 class="page-title">Formulir Layanan Akademik</h2>
 
+  <!-- Card Container -->
+  <div class="form-list-container">
+
+    <!-- Satu item formulir -->
+    <div class="form-item">
+      <span>Rekomendasi Penelitian</span>
+      <a href="{{ asset('formulir/rekomendasi_penelitian.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Pembuatan Surat Keterangan Lulus</span>
+      <a href="{{ asset('formulir/surat_keterangan_lulus.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Distribusi Skripsi-1</span>
+      <a href="{{ asset('formulir/distribusi_skripsi1.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Tanda Terima Proposal Penelitian</span>
+      <a href="{{ asset('formulir/tanda_terima_proposal.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Pelayanan Akademik</span>
+      <a href="{{ asset('formulir/pelayanan_akademik.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Pembuatan Surat Tunjangan Orang Tua</span>
+      <a href="{{ asset('formulir/surat_tunjangan_orangtua.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+    <div class="form-item">
+      <span>Surat Izin Sakit</span>
+      <a href="{{ asset('formulir/surat_izin_sakit.pdf') }}" class="btn-download" download>Unduh</a>
+    </div>
+
+  </div> <!-- end form-list-container -->
+</div> <!-- end content -->
+</div> <!-- end main-container -->
 @endsection
