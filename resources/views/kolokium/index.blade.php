@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <strong>BAGAS GA HADIRR</strong>
+    <strong>NANA HADIIRR</strong>
     <h1>Daftar Kolokium</h1>
 
     <a href="{{ url('kolokium/create') }}">Tambah Kolokium</a>
