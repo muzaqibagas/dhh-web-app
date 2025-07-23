@@ -10,8 +10,7 @@ class StaffDept extends Model
     use HasFactory;
 
     protected $table = 'staff_depts';
-    protected $fillable = [
-        'id_user', 
+    protected $fillable = [        
         'id_kategori', 
         'id_divisi',
         'foto', 

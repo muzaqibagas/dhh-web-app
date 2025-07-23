@@ -23,7 +23,7 @@ class StaffDeptController extends Controller
      */
     public function create()
     {
-        $kategoriStaffs = \App\Models\Kategori::all();
+        $kategoriStaffs = \App\Models\KategoriStaff::all();
         $divisis = \App\Models\Divisi::all();
         return view('staffdept.create', compact('kategoriStaffs', 'divisis'));
     }
@@ -33,11 +33,10 @@ class StaffDeptController extends Controller
      */
     public function store(Request $request)
     {
-        $staffdepts = $request->validate([
-            'id_user' => 'required|exists:users,id',
+        $staffdepts = $request->validate([            
             'id_kategori' => 'required|exists:kategoris,id',
             'id_divisi' => 'nullable|exists:divisis,id',
-            'foto' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'nama' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
             'nip' => 'required|string|unique:staff_depts,nip',
@@ -52,6 +51,15 @@ class StaffDeptController extends Controller
             'minat_penelitian' => 'nullable|string',
             'riwayat_pendidikan' => 'nullable|string',
         ]);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName(); // atau bisa pakai uniqid()
+            $file->move(public_path('img'), $filename); // simpan ke folder public/img
+            $staffdepts['foto'] = $filename; 
+        }
+
+
         $insert = StaffDept::create($staffdepts);
         if ($insert)
             return redirect()->route('staffdept.index')->with('success', 'Data berhasil disimpan!');
@@ -72,7 +80,9 @@ class StaffDeptController extends Controller
      */
     public function edit(StaffDept $staffDept)
     {
-        return view('staffdept.edit', compact('staffDept'));
+        $kategoriStaffs = \App\Models\KategoriStaff::all();
+        $divisis = \App\Models\Divisi::all();
+        return view('staffdept.edit', compact('staffDept', 'kategoriStaffs', 'divisis'));
     }
 
     /**
@@ -80,11 +90,10 @@ class StaffDeptController extends Controller
      */
     public function update(Request $request, StaffDept $staffDept)
     {
-        $staffdepts = $request->validate([
-            'id_user' => 'required|exists:users,id',
+        $staffdepts = $request->validate([            
             'id_kategori' => 'required|exists:kategoris,id',
             'id_divisi' => 'nullable|exists:divisis,id',
-            'foto' => 'nullable|string|max:255',
+            'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'nama' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
             'nip' => 'required|string|unique:staff_depts,nip,' . $staffDept->id,
@@ -99,7 +108,16 @@ class StaffDeptController extends Controller
             'minat_penelitian' => 'nullable|string',
             'riwayat_pendidikan' => 'nullable|string',
         ]);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('img'), $filename);
+            $staffdepts['foto'] = $filename;
+        }
+
         $update = $staffDept->update($staffdepts);
+
         if ($update)
             return redirect()->route('staffdept.index')->with('success', 'Data berhasil diperbarui!');
         else

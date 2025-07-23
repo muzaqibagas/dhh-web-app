@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('staff_depts', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');            
+            $table->id('id');            
             $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
             $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
             $table->string('foto')->nullable();
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->string('tanggal_lahir')->nullable();
             $table->string('nip')->unique();
             $table->string('jabatan')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->unique();
             $table->text('keahlian')->nullable();
             $table->string('sinta')->nullable();
             $table->string('google_scholar')->nullable();
