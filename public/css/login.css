@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url('/img/bglogin.jpeg');
+  background-position: center;
+  background-size: cover;
+}
+
+/* === KOTAK LOGIN === */
+section {
+  position: relative;
+  width: 500px;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.2); /* putih transparan */
+  border-radius: 20px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 2rem 3rem;
+  overflow: hidden; /* supaya pseudo-element nggak keluar */
+}
+
+/* ✅ Border emas halus dengan pseudo-element */
+section::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* full ukuran section */
+  padding: 4px; /* tebal border */
+  border-radius: 20px; /* sama kayak parent */
+  background: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #FFD700);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none; /* supaya nggak ganggu klik */
+}
+
+
+h1 {
+  font-size: 2rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* === INPUTBOX === */
+.inputbox {
+  position: relative;
+  margin: 30px 0;
+  width: 100%;           /* ✅ full lebar section */
+  border-bottom: 2px solid #fff;
+}
+
+.inputbox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+  top: -5px;
+}
+
+.inputbox input {
+  width: 100%;          /* ✅ ikut full width */
+  height: 50px;         /* sedikit lebih pendek biar proporsional */
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0 35px 0 5px;
+  color: #fff;
+}
+
+.inputbox ion-icon {
+  position: absolute;
+  right: 8px;
+  color: #fff;
+  font-size: 1.2rem;
+  top: 15px;
+}
+
+/* === LUPA PASSWORD === */
+.forget {
+  margin: 25px 0;
+  font-size: 0.85rem;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forget label {
+  display: flex;
+  align-items: center;
+}
+
+.forget label input {
+  margin-right: 3px;
+}
+
+.forget a {
+  color: #000000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forget a:hover {
+  text-decoration: underline;
+}
+
+/* === BUTTON LOGIN === */
+button {
+  width: 100%;
+  height: 45px;
+  border-radius: 40px;
+  background: #070456c8;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid #FFD700; /* ✅ border emas simple */
+
+  transition: all 0.3s ease;
+}
+
+/* Hover sedikit lebih cerah */
+button:hover {
+  border-color: #efab2c; /* hover sedikit beda emasnya */
+}
+
+/* === REGISTER LINK === */
+.register {
+  font-size: 0.9rem;
+  color: #ffffff;
+  text-align: center;
+  margin: 20px 0 10px;
+}
+
+.register p a {
+  text-decoration: none;
+  color: #273bd8;
+  font-weight: 600;
+}
+
+.register p a:hover {
+  text-decoration: underline;
+}
+
+/* === RESPONSIVE HP === */
+@media (max-width: 480px) {
+  section {
+    width: 90%;  /* di HP lebih kecil */
+    padding: 1.5rem 2rem;
+  }
+  .inputbox input {
+    height: 45px;
+  }
+}

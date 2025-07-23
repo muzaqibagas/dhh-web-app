@@ -28,6 +28,11 @@ use App\Http\Controllers\TipeController;
 use App\Http\Controllers\UndanganController;
 use App\Http\Controllers\UserController;
 
+
+// ROUTE MAHASISWA
+use App\Http\Controllers\DashboardmhsController;
+
+// ROUTE ADMIN
 Route::get('/', function () {
     return view('welcome');
 });
@@ -56,6 +61,12 @@ Route::get('/', function () {
 // Route::resource('tipe', TipeController::class);
 // Route::resource('undangan', UndanganController::class);
 // Route::resource('user', UserController::class);
+
+
+// ROUTE MAHASISWA
+Route::resource('dashboardmhs', DashboardmhsController::class);
+// ROUTE MAHASISWA END
+
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');

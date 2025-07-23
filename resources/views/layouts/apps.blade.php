@@ -7,6 +7,8 @@
     <title>@yield('title') | DHH</title>
     {{-- CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboardmhs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kolokium.css') }}">
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -33,31 +35,14 @@
     @stack('style')
 </head>
 <body class="bg-gray-100">
-    {{-- HEADER --}}
-    @include('components.header')
-    {{-- HEADER --}}
+    {{-- TOPBAR --}}
+    @include('components.topbar')
+    {{-- TOPBAR --}}
 
     {{-- CONTENT --}}
     @yield('content')
     {{-- CONTENT --}}
 
-    {{-- FOOTER --}}
-    @include('components.footer')
-    {{-- FOOTER --}}
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const dropdownBtn = document.querySelector(".dropdown-btn");
-        const dropdownContainer = document.querySelector(".dropdown-container");
-        const arrowIcon = document.querySelector(".dropdown-btn .arrow");
-
-        dropdownBtn.addEventListener("click", function() {
-            dropdownContainer.classList.toggle("show");
-            arrowIcon.classList.toggle("rotate");
-        });
-        });
-    </script>
-    
     <!-- Link FontAwesome (Untuk Ikon) -->
     
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>

@@ -1,0 +1,637 @@
+/* === GLOBAL === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f8f8f8;
+  color: #333;
+}
+
+/* === TOP NAVBAR === */
+.topbar {
+  background: #013880;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #FFD700; /* emas */
+  position: fixed;     /* biar selalu di atas */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;   
+}
+
+.header-logo img {
+  max-height: 35px;  /* kecil */
+}
+
+.topbar .logo-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar .logo-left img {
+  height: 30px;
+}
+
+.topbar .user-info {
+  font-weight: 500;
+}
+
+.topbar .user-info i {
+  margin-right: 5px;
+  color: #FFD700;
+}
+
+/* === MAIN CONTAINER === */
+.main-container {
+  display: flex;
+  margin-top: 50px;
+}
+
+
+.main-container.collapsed .sidebar {
+  transform: translateX(-100%);
+  position: absolute; /* keluar dari flow flex */
+}
+
+.main-container.collapsed .content {
+  flex: none;
+  width: 100%;
+  transition: margin-left 0.4s ease 0.3s; /* delay 0.3s supaya sidebar geser dulu */
+}
+
+/* === SIDEBAR === */
+.sidebar {
+  width: 260px;
+  font-size: 10px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-height: calc(100vh - 50px);
+  padding: 20px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  position: sticky;      /* nempel di viewport */
+  top: 50px;             /* jarak dari atas, tepat di bawah topbar */
+  height: calc(100vh - 50px); /* penuh layar minus topbar */
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+.sidebar h3 {
+  color: #A52A2A;
+  margin-bottom: 20px;
+  font-size: 18px;
+  align-items: center;
+}
+
+.menu-img {
+  width: 100%;        /* biar foto pas */
+  display: block;
+}
+
+.menu-image-only {
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+  margin-bottom: 5px;
+  transform: translateX(-10px);  /* geser 10px ke kiri */
+}
+
+.menu-image-only .menu-img {
+  width: calc(100% + 10px); /* supaya tetap penuh meski digeser */
+  display: block;
+  margin-left: -35px;       /* geser 10px ke kiri */
+  margin-bottom: 15px;
+}
+
+.sidebar .menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 20px;
+  margin-bottom: 12px;       /* ✅ tambah jarak antar button */
+  border: 2px solid #292E94; /* ✅ stroke untuk default */
+  background: #fff;          /* ✅ tetap putih default */
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+/* Aktif tetap full gradient */
+.sidebar .menu.active {
+  background: linear-gradient(to right, #721B29, #292E94);
+  color: #fff;
+  border: none; /* ✅ hilangkan stroke kalau aktif */
+}
+
+.sidebar .menu:hover {
+  background: linear-gradient(to right, #721B29, #292E94);
+  color: #fff;
+}
+
+.sidebar .menu.active i {
+  color: #fff; /* ✅ kalau aktif jadi putih */
+}
+
+.sidebar .submenu {
+  margin-bottom: 5px;
+}
+
+.submenu-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  font-size: 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.submenu-items {
+  padding-left: 15px;
+}
+
+.submenu-items a {
+  display: block;
+  padding: 8px;
+  font-size: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.submenu-items a:hover {
+  color: #013880;
+}
+
+/* Kalau sidebar hidden, content full width */
+.sidebar.hidden + .content {
+  margin-left: 0;
+}
+
+
+/* === BURGER BUTTON === */
+.burger-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.burger-btn:hover {
+  color: #FFD700; /* emas saat hover */
+}
+
+/* Supaya smooth toggle */
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+/* Kalau sidebar hidden, content full width */
+.sidebar.collapsed + .content {
+  margin-left: 0;
+  transition: margin-left 2s ease;
+
+}
+
+/* === SUBMENU === */
+.submenu-link {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 10px;
+  border-radius: 10px;
+  transition: 0.2s;
+  margin-bottom: 5px;
+}
+
+/* Hover submenu cuma abu muda */
+.submenu-link:hover {
+  background: #f0f0f0;
+  color: #013880;
+}
+
+
+.logout {
+  margin-top: 20px;
+  border: 1px solid #333;
+  color: #d9534f ;
+}
+
+/* === DROPDOWN SUBMENU === */
+
+.dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  background: #f4f4f4;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px 15px;
+  width: 100%;
+  margin-left: 10px; /* ✅ geser ke kanan */
+}
+
+.dropdown-container {
+  display: none; /* default tertutup */
+  padding-left: 15px;
+  margin-top: 5px;
+}
+
+.dropdown-container a {
+  display: block;
+  padding: 8px;
+  font-size: 10px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+}
+
+.dropdown-container a:hover {
+  background: #f0f0f0;
+  color: #013880;
+}
+
+/* kalau aktif show */
+.dropdown-container.show {
+  display: block;
+}
+
+/* Arrow animation */
+.arrow {
+  transition: transform 0.3s ease;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* WELCOME CARD */
+
+.welcome-card {
+  background: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.welcome-card h2 {
+  margin-bottom: 10px;
+  color: #013880; /* warna senada */
+}
+
+.welcome-card .welcome-text {
+  font-size: 14px !important;
+  line-height: 1.6;  /* ✅ tetap nyaman dibaca */
+  color: #555;       /* ✅ agak abu biar soft */
+  margin-bottom: 20px;
+}
+
+/* === CONTENT === */
+.content {
+  flex: 1;
+  padding: 30px;
+  transition: margin-left 0.4s ease; /* default transisi */
+
+}
+
+.content h2 {
+  margin-bottom: 10px;
+  transition: margin-left 2s ease;
+
+}
+
+.content p {
+  margin-bottom: 20px;
+  font-size: 12px;
+  transition: margin-left 2s ease;
+}
+
+/* Pengumuman box */
+.pengumuman {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.pengumuman h4 {
+  margin-bottom: 10px;
+  color: #013880;
+}
+
+.pengumuman ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+/* Status Cards */
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ✅ selalu 2 kolom */
+  gap: 20px; /* jarak antar card */
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card i {
+  font-size: 36px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.card h5 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.card .status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Warna status */
+.waiting .status { color: #ff9800; }
+.success .status { color: green; }
+.danger .status { color: red; }
+.neutral .status { color: #999; }
+
+/* === RESPONSIVE MODE === */
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  /* Sidebar jadi overlay */
+  .sidebar {
+    position: fixed;
+    top: 50px; /* di bawah navbar */
+    left: 0;
+    width: 240px;
+    height: 100%;
+    height: calc(100vh - 50px);
+    background: #fff;
+    border-right: 1px solid #ddd;
+    transform: translateX(-100%); /* default: sembunyi */
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  /* Kalau sidebar aktif, tampilkan */
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Konten tetap full */
+  .content {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  /* Burger button muncul */
+  .burger-btn {
+    display: block;
+  }
+}
+
+/* Kalau layar kecil banget */
+@media (max-width: 768px) {
+
+  .sidebar .menu,
+  .sidebar button.menu {
+    flex: none;
+    width: 100%;
+  }
+
+  .status-cards {
+    grid-template-columns: 1fr; /* kartu jadi 1 kolom */
+  }
+
+    .biodata-container {
+    flex-direction: column; /* ✅ susun vertikal */
+    align-items: center;    /* ✅ tengahin foto */
+  }
+    .info-section {
+    width: 100%;            /* ✅ biodata full width */
+  }
+
+  .info-box {
+    width: 90%;             /* ✅ agak kecil biar ada jarak */
+    margin-top: 20px;
+  }
+
+  .photo-section {
+    margin-bottom: 20px;    /* ✅ kasih jarak sama biodata */
+  }
+}
+
+
+/* profile mhs */
+
+/* --- Container Biodata --- */
+.biodata-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* --- Foto Mahasiswa --- */
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-placeholder {
+  width: 180px;
+  height: 220px;
+  background: #f2f2f2;
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.btn-edit-photo {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-edit-photo i {
+  margin-right: 6px;
+}
+
+/* --- Info Mahasiswa --- */
+.info-section {
+  flex: 1;
+}
+
+.info-box {
+  border: 2px solid #1b2a6d; /* warna biru gelap */
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.info-item {
+  margin-bottom: 15px;
+}
+
+.info-item label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.info-item input {
+  width: 100%;
+  background: #f5f5f5;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* --- Signature Box --- */
+.signature-box {
+  width: 200px;
+  height: 100px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.signature-box img {
+  width: 100%;
+  height: auto;
+}
+
+/* --- Judul Halaman --- */
+.page-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #800000; /* merah marun */
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #d4af37; /* warna gold */
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+
+/* Button Edit & Save */
+.form-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit, .btn-save {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-edit {
+  background: #007bff;
+  color: #fff;
+  
+}
+
+.btn-save {
+  background: #28a745;
+  color: #fff;
+}
+/* profile mhs end */
+
+
+/* === FORMULIR LAYANAN AKADEMIK === */
+.form-list-container {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.btn-download {
+  background: linear-gradient(90deg, #1E90FF, #00BFFF);
+  color: #fff;
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-download:hover {
+  background: linear-gradient(90deg, #0066CC, #0088CC);
+}
+
+/* === FORMULIR LAYANAN AKADEMIK END=== */
