@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container position-relative">
         <h1>Daftar Staff Departemen</h1>
 
-        <a href="{{ route('staffdept.create') }}" class="btn btn-primary mb-3">+ Tambah Staff</a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('staffdept.create') }}" class="btn btn-primary">+ Tambah Staff</a>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -30,7 +32,7 @@
                     <tr>
                         <td>
                             @if($staff->foto)
-                                <img src="{{ asset('storage/' . $staff->foto) }}" alt="Foto" width="60">
+                                <img src="{{ asset('img/' . $staff->foto) }}" alt="Foto" width="60">
                             @else
                                 Tidak Ada
                             @endif
@@ -40,8 +42,9 @@
                         <td>{{ $staff->jabatan }}</td>
                         <td>{{ $staff->email }}</td>
                         <td>{{ $staff->divisi->nama ?? '-' }}</td>
-                        <td>{{ $staff->kategori->nama ?? '-' }}</td>
+                        <td>{{ $staff->kategoristaff->nama ?? '-' }}</td>
                         <td>
+                            <a href="{{ route('staffdept.show', $staff->id) }}" class="btn btn-primary btn-sm">show</a>
                             <a href="{{ route('staffdept.edit', $staff->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             <form action="{{ route('staffdept.destroy', $staff->id) }}" method="POST" style="display:inline-block;">

@@ -37,6 +37,8 @@ class UserController extends Controller
             'foto' => 'nullable|string|max:255',
         ]);
         $data['password'] = bcrypt($data['password']);
+        $data['role'] = 'Mahasiswa'; 
+            
         $insert = \App\Models\User::create($data);
         if ($insert)
             return redirect()->route('user.index')->with('success', 'Data berhasil disimpan!');

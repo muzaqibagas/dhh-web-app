@@ -10,9 +10,8 @@ class StaffDeptFactory extends Factory
 
     public function definition()
     {
-        return [
-            'id_user' => \App\Models\User::factory(),
-            'id_kategori' => \App\Models\Kategori::factory(),
+        return [            
+            'id_kategoristaff' => \App\Models\KategoriStaff::factory(), 
             'id_divisi' => \App\Models\Divisi::factory(),
             'foto' => $this->faker->imageUrl(),
             'nama' => $this->faker->name(),

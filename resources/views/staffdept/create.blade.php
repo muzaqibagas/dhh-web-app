@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Tambah Staff Departemen</h1>
-
+    <h1>Tambah Staff Departemen</h1>    
     <form action="{{ route('staffdept.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
@@ -17,6 +16,11 @@
         </div>
 
         <div class="mb-3">
+            @error('nip')
+                <div class="alert alert-danger mt-2 p-2 rounded-2 shadow-sm">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i> {{ $message }}
+                </div>
+            @enderror
             <label for="nip" class="form-label">NIP</label>
             <input type="text" name="nip" class="form-control" id="nip" required>
         </div>
@@ -34,6 +38,11 @@
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" name="email" class="form-control" id="email" required>
+            @error('email')
+                <div class="alert alert-danger mt-2 p-2 rounded-2 shadow-sm">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i> {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -48,12 +57,12 @@
 
         <div class="mb-3">
             <label for="id_kategori" class="form-label">Kategori</label>
-            <select name="id_kategori" id="id_kategori" class="form-select" required>
+            <select name="id_kategoristaff" id="id_kategoristaff" class="form-select" required>
                 <option value="">-- Pilih Kategori --</option>
                 @foreach ($kategoriStaffs as $kategori)
                     <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                 @endforeach
-            </select>
+            </select>            
         </div>
 
         <div class="mb-3">

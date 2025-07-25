@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('id');                        
             $table->foreignId('id_jenjang')->nullable()->constrained('jenjangs')->onDelete('cascade');
-            $table->string('nim')->unique();
+            $table->string('nim')->nullable()->unique();
             $table->string('nama');
             $table->string('no_hp')->nullable();
             $table->text('alamat')->nullable();
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->default('Laki-laki');
             $table->enum('role', ['Admin', 'Mahasiswa'])->default('Mahasiswa');

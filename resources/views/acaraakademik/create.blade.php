@@ -73,7 +73,7 @@
             data.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id_mahasiswa;
-                option.textContent = item.mahasiswa?.name ?? '(Tidak diketahui)';
+                option.textContent = item.mahasiswa?.nama ?? '(Tidak diketahui)';
                 option.dataset.acaraId = item.id;
                 mahasiswaSelect.appendChild(option);
             });

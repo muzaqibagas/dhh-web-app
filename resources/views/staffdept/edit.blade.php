@@ -2,8 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Data Staff</h1>
-
+    <h1>Edit Data Staff</h1>    
     @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
@@ -15,7 +14,7 @@
         {{-- Kategori --}}
         <div class="mb-3">
             <label for="id_kategori" class="form-label">Kategori</label>
-            <select name="id_kategori" id="id_kategori" class="form-select">
+            <select name="id_kategoristaff" id="id_kategoristaff" class="form-select" required>
                 @foreach($kategoriStaffs as $kategori)
                     <option value="{{ $kategori->id }}" {{ $staffDept->id_kategori == $kategori->id ? 'selected' : '' }}>
                         {{ $kategori->nama }}
@@ -59,6 +58,11 @@
         </div>
 
         {{-- NIP --}}
+        @error('nip')
+            <div class="alert alert-danger mt-2 p-2 rounded-2 shadow-sm">
+                <i class="bi bi-exclamation-circle-fill me-2"></i> {{ $message }}
+            </div>
+        @enderror
         <div class="mb-3">
             <label for="nip" class="form-label">NIP</label>
             <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip', $staffDept->nip) }}">
@@ -71,6 +75,11 @@
         </div>
 
         {{-- Email --}}
+        @error('email')
+            <div class="alert alert-danger mt-2 p-2 rounded-2 shadow-sm">
+                <i class="bi bi-exclamation-circle-fill me-2"></i> {{ $message }}
+            </div>
+        @enderror
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $staffDept->email) }}">

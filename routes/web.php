@@ -17,6 +17,7 @@ use App\Http\Controllers\KurikulumDetailController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\ReviewAlumniController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SeminarController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginmhsController;
 use App\Http\Controllers\DashboardmhsController;
+use App\Http\Controllers\DashboardadmController;
 use App\Http\Controllers\ProfilemhsController;
 use App\Http\Controllers\FormulirlayananakademikmhsController;
 use App\Http\Controllers\KolokiummhsController;
@@ -73,11 +75,50 @@ Route::get('/', function () {
 // Route::resource('undangan', UndanganController::class);
 // Route::resource('user', UserController::class);
 
+Route::get('email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
+Route::get('email/verify/{id}/{hash}', function (Request $request) {
+    $request->fulfill(); // sudah benar, fulfill() memverifikasi email
+
+    if (Auth::user()->role == 'admin') {
+        return redirect()->route('admprofile.index');
+    } else {
+        return redirect()->route('dashboardmhs.index');
+    }
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link verifikasi telah dikirim ke email kamu!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard-mahasiswa', function () {
+        return view('dashboardmhs.index'); // sesuaikan view-nya
+    })->name('dashboardmhs.index');
+
+    Route::get('/dashboard-admin', function () {
+        return view('admprofile.index'); // sesuaikan view-nya
+    })->name('admprofile.index');
+});
+
+
+Route::get('login', [LoginmhsController::class, 'index'])->name('login.index');
+Route::post('login', [LoginmhsController::class, 'signin'])->name('login.signin');
+Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout');
+
+Route::get('register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('register', [RegisterController::class, 'store'])->name('register.store');
+Route::get('email/verify/{token}', [RegisterController::class, 'verify'])->name('verify.email');
+
+//admprofile.index
 // ROUTE MAHASISWA
 Route::get('home', [HomeController::class, 'index'])->name('home.index');
-Route::get('loginmhs', [LoginmhsController::class, 'index'])->name('loginmhs.index');
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
+Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');

@@ -11,7 +11,7 @@ class StaffDept extends Model
 
     protected $table = 'staff_depts';
     protected $fillable = [        
-        'id_kategori', 
+        'id_kategoristaff', 
         'id_divisi',
         'foto', 
         'nama', 
@@ -34,9 +34,9 @@ class StaffDept extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function kategori()
+    public function kategoristaff()
     {
-        return $this->belongsTo(Kategori::class, 'id_kategori');
+        return $this->belongsTo(KategoriStaff::class, 'id_kategoristaff');
     }
 
     public function divisi()

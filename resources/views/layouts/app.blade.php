@@ -7,6 +7,7 @@
     <title>@yield('title') | DHH</title>
     {{-- CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">

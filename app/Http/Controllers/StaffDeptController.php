@@ -34,14 +34,14 @@ class StaffDeptController extends Controller
     public function store(Request $request)
     {
         $staffdepts = $request->validate([            
-            'id_kategori' => 'required|exists:kategoris,id',
+            'id_kategoristaff' => 'required|exists:kategori_staffs,id',
             'id_divisi' => 'nullable|exists:divisis,id',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'nama' => 'nullable|string|max:255',
+            'nama' => 'required|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
-            'nip' => 'required|string|unique:staff_depts,nip',
-            'jabatan' => 'nullable|string|max:255',
-            'email' => 'nullable|string|max:255',
+            'nip' => 'required|string|unique:staff_depts,nip',            
+            'jabatan' => 'nullable|string|max:255',            
+            'email' => 'required|string|email|unique:staff_depts,email,',
             'keahlian' => 'nullable|string',
             'sinta' => 'nullable|string|max:255',
             'google_scholar' => 'nullable|string|max:255',
@@ -54,9 +54,15 @@ class StaffDeptController extends Controller
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName(); // atau bisa pakai uniqid()
-            $file->move(public_path('img'), $filename); // simpan ke folder public/img
-            $staffdepts['foto'] = $filename; 
+            $filename = $file->getClientOriginalName(); 
+
+            $filePath = public_path('img/' . $filename);
+            
+            if (!file_exists($filePath)) {
+                $file->move(public_path('img'), $filename);
+            }
+
+            $staffdepts['foto'] = $filename;
         }
 
 
@@ -90,15 +96,15 @@ class StaffDeptController extends Controller
      */
     public function update(Request $request, StaffDept $staffDept)
     {
-        $staffdepts = $request->validate([            
-            'id_kategori' => 'required|exists:kategoris,id',
+        $staffdepts = $request->validate([                        
+            'id_kategoristaff' => 'required|exists:kategori_staffs,id',
             'id_divisi' => 'nullable|exists:divisis,id',
             'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'nama' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
             'nip' => 'required|string|unique:staff_depts,nip,' . $staffDept->id,
-            'jabatan' => 'nullable|string|max:255',
-            'email' => 'nullable|string|max:255',
+            'jabatan' => 'nullable|string|max:255',            
+            'email' => 'required|string|email|unique:staff_depts,email,' . $staffDept->id,
             'keahlian' => 'nullable|string',
             'sinta' => 'nullable|string|max:255',
             'google_scholar' => 'nullable|string|max:255',
@@ -110,6 +116,12 @@ class StaffDeptController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
+            // Hapus file foto lama jika ada
+            if ($staffDept->foto && file_exists(public_path('img/' . $staffDept->foto))) {
+                unlink(public_path('img/' . $staffDept->foto));
+            }
+
+            // Simpan file foto baru
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('img'), $filename);
