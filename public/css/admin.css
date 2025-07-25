@@ -96,7 +96,25 @@ body {
   font-size: 18px;
   align-items: center;
 }
+.menu {
+  display: flex;
+  align-items: center;       /* sejajarkan vertikal */
+  justify-content: space-between; /* icon+teks kiri, panah kanan */
+  width: 100%;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #000;
+}
 
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* jarak icon sama teks */
+}
+
+.dropdownArrow {
+  font-size: 0.8em;
+}
 .menu-img {
   width: 100%;        /* biar foto pas */
   display: block;
@@ -288,29 +306,6 @@ body {
   transform: rotate(180deg);
 }
 
-/* WELCOME CARD */
-
-.welcome-card {
-  background: #fff; 
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
-}
-
-.welcome-card h2 {
-  margin-bottom: 10px;
-  color: #013880; /* warna senada */
-}
-
-.welcome-card .welcome-text {
-  font-size: 14px !important;
-  line-height: 1.6;  /* ✅ tetap nyaman dibaca */
-  color: #555;       /* ✅ agak abu biar soft */
-  margin-bottom: 20px;
-}
-
 /* === CONTENT === */
 .content {
   flex: 1;
@@ -330,66 +325,6 @@ body {
   font-size: 12px;
   transition: margin-left 2s ease;
 }
-
-/* Pengumuman box */
-.pengumuman {
-  background: #fff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 12px;
-}
-
-.pengumuman h4 {
-  margin-bottom: 10px;
-  color: #013880;
-}
-
-.pengumuman ul {
-  list-style: disc;
-  padding-left: 20px;
-}
-
-/* Status Cards */
-.status-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* ✅ selalu 2 kolom */
-  gap: 20px; /* jarak antar card */
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.card i {
-  font-size: 36px;
-  margin-bottom: 10px;
-  display: block;
-}
-
-.card h5 {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.card .status {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* Warna status */
-.waiting .status { color: #ff9800; }
-.success .status { color: green; }
-.danger .status { color: red; }
-.neutral .status { color: #999; }
 
 /* === RESPONSIVE MODE === */
 /* === RESPONSIVE === */
@@ -443,7 +378,8 @@ body {
     flex-direction: column; /* ✅ susun vertikal */
     align-items: center;    /* ✅ tengahin foto */
     justify-content: center; /* ✅ biar aman tengah */
-}
+    
+  }
     .info-section {
     width: 100%;            /* ✅ biodata full width */
   }
@@ -490,9 +426,10 @@ body {
   margin-bottom: 10px;
 }
 
-.photo-placeholder {
+.admin-photo-placeholder {
   width: 180px;
-  height: 220px;
+  height: 180px;
+  border-radius: 50%;
   background: #f2f2f2;
   border: 2px dashed #ccc;
   display: flex;
@@ -517,7 +454,6 @@ body {
   margin-right: 6px;
 }
 
-/* --- Info Mahasiswa --- */
 .info-section {
   flex: 1;
 }
@@ -546,19 +482,6 @@ body {
   padding: 8px;
   border-radius: 5px;
   font-size: 14px;
-}
-
-/* --- Signature Box --- */
-.signature-box {
-  width: 200px;
-  height: 100px;
-  border: 1px solid #ccc;
-  padding: 5px;
-}
-
-.signature-box img {
-  width: 100%;
-  height: auto;
 }
 
 /* --- Judul Halaman --- */
@@ -649,4 +572,132 @@ body {
   background: linear-gradient(90deg, #0066CC, #0088CC);
 }
 
-/* === FORMULIR LAYANAN AKADEMIK END=== */
+/* === ADMIN CARD WRAPPER === */
+.adm-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* === HEADER JUDUL + TOMBOL === */
+.adm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.adm-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #800000;
+}
+.adm-btn-add {
+  background: green;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+}
+.adm-btn-add:hover {
+  background: #0f7b0f;
+}
+
+/* === TABLE WRAPPER === */
+.adm-table-container {
+  overflow-x: auto; /* responsif kalau kolom kepanjangan */
+}
+
+/* === TABLE STYLE === */
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.adm-table thead {
+  background: #f8f8f8;
+}
+.adm-table thead th {
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+}
+.adm-table tbody td {
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* === ACTION BUTTONS === */
+.adm-action {
+  display: flex;
+  gap: 8px;
+}
+
+.adm-btn-edit,
+.adm-btn-delete {
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adm-btn-edit {
+  background: green;
+}
+.adm-btn-edit:hover {
+  background: #0f7b0f;
+}
+
+.adm-btn-delete {
+  background: red;
+}
+.adm-btn-delete:hover {
+  background: #c10000;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .adm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .adm-table thead {
+    display: none; /* hilangkan header di HP */
+  }
+  .adm-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+  .adm-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border: none;
+  }
+  .adm-table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #444;
+  }
+}
