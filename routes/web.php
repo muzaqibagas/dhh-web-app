@@ -42,6 +42,11 @@ use App\Http\Controllers\SyaratSeminarmhsController;
 use App\Http\Controllers\KomprehensifmhsController;
 use App\Http\Controllers\SyaratKomprehensifmhsController;
 
+// ROUTE ADMIN AKADEMIK
+use App\Http\Controllers\AdmProfileController;
+use App\Http\Controllers\AdmDaftarKurikulumController;
+
+
 
 // ROUTE ADMIN
 Route::get('/', function () {
@@ -87,8 +92,10 @@ Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->na
 Route::get('komprehensifmhs', [KomprehensifmhsController::class, 'index'])->name('komprehensifmhs.index');
 Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
 
-// ROUTE MAHASISWA END
 
+// ROUTE ADMIN AKADEMIK
+Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
+Route::get('admdaftarkurikulum', [AdmDaftarKurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');

@@ -7,8 +7,10 @@
     <title>@yield('title') | DHH</title>
     {{-- CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboardmhs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kolokium.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dashboardmhs.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
