@@ -102,11 +102,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard-mahasiswa', function () {
         return view('dashboardmhs.index'); // sesuaikan view-nya
-    })->name('dashboardmhs.index');
+    })->name('dashboardmhs');
 
     Route::get('/dashboard-admin', function () {
         return view('admprofile.index'); // sesuaikan view-nya
-    })->name('admprofile.index');
+    })->name('admprofile');
 });
 
 
@@ -135,6 +135,7 @@ Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'in
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
+Route::get('admdaftarkurikulum', [AdmDaftarKurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');

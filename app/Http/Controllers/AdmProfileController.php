@@ -20,7 +20,7 @@ class AdmProfileController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -44,7 +44,8 @@ class AdmProfileController extends Controller
      */
     public function edit(AdmProfile $admProfile)
     {
-        //
+        $user = Auth::user();
+        return view('admprofile.edit');
     }
 
     /**

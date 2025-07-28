@@ -8,7 +8,7 @@
       </button>
   </div>
   <div class="user-info">
-    <i class="bi bi-person-circle"></i> Muzaqi Bagas
+    <i class="bi bi-person-circle"></i> {{ Auth::user()->username ?? 'Guest' }}
   </div>
 </div>
 <script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -54,6 +55,24 @@ class UserController extends Controller
         $user = \App\Models\User::findOrFail($id);
         return view('user.show', compact('user'));
     }
+
+    public function edit(User $user)
+    {
+        // Pastikan user yang login hanya bisa edit profilnya sendiri
+        if (auth()->id() !== $user->id) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
+        // Arahkan ke halaman edit sesuai role
+        if ($user->role === 'Admin') {
+            return view('admprofile.edit', compact('user'));
+        } elseif ($user->role === 'Mahasiswa') {
+            return view('mahasiswaprofile.edit', compact('user'));
+        } else {
+            abort(404, 'Role tidak dikenali.');
+        }
+    }
+
 
     /**
      * Update the specified resource in storage.
