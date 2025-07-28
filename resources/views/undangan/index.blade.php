@@ -15,7 +15,7 @@
       @endphp
 
       <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu active {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
+      <a href="#" class="menu {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
         <div class="menu-left">
           <i class="bi bi-journal-check"></i>
           <span> Akademik </span>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <a href="#" class="menu active {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
         <div class="menu-left">
           <i class="bi bi-mortarboard"></i>
           <span> Tingkat Akhir </span>
@@ -142,86 +142,24 @@
       </script>
     </aside>
 
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Kurikulum</h2>
-        <button class="adm-btn-add">
-          <i class="bi bi-plus"></i> Tambah Data
-        </button>
-    </div>
-    <div class="adm-card">
-      <!-- JUDUL -->
-      
+        
+    <main class="content">
+      <!-- Status Cards -->
+      <div class="adm-status-cards">
+        <div class="card waiting">
+          <i class="bi bi-lightbulb"></i>
+          <h5>Surat Undangan Kolokium</h5>
+        </div>
+        <div class="card success">
+          <i class="bi bi-laptop"></i>
+          <h5>Surat Undangan Seminar</h5>
+        </div>
+        <div class="card danger">
+          <i class="bi bi-bookmark"></i>
+          <h5>Surat Undangan Sidang</h5>
+        </div>
+      </div>
+    </main>
+  </div>
 
-      <!-- TABEL -->
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Jenjang</th>
-              <th>Nama Kurikulum</th>
-              <th>Tahun</th>
-              <th>Kompetensi</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Minor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Keterampilan (KBK)</td>
-              <td>2025</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S2</td>
-              <td>Kurikulum Berbasis Proyek</td>
-              <td>2009</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S3</td>
-              <td>Kurikulum Berbasis Kompetensi (KBK)</td>
-              <td>2011</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
-    </div>
-  </main>
-</div>
 @endsection

@@ -142,6 +142,7 @@
       </script>
     </aside>
 
+
 <!-- MAIN CONTENT -->
   <main class="content">
     <div class="adm-header">
@@ -160,37 +161,21 @@
           <thead>
             <tr>
               <th>Jenjang</th>
-              <th>Nama Kurikulum</th>
-              <th>Tahun</th>
-              <th>Kompetensi</th>
+              <th>Semester</th>
+              <th>Mata Kuliah</th>
+              <th>Kode</th>
+              <th>SKS</th>
+              <th>Prasyarat</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Minor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Keterampilan (KBK)</td>
-              <td>2025</td>
+              <td>1</td>
+              <td>Agama</td>
+              <td>IPB101</td>
+              <td>3(2-1)r</td>
               <td>-</td>
               <td class="adm-action">
                 <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
@@ -198,20 +183,48 @@
               </td>
             </tr>
             <tr>
-              <td>S2</td>
-              <td>Kurikulum Berbasis Proyek</td>
-              <td>2009</td>
-              <td>Kompetensi Mayor</td>
+              <td>S1</td>
+              <td>1</td>
+              <td>Agama</td>
+              <td>IPB101</td>
+              <td>3(2-1)r</td>
+              <td>-</td>
               <td class="adm-action">
                 <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
                 <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
             <tr>
-              <td>S3</td>
-              <td>Kurikulum Berbasis Kompetensi (KBK)</td>
-              <td>2011</td>
-              <td>Kompetensi Mayor</td>
+              <td>S1</td>
+              <td>1</td>
+              <td>Agama</td>
+              <td>IPB101</td>
+              <td>3(2-1)r</td>
+              <td>-</td>
+              <td class="adm-action">
+                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
+                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>S1</td>
+              <td>1</td>
+              <td>Agama</td>
+              <td>IPB101</td>
+              <td>3(2-1)r</td>
+              <td>-</td>
+              <td class="adm-action">
+                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
+                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>S1</td>
+              <td>1</td>
+              <td>Agama</td>
+              <td>IPB101</td>
+              <td>3(2-1)r</td>
+              <td>-</td>
               <td class="adm-action">
                 <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
                 <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>

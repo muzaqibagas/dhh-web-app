@@ -783,26 +783,9 @@ body {
 
 /* === TABLE WRAPPER === */
 .adm-table-container {
-  overflow-x: auto; /* responsif kalau kolom kepanjangan */
-}
-
-/* === TABLE STYLE === */
-.adm-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 15px;
-}
-.adm-table thead {
-  background: #f8f8f8;
-}
-.adm-table thead th {
-  padding: 12px;
-  text-align: left;
-  font-weight: bold;
-}
-.adm-table tbody td {
-  padding: 12px;
-  border-top: 1px solid #eee;
+  overflow-x: auto; /* responsif kalau kolom kepanjangan */
+  -webkit-overflow-scrolling: touch; /* biar smooth di iOS */
 }
 
 /* === ACTION BUTTONS === */
@@ -841,31 +824,34 @@ body {
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
-  .adm-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .adm-table thead {
-    display: none; /* hilangkan header di HP */
-  }
-  .adm-table tbody tr {
-    display: block;
-    margin-bottom: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 10px;
-    background: #fff;
-  }
-  .adm-table tbody td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    border: none;
-  }
-  .adm-table tbody td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #444;
-  }
+/* Container luarnya */
+.table-container {
+  padding: 1rem;
+}
+
+/* Scroll wrapper */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    min-width: 800px; /* atau sesuai kebutuhan */
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+}
+
+/* UNDANGAN ADMIN */
+.adm-status-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* ✅ selalu 2 kolom */
+  gap: 20px; /* jarak antar card */
+  margin-top: 20px;
+  font-size: 14px;
 }
