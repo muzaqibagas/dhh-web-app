@@ -106,7 +106,7 @@ class RegisterController extends Controller
         $user->verification_token = null;
         $user->save();
 
-        return redirect()->route('login.index')->with('success', 'Email berhasil diverifikasi. Silakan login.');
+        return redirect()->route('profilemhs.index')->with('success', 'Email berhasil diverifikasi. Silakan login.');
     }
 
 }

@@ -42,7 +42,7 @@
     
     <main class="content">
       <div class="welcome-card">
-        <h2>Halo, Muzaqi!</h2>
+        <h2>Halo, {{ Auth::user()->username ?? 'Guest' }}!</h2>
         <p class="welcome-text">
           Selamat datang di <b>Layanan Akademik Departemen Hasil Hutan</b>.  
           Pantau status akademikmu, ajukan kolokium dan seminar, serta unduh dokumen penting secara mudah dan cepat.

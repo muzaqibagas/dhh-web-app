@@ -1,4 +1,4 @@
-@extends('layouts.appss')
+@extends('layouts.apps')
 
 @section('content')
 <!-- SIDEBAR -->
@@ -68,7 +68,7 @@
       </a>
       <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
     
-    <script>
+      <script>
       // Ambil semua toggle
       const toggles = document.querySelectorAll('.menu[id^="dropdownToggle"]');
 
@@ -108,11 +108,15 @@
     
     <!-- FOTO MAHASISWA -->
     <div class="photo-section">
-      <div class="admin-photo-placeholder">
-        <i class="bi bi-image"></i>
+      <div class="admin-photo-placeholder">        
+          @if(Auth::user()->foto)
+            <img src="{{ asset('profile/' . Auth::user()->foto) }}" alt="" class="bi bi-image">
+          @else
+            <img src="{{ asset('img/default.png') }}" alt="" class="bi bi-image">
+          @endif
       </div>
-      <button class="btn-edit-photo">
-        <i class="bi bi-pencil-square"></i> Edit Foto
+      <button class="btn-edit-photo">        
+        <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
       </button>
     </div>
 
@@ -120,20 +124,20 @@
     <div class="info-section">
       <div class="info-box">
         <div class="info-item">
-          <label>Usename</label>
-          <input type="text" value="AdminAkademik" readonly>
+          <label>Username</label>
+          <input type="text" value="{{ Auth::user()->username ?? 'Guest' }}" readonly>
         </div>
         <div class="info-item">
           <label>Nama</label>
-          <form><input type="text" value="Admin" readonly></form>
+          <form><input type="text" value="{{ Auth::user()->nama ?? 'Guest' }}" readonly></form>
         </div>
         <div class="info-item">
           <label>Email</label>
-          <input type="text" value="dhhadmin@apps.ipb.ac.id" readonly>
+          <input type="text" value="{{ Auth::user()->email ?? 'Guest' }}" readonly>
         </div>
         <div class="info-item">
           <label>jenis kelamin</label>
-          <input type="text" value="Pria" readonly>
+          <input type="text" value="{{ Auth::user()->jenis_kelamin ?? 'Guest' }}" readonly>
         </div>
         <!-- Kalau nanti mau bisa edit -->
           <div class="form-actions">
