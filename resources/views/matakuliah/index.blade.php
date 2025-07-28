@@ -146,7 +146,7 @@
 <!-- MAIN CONTENT -->
   <main class="content">
     <div class="adm-header">
-        <h2 class="adm-title">Daftar Kurikulum</h2>
+        <h2 class="adm-title">Daftar Mata Kuliah</h2>
         <button class="adm-btn-add">
           <i class="bi bi-plus"></i> Tambah Data
         </button>

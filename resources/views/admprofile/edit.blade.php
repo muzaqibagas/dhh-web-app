@@ -99,30 +99,28 @@
       </script>
   </aside>
 
-  <main class="content">
+  <main class="content py-4">
     <h2 class="page-title">Edit Profil Admin</h2>
-
-    <div class="biodata-container">
-      <div class="info-section">
-        <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data" class="row g-4">
           @csrf
           @method('PUT')
-          <div class="photo-section">
-            <div class="admin-photo-placeholder">
+          <div class="photo-section col-md-4 text-center">
+            <div class="admin-photo-placeholder mb-3">
               @if(Auth::user()->foto)
-                <img src="{{ asset('uploads/' . Auth::user()->foto) }}" alt="" class="bi bi-image">
+                <img src="{{ asset('uploads/' . Auth::user()->foto) }}" class="img-thumbnail mb-2" style="max-width: 100%;">
               @else
-                <img src="{{ asset('img/default.png') }}" alt="" class="bi bi-image">
+                <img src="{{ asset('img/default.png') }}" alt="" class="bi bi-image mb-2" style="max-width: 100%;">
               @endif
             </div>
             <!-- Upload photo button -->
-            <label for="foto" class="btn-edit-photo">
+            <label for="foto" class="btn-edit-photo mb-3">
               <i class="bi bi-pencil-square"></i> Ganti Foto
             </label>
           </div>
 
-          <div class="info-box">
-            <div class="info-item">
+          <div class="info-box col-md-8">
+            <div class="p-4">
+            <div class="info-item mb-3">
               <label>Username</label>
               <input type="text" name="username" value="{{ old('username', Auth::user()->username) }}">
             </div>
@@ -146,14 +144,14 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn-save">
+              <button type="submit" class="btn btn-success">
                 <i class="bi bi-save"></i> Simpan
               </button>
-              <a href="{{ route('admprofile.index') }}" class="btn-cancel">
+
+              <a href="{{ route('admprofile.index') }}" class="btn btn-danger ms-2">
                 <i class="bi bi-x-circle"></i> Batal
               </a>
-            </div>
-          </div>
+
         </form>
       </div>
 

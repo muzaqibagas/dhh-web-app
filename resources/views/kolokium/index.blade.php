@@ -159,10 +159,10 @@
         <table class="adm-table">
           <thead>
             <tr>
-              <th>Jenjang</th>
-              <th>Nama Kurikulum</th>
-              <th>Tahun</th>
-              <th>Kompetensi</th>
+              <th>Nama</th>
+              <th>Form Kurikulum</th>
+              <th>Moderator</th>
+              <th>Bukti SPP</th>
               <th>Action</th>
             </tr>
           </thead>
