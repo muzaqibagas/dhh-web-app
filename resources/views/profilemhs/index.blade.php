@@ -7,11 +7,21 @@
       <a href="#" class="menu-image-only">
         <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
-      
-      <a href="/dashboardmhs" class="menu"><i class="bi bi-house-door-fill"></i> Beranda</a>
-      <a href="/profilemhs" class="menu active"><i class="bi bi-person"></i> Profil Mahasiswa</a>
-      <a href="/formulirlayananakademikmhs" class="menu"><i class="bi bi-file-earmark-text"></i> Formulir Layanan Akademik</a>
-      <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
+      <a href="/dashboardmhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
+        </div>
+      </a>
+      <a href="/profilemhs" class="menu active">
+        <div class="menu-left">
+          <i class="bi bi-person"></i> <span> Profil Mahasiswa </span>
+        </div>
+      </a>
+      <a href="/formulirlayananakademikmhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-file-earmark-text"></i> <span> Formulir Layanan Akademik </span>
+        </div>
+      </a>
       <a href="" class="menu" id="dropdownToggle">
   <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
   <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">&#9650;</span>
@@ -24,8 +34,11 @@
         <a href="/komprehensifmhs" class="submenu-link"><i class="bi bi-journal-text"></i> Komprehensif</a>
         <a href="/syaratkomprehensifmhs" class="submenu-link"><i class="bi bi-info-circle"></i> Syarat Komprehensif</a>
       </div>
-
-      <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a>
+      <a href="/dashboardmhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+        </div>
+      </a>
 
       <script>
         document.getElementById('dropdownToggle').addEventListener('click', function(e) {

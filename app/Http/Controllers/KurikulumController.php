@@ -44,7 +44,7 @@ class KurikulumController extends Controller
         }
 
         $data = $query->get();
-        return view('kurikulum.index', compact('data'));
+        return view('admdaftarkurikulum.index', compact('data'));
 
     }
 

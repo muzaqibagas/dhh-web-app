@@ -1,4 +1,4 @@
-@extends('layouts.appss')
+@extends('layouts.apps')
 
 @section('content')
 <!-- SIDEBAR -->
@@ -16,14 +16,13 @@
         <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
       </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
-        <a href="/admdaftarkurikulum" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
         <a href="/admdaftarkurikulum" 
           class="submenu-link {{ Request::is('admdaftarkurikulum') ? 'active' : '' }}">
           <i class="bi bi-archive"></i> Daftar Kurikulum
         </a>
         <a href="/admmatakuliah" 
           class="submenu-link {{ Request::is('admmatakuliah') ? 'active' : '' }}">
-          <i class="bi bi-archive"></i> Mata Kuliah
+          <i class="bi bi-journals"></i> Mata Kuliah
         </a>
       </div>
 
