@@ -16,8 +16,7 @@
         <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
       </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
-        <a href="/admdaftarkurikulum" 
-          class="submenu-link {{ Request::is('admdaftarkurikulum') ? 'active' : '' }}">
+        <a href="{{route('admdaftarkurikulum.index')}}" class="submenu-link {{ Request::is('admdaftarkurikulum') ? 'active' : '' }}">
           <i class="bi bi-archive"></i> Daftar Kurikulum
         </a>
         <a href="/admmatakuliah" 
