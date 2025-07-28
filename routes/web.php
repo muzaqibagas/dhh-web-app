@@ -46,7 +46,6 @@ use App\Http\Controllers\SyaratKomprehensifmhsController;
 
 // ROUTE ADMIN AKADEMIK
 use App\Http\Controllers\AdmProfileController;
-use App\Http\Controllers\AdmDaftarKurikulumController;
 
 
 

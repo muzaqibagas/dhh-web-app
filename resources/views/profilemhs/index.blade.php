@@ -2,12 +2,13 @@
 
 @section('content')
 <!-- SIDEBAR -->
-    <div class="main-container">
+  <div class="main-container">
     <aside class="sidebar">
       <a href="#" class="menu-image-only">
         <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
-      <a href="/dashboardmhs" class="menu">
+      
+      <a href="/dashboardmhs" class="menu ">
         <div class="menu-left">
           <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
         </div>
@@ -23,9 +24,9 @@
         </div>
       </a>
       <a href="" class="menu" id="dropdownToggle">
-  <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
-  <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">&#9650;</span>
-</a>
+        <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
+        <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">&#9650;</span>
+      </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
         <a href="/kolokiummhs" class="submenu-link"><i class="bi bi-check2-circle"></i> Kolokium</a>
         <a href="/syaratkolokiummhs" class="submenu-link"><i class="bi bi-info-circle"></i> Syarat Kolokium</a>
@@ -48,7 +49,7 @@
           var isOpen = menu.style.display === 'flex';
           menu.style.display = isOpen ? 'none' : 'flex';
           arrow.innerHTML = isOpen ? '&#9650;' : '&#9660;'; // atas: &#9650;, bawah: &#9660;
-  });
+       });
       </script>
 
     </aside>

@@ -2,56 +2,71 @@
 
 @section('content')
 <!-- SIDEBAR -->
-    <div class="main-container">
+  <div class="main-container">
     <aside class="sidebar">
       <a href="#" class="menu-image-only">
         <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
       
-      <a href="/dashboardmhs" class="menu"><i class="bi bi-house-door-fill"></i> Beranda</a>
-      <a href="/profilemhs" class="menu"><i class="bi bi-person"></i> Profil Mahasiswa</a>
-      <a href="/formulirlayananakademikmhs" class="menu"><i class="bi bi-file-earmark-text"></i> Formulir Layanan Akademik</a>
+      <a href="/dashboardmhs" class="menu ">
+        <div class="menu-left">
+          <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
+        </div>
+      </a>
+      <a href="/profilemhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-person"></i> <span> Profil Mahasiswa </span>
+        </div>
+      </a>
+      <a href="/formulirlayananakademikmhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-file-earmark-text"></i> <span> Formulir Layanan Akademik </span>
+        </div>
+      </a>
       <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
       <a href="#" class="menu {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'active' : '' }}" id="dropdownToggle">
-    <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
-    <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">
-        {{-- kalau ada di salah satu submenu → panah kebuka ▼ --}}
-        {!! request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? '&#9660;' : '&#9650;' !!}
-    </span>
-</a>
+          <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
+          <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">
+              {{-- kalau ada di salah satu submenu → panah kebuka ▼ --}}
+              {!! request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? '&#9660;' : '&#9650;' !!}
+          </span>
+      </a>
 
-<div id="dropdownMenu" 
-     style="margin-left:24px; flex-direction:column; 
-        {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'display:flex;' : 'display:none;' }}">
+      <div id="dropdownMenu" 
+          style="margin-left:24px; flex-direction:column; 
+              {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'display:flex;' : 'display:none;' }}">
         
-    <a href="/kolokiummhs" 
-       class="submenu-link {{ request()->is('kolokiummhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-check2-circle"></i> Kolokium
-    </a>
-    <a href="/syaratkolokiummhs" 
-       class="submenu-link {{ request()->is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Kolokium
-    </a>
-    <a href="/seminarmhs" 
-       class="submenu-link {{ request()->is('seminarmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-calendar-event"></i> Seminar
-    </a>
-    <a href="/syaratseminarmhs" 
-       class="submenu-link {{ request()->is('syaratseminarmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Seminar
-    </a>
-    <a href="/komprehensifmhs" 
-       class="submenu-link {{ request()->is('komprehensifmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-journal-text"></i> Komprehensif
-    </a>
-    <a href="/syaratkomprehensifmhs" 
-       class="submenu-link {{ request()->is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Komprehensif
-    </a>
-</div>
+          <a href="/kolokiummhs" 
+            class="submenu-link {{ request()->is('kolokiummhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-check2-circle"></i> Kolokium
+          </a>
+          <a href="/syaratkolokiummhs" 
+            class="submenu-link {{ request()->is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-info-circle"></i> Syarat Kolokium
+          </a>
+          <a href="/seminarmhs" 
+            class="submenu-link {{ request()->is('seminarmhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-calendar-event"></i> Seminar
+          </a>
+          <a href="/syaratseminarmhs" 
+            class="submenu-link {{ request()->is('syaratseminarmhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-info-circle"></i> Syarat Seminar
+          </a>
+          <a href="/komprehensifmhs" 
+            class="submenu-link {{ request()->is('komprehensifmhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-journal-text"></i> Komprehensif
+          </a>
+          <a href="/syaratkomprehensifmhs" 
+            class="submenu-link {{ request()->is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
+              <i class="bi bi-info-circle"></i> Syarat Komprehensif
+          </a>
+      </div>
 
-
-      <a href="#" class="menu"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a>
+      <a href="/dashboardmhs" class="menu">
+        <div class="menu-left">
+          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+        </div>
+      </a>
 
       <script>
         document.getElementById('dropdownToggle').addEventListener('click', function(e) {

@@ -124,8 +124,8 @@
             e.preventDefault();
 
             const target = this.getAttribute('data-dropdown');
-            const menu = document.querySelector([data-menu="${target}"]);
-            const arrow = document.querySelector([data-arrow="${target}"]);
+            const menu = document.querySelector(`[data-menu="${target}"]`);
+            const arrow = document.querySelector(`[data-arrow="${target}"]`);
             const isOpen = menu.style.display === 'flex';
 
             // Tutup semua dulu

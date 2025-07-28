@@ -141,126 +141,25 @@
         });
       </script>
     </aside>
-  
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="adm-header">
-        <h2 class="adm-title">Data Pendaftar Kurikulum</h2>
-        <button class="adm-btn-add">
-          <i class="bi bi-plus"></i> Tambah Data
-        </button>
-    </div>
-    <div class="adm-card">
-      <!-- JUDUL -->
-      
-
-      <!-- TABEL -->
-      <div class="adm-table-container">
-        <table class="adm-table">
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Form Kurikulum</th>
-              <th>Moderator</th>
-              <th>Bukti SPP</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Minor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Keterampilan (KBK)</td>
-              <td>2025</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S2</td>
-              <td>Kurikulum Berbasis Proyek</td>
-              <td>2009</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S3</td>
-              <td>Kurikulum Berbasis Kompetensi (KBK)</td>
-              <td>2011</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
-</div>
-@endsection
-
-
-
 
         
-    <!-- <h1>Daftar Kolokium</h1>
+    <main class="content">
+      <!-- Status Cards -->
+      <div class="adm-status-cards">
+        <div class="card waiting">
+          <i class="bi bi-lightbulb"></i>
+          <h5>Surat Undangan Kolokium</h5>
+        </div>
+        <div class="card success">
+          <i class="bi bi-laptop"></i>
+          <h5>Surat Undangan Seminar</h5>
+        </div>
+        <div class="card danger">
+          <i class="bi bi-bookmark"></i>
+          <h5>Surat Undangan Sidang</h5>
+        </div>
+      </div>
+    </main>
+  </div>
 
-    <a href="{{ url('kolokium/create') }}">Tambah Kolokium</a>
-    @if(session('success'))
-        <p style="color:green;">{{ session('success') }}</p>
-    @endif
-
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nama</th>                                  
-            <th>Tempat</th>
-            <th>judul kolokium</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach($kolokiums as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->mahasiswa->nama }}</td>                        
-                <td>{{ $item->ruangan->nama ?? '-' }}</td>
-                <td>{{ $item->judul_kolokium }}</td>
-                
-                <td>
-                    <a href="{{ url('kolokium/' . $item->id) }}">Show</a>
-                    <a href="{{ url('kolokium/' . $item->id . '/edit') }}">Edit</a>
-                    <form action="{{ url('kolokium/' . $item->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Hapus daftar kolokium ini?')">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table> -->
-
+@endsection
