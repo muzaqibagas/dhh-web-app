@@ -93,7 +93,6 @@ Route::get('email/verify/{id}/{hash}', function (Request $request) {
     }
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Link verifikasi telah dikirim ke email kamu!');
@@ -134,8 +133,6 @@ Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'in
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
-// Route::get('admprofile/{admProfile}/edit', [AdmProfileController::class, 'edit'])->name('admprofile.edit');
-// Route::get('admdaftarkurikulum', [AdmDaftarKurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');

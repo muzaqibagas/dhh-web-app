@@ -67,7 +67,7 @@ class UserController extends Controller
         if ($user->role === 'Admin') {
             return view('admprofile.edit', compact('user'));
         } elseif ($user->role === 'Mahasiswa') {
-            return view('mahasiswaprofile.edit', compact('user'));
+            return view('profilemhs.edit', compact('user'));
         } else {
             abort(404, 'Role tidak dikenali.');
         }
@@ -80,9 +80,10 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = \App\Models\User::findOrFail($id);
+
         $data = $request->validate([
             'id_jenjang' => 'nullable|exists:jenjangs,id',
-            'nim' => 'required|string|unique:users,nim,' . $id,
+            'nim' => 'nullable|string|unique:users,nim,' . $id,
             'nama' => 'required|string|max:255',
             'no_hp' => 'nullable|string|max:255',
             'alamat' => 'nullable|string',
@@ -93,17 +94,33 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:6',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'role' => 'required|in:Admin,Mahasiswa',
-            'foto' => 'nullable|string|max:255',
+            'role' => 'nullable|in:Admin,Mahasiswa',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
         if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         } else {
             unset($data['password']);
         }
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('profile'), $filename);
+            $data['foto'] = $filename;
+        }
+
         $update = $user->update($data);
+
         if ($update)
-            return redirect()->route('user.index')->with('success', 'Data berhasil diperbarui!');
+            if ($user->role === 'Admin') {
+                return redirect()->route('admprofile.index')->with('success', 'Profil Admin berhasil diperbarui!');
+            } elseif ($user->role === 'Mahasiswa') {
+                return redirect()->route('profilemhs.index')->with('success', 'Profil Mahasiswa berhasil diperbarui!');                
+            } else {
+                abort(404, 'Role tidak dikenali.');
+            }
         else
             return back()->with('error', 'Gagal memperbarui data!');
     }

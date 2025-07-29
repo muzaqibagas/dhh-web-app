@@ -2,34 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\AdmProfile;
+use App\Models\KategoriMatakuliah;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AdmProfileController extends Controller
+class KategoriMatakuliahController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = Auth::user();
-
-        if ($user->role !== 'Admin') {
-            abort(403, 'Unauthorized');
-        }
-
-        return view('admprofile.index', compact('user'));
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -43,7 +34,7 @@ class AdmProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AdmProfile $admProfile)
+    public function show(KategoriMatakuliah $kategoriMatakuliah)
     {
         //
     }
@@ -51,16 +42,15 @@ class AdmProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdmProfile $admProfile)
+    public function edit(KategoriMatakuliah $kategoriMatakuliah)
     {
-        $user = Auth::user();
-        return view('admprofile.edit', compact('user'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdmProfile $admProfile)
+    public function update(Request $request, KategoriMatakuliah $kategoriMatakuliah)
     {
         //
     }
@@ -68,7 +58,7 @@ class AdmProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AdmProfile $admProfile)
+    public function destroy(KategoriMatakuliah $kategoriMatakuliah)
     {
         //
     }
