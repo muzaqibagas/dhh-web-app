@@ -112,7 +112,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('admprofile');
 });
 
-
 Route::get('login', [LoginmhsController::class, 'index'])->name('login.index');
 Route::post('login', [LoginmhsController::class, 'signin'])->name('login.signin');
 Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout');
@@ -138,7 +137,8 @@ Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'in
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
-Route::get('admdaftarkurikulum', [AdmDaftarKurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
+// Route::get('admprofile/{admProfile}/edit', [AdmProfileController::class, 'edit'])->name('admprofile.edit');
+// Route::get('admdaftarkurikulum', [AdmDaftarKurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');
@@ -232,7 +232,7 @@ Route::put('konten-dept/{kontendept}', [KontenDeptController::class, 'update'])-
 Route::delete('konten-dept/{kontendept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
 
 // Kurikulum
-Route::get('kurikulum', [KurikulumController::class, 'index'])->name('kurikulum.index');
+Route::get('kurikulum', [KurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
 Route::get('kurikulum/create', [KurikulumController::class, 'create'])->name('kurikulum.create');
 Route::post('kurikulum', [KurikulumController::class, 'store'])->name('kurikulum.store');
 Route::get('kurikulum/{kurikulum}', [KurikulumController::class, 'show'])->name('kurikulum.show');
