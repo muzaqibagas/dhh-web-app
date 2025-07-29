@@ -144,6 +144,9 @@
 
         
     <main class="content">
+      <div class="adm-header">
+        <h2 class="adm-title">Surat Undangan</h2>
+      </div>
       <!-- Status Cards -->
       <div class="adm-status-cards">
         <div class="card waiting">

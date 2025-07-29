@@ -27,6 +27,9 @@ use App\Http\Controllers\StaffDeptController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TipeController;
 use App\Http\Controllers\UndanganController;
+use App\Http\Controllers\UndanganKolokiumController;
+use App\Http\Controllers\UndanganSeminarController;
+use App\Http\Controllers\UndanganSidangController;
 use App\Http\Controllers\UserController;
 
 
@@ -350,6 +353,16 @@ Route::get('undangan/{undangan}', [UndanganController::class, 'show'])->name('un
 Route::get('undangan/{undangan}/edit', [UndanganController::class, 'edit'])->name('undangan.edit');
 Route::put('undangan/{undangan}', [UndanganController::class, 'update'])->name('undangan.update');
 Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->name('undangan.destroy');
+
+// Undangan Kolokium
+Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
+
+
+// Undangan Seminar
+Route::get('undanganseminar', [UndanganSeminarController::class, 'index'])->name('undanganseminar.index');
+
+// Undangan Seminar
+Route::get('undangansidang', [UndanganSidangController::class, 'index'])->name('undangansidang.index');
 
 // User
 Route::get('user', [UserController::class, 'index'])->name('user.index');

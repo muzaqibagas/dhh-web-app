@@ -142,99 +142,83 @@
       </script>
     </aside>
 
+<main class="content">
+  <div class="adm-header">
+      <h2 class="adm-title">Daftar Mata Kuliah</h2>
+      <button class="adm-btn-add">
+        <i class="bi bi-plus"></i> Tambah Data
+      </button>
+  </div>
 
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Mata Kuliah</h2>
-        <button class="adm-btn-add">
-          <i class="bi bi-plus"></i> Tambah Data
-        </button>
-    </div>
-    <div class="adm-card">
-      <!-- JUDUL -->
-      
+  <div class="adm-card">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Jenjang</th>
+            <th>Semester</th>
+            <th>Mata Kuliah</th>
+            <th>Kode</th>
+            <th>SKS</th>
+            <th>Prasyarat</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @php
+            $matakuliahs = [
+              (object)[
+                'jenjang' => 'S1',
+                'semester' => 1,
+                'nama' => 'Pendidikan Agama',
+                'kode' => 'AGM101',
+                'sks' => '3(2-1)',
+                'prasyarat' => null,
+              ],
+              (object)[
+                'jenjang' => 'S1',
+                'semester' => 2,
+                'nama' => 'Matematika Dasar',
+                'kode' => 'MTK102',
+                'sks' => '3(3-0)',
+                'prasyarat' => 'AGM101',
+              ],
+              (object)[
+                'jenjang' => 'D3',
+                'semester' => 1,
+                'nama' => 'Bahasa Indonesia',
+                'kode' => 'BIN103',
+                'sks' => '2(2-0)',
+                'prasyarat' => null,
+              ],
+              (object)[
+                'jenjang' => 'S1',
+                'semester' => 3,
+                'nama' => 'Pemrograman Web',
+                'kode' => 'WEB201',
+                'sks' => '4(3-1)',
+                'prasyarat' => 'MTK102',
+              ],
+            ];
+          @endphp
 
-      <!-- TABEL -->
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Jenjang</th>
-              <th>Semester</th>
-              <th>Mata Kuliah</th>
-              <th>Kode</th>
-              <th>SKS</th>
-              <th>Prasyarat</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>S1</td>
-              <td>1</td>
-              <td>Agama</td>
-              <td>IPB101</td>
-              <td>3(2-1)r</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>1</td>
-              <td>Agama</td>
-              <td>IPB101</td>
-              <td>3(2-1)r</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>1</td>
-              <td>Agama</td>
-              <td>IPB101</td>
-              <td>3(2-1)r</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>1</td>
-              <td>Agama</td>
-              <td>IPB101</td>
-              <td>3(2-1)r</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>1</td>
-              <td>Agama</td>
-              <td>IPB101</td>
-              <td>3(2-1)r</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
+          @foreach ($matakuliahs as $matkul)
+          <tr>
+            <td>{{ $matkul->jenjang }}</td>
+            <td>{{ $matkul->semester }}</td>
+            <td>{{ $matkul->nama }}</td>
+            <td>{{ $matkul->kode }}</td>
+            <td>{{ $matkul->sks }}</td>
+            <td>{{ $matkul->prasyarat ?? '-' }}</td>
+            <td class="adm-action">
+              <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
+              <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
-  </main>
-</div>
+  </div>
+</main>
 @endsection

@@ -183,7 +183,8 @@
               <td>2013</td>
               <td>Kompetensi Minor</td>
               <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
+
+                <a href="{{route('kurikulum.edit')}}" class="adm-btn-edit"><i class="bi bi-pencil-square"></i></a>
                 <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
