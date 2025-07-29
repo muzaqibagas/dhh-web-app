@@ -145,89 +145,72 @@
 <!-- MAIN CONTENT -->
   <main class="content">
     <div class="adm-header">
-        <h2 class="adm-title">Data Pendaftar Kurikulum</h2>
-        <button class="adm-btn-add">
-          <i class="bi bi-plus"></i> Tambah Data
-        </button>
+        <h2 class="adm-title">Data Pendaftar Kolokium</h2>
     </div>
     <div class="adm-card">
-      <!-- JUDUL -->
-      
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>Nama</th>
+                    <th>Form Kolokium</th>
+                    <th>Moderator</th>
+                    <th>Bukti SPP</th>
+                    <th>Kartu Kehadiran</th>
+                    <th>Verifikasi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $pendaftar = [
+                        ['nama' => 'Raisa Mutia Thahir'],
+                        ['nama' => 'Hasna Nabilah Widiani'],
+                        ['nama' => 'Nurbadillah'],
+                        ['nama' => 'Saniyyah Wafa Nurjihan'],
+                    ];
+                @endphp
 
-      <!-- TABEL -->
-      <div class="adm-table-container">
-        <table class="adm-table">
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Form Kurikulum</th>
-              <th>Moderator</th>
-              <th>Bukti SPP</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Minor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Keterampilan (KBK)</td>
-              <td>2025</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S2</td>
-              <td>Kurikulum Berbasis Proyek</td>
-              <td>2009</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S3</td>
-              <td>Kurikulum Berbasis Kompetensi (KBK)</td>
-              <td>2011</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
+                @foreach ($pendaftar as $p)
+                <tr>
+                    <td  class="text-start">{{ $p['nama'] }}</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i> Lihat
+                        </a>
+                    </td>
+                    <td>
+                        <select class="form-select form-select-sm">
+                            <option selected disabled>pilih mod</option>
+                            <option>Moderator 1</option>
+                            <option>Moderator 2</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i> Lihat
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i> Lihat
+                        </a>
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-sm me-1">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
-      </div>
     </div>
-  </main>
 </div>
+
 @endsection
-
-
-
-
         
     <!-- <h1>Daftar Kolokium</h1>
 

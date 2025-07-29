@@ -34,7 +34,7 @@ class KurikulumController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Kurikulum::all();
+        $kurikulums = Kurikulum::all();
 
         // Search
         $query = Kurikulum::query();
@@ -44,7 +44,7 @@ class KurikulumController extends Controller
         }
 
         $data = $query->get();
-        return view('admdaftarkurikulum.index', compact('data'));
+        return view('kurikulum.index', compact('kurikulums'));
 
     }
 

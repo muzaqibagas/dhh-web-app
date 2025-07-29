@@ -9,13 +9,13 @@
       </a>
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
-        $isAkademikActive = Request::is('kurikulum') || Request::is('mata-kuliah');
+        $isAkademikActive = Request::is('kurikulum') || Request::is('mata-kuliah') || Request::is('kurikulum/1/edit');
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
-        $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept');
+        $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') ; 
       @endphp
 
       <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu{{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
+      <a href="#" class="menu {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
         <div class="menu-left">
           <i class="bi bi-journal-check"></i>
           <span> Akademik </span>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu active {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
         <div class="menu-left">
           <i class="bi bi-mortarboard"></i>
           <span> Tingkat Akhir </span>
@@ -141,102 +141,77 @@
         });
       </script>
     </aside>
-  
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="adm-header">
-        <h2 class="adm-title">Data Pendaftar Sidang</h2>
-    </div>
-    <div class="adm-card">
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th>Nama</th>
-                    <th>Form Sidang</th>
-                    <th>Ketua Sidang</th>
-                    <th>Bukti SPP</th>
-                    <th>Verifikasi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $pendaftar = [
-                        ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabilah Widiani'],
-                        ['nama' => 'Nurbadillah'],
-                        ['nama' => 'Saniyyah Wafa Nurjihan'],
-                    ];
-                @endphp
 
-                @foreach ($pendaftar as $p)
-                <tr>
-                    <td class="text-start">{{ $p['nama'] }}</td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <select class="form-select form-select-sm">
-                            <option selected disabled>pilih dosen</option>
-                            <option>Dosen 1</option>
-                            <option>Dosen 2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm me-1">
-                            <i class="bi bi-check-circle-fill"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+<div class="content my-4">
+  <h2 class="page-title">Edit Mata Kuliah</h2>
+  <div class="card shadow-sm rounded-4">
+    <div class="card-body">
+      <form>
+
+    <!-- Jenjang & Kode -->
+    <div class="row mb-3">
+      <div class="col-md-2 fw-semibold text-start">Jenjang</div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm">
+          <option>S1</option>
+          <option>D3</option>
+        </select>
+      </div>
+      <div class="col-md-2 fw-semibold text-start">Kode</div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="Masukkan Kode Mata Kuliah">
+      </div>
     </div>
+
+    <!-- Semester & SKS -->
+    <div class="row mb-3">
+      <div class="col-md-2 fw-semibold text-start">Semester</div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+      <div class="col-md-2 fw-semibold text-start">SKS</div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="Masukkan SKS">
+      </div>
+    </div>
+
+    <!-- Mata Kuliah & Prasyarat -->
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-2 fw-semibold text-start">Mata Kuliah</div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="Msukkan Nama Mata Kuliah">
+      </div>
+      <div class="col-md-2 fw-semibold text-start">Prasyarat</div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="Masukkan Prasyarat">
+      </div>
+    </div>
+
+    <!-- Deskripsi -->
+    <div class="row mb-3">
+      <div class="col-md-2 fw-semibold text-start">Deskripsi</div>
+      <div class="col-md-10">
+        <textarea class="form-control form-control-sm" rows="4" placeholder="Masukkan deskripsi mata kuliah..."></textarea>
+      </div>
+    </div>
+
+    <!-- Tombol -->
+    <div class="row">
+      <div class="col-md-12 text-end">
+        <button type="submit" class="btn btn-success btn-sm me-2">
+          Simpan Perubahan
+        </button>
+        <a href="#" class="btn btn-danger btn-sm">
+          Batal
+        </a>
+      </div>
+    </div>
+
+  </form>
+</div>
 </div>
 @endsection
-
-
-    <!-- <h1>Daftar Sidang</h1>
-
-    <a href="{{ url('sidang/create') }}">Tambah Sidang</a>
-    @if(session('success'))
-        <p style="color:green;">{{ session('success') }}</p>
-    @endif
-
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nama</th>                                  
-            <th>Tempat</th>
-            <th>judul Sidang</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach($sidangs as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->mahasiswa->nama }}</td>                        
-                <td>{{ $item->ruangan->nama ?? '-' }}</td>
-                <td>{{ $item->judul_tugasakhir }}</td>
-                
-                <td>
-                    <a href="{{ url('sidang/' . $item->id) }}">Show</a>
-                    <a href="{{ url('sidang/' . $item->id . '/edit') }}">Edit</a>
-                    <form action="{{ url('sidang/' . $item->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Hapus daftar kolokium ini?')">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table> -->

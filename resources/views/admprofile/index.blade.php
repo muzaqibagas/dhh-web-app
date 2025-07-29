@@ -106,7 +106,7 @@
 
   <div class="biodata-container">
     
-    <!-- FOTO MAHASISWA -->
+    <!-- FOTO -->
     <div class="photo-section">
       <div class="admin-photo-placeholder">        
           @if(Auth::user()->foto)
@@ -120,7 +120,7 @@
       </button>
     </div>
 
-    <!-- DATA MAHASISWA -->
+    <!-- DATA -->
     <div class="info-section">
       <div class="info-box">
         <div class="info-item">
