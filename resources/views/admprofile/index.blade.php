@@ -16,7 +16,7 @@
       </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
         <a href="{{route('kurikulum.index')}}" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
-        <a href="/admmatakuliah" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
+        <a href="{{route('mata-kuliah.index')}}" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->

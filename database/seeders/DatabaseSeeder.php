@@ -22,14 +22,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             JenjangSeeder::class,
+            kategoriKompetensiSeeder::class,
+            kurikulumDetailSeeder::class,
             UserSeeder::class,            
             KurikulumSeeder::class,
             SemesterSeeder::class,             
             DivisiSeeder::class,    
-            TipeSeeder::class,     
+            TipeSeeder::class,                 
             KategoriSeeder::class,           
             RuanganSeeder::class,  
-            KategoriStaffSeeder::class,
+            KategoriStaffSeeder::class,            
         ]);
     }
 }

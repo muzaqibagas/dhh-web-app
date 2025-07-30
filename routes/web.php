@@ -229,7 +229,7 @@ Route::put('konten-dept/{kontendept}', [KontenDeptController::class, 'update'])-
 Route::delete('konten-dept/{kontendept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
 
 // Kurikulum
-Route::get('kurikulum', [KurikulumController::class, 'index'])->name('admdaftarkurikulum.index');
+Route::get('kurikulum', [KurikulumController::class, 'index'])->name('kurikulum.index');
 Route::get('kurikulum/create', [KurikulumController::class, 'create'])->name('kurikulum.create');
 Route::post('kurikulum', [KurikulumController::class, 'store'])->name('kurikulum.store');
 Route::get('kurikulum/{kurikulum}', [KurikulumController::class, 'show'])->name('kurikulum.show');

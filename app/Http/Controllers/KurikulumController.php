@@ -64,13 +64,9 @@ class KurikulumController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_jenjang' => 'required|exists:jenjangs,id',
+        $request->validate([                        
             'nama' => 'required|string|max:255',
-            'tahun' => 'required|digits:4|integer|min:2000|max:' . (date('Y') + 1),
-            'judul' => 'nullable|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'tahun' => 'required|digits:4|integer|min:2000|max:' . (date('Y') + 1),            
         ]);
 
         $insert = Kurikulum::create($request->all());
@@ -106,13 +102,9 @@ class KurikulumController extends Controller
      */
     public function update(Request $request, Kurikulum $kurikulum)
     {
-        $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_jenjang' => 'required|exists:jenjangs,id',
+        $request->validate([            
             'nama' => 'required|string|max:255',
-            'tahun' => 'required|digits:4|integer|min:2000|max:' . (date('Y') + 1),
-            'judul' => 'nullable|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'tahun' => 'required|digits:4|integer|min:2000|max:' . (date('Y') + 1),            
         ]);
         
         $update = $kurikulum->update($request->all());
