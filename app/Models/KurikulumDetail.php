@@ -7,16 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class KurikulumDetail extends Model
 {
     protected $table = 'kurikulum_details';
-    protected $fillable = [
-        'id_smk',
+    protected $fillable = [        
         'id_kategorikompetensi',
         'deskripsi',
-    ];
-
-    public function smk()
-    {
-        return $this->belongsTo(Smk::class, 'id_smk');
-    }
+    ];    
     
     public function kategorikompetensi()
     {

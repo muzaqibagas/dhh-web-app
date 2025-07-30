@@ -99,63 +99,64 @@
       </script>
   </aside>
 
-  <main class="content py-4">
-    <h2 class="page-title">Edit Profil Admin</h2>
-        <form action="{{ route('user.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data" class="row g-4">
-          @csrf
-          @method('PUT')
-          <div class="photo-section col-md-4 text-center">
-            <div class="admin-photo-placeholder mb-3">
-              @if(Auth::user()->foto)
-                <img src="{{ asset('uploads/' . Auth::user()->foto) }}" class="img-thumbnail mb-2" style="max-width: 100%;">
-              @else
-                <img src="{{ asset('img/default.png') }}" alt="" class="bi bi-image mb-2" style="max-width: 100%;">
-              @endif
-            </div>
-            <!-- Upload photo button -->
-            <label for="foto" class="btn-edit-photo mb-3">
-              <i class="bi bi-pencil-square"></i> Ganti Foto
-            </label>
-          </div>
+  <main class="content">
+    <h2 class="page-title">Edit Biodata Admin</h2>
+    <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="col-md-9 px-2 d-flex justify-content-center align-items-start gap-5 w-100 mt-4">
+      @csrf
+      @method('PUT')
 
-          <div class="info-box col-md-8">
-            <div class="p-4">
-            <div class="info-item mb-3">
-              <label>Username</label>
-              <input type="text" name="username" value="{{ old('username', Auth::user()->username) }}">
-            </div>
+      <!-- FOTO PROFIL -->
+      <div class="d-flex flex-column align-items-center">
+        <div class="rounded-circle overflow-hidden" style="width: 180px; height: 180px; background-color:#f5f5f5">
+          @if($user->foto)
+            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
+          @else
+            <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
+          @endif
+        </div>
 
-            <div class="info-item">
-              <label>Nama</label>
-              <input type="text" name="nama" value="{{ old('nama', Auth::user()->nama) }}">
-            </div>
-
-            <div class="info-item">
-              <label>Email</label>
-              <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}">
-            </div>
-
-            <div class="info-item">
-              <label>Jenis Kelamin</label>
-              <select name="jenis_kelamin">
-                <option value="Laki-laki" {{ Auth::user()->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                <option value="Perempuan" {{ Auth::user()->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-              </select>
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-success">
-                <i class="bi bi-save"></i> Simpan
-              </button>
-
-              <a href="{{ route('admprofile.index') }}" class="btn btn-danger ms-2">
-                <i class="bi bi-x-circle"></i> Batal
-              </a>
-
-        </form>
+        <input type="file" name="foto" accept="image/*" class="form-control mt-3" onchange="previewImage(event)">
       </div>
 
-    </div>
+      <!-- FORM BIODATA -->
+      <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Username</label>
+          <input type="text" class="form-control" name="username" value="{{ old('username', $user->username) }}">
+        </div>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Nama</label>
+          <input type="text" class="form-control" name="nama" value="{{ old('nama', $user->nama) }}">
+        </div>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Email</label>
+          <input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}">
+        </div>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Jenis Kelamin</label>
+          <select class="form-select" name="jenis_kelamin">
+            <option value="Laki-laki" {{ $user->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+            <option value="Perempuan" {{ $user->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+          </select>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="text-start mt-3">
+          <button type="submit" class="btn btn-success" style="background-color: #28a745;">Simpan</button>
+          <a href="{{ route('admprofile.index') }}" class="btn btn-secondary">Batal</a>
+        </div>
+      </div>
+    </form>
   </main>
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('preview-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
 </div>
 @endsection

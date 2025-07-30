@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kurikulums', function (Blueprint $table) {
-            $table->id('id');                    
-            // $table->foreignId('id_kurikulumdetail')->constrained('kurikulum_details')->onDelete('cascade');
-            $table->string('nama')->nullable(); 
-            $table->string('tahun')->nullable(); 
+        Schema::create('kategori_matakuliahs', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kurikulums');
+        Schema::dropIfExists('kategori_matakuliahs');
     }
 };

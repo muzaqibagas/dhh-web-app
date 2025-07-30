@@ -14,8 +14,7 @@ class KurikulumSeeder extends Seeder
     public function run(): void
     {
         DB::table('kurikulums')->insert([
-            'id' => 1, // Sesuai kebutuhan relasi semester            
-            'id_jenjang' => 3, // Pastikan jenjang dengan ID 1 ada
+            'id' => 1, // Sesuai kebutuhan relasi semester                                    
             'nama' => 'Kurikulum Fahutan',
             'tahun' => 2025,           
             'created_at' => now(),

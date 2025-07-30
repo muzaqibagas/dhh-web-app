@@ -145,63 +145,41 @@
 <div class="content my-4">
   <h2 class="page-title">Tambah Kurikulum</h2>
   <div class="card shadow-sm rounded-4">
-    <div class="card-body">
-      <form>
+    <div class="card-body p-0">
+      <form method="POST" action="{{ route('kurikulum.store') }}">
+        @csrf
+        <div class="row mb-3">      
+          <div>
+            <div class="col-md-2 fw-semibold text-start">Nama Kurikulum</div>
+            <div class="col-md-4">
+              <input type="text" name="nama" class="form-control form-control-sm" placeholder="Contoh: Kurikulum Berbasis Teknologi">
+            </div>
+          </div>
+          <div>
+            <div class="col-md-2 fw-semibold text-start">Tahun</div>
+            <div class="col-md-4">
+              <select name="tahun" class="form-select form-select-sm" required>
+                <option value="">-- Pilih Tahun --</option>
+                @for ($i = date('Y'); $i >= 2010; $i--)
+                  <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+              </select>
+            </div>    
+          </div>          
+        </div>                      
+        <div class="row">
+          <div class="col-md-12 text-end">
+            <button type="submit" class="btn btn-success btn-sm me-2">
+              Simpan
+            </button>
+            <a href="#" class="btn btn-danger btn-sm">
+              Batal
+            </a>
+          </div>
+        </div>
 
-        <!-- Jenjang & Tahun -->
-    <div class="row mb-3">
-      <div class="col-md-2 fw-semibold text-start">Jenjang</div>
-      <div class="col-md-4">
-        <select class="form-select form-select-sm">
-          <option>S1</option>
-          <option>D3</option>
-        </select>
-      </div>
-      <div class="col-md-2 fw-semibold text-start">Tahun</div>
-      <div class="col-md-4">
-        <select class="form-select form-select-sm">
-          <option>2013</option>
-          <option>2014</option>
-        </select>
-      </div>
+      </form>
     </div>
-
-    <!-- Nama Kurikulum & Kompetensi -->
-    <div class="row mb-3 align-items-center">
-      <div class="col-md-2 fw-semibold text-start">Nama Kurikulum</div>
-      <div class="col-md-4">
-        <input type="text" class="form-control form-control-sm" placeholder="Contoh: Kurikulum Berbasis Teknologi">
-      </div>
-      <div class="col-md-2 fw-semibold text-start">Kompetensi</div>
-      <div class="col-md-4">
-        <select class="form-select form-select-sm">
-          <option>Kompetensi Mayor</option>
-          <option>Kompetensi Minor</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Deskripsi -->
-    <div class="row mb-3">
-      <div class="col-md-2 fw-semibold text-start">Deskripsi</div>
-      <div class="col-md-10">
-        <textarea class="form-control form-control-sm" rows="4" placeholder="Masukkan deskripsi kurikulum..."></textarea>
-      </div>
-    </div>
-
-    <!-- Tombol -->
-    <div class="row">
-      <div class="col-md-12 text-end">
-        <button type="submit" class="btn btn-success btn-sm me-2">
-           Simpan
-        </button>
-        <a href="#" class="btn btn-danger btn-sm">
-          Batal
-        </a>
-      </div>
-    </div>
-
-  </form>
-</div>
+  </div>
 </div>
 @endsection

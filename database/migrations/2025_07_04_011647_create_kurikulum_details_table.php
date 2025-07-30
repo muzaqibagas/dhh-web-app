@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kurikulum_details', function (Blueprint $table) {            
             $table->id('id');          
-            $table->foreignId('id_smk')->constrained('smks')->onDelete('cascade');
+            $table->foreignId('id_jenjang')->nullable()->constrained('jenjangs')->onDelete('cascade');            
             $table->foreignId('id_kategorikompetensi')->constrained('kategori_kompetensis')->onDelete('cascade');            
             $table->text('deskripsi')->nullable();
             $table->timestamps();

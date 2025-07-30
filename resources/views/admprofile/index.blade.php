@@ -1,10 +1,9 @@
 @extends('layouts.apps')
 
 @section('content')
-<!-- SIDEBAR -->
-  <div class="main-container">
-    <aside class="sidebar">
-      <a href="" class="menu-image-only">
+<div class="main-container">
+  <aside class="sidebar">
+    <a href="" class="menu-image-only">
         <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
       <!-- BTN AKADEMIK========================= -->
@@ -16,7 +15,7 @@
         <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
       </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
-        <a href="{{route('admdaftarkurikulum.index')}}" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
+        <a href="{{route('kurikulum.index')}}" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
         <a href="{{route('mata-kuliah.index')}}" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
       </div>
 
@@ -67,96 +66,85 @@
         <span class="dropdownArrow"></span>
       </a>
       <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
-    
+
       <script>
-      // Ambil semua toggle
-      const toggles = document.querySelectorAll('.menu[id^="dropdownToggle"]');
+        // Ambil semua toggle
+        const toggles = document.querySelectorAll('.menu[id^="dropdownToggle"]');
 
-      toggles.forEach(toggle => {
-        toggle.addEventListener('click', function (e) {
-          e.preventDefault();
+        toggles.forEach(toggle => {
+          toggle.addEventListener('click', function (e) {
+            e.preventDefault();
 
-          // Ambil id tombol yang diklik (misal dropdownToggle2 -> jadi dropdownMenu2)
-          const toggleId = this.id;
-          const menuId = toggleId.replace('dropdownToggle', 'dropdownMenu');
-          const arrowId = toggleId.replace('dropdownToggle', 'dropdownArrow');
+            // Ambil id tombol yang diklik (misal dropdownToggle2 -> jadi dropdownMenu2)
+            const toggleId = this.id;
+            const menuId = toggleId.replace('dropdownToggle', 'dropdownMenu');
+            const arrowId = toggleId.replace('dropdownToggle', 'dropdownArrow');
 
-          const menu = document.getElementById(menuId);
-          const arrow = document.getElementById(arrowId);
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
 
-          const isOpen = menu.style.display === 'flex';
+            const isOpen = menu.style.display === 'flex';
 
-          // 🔹 TUTUP SEMUA dropdown terlebih dulu
-          document.querySelectorAll('[id^="dropdownMenu"]').forEach(m => m.style.display = 'none');
-          document.querySelectorAll('[id^="dropdownArrow"]').forEach(a => a.innerHTML = '&#9650;');
+            // 🔹 TUTUP SEMUA dropdown terlebih dulu
+            document.querySelectorAll('[id^="dropdownMenu"]').forEach(m => m.style.display = 'none');
+            document.querySelectorAll('[id^="dropdownArrow"]').forEach(a => a.innerHTML = '&#9650;');
 
-          // 🔹 Kalau tadi TERTUTUP, buka menu yg diklik
-          if (!isOpen) {
-            menu.style.display = 'flex';
-            arrow.innerHTML = '&#9660;';
-          }
+            // 🔹 Kalau tadi TERTUTUP, buka menu yg diklik
+            if (!isOpen) {
+              menu.style.display = 'flex';
+              arrow.innerHTML = '&#9660;';
+            }
+          });
         });
-      });
-    </script>
-
+      </script>
   </aside>
 
-<main class="content">
-  <h2 class="page-title">Biodata Admin</h2>
-
-  <div class="biodata-container">
-    
-    <!-- FOTO -->
-    <div class="photo-section">
-      <div class="admin-photo-placeholder">        
-          @if(Auth::user()->foto)
-            <img src="{{ asset('profile/' . Auth::user()->foto) }}" alt="" class="bi bi-image">
+  <main class="content">
+    <h2 class="page-title">Biodata Admin</h2>
+    <div class="col-md-9 px-2 d-flex justify-content-center align-items-center gap-5 w-100 mt-4">
+      <div class="d-flex flex-column align-items-center align-self-start">
+        <div class="rounded-circle overflow-hidden mb-3" style="width: 180px; height: 180px; background-color:#f5f5f5">
+          @if($user->foto)
+            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
           @else
-            <img src="{{ asset('img/default.png') }}" alt="" class="bi bi-image">
+            <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
           @endif
+        </div>
+              
+        <button class="btn-edit-photo">        
+          <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
+        </button>    
       </div>
-      <button class="btn-edit-photo">        
-        <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
-      </button>
-    </div>
 
-    <!-- DATA -->
-    <div class="info-section">
-      <div class="info-box">
-        <div class="info-item">
-          <label>Username</label>
-          <input type="text" value="{{ Auth::user()->username ?? 'Guest' }}" readonly>
+      <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Username</label>
+          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->username ?? 'Guest' }}" readonly>
         </div>
-        <div class="info-item">
-          <label>Nama</label>
-          <form><input type="text" value="{{ Auth::user()->nama ?? 'Guest' }}" readonly></form>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Nama</label>
+          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->nama ?? 'Guest' }}" readonly>
         </div>
-        <div class="info-item">
-          <label>Email</label>
-          <input type="text" value="{{ Auth::user()->email ?? 'Guest' }}" readonly>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Email</label>
+          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->email ?? 'Guest' }}" readonly>
         </div>
-        <div class="info-item">
-          <label>jenis kelamin</label>
-          <input type="text" value="{{ Auth::user()->jenis_kelamin ?? 'Guest' }}" readonly>
-        </div>
-        <!-- Kalau nanti mau bisa edit -->
-          <div class="form-actions">
-            <!-- <button type="button" class="btn-edit" id="editBtn">
-              <i class="bi bi-pencil-square"></i> Edit
-            </button> -->
-            <button type="submit" class="btn-save" style="display:none;" id="saveBtn">
-              <i class="bi bi-save"></i> Simpan
-            </button>
-          </div>
+        <div class="text-start mb-2">
+          <label class="form-label fw-bold mb-0">Jenis Kelamin</label>
+          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->jenis_kelamin ?? 'Guest' }}" readonly>
+        </div>        
       </div>
-      
     </div>
-
-    
-
-  </div>
-</main>
-
+  </main>
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('preview-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+</div>
 @endsection
-
-</body>

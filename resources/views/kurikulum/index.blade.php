@@ -146,8 +146,8 @@
   <main class="content">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Kurikulum</h2>
-        <button class="adm-btn-add">
-          <i class="bi bi-plus"></i> Tambah Data
+        <button class="adm-btn-add">          
+          <a href="{{ route('kurikulum.create') }}" class="bi bi-plus text-light text-decoration-none">Tambah Data</a>
         </button>
     </div>
     <div class="adm-card">
@@ -158,66 +158,29 @@
       <div class="table-responsive">
         <table class="table">
           <thead>
-            <tr>
-              <th>Jenjang</th>
+            <tr>              
               <th>Nama Kurikulum</th>
-              <th>Tahun</th>
-              <th>Kompetensi</th>
+              <th>Tahun</th>              
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
+            @foreach ($kurikulums as $kurikulum)
+            <tr>              
+              <td>{{ $kurikulum->nama }}</td>
+              <td>{{ $kurikulum->tahun }}</td>              
+              <td>
+                <a href="{{ route('kurikulum.edit', $kurikulum->id) }}" class="adm-btn-edit"><i class="bi bi-pencil-square"></i></a>                  
+                <form action="{{ route('kurikulum.destroy', $kurikulum->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="adm-btn-delete">
+                    <i class="bi bi-trash"></i> 
+                  </button>
+                </form>
               </td>
             </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Teknologi.</td>
-              <td>2013</td>
-              <td>Kompetensi Minor</td>
-              <td class="adm-action">
-
-                <a href="{{route('kurikulum.edit')}}" class="adm-btn-edit"><i class="bi bi-pencil-square"></i></a>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S1</td>
-              <td>Kurikulum Berbasis Keterampilan (KBK)</td>
-              <td>2025</td>
-              <td>-</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S2</td>
-              <td>Kurikulum Berbasis Proyek</td>
-              <td>2009</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>S3</td>
-              <td>Kurikulum Berbasis Kompetensi (KBK)</td>
-              <td>2011</td>
-              <td>Kompetensi Mayor</td>
-              <td class="adm-action">
-                <button class="adm-btn-edit"><i class="bi bi-pencil-square"></i></button>
-                <button class="adm-btn-delete"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
