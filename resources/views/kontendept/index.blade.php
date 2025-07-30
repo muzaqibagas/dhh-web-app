@@ -15,7 +15,7 @@
       @endphp
 
       <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
+      <a href="#" class="menu{{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
         <div class="menu-left">
           <i class="bi bi-journal-check"></i>
           <span> Akademik </span>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu active {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
         <div class="menu-left">
           <i class="bi bi-mortarboard"></i>
           <span> Tingkat Akhir </span>
@@ -141,77 +141,60 @@
         });
       </script>
     </aside>
-
-<!-- Main konten -->
-<div class="container mt-5">
+    
+<!-- Halaman Galeri - Admin Dashboard -->
+<main class="content">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Undangan Seminar</h2>
-    </div>
-    <div class="card shadow-sm mt-4">
+        <h2 class="adm-title">Daftar Konten Departemen</h2>
+        <button class="adm-btn-add">
+            <i class="bi bi-plus"></i> Tambah Data
+        </button>
+    </div> 
+    <div class="card shadow-sm">
         <div class="card-body">
-            <form action="#" method="POST">
-                @csrf
-
-                @php
-                    $formFields = [
-                        'Nama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih nama</option>
-                                <option>Muzaqi Bagas</option>
-                                <option>Hasna Nabiilah</option>
-                            </select>',
-                        'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
-                        'Hari/Tanggal' => '
-                            <div class="input-group">
-                                <input type="date" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Waktu' => '
-                            <div class="input-group">
-                                <input type="time" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Tempat' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat seminar">',
-                        'Judul Praktek Khusus' => '
-                            <div class="input-group">
-                                <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
-                            </div>',
-                        'Pembimbing Utama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Utama</option>
-                                <option>Nana nyanya M.Ts.</option>
-                            </select>',
-                        'Pembimbing II' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing II</option>
-                                <option>-</option>
-                            </select>',
-                        'Moderator' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Moderator</option>
-                                <option>Bambang</option>
-                            </select>',
-                        'Sekretaris Departemen' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Sekretaris</option>
-                                <option>Morgan</option>
-                            </select>',
-                    ];
-                @endphp
-
-                @foreach ($formFields as $label => $field)
-                <div class="row mb-3 align-items-center">
-                    <label class="col-md-3 col-form-label text-md-start fw-semibold">{{ $label }}</label>
-                    <div class="col-md-9">
-                        {!! $field !!}
-                    </div>
-                </div>
-                @endforeach
-
-                <div class="row">
-                    <div class="col-12 d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">Buat Surat</button>
-                    </div>
-                </div>
-            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light ">
+                        <tr>
+                            <th>No.</th>
+                            <th>Section Judul</th>
+                            <th>Deskripsi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data Galeri (dummy) -->
+                        <tr>
+                            <td>1</td>
+                            <td>Sejarah DHH</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Dahulu kala saat dibangunnya kerajaan ipb, Departemen DHH...</td>
+                            <td>
+                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-trash" style="font-size: 18px;"></i>
+                            </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Visi dan Misi</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">DHH memiliki misi untu menumbuhkan generasi yang unggul dan...</td>
+                            <!-- Tombol Aksi -->
+                        <td class="text-center">
+                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-trash" style="font-size: 18px;"></i>
+                            </button>
+                        </td>
+                        <!-- Tambahkan baris lain sesuai kebutuhan -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

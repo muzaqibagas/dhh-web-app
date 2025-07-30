@@ -97,7 +97,7 @@
       </div>
 
       <!-- BTN SDM ===================== -->
-      <a href="/admsumberdayamanusia" class="menu">
+      <a href="/staffdept" class="menu">
         <div class="menu-left">
           <i class="bi bi-people-fill"></i> <span> Sumber Daya Manusia </span>
         </div>

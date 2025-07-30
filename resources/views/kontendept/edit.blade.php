@@ -15,7 +15,7 @@
       @endphp
 
       <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
+      <a href="#" class="menu{{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
         <div class="menu-left">
           <i class="bi bi-journal-check"></i>
           <span> Akademik </span>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu active {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
         <div class="menu-left">
           <i class="bi bi-mortarboard"></i>
           <span> Tingkat Akhir </span>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- BTN KONTEN ===================== -->
-      <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+      <a href="#" class="menu active{{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
         <div class="menu-left">
           <i class="bi bi-collection"></i>
           <span> Konten </span>
@@ -141,78 +141,69 @@
         });
       </script>
     </aside>
-
-<!-- Main konten -->
-<div class="container mt-5">
+<main class="content">
+<div class="container-fluid">
     <div class="adm-header">
-        <h2 class="adm-title">Undangan Seminar</h2>
+        <h2 class="adm-title">Edit Konten Departemen</h2>
     </div>
-    <div class="card shadow-sm mt-4">
-        <div class="card-body">
-            <form action="#" method="POST">
-                @csrf
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form>
+        <div class="row">
+            <!-- Judul -->
+            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+              <div class="col-sm-2">
+                <label for="judul" class="col-form-label">Judul</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
+              </div>
+            </div>
 
-                @php
-                    $formFields = [
-                        'Nama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih nama</option>
-                                <option>Muzaqi Bagas</option>
-                                <option>Hasna Nabiilah</option>
-                            </select>',
-                        'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
-                        'Hari/Tanggal' => '
-                            <div class="input-group">
-                                <input type="date" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Waktu' => '
-                            <div class="input-group">
-                                <input type="time" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Tempat' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat seminar">',
-                        'Judul Praktek Khusus' => '
-                            <div class="input-group">
-                                <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
-                            </div>',
-                        'Pembimbing Utama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Utama</option>
-                                <option>Nana nyanya M.Ts.</option>
-                            </select>',
-                        'Pembimbing II' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing II</option>
-                                <option>-</option>
-                            </select>',
-                        'Moderator' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Moderator</option>
-                                <option>Bambang</option>
-                            </select>',
-                        'Sekretaris Departemen' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Sekretaris</option>
-                                <option>Morgan</option>
-                            </select>',
-                    ];
-                @endphp
+            <!-- Deskripsi -->
+            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
+              <div class="col-sm-2">
+                <label for="deskripsi" class="col-form-label">Deskripsi</label>
+              </div>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+              </div>
+            </div>
 
-                @foreach ($formFields as $label => $field)
-                <div class="row mb-3 align-items-center">
-                    <label class="col-md-3 col-form-label text-md-start fw-semibold">{{ $label }}</label>
-                    <div class="col-md-9">
-                        {!! $field !!}
-                    </div>
-                </div>
-                @endforeach
+          </div>
 
-                <div class="row">
-                    <div class="col-12 d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">Buat Surat</button>
-                    </div>
-                </div>
-            </form>
+        <!-- Tombol Simpan -->
+        <div class="text-end">
+            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
         </div>
+
+      </form>
     </div>
+  </div>
 </div>
+<script>
+  document.getElementById('foto').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const previewImage = document.getElementById('preview-image');
+    const previewIcon = document.getElementById('preview-icon');
+
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewImage.classList.remove('d-none');
+        previewIcon.classList.add('d-none');
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      previewImage.src = '';
+      previewImage.classList.add('d-none');
+      previewIcon.classList.remove('d-none');
+    }
+  });
+</script>
+
 @endsection
