@@ -146,7 +146,7 @@
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Daftar Review Alumni</h2>
+        <h2 class="adm-title">Daftar Konten Departemen</h2>
         <button class="adm-btn-add">
             <i class="bi bi-plus"></i> Tambah Data
         </button>
@@ -168,14 +168,13 @@
                         <!-- Data Galeri (dummy) -->
                         <tr>
                             <td>1</td>
-                            <td>
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHrrqctH3nm0R5vu9AM69b--LaN02ueV2DdQ&s" 
+                            <td><img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
                                     alt="foto" 
                                     class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                    style="max-width: 100px; max-height: 100px; object-fit: cover;">
                             </td>
-                            <td>Nyanya Caine</td>
-                            <td>59</td>
+                            <td class="text-start text-truncate" style="min-width: 400px;">Hasna Nabaaaaassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssiilah Caine</td>
+                            <td class="text-center text-truncate" style="min-width: 100px; max-width: 150px;">45</td>
                             <td>
                             <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
@@ -190,10 +189,10 @@
                             <td><img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
                                     alt="foto" 
                                     class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                    style="max-width: 100px; max-height: 100px; object-fit: cover;">
                             </td>
-                            <td>Mikazuki Bunny</td>
-                            <td>60</td>
+                            <td class="text-start text-truncate" style="min-width: 400px;">Mikazuki Nanaaa</td>
+                            <td class="text-center text-truncate" style="min-width: 100px; max-width: 200px;">32</td>
                             <!-- Tombol Aksi -->
                         <td class="text-center">
                             <div style="display: flex; justify-content: center; gap: 6px;">

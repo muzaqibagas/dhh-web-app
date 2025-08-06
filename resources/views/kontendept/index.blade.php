@@ -160,6 +160,7 @@
                             <th>No.</th>
                             <th>Section Judul</th>
                             <th>Deskripsi</th>
+                            <th>Nama Kategori</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -167,8 +168,9 @@
                         <!-- Data Galeri (dummy) -->
                         <tr>
                             <td>1</td>
-                            <td>Sejarah DHH</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Dahulu kala saat dibangunnya kerajaan ipb, Departemen DHH...</td>
+                            <td class="text-start text-truncate" style="max-width: 150px;">12/sssssssssssssssss ssssssssssssssss03/2025</td>
+                            <td class="text-start text-truncate" style="max-width: 500px;">Penerimaan Sertifikat Webinar berhasil mendapatkan sebanyak 1234 audience</td>
+                            <td class="text-start text-truncate" style="max-width: 150px;">Prestasi</td>
                             <td>
                             <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
@@ -180,16 +182,19 @@
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>Visi dan Misi</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">DHH memiliki misi untu menumbuhkan generasi yang unggul dan...</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">13/03/2024</td>
+                            <td class="text-start text-truncate" style="max-width: 600px;">Video profile DHH</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Akademik</td>
                             <!-- Tombol Aksi -->
                         <td class="text-center">
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
+                            <div style="display: flex; justify-content: center; gap: 6px;">
+                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                </button>
+                            </div>
                         </td>
                         <!-- Tambahkan baris lain sesuai kebutuhan -->
                     </tbody>
