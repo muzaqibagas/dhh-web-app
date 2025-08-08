@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_staffdept')->constrained('staff_depts')->onDelete('cascade');
-            $table->foreignId('id_kolokium')->constrained('kolokiums')->onDelete('cascade');
+            $table->foreignId('id_kolokiummhs')->constrained('kolokiummhs')->onDelete('cascade');                        
             $table->foreignId('id_seminar')->constrained('seminars')->onDelete('cascade');
             $table->foreignId('id_sidang')->constrained('sidangs')->onDelete('cascade');
             $table->timestamps();

@@ -15,8 +15,8 @@
         <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
       </a>
       <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
-        <a href="{{route('kurikulum.index')}}" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
-        <a href="{{route('mata-kuliah.index')}}" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
+        <a href="#" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
+        <a href="#" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
       </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->

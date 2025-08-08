@@ -3,16 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kolokiummhs;
+use App\Models\Ruangan;
+use App\Models\User;
+use App\Models\StaffDept;
+use App\Models\Semester;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class KolokiummhsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return view('kolokiummhs.index');
+    {        
+        $mahasiswaId = auth()->id();
+        $kolokiummhs = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        if ($kolokiummhs) {
+            // Sudah pernah daftar → lihat detail
+            return redirect()->route('kolokiummhs.show', $kolokiummhs->id);
+        } else {
+            // Belum pernah daftar → tampilkan form
+            return redirect()->route('kolokiummhs.create');
+        }
     }
 
     /**
@@ -20,7 +42,11 @@ class KolokiummhsController extends Controller
      */
     public function create()
     {
-        //
+        $kolokiummhs = Kolokiummhs::all();
+        $listDosen = StaffDept::all();
+        $semesters = Semester::all();
+        $ruangans = Ruangan::all();
+        return view('kolokiummhs.create', compact('kolokiummhs', 'listDosen', 'semesters', 'ruangans'));
     }
 
     /**
@@ -28,15 +54,68 @@ class KolokiummhsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id',
+            'id_semester' => 'required|exists:semesters,id',
+            'id_pembimbing1' => 'required|exists:staff_depts,id',              
+            'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:50',
+            'alamat' => 'required|string|max:255',
+            'tanggal' => 'required|date|after_or_equal:today',
+            'waktu_mulai' => 'required|date_format:H:i',
+            'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
+            'judul_kolokium' => 'required|string|max:255',
+        ]);
+
+        $data['nama'] = Str::title($data['nama']);
+        $data['nim'] = Str::upper($data['nim']); 
+        $data['alamat'] = Str::title($data['alamat']); 
+        $data['judul_kolokium'] = Str::title($data['judul_kolokium']);
+
+        // Hitung hari kerja
+        $tanggalKolokium = Carbon::parse($request->tanggal);
+        $hariIni = Carbon::today();
+
+        $selisihHariKerja = 0;
+        $tanggalCek = $hariIni->copy();
+        while ($tanggalCek->lt($tanggalKolokium)) {
+            if (!$tanggalCek->isWeekend()) {
+                $selisihHariKerja++;
+            }
+            $tanggalCek->addDay();
+        }        
+
+        if ($selisihHariKerja <= 4) {
+            return back()
+                ->withInput()
+                ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
+        }
+
+        if ($tanggalKolokium->isWeekend()) {
+            return back()
+                ->withInput()
+                ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
+        }        
+
+        // Simpan ke DB dulu
+        $insert = Kolokiummhs::create($data);
+
+        if ($insert) {
+            return redirect()->route('kolokiummhs.index')->with('success', 'Data berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan kolokium.');
+        } else {
+            return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Kolokiummhs $kolokiummhs)
     {
-        //
+        return view('kolokiummhs.show', compact('kolokiummhs'));
     }
 
     /**
@@ -44,7 +123,9 @@ class KolokiummhsController extends Controller
      */
     public function edit(Kolokiummhs $kolokiummhs)
     {
-        //
+        $ruangans = Ruangan::all();
+        $mahasiswas = User::where('role', 'mahasiswa')->get();
+        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'mahasiswas'));
     }
 
     /**
@@ -52,7 +133,25 @@ class KolokiummhsController extends Controller
      */
     public function update(Request $request, Kolokiummhs $kolokiummhs)
     {
-        //
+        $data = $request->validate([
+            'id_ruangan' => 'required|exists:ruangans,id',
+            'id_mahasiswa' => 'required|exists:users,id', 
+            'id_semester' => 'required|exists:semesters,id',
+            'id_pembimbing1' => 'required|exists:staff_depts,id',
+            'id_pembimbing2' => 'required|exists:staff_depts,id',   
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:50',
+            'alamat' => 'required|string|max:255',
+            'tanggal' => 'required|date|after_or_equal:today',
+            'waktu_mulai' => 'required|date_format:H:i',
+            'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
+            'judul_kolokium' => 'required|string|max:255',
+        ]);
+        $update = $kolokiummhs->update($data);
+        if ($update)
+            return redirect()->route('kolokiummhs.index')->with('success', 'Data berhasil diperbarui!');
+        else
+            return back()->with('error', 'Gagal memperbarui data!');
     }
 
     /**
@@ -60,6 +159,7 @@ class KolokiummhsController extends Controller
      */
     public function destroy(Kolokiummhs $kolokiummhs)
     {
-        //
+        $kolokiummhs->delete();
+        return redirect()->route('kolokiummhs.index');
     }
 }

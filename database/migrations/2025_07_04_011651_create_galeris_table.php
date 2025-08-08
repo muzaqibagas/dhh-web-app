@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('galeris', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('id_kategori')->constrained('kategoris')->onDelete('cascade');
+            $table->foreignId('id_kategorigaleri')->constrained('kategori_galeris')->onDelete('cascade');
             $table->string('judul')->nullable();
             $table->string('tanggal')->nullable();
             $table->enum('tipe', ['gambar', 'video'])->default('gambar');

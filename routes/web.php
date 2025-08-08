@@ -7,22 +7,15 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\JenjangController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KategoriStaffController; 
-use App\Http\Controllers\KategoriKompetensiController;
 use App\Http\Controllers\KolokiumController;
 use App\Http\Controllers\KontenDeptController;
-use App\Http\Controllers\KurikulumController;
-use App\Http\Controllers\KurikulumDetailController;
-use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\ReviewAlumniController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RuanganController;
-use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\SeminarController;
 use App\Http\Controllers\SidangController;
-use App\Http\Controllers\SmkController;
 use App\Http\Controllers\StaffDeptController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TipeController;
@@ -62,20 +55,13 @@ Route::get('/', function () {
 // Route::resource('divisi', DivisiController::class);
 // Route::resource('galeri', GaleriController::class);
 // Route::resource('jenjang', JenjangController::class);
-// Route::resource('kategori', KategoriController::class);
-// Route::resource('kategori-kompetensi', KategoriKompetensiController::class);
 // Route::resource('kolokium', KolokiumController::class);
 // Route::resource('konten-dept', KontenDeptController::class);
-// Route::resource('kurikulum', KurikulumController::class); // sudah diperbaiki dari KurikulumContror
-// Route::resource('kurikulum-detail', KurikulumDetailController::class);
-// Route::resource('mata-kuliah', MataKuliahController::class);
 // Route::resource('pembimbing', PembimbingController::class);
 // Route::resource('review-alumni', ReviewAlumniController::class);
 // Route::resource('ruangan', RuanganController::class);
-// Route::resource('semester', SemesterController::class);
 // Route::resource('seminar', SeminarController::class);
 // Route::resource('sidang', SidangController::class);
-// Route::resource('smk', SmkController::class);
 // Route::resource('staff-dept', StaffDeptController::class);
 // Route::resource('template', TemplateController::class);
 // Route::resource('tipe', TipeController::class);
@@ -121,12 +107,19 @@ Route::get('email/verify/{token}', [RegisterController::class, 'verify'])->name(
 
 //admprofile.index
 // ROUTE MAHASISWA
-Route::get('home', [HomeController::class, 'index'])->name('home.index');
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
+
 Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
+Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');
+Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');
+Route::get('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'show'])->name('kolokiummhs.show');
+Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
+Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
+Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
+
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
 Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
@@ -183,32 +176,14 @@ Route::get('jenjang/{jenjang}/edit', [JenjangController::class, 'edit'])->name('
 Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jenjang.update');
 Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
 
-// Kategori
-Route::get('kategori', [KategoriController::class, 'index'])->name('kategori.index');
-Route::get('kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-Route::post('kategori', [KategoriController::class, 'store'])->name('kategori.store');
-Route::get('kategori/{kategori}', [KategoriController::class, 'show'])->name('kategori.show');
-Route::get('kategori/{kategori}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
-Route::put('kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
-Route::delete('kategori/{kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
-
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
 Route::get('kategoristaff/create', [KategoriStaffController::class, 'create'])->name('kategoristaff.create');                                                                                      
 Route::post('kategoristaff', [KategoriStaffController::class, 'store'])->name('kategoristaff.store');
 Route::get('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'show'])->name('kategoristaff.show');
-Route::get('kategoristaff/{kategoriStaff}/edit', [KategoriStaffController::class, 'edit'])->name('kategoristaff.edit');
+Route::get('kategoristaff/{kategoriStaff}/edit', [KategoriStaffController::class, 'edit'])->name('kategoristaff.edit');                           
 Route::put('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'update'])->name('kategoristaff.update');
 Route::delete('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'destroy'])->name('kategoristaff.destroy');
-
-// KategoriKompetensi
-Route::get('kategorikompetensi', [KategoriController::class, 'index'])->name('kategorikompetensi.index');
-Route::get('kategorikompetensi/create', [KategoriController::class, 'create'])->name('kategorikompetensi.create');
-Route::post('kategorikompetensi', [KategoriController::class, 'store'])->name('kategorikompetensi.store');
-Route::get('kategorikompetensi/{kategorikompetensi}', [KategoriController::class, 'show'])->name('kategorikompetensi.show');
-Route::get('kategorikompetensi/{kategorikompetensi}/edit', [KategoriController::class, 'edit'])->name('kategorikompetensi.edit');
-Route::put('kategorikompetensi/{kategorikompetensi}', [KategoriController::class, 'update'])->name('kategorikompetensi.update');
-Route::delete('kategorikompetensi/{kategorikompetensi}', [KategoriController::class, 'destroy'])->name('kategorikompetensi.destroy');
 
 // Kolokium
 Route::get('kolokium', [KolokiumController::class, 'index'])->name('kolokium.index');
@@ -227,33 +202,6 @@ Route::get('konten-dept/{kontendept}', [KontenDeptController::class, 'show'])->n
 Route::get('konten-dept/{kontendept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
 Route::put('konten-dept/{kontendept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
 Route::delete('konten-dept/{kontendept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
-
-// Kurikulum
-Route::get('kurikulum', [KurikulumController::class, 'index'])->name('kurikulum.index');
-Route::get('kurikulum/create', [KurikulumController::class, 'create'])->name('kurikulum.create');
-Route::post('kurikulum', [KurikulumController::class, 'store'])->name('kurikulum.store');
-Route::get('kurikulum/{kurikulum}', [KurikulumController::class, 'show'])->name('kurikulum.show');
-Route::get('kurikulum/{kurikulum}/edit', [KurikulumController::class, 'edit'])->name('kurikulum.edit');
-Route::put('kurikulum/{kurikulum}', [KurikulumController::class, 'update'])->name('kurikulum.update');
-Route::delete('kurikulum/{kurikulum}', [KurikulumController::class, 'destroy'])->name('kurikulum.destroy');
-
-// KurikulumDetail
-Route::get('kurikulum-detail', [KurikulumDetailController::class, 'index'])->name('kurikulum-detail.index');
-Route::get('kurikulum-detail/create', [KurikulumDetailController::class, 'create'])->name('kurikulum-detail.create');
-Route::post('kurikulum-detail', [KurikulumDetailController::class, 'store'])->name('kurikulum-detail.store');
-Route::get('kurikulum-detail/{kurikulumdetail}', [KurikulumDetailController::class, 'show'])->name('kurikulum-detail.show');
-Route::get('kurikulum-detail/{kurikulumdetail}/edit', [KurikulumDetailController::class, 'edit'])->name('kurikulum-detail.edit');
-Route::put('kurikulum-detail/{kurikulumdetail}', [KurikulumDetailController::class, 'update'])->name('kurikulum-detail.update');
-Route::delete('kurikulum-detail/{kurikulumdetail}', [KurikulumDetailController::class, 'destroy'])->name('kurikulum-detail.destroy');
-
-// MataKuliah
-Route::get('mata-kuliah', [MataKuliahController::class, 'index'])->name('mata-kuliah.index');
-Route::get('mata-kuliah/create', [MataKuliahController::class, 'create'])->name('mata-kuliah.create');
-Route::post('mata-kuliah', [MataKuliahController::class, 'store'])->name('mata-kuliah.store');
-Route::get('mata-kuliah/{matakuliah}', [MataKuliahController::class, 'show'])->name('mata-kuliah.show');
-Route::get('mata-kuliah/{matakuliah}/edit', [MataKuliahController::class, 'edit'])->name('mata-kuliah.edit');
-Route::put('mata-kuliah/{matakuliah}', [MataKuliahController::class, 'update'])->name('mata-kuliah.update');
-Route::delete('mata-kuliah/{matakuliah}', [MataKuliahController::class, 'destroy'])->name('mata-kuliah.destroy');
 
 // Pembimbing
 Route::get('pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
@@ -282,15 +230,6 @@ Route::get('ruangan/{ruangan}/edit', [RuanganController::class, 'edit'])->name('
 Route::put('ruangan/{ruangan}', [RuanganController::class, 'update'])->name('ruangan.update');
 Route::delete('ruangan/{ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 
-// Semester
-Route::get('semester', [SemesterController::class, 'index'])->name('semester.index');
-Route::get('semester/create', [SemesterController::class, 'create'])->name('semester.create');
-Route::post('semester', [SemesterController::class, 'store'])->name('semester.store');
-Route::get('semester/{semester}', [SemesterController::class, 'show'])->name('semester.show');
-Route::get('semester/{semester}/edit', [SemesterController::class, 'edit'])->name('semester.edit');
-Route::put('semester/{semester}', [SemesterController::class, 'update'])->name('semester.update');
-Route::delete('semester/{semester}', [SemesterController::class, 'destroy'])->name('semester.destroy');
-
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
 Route::get('seminar/create', [SeminarController::class, 'create'])->name('seminar.create');
@@ -308,15 +247,6 @@ Route::get('sidang/{sidang}', [SidangController::class, 'show'])->name('sidang.s
 Route::get('sidang/{sidang}/edit', [SidangController::class, 'edit'])->name('sidang.edit');
 Route::put('sidang/{sidang}', [SidangController::class, 'update'])->name('sidang.update');
 Route::delete('sidang/{sidang}', [SidangController::class, 'destroy'])->name('sidang.destroy');
-
-// SMK
-Route::get('smk', [SmkController::class, 'index'])->name('smk.index');
-Route::get('smk/create', [SmkController::class, 'create'])->name('smk.create');
-Route::post('smk', [SmkController::class, 'store'])->name('smk.store');
-Route::get('smk/{smk}', [SmkController::class, 'show'])->name('smk.show');
-Route::get('smk/{smk}/edit', [SmkController::class, 'edit'])->name('smk.edit');
-Route::put('smk/{smk}', [SmkController::class, 'update'])->name('smk.update');
-Route::delete('smk/{smk}', [SmkController::class, 'destroy'])->name('smk.destroy');
 
 // StaffDept
 Route::get('staffdept', [StaffDeptController::class, 'index'])->name('staffdept.index');

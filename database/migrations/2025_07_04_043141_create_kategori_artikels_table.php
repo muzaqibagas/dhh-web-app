@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+    /** 
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('smks', function (Blueprint $table) {
+        Schema::create('kategori_artikels', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('id_jenjang')->constrained('jenjangs')->onDelete('cascade');
-            $table->foreignId('id_semester')->constrained('semesters')->onDelete('cascade');
-            $table->foreignId('id_matakuliah')->constrained('mata_kuliahs')->onDelete('cascade');
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('smks');
+        Schema::dropIfExists('kategori_artikels');
     }
 };
