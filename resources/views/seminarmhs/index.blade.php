@@ -148,8 +148,18 @@
       </div>
 
       <div class="form-group">
-        <label>Waktu Seminar</label>
-        <input type="time">
+        <label>Waktu kolokium</label>
+        <select>
+          <option selected disabled>Pilih Waktu</option>
+          <option value="08:00-09:00">08:00 - 09:00</option>
+          <option value="09:00-10:00">09:00 - 10:00</option>
+          <option value="10:00-11:00">10:00 - 11:00</option>
+          <option value="11:00-12:00">11:00 - 12:00</option>
+          <option value="12:00-13:00" disabled>12:00 - 13:00 (Istirahat)</option>
+          <option value="13:00-14:00">13:00 - 14:00</option>
+          <option value="14:00-15:00">14:00 - 15:00</option>
+          <option value="15:00-16:00">15:00 - 16:00</option>
+        </select>
       </div>
 
       <div class="form-group">

@@ -97,7 +97,7 @@
       </div>
 
       <!-- BTN SDM ===================== -->
-      <a href="/admsumberdayamanusia" class="menu">
+      <a href="/staffdept" class="menu">
         <div class="menu-left">
           <i class="bi bi-people-fill"></i> <span> Sumber Daya Manusia </span>
         </div>
@@ -142,7 +142,7 @@
       </script>
     </aside>
     
-<!-- Halaman Galeri - Admin Dashboard -->
+<!-- MAIN CONTENT -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
@@ -162,7 +162,7 @@
                             <th>Tanggal</th>
                             <th>Judul</th>
                             <th>Tipe</th>
-                            <th>Nama Kategori</th>
+                            <div> <th>Nama Kategori</th> </div>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -177,7 +177,7 @@
                                     style="max-width: 80px; max-height: 80px; object-fit: cover;">
                             </td>
                             <td>12/03/2025</td>
-                            <td>Penerimaan Sertifikat...</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce iaculis in massa eget bibendum. Nulla posuere consectetur lorem, ac feugiat ex aliquet quis. Vestibulum fringilla convallis orci, in tincidunt neque gravida at.</td>
                             <td>Foto</td>
                             <td>Prestasi</td>
                             <td>
@@ -197,17 +197,19 @@
                                     style="max-width: 80px; max-height: 80px; object-fit: cover;">
                             </td>
                             <td>13/03/2024</td>
-                            <td>Video profile DHH</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Video profile DHH</td>
                             <td>Video</td>
                             <td>Akademik</td>
                             <!-- Tombol Aksi -->
                         <td class="text-center">
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
+                            <div style="display: flex; justify-content: center; gap: 6px;">
+                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                </button>
+                            </div>
                         </td>
                         <!-- Tambahkan baris lain sesuai kebutuhan -->
                     </tbody>
