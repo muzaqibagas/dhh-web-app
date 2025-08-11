@@ -165,15 +165,15 @@
                             <div class="input-group">
                                 <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
                             </div>',
-                        'Hari/Tanggal' => '
+                        'Hari/Tanggal Sidang' => '
                             <div class="input-group">
                                 <input type="date" class="text-start form-control form-control-sm">
                             </div>',
-                        'Waktu' => '
+                        'Waktu Sidang' => '
                             <div class="input-group">
                                 <input type="time" class="text-start form-control form-control-sm">
                             </div>',
-                        'Tempat' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat sidang">',
+                        'Tempat Sidang' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat sidang">',
                         'Pembimbing Utama' => '
                             <select class="text-start form-select">
                                 <option disabled selected>Pilih Pembimbing Utama</option>
