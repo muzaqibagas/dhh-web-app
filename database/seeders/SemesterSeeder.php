@@ -13,17 +13,15 @@ class SemesterSeeder extends Seeder
      */
     public function run(): void
     {
-        $semesters = [
-            '1', '2', '3', '4',
-            '5', '6', '7', '8',
-        ];
-
-        foreach ($semesters as $semester) {
-            DB::table('semesters')->insert([                
-                'tingkat_semester' => $semester,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        \DB::table('Semesters')->insert([
+            ['semester' => '1'],
+            ['semester' => '2'],
+            ['semester' => '3'],
+            ['semester' => '4'],
+            ['semester' => '5'],
+            ['semester' => '6'],
+            ['semester' => '7'],
+            ['semester' => '8'],
+        ]);
     }
 }

@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function jenjang()
     {
         return $this->belongsTo(Jenjang::class, 'id_jenjang');
-    }
+    }    
 
     public function kontenDept() {
         return $this->hasMany(KontenDept::class, 'id_user');

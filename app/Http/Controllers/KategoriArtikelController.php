@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Home;
+use App\Models\KategoriArtikel;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class KategoriArtikelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('home.index');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Home $home)
+    public function show(KategoriArtikel $kategoriArtikel)
     {
         //
     }
@@ -42,7 +42,7 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Home $home)
+    public function edit(KategoriArtikel $kategoriArtikel)
     {
         //
     }
@@ -50,7 +50,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Home $home)
+    public function update(Request $request, KategoriArtikel $kategoriArtikel)
     {
         //
     }
@@ -58,7 +58,7 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Home $home)
+    public function destroy(KategoriArtikel $kategoriArtikel)
     {
         //
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KategoriMatakuliah;
+use App\Models\KategoriGaleri;
 use Illuminate\Http\Request;
 
-class KategoriMatakuliahController extends Controller
+class KategoriGaleriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class KategoriMatakuliahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KategoriMatakuliah $kategoriMatakuliah)
+    public function show(KategoriGaleri $kategoriGaleri)
     {
         //
     }
@@ -42,7 +42,7 @@ class KategoriMatakuliahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KategoriMatakuliah $kategoriMatakuliah)
+    public function edit(KategoriGaleri $kategoriGaleri)
     {
         //
     }
@@ -50,7 +50,7 @@ class KategoriMatakuliahController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, KategoriMatakuliah $kategoriMatakuliah)
+    public function update(Request $request, KategoriGaleri $kategoriGaleri)
     {
         //
     }
@@ -58,7 +58,7 @@ class KategoriMatakuliahController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KategoriMatakuliah $kategoriMatakuliah)
+    public function destroy(KategoriGaleri $kategoriGaleri)
     {
         //
     }

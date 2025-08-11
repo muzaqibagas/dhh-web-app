@@ -12,8 +12,6 @@ use App\Models\KategoriStaff;
 use App\Models\KategoriKompetensi;
 use App\Models\Kolokium;
 use App\Models\KontenDept;
-use App\Models\Kurikulum;
-use App\Models\KurikulumDetail;
 use App\Models\Matakuliah;
 use App\Models\Pembimbing;
 use App\Models\Review;

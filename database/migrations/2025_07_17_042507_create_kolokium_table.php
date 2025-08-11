@@ -11,15 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kolokiums', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_ruangan')->constrained('ruangans')->onDelete('cascade');
-            $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
-            $table->date('tanggal');
-            $table->time('waktu');            
-            $table->string('judul_kolokium');
-            $table->timestamps();
-        });
+        //
     }
 
     /**

@@ -7,11 +7,26 @@
       <a href="" class="menu-image-only">
         <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
+<<<<<<< HEAD
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
         $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept');
       @endphp
+=======
+      <!-- BTN AKADEMIK========================= -->
+      <a href="" class="menu" id="dropdownToggle">
+        <div class="menu-left">
+          <i class="bi bi-journal-check"></i> 
+          <span> Akademik </span>
+        </div>
+        <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
+      </a>
+      <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
+        <a href="#" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
+        <a href="#" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
+      </div>
+>>>>>>> 55fe15149dea53387a4f33d996c4eeb2406d20cb
 
       <!-- BTN TINGKAT AKHIR===================== -->
       <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">

@@ -490,10 +490,6 @@ body {
   margin-bottom: 10px;
 }
 
-.table th:nth-child(1), .table td:nth-child(1) { width: 5%; }
-.table th:nth-child(2), .table td:nth-child(2) { width: 3%; }
-.table th:nth-child(3), .table td:nth-child(3) { width: 3%; }
-
 .btn-edit-photo {
   background: #28a745;
   color: #fff;
@@ -812,6 +808,55 @@ body {
 .adm-btn-delete:hover {
   background: #c10000;
 }
+
+  /* Perbaiki vertical alignment Select2 */
+.select2-container--default .select2-selection--single  {
+  height: 38px !important; /* Sesuaikan dengan tinggi input lain */
+  padding: 6px 8px;
+  border: 1px solid #ddd !important; /* Sesuaikan dengan form lain */
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  display: flex;
+  align-items: center;  
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: normal;
+  padding-left: 0; /* Hapus padding ekstra */
+  margin-top: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 20px;    
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 0px !important;
+    padding-right: 20px;
+    font-weight: 100;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #000000 transparent transparent transparent !important;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    height: 0;
+    left: 50%;
+    margin-left: -4px;
+    margin-top: -2px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}   
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
