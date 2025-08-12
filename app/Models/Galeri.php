@@ -12,7 +12,7 @@ class Galeri extends Model
     protected $table = 'galeris';
     protected $fillable = [
         'id_user', 
-        'id_kategori', 
+        'id_kategorigaleris', 
         'judul', 
         'tanggal', 
         'tipe', 
@@ -25,8 +25,8 @@ class Galeri extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function kategori()
+    public function kategorigaleri()
     {
-        return $this->belongsTo(Kategori::class, 'id_kategori');
+        return $this->belongsTo(KategoriGaleri::class, 'id_kategorigaleri');
     }
 }
