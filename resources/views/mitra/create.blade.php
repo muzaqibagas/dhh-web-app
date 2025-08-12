@@ -153,97 +153,43 @@
         });
       </script>
     </aside>
-    
-<!-- KONTEN -->
+
+<!-- DAFTAR MITRA -->
 <main class="content">
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Edit Data Review Alumni</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-          <!-- Kolom Kiri: Form -->
-          <div class="col-lg-8">
+        <h2 class="adm-title">Create Mitra</h2>
+    </div> 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
 
-            <!-- Nama Alumni -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="nama" class="col-form-label">Nama</label>
+            <form>
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                  <label for="mitra" class="col-form-label">Mitra</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="mitra" placeholder="Masukkan nama mitra" required>
+                </div>
               </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="nama" placeholder="Tulis nama alumni.." required>
+                            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                  <label for="logo" class="col-form-label">Logo</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="file" class="form-control" id="logo" placeholder="No file logo selected" required>
+                </div>
               </div>
-            </div>
-
-            <!-- Angkatan -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="angkatan" class="col-form-label">Angkatan</label>
+              <!-- Tombol -->
+              <div class="row">
+                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-between">
+                      <button type="button" class="btn btn-secondary">Kembali</button>
+                      <button type="button" class="btn btn-success">Simpan</button>
+                  </div>
               </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="angkatan" placeholder="Tulis angkatan.." required>
-              </div>
-            </div>
-
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Kolom Kanan: Upload Gambar -->
-          <div class="col-lg-4 text-center mb-3">
-            <label class="text-start form-label fw-bold d-block">Foto</label>
-            <!-- Tempat preview -->
-            <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
-                <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
-                <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-            </div>
-            <!-- Input File -->
-                <input type="file" class="form-control" id="foto" accept="image/*">
-            </div>
-            </div>
-
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
-        </div>
-
-      </form>
-    </div>
+          </form>
+      </div>
   </div>
 </div>
-<script>
-  document.getElementById('foto').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const previewImage = document.getElementById('preview-image');
-    const previewIcon = document.getElementById('preview-icon');
-
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.classList.remove('d-none');
-        previewIcon.classList.add('d-none');
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.src = '';
-      previewImage.classList.add('d-none');
-      previewIcon.classList.remove('d-none');
-    }
-  });
-</script>
-
 @endsection

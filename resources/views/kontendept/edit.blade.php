@@ -9,32 +9,10 @@
       </a>
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
-        $isAkademikActive = Request::is('kurikulum') || Request::is('mata-kuliah');
+        $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
-        $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept');
+        $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
       @endphp
-
-      <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu{{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
-        <div class="menu-left">
-          <i class="bi bi-journal-check"></i>
-          <span> Akademik </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="akademik">
-          {!! $isAkademikActive ? '&#9660;' : '&#9650;' !!}
-        </span>
-      </a>
-      <div data-menu="akademik"
-        style="margin-left:24px; flex-direction:column; {{ $isAkademikActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/kurikulum"
-          class="submenu-link {{ Request::is('kurikulum') ? 'active-submenu' : '' }}">
-          <i class="bi bi-archive"></i> Daftar Kurikulum
-        </a>
-        <a href="/mata-kuliah"
-          class="submenu-link {{ Request::is('mata-kuliah') ? 'active-submenu' : '' }}">
-          <i class="bi bi-journals"></i> Mata Kuliah
-        </a>
-      </div>
 
       <!-- BTN TINGKAT AKHIR===================== -->
       <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
@@ -67,7 +45,7 @@
       </div>
 
       <!-- BTN KONTEN ===================== -->
-      <a href="#" class="menu active{{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+      <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
         <div class="menu-left">
           <i class="bi bi-collection"></i>
           <span> Konten </span>
@@ -78,9 +56,17 @@
       </a>
       <div data-menu="konten"
         style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/kategorigaleri"
+          class="submenu-link {{ Request::is('kategorigaleri') ? 'active-submenu' : '' }}">
+          <i class="bi bi-clipboard-check"></i> Kategori Galeri
+        </a>
         <a href="/galeri"
           class="submenu-link {{ Request::is('galeri') ? 'active-submenu' : '' }}">
           <i class="bi bi-images"></i> Galeri
+        </a>
+        <a href="/kategoriartikel"
+          class="submenu-link {{ Request::is('kategoriartikel') ? 'active-submenu' : '' }}">
+          <i class="bi bi-clipboard-check"></i> Kategori Artikel
         </a>
         <a href="/artikel"
           class="submenu-link {{ Request::is('artikel') ? 'active-submenu' : '' }}">
@@ -94,15 +80,41 @@
           class="submenu-link {{ Request::is('konten-dept') ? 'active-submenu' : '' }}">
           <i class="bi bi-laptop"></i> Konten Departemen
         </a>
+        <a href="/kontenjenjang"
+          class="submenu-link {{ Request::is('kontenjenjang') ? 'active-submenu' : '' }}">
+          <i class="bi bi-house-door"></i> Konten Jenjang
+        </a>
+        <a href="/mitra"
+          class="submenu-link {{ Request::is('mitra') ? 'active-submenu' : '' }}">
+          <i class="bi bi-person-check"></i> Mitra
+        </a>
       </div>
 
       <!-- BTN SDM ===================== -->
-      <a href="/staffdept" class="menu">
+      <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
         <div class="menu-left">
-          <i class="bi bi-people-fill"></i> <span> Sumber Daya Manusia </span>
+          <i class="bi bi-people-fill"></i>
+          <span> Sumber Daya Manusia </span>
         </div>
-        <span class="dropdownArrow"></span>
+        <span class="dropdownArrow" data-arrow="staffdept">
+          {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+        </span>
       </a>
+      <div data-menu="staffdept"
+        style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/kategoristaff-dept"
+          class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+          <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
+        </a>
+        <a href="/staffdept"
+          class="submenu-link {{ Request::is('staff-dept') ? 'active-submenu' : '' }}">
+          <i class="bi bi-check2-circle"></i> Staff Departemen
+        </a>
+        <a href="/ketuadhh"
+          class="submenu-link {{ Request::is('ketuadhh') ? 'active-submenu' : '' }}">
+          <i class="bi bi-calendar-event"></i> Ketua DHH
+        </a>
+      </div>
       
       <!-- PEMBATAS EMAS ===================== -->
       <a href="" class="menu-image-only">
@@ -141,69 +153,74 @@
         });
       </script>
     </aside>
-<main class="content">
-<div class="container-fluid">
+
+<!-- KONTEN DEPARTEMEN -->
+ <main class="content">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Edit Konten Departemen</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-            <!-- Judul -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="judul" class="col-form-label">Judul</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
-              </div>
-            </div>
+        <h2 class="adm-title">Konten Departemen</h2>
+    </div> 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
 
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
+            <form>
+                <!-- Sejarah -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                    <div class="col-sm-10">
+                        <textarea rows="4" class="form-control"> Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.
+                        </textarea>
+                    </div>
+                </div>
 
-          </div>
+                <!-- Visi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.</textarea>
+                    </div>
+                </div>
 
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                <!-- Misi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">
+1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
+2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
+3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
+4. Menghasilkan lulusan PS THH yang mempunyai dasar ketrampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.a
+                          </textarea>
+                    </div>
+                </div>
+
+                <!-- Kebijakan Mutu -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                    <div class="col-sm-10">
+                        <textarea rows="5" class="form-control">Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:</textarea>
+                    </div>
+                </div>
+            </form>
         </div>
-
-      </form>
+    </div>
+<!-- Tombol -->
+<div>
+  <div class="row">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
+      <button type="button" class="btn btn-secondary">Kembali</button>
+      <button type="button" class="btn btn-success">Simpan Perubahan</button>
     </div>
   </div>
 </div>
-<script>
-  document.getElementById('foto').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const previewImage = document.getElementById('preview-image');
-    const previewIcon = document.getElementById('preview-icon');
-
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.classList.remove('d-none');
-        previewIcon.classList.add('d-none');
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.src = '';
-      previewImage.classList.add('d-none');
-      previewIcon.classList.remove('d-none');
-    }
-  });
-</script>
-
 @endsection

@@ -154,7 +154,7 @@
       </script>
     </aside>
     
-<!-- Halaman Galeri - Admin Dashboard -->
+<!-- Halaman Review Alumni - Admin Dashboard -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">

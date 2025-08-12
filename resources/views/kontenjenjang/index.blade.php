@@ -153,97 +153,78 @@
         });
       </script>
     </aside>
-    
-<!-- KONTEN -->
+
+<!-- KONTEN JENJANG -->
 <main class="content">
-<div class="container-fluid">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Edit Data Review Alumni</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-          <!-- Kolom Kiri: Form -->
-          <div class="col-lg-8">
-
-            <!-- Nama Alumni -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="nama" class="col-form-label">Nama</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="nama" placeholder="Tulis nama alumni.." required>
-              </div>
+        <h2 class="adm-title">Konten Jenjang</h2>
+        <button class="adm-btn-add">
+            <i class="bi bi-plus"></i> Tambah Data
+        </button>
+    </div> 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light ">
+                        <tr>
+                            <th style="width: 10%;">No.</th>
+                            <th style="width: 65%;">Jenjang</th>
+                            <th style="width: 25%;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data Jenjang (dummy) -->
+                        <tr>
+                            <td>1</td>
+                            <td class="text-start">S1</td>
+                            <!-- Tombol Aksi -->
+                            <td class="text-center">
+                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="text-start">S2</td>
+                            <!-- Tombol Aksi -->
+                            <td class="text-center">
+                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="text-start">S3</td>
+                            <!-- Tombol Aksi -->
+                            <td class="text-center">
+                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <!-- Angkatan -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="angkatan" class="col-form-label">Angkatan</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="angkatan" placeholder="Tulis angkatan.." required>
-              </div>
-            </div>
-
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Kolom Kanan: Upload Gambar -->
-          <div class="col-lg-4 text-center mb-3">
-            <label class="text-start form-label fw-bold d-block">Foto</label>
-            <!-- Tempat preview -->
-            <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
-                <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
-                <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-            </div>
-            <!-- Input File -->
-                <input type="file" class="form-control" id="foto" accept="image/*">
-            </div>
-            </div>
-
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
         </div>
-
-      </form>
     </div>
-  </div>
 </div>
-<script>
-  document.getElementById('foto').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const previewImage = document.getElementById('preview-image');
-    const previewIcon = document.getElementById('preview-icon');
-
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.classList.remove('d-none');
-        previewIcon.classList.add('d-none');
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.src = '';
-      previewImage.classList.add('d-none');
-      previewIcon.classList.remove('d-none');
-    }
-  });
-</script>
-
 @endsection

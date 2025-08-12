@@ -81,7 +81,7 @@ body {
   z-index: 1000;
   position: sticky;      /* nempel di viewport */
   top: 50px;             /* jarak dari atas, tepat di bawah topbar */
-  height: calc(100vh - 50px); /* penuh layar minus topbar */
+  height: fit-content; /* penuh layar minus topbar */
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
 }
@@ -391,22 +391,23 @@ body {
 .danger .status { color: red; }
 .neutral .status { color: #999; }
 
-/* === RESPONSIVE MODE === */
 /* === RESPONSIVE === */
 @media (max-width: 992px) {
   /* Sidebar jadi overlay */
   .sidebar {
-    position: fixed;
-    top: 50px; /* di bawah navbar */
-    left: 0;
-    width: 240px;
-    height: 100%;
-    height: calc(100vh - 50px);
-    background: #fff;
-    border-right: 1px solid #ddd;
-    transform: translateX(-100%); /* default: sembunyi */
-    transition: transform 0.3s ease;
-    z-index: 1000;
+  width: 260px;
+  font-size: 10px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-height: calc(100vh - 50px);
+  padding: 20px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  position: sticky;      /* nempel di viewport */
+  top: 50px;             /* jarak dari atas, tepat di bawah topbar */
+  height: calc(100vh - 50px); /* penuh layar minus topbar */
+  scrollbar-width: none; /* Firefox */
   }
 
   /* Kalau sidebar aktif, tampilkan */
@@ -416,8 +417,9 @@ body {
 
   /* Konten tetap full */
   .content {
-    width: 100%;
-    margin-left: 0 !important;
+    margin-left: 240px; /* sama dengan lebar sidebar */
+    padding: 20px;
+    flex: 1;
   }
 
   /* Burger button muncul */
@@ -891,6 +893,3 @@ body {
   margin-top: 20px;
   font-size: 14px;
 }
-
-
-
