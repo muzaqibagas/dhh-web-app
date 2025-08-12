@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             [
                 'id_jenjang'       => 3, // sesuaikan dengan id yang ada di tabel `jenjangs`
                 'nim'              => 'J0403221096',
-                'nama'             => 'Muzaqi Bagas',
+                'nama'             => 'Anggito Rangkuti Bagas Muzaqi',
                 'no_hp'            => '081234567890',
                 'alamat'           => 'Jl. Mahasiswa No.1',
                 'tanggal_lahir'    => '2003-05-20',

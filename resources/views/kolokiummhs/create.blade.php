@@ -2,91 +2,103 @@
 
 @section('content')
 <!-- SIDEBAR -->
-  <div class="main-container">
-    <aside class="sidebar">
-      <a href="#" class="menu-image-only">
-        <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
-      </a>
-      
-      <a href="/dashboardmhs" class="menu ">
-        <div class="menu-left">
-          <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
-        </div>
-      </a>
-      <a href="/profilemhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-person"></i> <span> Profil Mahasiswa </span>
-        </div>
-      </a>
-      <a href="/formulirlayananakademikmhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-file-earmark-text"></i> <span> Formulir Layanan Akademik </span>
-        </div>
-      </a>
-      <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
-      <a href="#" class="menu {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'active' : '' }}" id="dropdownToggle">
-          <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
-          <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">
-              {{-- kalau ada di salah satu submenu → panah kebuka ▼ --}}
-              {!! request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? '&#9660;' : '&#9650;' !!}
-          </span>
-      </a>
-
-      <div id="dropdownMenu" 
-          style="margin-left:24px; flex-direction:column; 
-              {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'display:flex;' : 'display:none;' }}">
-        
-          <a href="/kolokiummhs" 
-            class="submenu-link {{ request()->is('kolokiummhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-check2-circle"></i> Kolokium
-          </a>
-          <a href="/syaratkolokiummhs" 
-            class="submenu-link {{ request()->is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Kolokium
-          </a>
-          <a href="/seminarmhs" 
-            class="submenu-link {{ request()->is('seminarmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-calendar-event"></i> Seminar
-          </a>
-          <a href="/syaratseminarmhs" 
-            class="submenu-link {{ request()->is('syaratseminarmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Seminar
-          </a>
-          <a href="/komprehensifmhs" 
-            class="submenu-link {{ request()->is('komprehensifmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-journal-text"></i> Komprehensif
-          </a>
-          <a href="/syaratkomprehensifmhs" 
-            class="submenu-link {{ request()->is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Komprehensif
-          </a>
+<div class="main-container">
+  <aside class="sidebar">
+    <a href="#" class="menu-image-only">
+      <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
+    
+    <a href="/dashboardmhs" class="menu ">
+      <div class="menu-left">
+        <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
       </div>
+    </a>
+    <a href="/profilemhs" class="menu">
+      <div class="menu-left">
+        <i class="bi bi-person"></i> <span> Profil Mahasiswa </span>
+      </div>
+    </a>
+    <a href="/formulirlayananakademikmhs" class="menu">
+      <div class="menu-left">
+        <i class="bi bi-file-earmark-text"></i> <span> Formulir Layanan Akademik </span>
+      </div>
+    </a>
+    <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
+    <a href="#" class="menu {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'active' : '' }}" id="dropdownToggle">
+        <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
+        <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">
+            {{-- kalau ada di salah satu submenu → panah kebuka ▼ --}}
+            {!! request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? '&#9660;' : '&#9650;' !!}
+        </span>
+    </a>
 
-      <a href="/dashboardmhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
-        </div>
-      </a>
+    <div id="dropdownMenu" 
+        style="margin-left:24px; flex-direction:column; 
+            {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'display:flex;' : 'display:none;' }}">
+      
+        <a href="/kolokiummhs" 
+          class="submenu-link {{ request()->is('kolokiummhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-check2-circle"></i> Kolokium
+        </a>
+        <a href="/syaratkolokiummhs" 
+          class="submenu-link {{ request()->is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-info-circle"></i> Syarat Kolokium
+        </a>
+        <a href="/seminarmhs" 
+          class="submenu-link {{ request()->is('seminarmhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-calendar-event"></i> Seminar
+        </a>
+        <a href="/syaratseminarmhs" 
+          class="submenu-link {{ request()->is('syaratseminarmhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-info-circle"></i> Syarat Seminar
+        </a>
+        <a href="/komprehensifmhs" 
+          class="submenu-link {{ request()->is('komprehensifmhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-journal-text"></i> Komprehensif
+        </a>
+        <a href="/syaratkomprehensifmhs" 
+          class="submenu-link {{ request()->is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
+            <i class="bi bi-info-circle"></i> Syarat Komprehensif
+        </a>
+    </div>
 
-      <script>
-        document.getElementById('dropdownToggle').addEventListener('click', function(e) {
-          e.preventDefault();
-          var menu = document.getElementById('dropdownMenu');
-          var arrow = document.getElementById('dropdownArrow');
-          var isOpen = menu.style.display === 'flex';
-          menu.style.display = isOpen ? 'none' : 'flex';
-          arrow.innerHTML = isOpen ? '&#9650;' : '&#9660;'; // atas: &#9650;, bawah: &#9660;
-       });
-      </script>
+    <a href="/dashboardmhs" class="menu">
+      <div class="menu-left">
+        <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+      </div>
+    </a>
 
-    </aside>
+    <script>
+      document.getElementById('dropdownToggle').addEventListener('click', function(e) {
+        e.preventDefault();
+        var menu = document.getElementById('dropdownMenu');
+        var arrow = document.getElementById('dropdownArrow');
+        var isOpen = menu.style.display === 'flex';
+        menu.style.display = isOpen ? 'none' : 'flex';
+        arrow.innerHTML = isOpen ? '&#9650;' : '&#9660;'; // atas: &#9650;, bawah: &#9660;
+      });
+    </script>
 
+  </aside>
 
   <main class="content">
-    <!-- FORM KOLOKIUM -->   
-
     <div class="kolokium-card">
       <h2 class="page-title">Daftar kolokium</h2>    
+      {{-- Alert Success --}}
+      @if (session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif
+
+      {{-- Alert Error --}}
+      @if (session('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ session('error') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif
 
       <form action="{{route('kolokiummhs.store')}}" method="POST">
         @csrf            
@@ -112,7 +124,7 @@
         </div>      
 
         <div class="form-group">
-          <label>Alamat di Bogor</label>
+          <label>Alamat</label>
           <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{Auth::user()->alamat ?? 'Guest'}}" required>
         </div>      
 
@@ -140,16 +152,10 @@
             @endforeach                 
           </select>
         </div>      
-        {{-- Alert Error --}}
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+
         <div class="form-group">
           <label>Hari/Tanggal kolokium</label>        
-          <input type="date" name="tanggal" required>                 >
+          <input type="date" name="tanggal" required>                 
         </div>
 
         <div class="form-group">
@@ -221,6 +227,7 @@
       </form>
     </div>
   </main>
+</div>
 
 @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

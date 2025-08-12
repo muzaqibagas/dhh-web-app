@@ -87,7 +87,7 @@ class KolokiummhsController extends Controller
             $tanggalCek->addDay();
         }        
 
-        if ($selisihHariKerja <= 4) {
+        if ($selisihHariKerja < 4) {
             return back()
                 ->withInput()
                 ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
@@ -124,8 +124,10 @@ class KolokiummhsController extends Controller
     public function edit(Kolokiummhs $kolokiummhs)
     {
         $ruangans = Ruangan::all();
+        $semesters = Semester::all();
+        $listDosen = StaffDept::all();
         $mahasiswas = User::where('role', 'mahasiswa')->get();
-        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'mahasiswas'));
+        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'semesters', 'listDosen','mahasiswas'));
     }
 
     /**
@@ -138,7 +140,7 @@ class KolokiummhsController extends Controller
             'id_mahasiswa' => 'required|exists:users,id', 
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
-            'id_pembimbing2' => 'required|exists:staff_depts,id',   
+            'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',   
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -147,12 +149,50 @@ class KolokiummhsController extends Controller
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
             'judul_kolokium' => 'required|string|max:255',
         ]);
+
+        // Format data seperti di store()
+        $data['nama'] = Str::title($data['nama']);
+        $data['nim'] = Str::upper($data['nim']); 
+        $data['alamat'] = Str::title($data['alamat']); 
+        $data['judul_kolokium'] = Str::title($data['judul_kolokium']);
+        $data['waktu_mulai'] = \Carbon\Carbon::parse($data['waktu_mulai'])->format('H:i');
+        $data['waktu_selesai'] = \Carbon\Carbon::parse($data['waktu_selesai'])->format('H:i');
+
+        // Hitung hari kerja
+        $tanggalKolokium = Carbon::parse($request->tanggal);
+        $hariIni = Carbon::today();
+
+        $selisihHariKerja = 0;
+        $tanggalCek = $hariIni->copy();
+        while ($tanggalCek->lt($tanggalKolokium)) {
+            if (!$tanggalCek->isWeekend()) {
+                $selisihHariKerja++;
+            }
+            $tanggalCek->addDay();
+        }        
+
+        if ($selisihHariKerja < 4) {
+            return back()
+                ->withInput()
+                ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
+        }
+
+        if ($tanggalKolokium->isWeekend()) {
+            return back()
+                ->withInput()
+                ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
+        }   
+
+        // Update data
         $update = $kolokiummhs->update($data);
-        if ($update)
+
+        if ($update) {
             return redirect()->route('kolokiummhs.index')->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
