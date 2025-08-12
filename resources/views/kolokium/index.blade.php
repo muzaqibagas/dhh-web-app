@@ -9,35 +9,13 @@
       </a>
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
-        $isAkademikActive = Request::is('kurikulum') || Request::is('mata-kuliah');
+        $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
-        $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept');
+        $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
       @endphp
 
-      <!-- BTN AKADEMIK========================= -->
-      <a href="#" class="menu {{ $isAkademikActive ? 'active' : '' }}" data-dropdown="akademik">
-        <div class="menu-left">
-          <i class="bi bi-journal-check"></i>
-          <span> Akademik </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="akademik">
-          {!! $isAkademikActive ? '&#9660;' : '&#9650;' !!}
-        </span>
-      </a>
-      <div data-menu="akademik"
-        style="margin-left:24px; flex-direction:column; {{ $isAkademikActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/kurikulum"
-          class="submenu-link {{ Request::is('kurikulum') ? 'active-submenu' : '' }}">
-          <i class="bi bi-archive"></i> Daftar Kurikulum
-        </a>
-        <a href="/mata-kuliah"
-          class="submenu-link {{ Request::is('mata-kuliah') ? 'active-submenu' : '' }}">
-          <i class="bi bi-journals"></i> Mata Kuliah
-        </a>
-      </div>
-
       <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu active {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
         <div class="menu-left">
           <i class="bi bi-mortarboard"></i>
           <span> Tingkat Akhir </span>
@@ -78,9 +56,17 @@
       </a>
       <div data-menu="konten"
         style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/kategorigaleri"
+          class="submenu-link {{ Request::is('kategorigaleri') ? 'active-submenu' : '' }}">
+          <i class="bi bi-clipboard-check"></i> Kategori Galeri
+        </a>
         <a href="/galeri"
           class="submenu-link {{ Request::is('galeri') ? 'active-submenu' : '' }}">
           <i class="bi bi-images"></i> Galeri
+        </a>
+        <a href="/kategoriartikel"
+          class="submenu-link {{ Request::is('kategoriartikel') ? 'active-submenu' : '' }}">
+          <i class="bi bi-clipboard-check"></i> Kategori Artikel
         </a>
         <a href="/artikel"
           class="submenu-link {{ Request::is('artikel') ? 'active-submenu' : '' }}">
@@ -94,15 +80,41 @@
           class="submenu-link {{ Request::is('konten-dept') ? 'active-submenu' : '' }}">
           <i class="bi bi-laptop"></i> Konten Departemen
         </a>
+        <a href="/kontenjenjang"
+          class="submenu-link {{ Request::is('kontenjenjang') ? 'active-submenu' : '' }}">
+          <i class="bi bi-house-door"></i> Konten Jenjang
+        </a>
+        <a href="/mitra"
+          class="submenu-link {{ Request::is('mitra') ? 'active-submenu' : '' }}">
+          <i class="bi bi-person-check"></i> Mitra
+        </a>
       </div>
 
       <!-- BTN SDM ===================== -->
-      <a href="/staffdept" class="menu">
+      <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
         <div class="menu-left">
-          <i class="bi bi-people-fill"></i> <span> Sumber Daya Manusia </span>
+          <i class="bi bi-people-fill"></i>
+          <span> Sumber Daya Manusia </span>
         </div>
-        <span class="dropdownArrow"></span>
+        <span class="dropdownArrow" data-arrow="staffdept">
+          {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+        </span>
       </a>
+      <div data-menu="staffdept"
+        style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/kategoristaff-dept"
+          class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+          <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
+        </a>
+        <a href="/staffdept"
+          class="submenu-link {{ Request::is('staff-dept') ? 'active-submenu' : '' }}">
+          <i class="bi bi-check2-circle"></i> Staff Departemen
+        </a>
+        <a href="/ketuadhh"
+          class="submenu-link {{ Request::is('ketuadhh') ? 'active-submenu' : '' }}">
+          <i class="bi bi-calendar-event"></i> Ketua DHH
+        </a>
+      </div>
       
       <!-- PEMBATAS EMAS ===================== -->
       <a href="" class="menu-image-only">
@@ -144,6 +156,7 @@
   
 <!-- MAIN CONTENT -->
   <main class="content">
+    <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Data Pendaftar Kolokium</h2>
     </div>
@@ -152,12 +165,12 @@
         <table class="table table-bordered align-middle text-center">
             <thead class="table-light">
                 <tr>
-                    <th>Nama</th>
-                    <th>Form Kolokium</th>
-                    <th>Moderator</th>
-                    <th>Bukti SPP</th>
-                    <th>Kartu Kehadiran</th>
-                    <th>Verifikasi</th>
+                    <th style="width: 25%;">Nama</th>
+                    <th style="width: 10%;">Form Kolokium</th>
+                    <th style="width: 15%;">Moderator</th>
+                    <th style="width: 10%;">Bukti SPP</th>
+                    <th style="width: 10%;">Kartu Kehadiran</th>
+                    <th style="width: 10%;">Verifikasi</th>
                 </tr>
             </thead>
             <tbody>
@@ -174,34 +187,34 @@
                 <tr>
                     <td  class="text-start">{{ $p['nama'] }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">
+                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
+                        <i class="bi bi-eye"></i> Lihat
+                      </a>
+                    </td>
+                    <td>
+                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
+                          <option selected disabled>pilih mod</option>
+                          <option>Moderator 1</option>
+                          <option>Moderator 2</option>
+                      </select>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
                             <i class="bi bi-eye"></i> Lihat
                         </a>
                     </td>
                     <td>
-                        <select class="form-select form-select-sm">
-                            <option selected disabled>pilih mod</option>
-                            <option>Moderator 1</option>
-                            <option>Moderator 2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm">
+                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
                             <i class="bi bi-eye"></i> Lihat
                         </a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm me-1">
-                            <i class="bi bi-check-circle-fill"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </button>
+                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
+                        <i class="bi bi-check-circle-fill"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm px-2 py-1">
+                        <i class="bi bi-x-circle-fill"></i>
+                      </button>
                     </td>
                 </tr>
                 @endforeach

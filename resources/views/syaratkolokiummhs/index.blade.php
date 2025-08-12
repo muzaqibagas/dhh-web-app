@@ -88,6 +88,9 @@
             <h2 class="page-title">Persyaratan Kolokium</h2>
 
             <ol class="syarat-list">
+                <li><b>Batas Waktu Pengurusan Administrasi</b><br>
+                    Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
+                </li>
                 <li><b>Formulir Pendaftaran Kolokium</b><br>
                     Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB).
                 </li>

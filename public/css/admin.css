@@ -82,7 +82,6 @@ body {
   position: sticky;      /* nempel di viewport */
   top: 50px;             /* jarak dari atas, tepat di bawah topbar */
   height: calc(100vh - 50px); /* penuh layar minus topbar */
-  overflow-y: auto;
   scrollbar-width: none; /* Firefox */
 }
 

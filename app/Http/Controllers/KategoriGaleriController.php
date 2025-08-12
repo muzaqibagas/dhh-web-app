@@ -12,7 +12,7 @@ class KategoriGaleriController extends Controller
      */
     public function index()
     {
-        //
+        return view('kategorigaleri.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class KategoriGaleriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategorigaleri.create');
     }
 
     /**

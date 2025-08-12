@@ -161,15 +161,15 @@
                                 <option>Hasna Nabiilah</option>
                             </select>',
                         'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
-                        'Hari/Tanggal' => '
+                        'Hari/Tanggal Seminar' => '
                             <div class="input-group">
                                 <input type="date" class="text-start form-control form-control-sm">
                             </div>',
-                        'Waktu' => '
+                        'Waktu Seminar' => '
                             <div class="input-group">
                                 <input type="time" class="text-start form-control form-control-sm">
                             </div>',
-                        'Tempat' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat seminar">',
+                        'Tempat Seminar' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat seminar">',
                         'Judul Praktek Khusus' => '
                             <div class="input-group">
                                 <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
@@ -184,7 +184,7 @@
                                 <option disabled selected>Pilih Pembimbing II</option>
                                 <option>-</option>
                             </select>',
-                        'Moderator' => '
+                        'Moderator Seminar' => '
                             <select class="text-start form-select">
                                 <option disabled selected>Pilih Moderator</option>
                                 <option>Bambang</option>

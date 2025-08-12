@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KategoriArtikel;
+use App\Models\KontenJenjang;
 use Illuminate\Http\Request;
 
-class KategoriArtikelController extends Controller
+class KontenJenjangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('kategoriartikel.index');
+        return view('kontenjenjang.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class KategoriArtikelController extends Controller
      */
     public function create()
     {
-        return view('kategoriartikel.create');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class KategoriArtikelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KategoriArtikel $kategoriArtikel)
+    public function show(KontenJenjang $kontenJenjang)
     {
         //
     }
@@ -42,7 +42,7 @@ class KategoriArtikelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KategoriArtikel $kategoriArtikel)
+    public function edit(KontenJenjang $kontenJenjang)
     {
         //
     }
@@ -50,7 +50,7 @@ class KategoriArtikelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, KategoriArtikel $kategoriArtikel)
+    public function update(Request $request, KontenJenjang $kontenJenjang)
     {
         //
     }
@@ -58,7 +58,7 @@ class KategoriArtikelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KategoriArtikel $kategoriArtikel)
+    public function destroy(KontenJenjang $kontenJenjang)
     {
         //
     }

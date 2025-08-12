@@ -320,3 +320,31 @@
   font-size: 12px;
   margin: 0;
 }
+
+/* Hilangkan scroll horizontal di layar besar halaman konten departemen*/
+@media (min-width: 992px) {
+  html, body {
+    overflow-x: hidden;
+  }
+}
+
+/* Pastikan elemen besar mengikuti lebar layar */
+img, table, .container, .row, .col {
+  max-width: 100%;
+}
+
+/* Kalau ada tabel lebar, biar wrap text */
+table {
+  table-layout: auto;
+  word-wrap: break-word;
+}
+
+textarea, input, select {
+  max-width: 100%;
+}
+
+@media (max-width: 991px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+}

@@ -8,8 +8,12 @@ use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\JenjangController;
 use App\Http\Controllers\KategoriStaffController; 
+use App\Http\Controllers\KategoriGaleriController;
+use App\Http\Controllers\KategoriArtikelController;
 use App\Http\Controllers\KolokiumController;
 use App\Http\Controllers\KontenDeptController;
+use App\Http\Controllers\MitraController;
+use App\Http\Controllers\KontenJenjangController;
 use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\ReviewAlumniController;
 use App\Http\Controllers\RegisterController;
@@ -139,6 +143,14 @@ Route::get('acara-akademik/{acaraAkademik}/edit', [AcaraAkademikController::clas
 Route::put('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'update'])->name('acaraakademik.update');
 Route::delete('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'destroy'])->name('acaraakademik.destroy');
 
+// KategoriArtikel
+Route::get('kategoriartikel', [KategoriArtikelController::class, 'index'])->name('kategoriartikel.index');
+Route::get('kategoriartikel/create', [KategoriArtikelController::class, 'create'])->name('kategoriartikel.create');
+Route::post('kategoriartikel', [KategoriArtikelController::class, 'store'])->name('kategoriartikel.store');
+Route::get('kategoriartikel/{kategoriArtikel}', [KategoriArtikelController::class, 'show'])->name('kategoriartikel.show');
+Route::get('kategoriartikel/{kategoriArtikel}/edit', [KategoriArtikelController::class, 'edit'])->name('kategoriartikel.edit');
+Route::put('kategoriartikel/{kategoriArtikel}', [KategoriArtikelController::class, 'update'])->name('kategoriartikel.update');
+Route::delete('kategoriartikel/{kategoriArtikel}', [KategoriArtikelController::class, 'destroy'])->name('kategoriartikel.destroy');
 
 // Artikel
 Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');
@@ -158,6 +170,16 @@ Route::get('divisi/{divisi}/edit', [DivisiController::class, 'edit'])->name('div
 Route::put('divisi/{divisi}', [DivisiController::class, 'update'])->name('divisi.update');
 Route::delete('divisi/{divisi}', [DivisiController::class, 'destroy'])->name('divisi.destroy');
 
+// KategoriGaleri
+Route::get('kategorigaleri', [KategoriGaleriController::class, 'index'])->name('kategorigaleri.index');
+Route::get('kategorigaleri/create', [KategoriGaleriController::class, 'create'])->name('kategorigaleri.create');
+Route::post('kategorigaleri', [KategoriGaleriController::class, 'store'])->name('kategorigaleri.store');
+Route::get('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 'show'])->name('kategorigaleri.show');
+Route::get('kategorigaleri/{kategoriGaleri}/edit', [KategoriGaleriController::class, 'edit'])->name('kategorigaleri.edit');
+Route::put('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 'update'])->name('kategorigaleri.update');
+Route::delete('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 'destroy'])->name('kategorigaleri.destroy');
+
+
 // Galeri
 Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
@@ -175,6 +197,9 @@ Route::get('jenjang/{jenjang}', [JenjangController::class, 'show'])->name('jenja
 Route::get('jenjang/{jenjang}/edit', [JenjangController::class, 'edit'])->name('jenjang.edit');
 Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jenjang.update');
 Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
+
+// KontenJenjang
+Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
@@ -202,6 +227,10 @@ Route::get('konten-dept/{kontendept}', [KontenDeptController::class, 'show'])->n
 Route::get('konten-dept/{kontendept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
 Route::put('konten-dept/{kontendept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
 Route::delete('konten-dept/{kontendept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
+
+//Mitra
+Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
+Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create');
 
 // Pembimbing
 Route::get('pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
