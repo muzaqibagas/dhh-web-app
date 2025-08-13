@@ -156,12 +156,12 @@
             <div class="form-group">
             <label>Dosen Pembimbing 2</label>
             <select name="id_pembimbing2" id="pembimbing2">                                                       
-                <option disabled value="">Pilih Dosen</option>
+                <option value="">Pilih Dosen</option> {{-- placeholder tetap ada --}}
                 @foreach ($listDosen as $dosen)
-                <option value="{{ $dosen->id }}" 
-                    {{ old('id_pembimbing2', $kolokiummhs->id_pembimbing2) == $dosen->id ? 'selected' : '' }}>
-                    {{ $dosen->nama }}
-                </option>
+                    <option value="{{ $dosen->id }}" 
+                        {{ old('id_pembimbing2', $kolokiummhs->id_pembimbing2) == $dosen->id ? 'selected' : '' }}>
+                        {{ $dosen->nama }}
+                    </option>
                 @endforeach                 
             </select>
             </div>      
@@ -229,36 +229,46 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
     $(document).ready(function () {
-        // Inisialisasi Select2
-        $('#pembimbing1').select2({
+        // Ambil nilai awal dari server
+        let pembimbing1Val = "{{ old('id_pembimbing1', $kolokiummhs->id_pembimbing1) }}";
+        let pembimbing2Val = "{{ old('id_pembimbing2', $kolokiummhs->id_pembimbing2) }}";
+
+        // Init Select2
+        $('#pembimbing1, #pembimbing2').select2({
             width: '100%',
-            placeholder: "Pilih Dosen Pembimbing 1"
+            placeholder: "Pilih Dosen Pembimbing 2" // biar muncul placeholder kalau null
         });
 
-        $('#pembimbing2').select2({
-            width: '100%',
-            placeholder: "Pilih Dosen Pembimbing 2"
-        });
-
-        // Simpan semua opsi awal pembimbing2
+        // Simpan opsi awal
         let originalPembimbing2 = $('#pembimbing2 option').clone();
 
-        // Saat pembimbing1 berubah
-        $('#pembimbing1').on('change', function () {
-            let selected1 = $(this).val();
-
-            // Kosongkan pembimbing2
+        function filterPembimbing2(selected1) {
             $('#pembimbing2').empty();
-
-            // Masukkan opsi kecuali yang dipilih di pembimbing1
             originalPembimbing2.each(function () {
                 if ($(this).val() !== selected1) {
                     $('#pembimbing2').append($(this).clone());
                 }
             });
+        }
 
-            // Reset pilihan pembimbing2
-            $('#pembimbing2').val(null).trigger('change');
+        // Set nilai awal Pembimbing 1
+        if (pembimbing1Val) {
+            $('#pembimbing1').val(pembimbing1Val).trigger('change.select2');
+            filterPembimbing2(pembimbing1Val);
+        }
+
+        // Set nilai awal Pembimbing 2 (hanya kalau ada isinya)
+        if (pembimbing2Val) {
+            $('#pembimbing2').val(pembimbing2Val).trigger('change.select2');
+        } else {
+            $('#pembimbing2').val('').trigger('change.select2'); // kosongkan kalau null
+        }
+
+        // Event ketika Pembimbing 1 berubah
+        $('#pembimbing1').on('change', function () {
+            let selected1 = $(this).val();
+            filterPembimbing2(selected1);
+            $('#pembimbing2').val('').trigger('change.select2'); // reset jadi kosong
         });
     });
     </script>

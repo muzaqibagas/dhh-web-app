@@ -120,6 +120,7 @@ Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('koloki
 Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');
 Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');
 Route::get('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'show'])->name('kolokiummhs.show');
+Route::get('/kolokiummhs/{id}/pdf', [KolokiummhsController::class, 'generatePdf'])->name('kolokiummhs.pdf');
 Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
 Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
 Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');

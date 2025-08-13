@@ -11,7 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+use setasign\Fpdi\Fpdi;
+use setasign\Fpdf\Fpdf;
 
 class KolokiummhsController extends Controller
 {
@@ -42,6 +43,15 @@ class KolokiummhsController extends Controller
      */
     public function create()
     {
+        $mahasiswaId = auth()->id();
+        $existing = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        if ($existing) {
+            return redirect()
+                ->route('kolokiummhs.show', $existing->id)
+                ->with('error', 'Anda sudah mendaftar kolokium, silakan edit data yang ada.');
+        }
+
         $kolokiummhs = Kolokiummhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
@@ -54,6 +64,15 @@ class KolokiummhsController extends Controller
      */
     public function store(Request $request)
     {
+        $mahasiswaId = auth()->id();
+        $existing = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        if ($existing) {
+            return redirect()
+                ->route('kolokiummhs.show', $existing->id)
+                ->with('error', 'Anda sudah mendaftar kolokium, silakan edit data yang ada.');
+        }
+        
         $data = $request->validate([
             'id_ruangan' => 'required|exists:ruangans,id',
             'id_mahasiswa' => 'required|exists:users,id',
@@ -116,6 +135,71 @@ class KolokiummhsController extends Controller
     public function show(Kolokiummhs $kolokiummhs)
     {
         return view('kolokiummhs.show', compact('kolokiummhs'));
+    }
+
+    public function generatePdf($id)
+    {
+        // Ambil data kolokium dari database
+        $kolokiummhs = Kolokiummhs::findOrFail($id);
+
+        // Path template PDF
+        $template = public_path('pdf/templatekolokium.pdf');
+        $outputPath = public_path("pdf/ditandatangani");
+
+        if (!file_exists($outputPath)) {
+            mkdir($outputPath, 0777, true);
+        }
+
+        $output = $outputPath . "/{$kolokiummhs->nim}_draft.pdf";
+
+        // Mulai generate PDF
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->setSourceFile($template);
+        $tpl = $pdf->importPage(1);
+        $pdf->useTemplate($tpl);
+
+        $pdf->SetFont('Helvetica', '', 12);
+
+        // Isi sesuai format
+        $pdf->SetXY(75, 35);
+        $pdf->Write(5, $kolokiummhs->nama);
+
+        $pdf->SetXY(75, 44);
+        $pdf->Write(5, $kolokiummhs->nim);
+
+        $pdf->SetXY(75, 53);
+        $pdf->Write(5, $kolokiummhs->semester->semester ?? '-');
+
+        $pdf->SetXY(75, 62);
+        $pdf->Write(5, $kolokiummhs->alamat);
+
+        $pdf->SetXY(75, 70);
+        $pdf->Write(5, $kolokiummhs->judul_kolokium);
+
+        $pdf->SetXY(75, 79);
+        $pdf->Write(5, $kolokiummhs->pembimbing1->nama ?? '-');
+
+        $pdf->SetXY(75, 87);
+        $pdf->Write(5, $kolokiummhs->pembimbing2->nama ?? '-');
+
+        $pdf->SetXY(75, 97);
+        $pdf->Write(5, $kolokiummhs->tanggal);
+
+        $pdf->SetXY(75, 105);
+        $pdf->Write(5, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai);
+
+        $pdf->SetXY(75, 114);
+        $pdf->Write(5, $kolokiummhs->ruangan->nama ?? '-');
+
+        $pdf->SetXY(75, 123);
+        $pdf->Write(5, '-');
+
+        // Simpan PDF
+        $pdf->Output('F', $output);
+
+        // Download
+        return response()->download($output);
     }
 
     /**
