@@ -177,7 +177,7 @@
                 @php
                     $pendaftar = [
                         ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabilah Widiani'],
+                        ['nama' => 'Hasna Nabiilah Widiani'],
                         ['nama' => 'Nurbadillah'],
                         ['nama' => 'Saniyyah Wafa Nurjihan'],
                     ];

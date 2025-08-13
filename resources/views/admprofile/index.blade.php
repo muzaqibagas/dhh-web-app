@@ -2,104 +2,127 @@
 
 @section('content')
 <!-- SIDEBAR -->
- <div class="main-container">
-    <aside class="sidebar">
-      <a href="" class="menu-image-only">
-        <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
-      </a>
-      <!-- Untuk aktifin button sub menu ========================= -->
-      @php
-        $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
-        $isKontenActive = Request::is('galeri') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept');
-      @endphp
-      <!-- BTN AKADEMIK========================= -->
-      <a href="" class="menu" id="dropdownToggle">
-        <div class="menu-left">
-          <i class="bi bi-journal-check"></i> 
-          <span> Akademik </span>
-        </div>
-        <span class="dropdownArrow" id="dropdownArrow">&#9650;</span>
-      </a>
-      <div id="dropdownMenu" style="display:none; margin-left:24px; flex-direction:column;">
-        <a href="#" class="submenu-link"><i class="bi bi-archive"></i> Daftar Kurikulum</a>
-        <a href="#" class="submenu-link"><i class="bi bi-journals"></i> Mata Kuliah</a>
-      </div>
+<div class="main-container">
+  <aside class="sidebar">
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
+    <!-- Untuk aktifin button sub menu ========================= -->
+    @php
+      $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
+      $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
+      $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
+    @endphp
 
-      <!-- BTN TINGKAT AKHIR===================== -->
-      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
-        <div class="menu-left">
-          <i class="bi bi-mortarboard"></i>
-          <span> Tingkat Akhir </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="tingkatakhir">
-          {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
-        </span>
-      </a>
-      <div data-menu="tingkatakhir"
-        style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/undangan"
-          class="submenu-link {{ Request::is('undangan') ? 'active-submenu' : '' }}">
-          <i class="bi bi-envelope-open"></i> Undangan
-        </a>
-        <a href="/kolokium"
-          class="submenu-link {{ Request::is('kolokium') ? 'active-submenu' : '' }}">
-          <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
-        </a>
-        <a href="/seminar"
-          class="submenu-link {{ Request::is('seminar') ? 'active-submenu' : '' }}">
-          <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
-        </a>
-        <a href="/sidang"
-          class="submenu-link {{ Request::is('sidang') ? 'active-submenu' : '' }}">
-          <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
-        </a>
+    <!-- BTN TINGKAT AKHIR===================== -->
+    <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <div class="menu-left">
+        <i class="bi bi-mortarboard"></i>
+        <span> Tingkat Akhir </span>
       </div>
-
-      <!-- BTN KONTEN ===================== -->
-      <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
-        <div class="menu-left">
-          <i class="bi bi-collection"></i>
-          <span> Konten </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="konten">
-          {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
-        </span>
+      <span class="dropdownArrow" data-arrow="tingkatakhir">
+        {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="tingkatakhir"
+      style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/undangan"
+        class="submenu-link {{ Request::is('undangan') ? 'active-submenu' : '' }}">
+        <i class="bi bi-envelope-open"></i> Undangan
       </a>
-      <div data-menu="konten"
-        style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/galeri"
-          class="submenu-link {{ Request::is('galeri') ? 'active-submenu' : '' }}">
-          <i class="bi bi-images"></i> Galeri
-        </a>
-        <a href="/artikel"
-          class="submenu-link {{ Request::is('artikel') ? 'active-submenu' : '' }}">
-          <i class="bi bi-layout-text-window"></i> Artikel
-        </a>
-        <a href="/review-alumni"
-          class="submenu-link {{ Request::is('review-alumni') ? 'active-submenu' : '' }}">
-          <i class="bi bi-star"></i>  Review Alumni
-        </a>
-        <a href="/konten-dept"
-          class="submenu-link {{ Request::is('konten-dept') ? 'active-submenu' : '' }}">
-          <i class="bi bi-laptop"></i> Konten Departemen
-        </a>
+      <a href="/kolokium"
+        class="submenu-link {{ Request::is('kolokium') ? 'active-submenu' : '' }}">
+        <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
+      </a>
+      <a href="/seminar"
+        class="submenu-link {{ Request::is('seminar') ? 'active-submenu' : '' }}">
+        <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
+      </a>
+      <a href="/sidang"
+        class="submenu-link {{ Request::is('sidang') ? 'active-submenu' : '' }}">
+        <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
+      </a>
+    </div>
+
+    <!-- BTN KONTEN ===================== -->
+    <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+      <div class="menu-left">
+        <i class="bi bi-collection"></i>
+        <span> Konten </span>
       </div>
+      <span class="dropdownArrow" data-arrow="konten">
+        {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="konten"
+      style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/kategorigaleri"
+        class="submenu-link {{ Request::is('kategorigaleri') ? 'active-submenu' : '' }}">
+        <i class="bi bi-clipboard-check"></i> Kategori Galeri
+      </a>
+      <a href="/galeri"
+        class="submenu-link {{ Request::is('galeri') ? 'active-submenu' : '' }}">
+        <i class="bi bi-images"></i> Galeri
+      </a>
+      <a href="/kategoriartikel"
+        class="submenu-link {{ Request::is('kategoriartikel') ? 'active-submenu' : '' }}">
+        <i class="bi bi-clipboard-check"></i> Kategori Artikel
+      </a>
+      <a href="/artikel"
+        class="submenu-link {{ Request::is('artikel') ? 'active-submenu' : '' }}">
+        <i class="bi bi-layout-text-window"></i> Artikel
+      </a>
+      <a href="/review-alumni"
+        class="submenu-link {{ Request::is('review-alumni') ? 'active-submenu' : '' }}">
+        <i class="bi bi-star"></i>  Review Alumni
+      </a>
+      <a href="/konten-dept"
+        class="submenu-link {{ Request::is('konten-dept') ? 'active-submenu' : '' }}">
+        <i class="bi bi-laptop"></i> Konten Departemen
+      </a>
+      <a href="/kontenjenjang"
+        class="submenu-link {{ Request::is('kontenjenjang') ? 'active-submenu' : '' }}">
+        <i class="bi bi-house-door"></i> Konten Jenjang
+      </a>
+      <a href="/mitra"
+        class="submenu-link {{ Request::is('mitra') ? 'active-submenu' : '' }}">
+        <i class="bi bi-person-check"></i> Mitra
+      </a>
+    </div>
 
-      <!-- BTN SDM ===================== -->
-      <a href="/staffdept" class="menu active">
-        <div class="menu-left">
-          <i class="bi bi-people-fill"></i> <span> Sumber Daya Manusia </span>
-        </div>
-        <span class="dropdownArrow"></span>
+    <!-- BTN SDM ===================== -->
+    <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
+      <div class="menu-left">
+        <i class="bi bi-people-fill"></i>
+        <span> Sumber Daya Manusia </span>
+      </div>
+      <span class="dropdownArrow" data-arrow="staffdept">
+        {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="staffdept"
+      style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/kategoristaff-dept"
+        class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+        <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
       </a>
-      
-      <!-- PEMBATAS EMAS ===================== -->
-      <a href="" class="menu-image-only">
-        <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+      <a href="/staffdept"
+        class="submenu-link {{ Request::is('staff-dept') ? 'active-submenu' : '' }}">
+        <i class="bi bi-check2-circle"></i> Staff Departemen
       </a>
+      <a href="/ketuadhh"
+        class="submenu-link {{ Request::is('ketuadhh') ? 'active-submenu' : '' }}">
+        <i class="bi bi-calendar-event"></i> Ketua DHH
+      </a>
+    </div>
+    
+    <!-- PEMBATAS EMAS ===================== -->
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
 
       <!-- BTN ADMIN ===================== -->
-      <a href="/admprofile" class="menu">
+      <a href="/admprofile" class="menu active">
         <div class="menu-left">
           <i class="bi bi-person-badge"></i> <span> Profil Admin </span>
         </div>

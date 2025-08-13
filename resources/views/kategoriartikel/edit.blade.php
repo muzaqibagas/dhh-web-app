@@ -154,42 +154,37 @@
       </script>
     </aside>
 
-<!-- DAFTAR MITRA -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Create Mitra</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-
-            <form>
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                  <label for="mitra" class="col-form-label">Mitra</label>
+<!-- EDIT KATEGORI ARTIKEL -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Edit Kategori Artikel</h2>
+        </div> 
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                  <form action="{{route('kategoriartikel.update', $kategoriArtikel->id)}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                      <div class="col-sm-2">
+                        <label for="kategori" class="col-form-label">Kategori Artikel</label>
+                      </div>
+                      <div class="col-sm-10">
+                        <input type="text" name="nama" value="{{$kategoriArtikel->nama}}" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                      </div>
+                    </div>
+                    <!-- Tombol -->
+                    <div class="row">
+                        <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                        </div>
+                    </div>
+                  </form>
                 </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="mitra" placeholder="Masukkan nama mitra" required>
-                </div>
-              </div>
-                            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                  <label for="logo" class="col-form-label">Logo</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="file" class="form-control" id="logo" placeholder="No file logo selected" required>
-                </div>
-              </div>
-              <!-- Tombol -->
-              <div class="row">
-                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-between">
-                      <button type="button" class="btn btn-secondary">Kembali</button>
-                      <button type="button" class="btn btn-success">Simpan</button>
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
+            </div>
+        </div>
+  </main>
 </div>
 @endsection

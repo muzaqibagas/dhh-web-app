@@ -12,7 +12,8 @@ class KategoriArtikelController extends Controller
      */
     public function index()
     {
-        return view('kategoriartikel.index');
+        $kategoriArtikel = KategoriArtikel::all();
+        return view('kategoriartikel.index', compact('kategoriArtikel'));
     }
 
     /**
@@ -28,7 +29,18 @@ class KategoriArtikelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $insert = KategoriArtikel::create([
+            'nama' => $request->nama,
+        ]);
+
+        if ($insert)
+            return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Disimpan.');
+        else
+            return back()->with('error', 'Kategori Artikel Gagal Disimpan');
     }
 
     /**
@@ -44,7 +56,7 @@ class KategoriArtikelController extends Controller
      */
     public function edit(KategoriArtikel $kategoriArtikel)
     {
-        //
+        return view('kategoriartikel.edit', compact('kategoriArtikel'));
     }
 
     /**
@@ -52,7 +64,19 @@ class KategoriArtikelController extends Controller
      */
     public function update(Request $request, KategoriArtikel $kategoriArtikel)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $update = $kategoriArtikel->update([
+            'nama' => $request->nama,
+        ]);        
+
+
+        if ($update)
+            return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Diupdate.');
+        else
+            return back()->with('error', 'Kategori Artikel Gagal Diupdate');
     }
 
     /**
@@ -60,6 +84,11 @@ class KategoriArtikelController extends Controller
      */
     public function destroy(KategoriArtikel $kategoriArtikel)
     {
-        //
+        $delete = $kategoriArtikel->delete();
+
+        if ($delete)
+            return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Dihapus');
+        else
+            return back()->with('error', 'Kategori Artikel Gagal Dihapus');
     }
 }

@@ -156,6 +156,7 @@
   
 <!-- MAIN CONTENT -->
   <main class="content">
+    <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Data Pendaftar Seminar</h2>
     </div>
@@ -183,31 +184,31 @@
 
                 @foreach ($pendaftar as $p)
                 <tr>
-                    <td class="text-start">{{ $p['nama'] }}</td>
+                    <td  class="text-start">{{ $p['nama'] }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">
+                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
+                        <i class="bi bi-eye"></i> Lihat
+                      </a>
+                    </td>
+                    <td>
+                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
+                          <option selected disabled>pilih mod</option>
+                          <option>Moderator 1</option>
+                          <option>Moderator 2</option>
+                      </select>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
                             <i class="bi bi-eye"></i> Lihat
                         </a>
                     </td>
                     <td>
-                        <select class="form-select form-select-sm">
-                            <option selected disabled>pilih mod</option>
-                            <option>Moderator 1</option>
-                            <option>Moderator 2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm me-1">
-                            <i class="bi bi-check-circle-fill"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </button>
+                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
+                        <i class="bi bi-check-circle-fill"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm px-2 py-1">
+                        <i class="bi bi-x-circle-fill"></i>
+                      </button>
                     </td>
                 </tr>
                 @endforeach
@@ -215,39 +216,8 @@
         </table>
     </div>
 </div>
+
 @endsection
+        
+    
 
-    <!-- <h1>Daftar Seminar</h1>
-
-    <a href="{{ url('seminar/create') }}">Tambah Seminar</a>
-    @if(session('success'))
-        <p style="color:green;">{{ session('success') }}</p>
-    @endif
-
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nama</th>                                  
-            <th>Tempat</th>
-            <th>judul Seminar</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach($seminars as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->mahasiswa->nama }}</td>                        
-                <td>{{ $item->ruangan->nama ?? '-' }}</td>
-                <td>{{ $item->judul_seminar }}</td>
-                
-                <td>
-                    <a href="{{ url('seminar/' . $item->id) }}">Show</a>
-                    <a href="{{ url('seminar/' . $item->id . '/edit') }}">Edit</a>
-                    <form action="{{ url('seminar/' . $item->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Hapus daftar seminar ini?')">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table> -->

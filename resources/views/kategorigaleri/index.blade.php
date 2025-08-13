@@ -9,7 +9,7 @@
     </a>
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
-      $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
+      $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
       $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
       $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
     @endphp
@@ -102,8 +102,8 @@
     </a>
     <div data-menu="staffdept"
       style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
-      <a href="/kategoristaff-dept"
-        class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+      <a href="/kategoristaff"
+        class="submenu-link {{ Request::is('kategoristaff') ? 'active-submenu' : '' }}">
         <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
       </a>
       <a href="/staffdept"
@@ -159,7 +159,9 @@
     <div class="container-fluid mt-4">
         <div class="adm-header">
             <h2 class="adm-title">Kategori Galeri</h2>
-            <a href="{{route('kategorigaleri.create')}}" class="adm-btn-add text-decoration-none"><i class="bi bi-plus"></i>Tambah Data</a>
+            <a href="{{route('kategorigaleri.create')}}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-plus"></i>Tambah Data
+            </a>
         </div> 
         <div class="card shadow-sm">
             <div class="card-body">
@@ -181,10 +183,13 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td class="text-start">{{ $kategoriGaleris->nama}}</td>
+                                
                                 <td>
-
                                 <div class="d-flex justify-content-center gap-2">
-                                  <a href="{{route('kategorigaleri.edit', $kategoriGaleris->id)}}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;"><i class="bi bi-pencil" style="font-size: 18px;"></i></a>
+                                  <a href="{{route('kategorigaleri.edit', $kategoriGaleris->id)}}" 
+                                    class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                  </a>
                                   <form action="{{route('kategorigaleri.destroy', $kategoriGaleris->id)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -194,7 +199,7 @@
                                   </form>
                                 </div>
                                 </td>
-                            </tr>                            
+                            </tr>                        
                         </tbody>
                         @endforeach
                     </table>

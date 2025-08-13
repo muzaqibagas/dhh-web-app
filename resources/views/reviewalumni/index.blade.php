@@ -9,7 +9,7 @@
       </a>
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
-        $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
+        $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
         $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
       @endphp
@@ -102,8 +102,8 @@
       </a>
       <div data-menu="staffdept"
         style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/kategoristaff-dept"
-          class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+        <a href="/kategoristaff"
+          class="submenu-link {{ Request::is('kategoristaff') ? 'active-submenu' : '' }}">
           <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
         </a>
         <a href="/staffdept"
@@ -154,11 +154,11 @@
       </script>
     </aside>
     
-<!-- Halaman Review Alumni - Admin Dashboard -->
+<!-- Halaman Galeri - Admin Dashboard -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Daftar Konten Departemen</h2>
+        <h2 class="adm-title">Daftar Artikel</h2>
         <button class="adm-btn-add">
             <i class="bi bi-plus"></i> Tambah Data
         </button>
@@ -180,13 +180,14 @@
                         <!-- Data Galeri (dummy) -->
                         <tr>
                             <td>1</td>
-                            <td><img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
+                            <td>
+                                <img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
                                     alt="foto" 
                                     class="img-thumbnail"
-                                    style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
                             </td>
-                            <td class="text-start text-truncate" style="min-width: 400px;">Hasna Nabaaaaassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssiilah Caine</td>
-                            <td class="text-center text-truncate" style="min-width: 100px; max-width: 150px;">45</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Hasna Nabiilah Widiani</td>
+                            <td>60</td>
                             <td>
                             <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
@@ -198,13 +199,13 @@
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td><img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
+                            <td><img src="https://i.pinimg.com/236x/a2/30/cd/a230cdb07b8c98ffe445617dbf566860.jpg" 
                                     alt="foto" 
                                     class="img-thumbnail"
-                                    style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
                             </td>
-                            <td class="text-start text-truncate" style="min-width: 400px;">Mikazuki Nanaaa</td>
-                            <td class="text-center text-truncate" style="min-width: 100px; max-width: 200px;">32</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Anggito Rangkuti Bagas Muzaqi</td>
+                            <td>59</td>
                             <!-- Tombol Aksi -->
                         <td class="text-center">
                             <div style="display: flex; justify-content: center; gap: 6px;">

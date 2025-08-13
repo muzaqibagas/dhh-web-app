@@ -156,6 +156,7 @@
   
 <!-- MAIN CONTENT -->
   <main class="content">
+    <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Data Pendaftar Sidang</h2>
     </div>
@@ -166,7 +167,7 @@
                 <tr>
                     <th style="width: 25%;">Nama</th>
                     <th style="width: 10%;">Form Sidang</th>
-                    <th style="width: 25%;">Ketua Sidang</th>
+                    <th style="width: 15%;">Ketua Sidang</th>
                     <th style="width: 10%;">Bukti SPP</th>
                     <th style="width: 10%;">Verifikasi</th>
                 </tr>
@@ -175,7 +176,7 @@
                 @php
                     $pendaftar = [
                         ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabilah Widiani'],
+                        ['nama' => 'Hasna Nabiilah Widiani'],
                         ['nama' => 'Nurbadillah'],
                         ['nama' => 'Saniyyah Wafa Nurjihan'],
                     ];
@@ -183,31 +184,31 @@
 
                 @foreach ($pendaftar as $p)
                 <tr>
-                    <td class="text-start">{{ $p['nama'] }}</td>
+                    <td  class="text-start">{{ $p['nama'] }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">
+                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
+                        <i class="bi bi-eye"></i> Lihat
+                      </a>
+                    </td>
+                    <td>
+                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
+                          <option selected disabled>pilih Ketua Sidang</option>
+                          <option>Nama Dosen 1</option>
+                          <option>Nama Dosen 2</option>
+                      </select>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
                             <i class="bi bi-eye"></i> Lihat
                         </a>
                     </td>
                     <td>
-                        <select class="form-select form-select-sm">
-                            <option selected disabled>pilih dosen</option>
-                            <option>Dosen 1</option>
-                            <option>Dosen 2</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm me-1">
-                            <i class="bi bi-check-circle-fill"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </button>
+                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
+                        <i class="bi bi-check-circle-fill"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm px-2 py-1">
+                        <i class="bi bi-x-circle-fill"></i>
+                      </button>
                     </td>
                 </tr>
                 @endforeach
@@ -215,40 +216,5 @@
         </table>
     </div>
 </div>
+
 @endsection
-
-
-    <!-- <h1>Daftar Sidang</h1>
-
-    <a href="{{ url('sidang/create') }}">Tambah Sidang</a>
-    @if(session('success'))
-        <p style="color:green;">{{ session('success') }}</p>
-    @endif
-
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nama</th>                                  
-            <th>Tempat</th>
-            <th>judul Sidang</th>
-            <th>Aksi</th>
-        </tr>
-        @foreach($sidangs as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->mahasiswa->nama }}</td>                        
-                <td>{{ $item->ruangan->nama ?? '-' }}</td>
-                <td>{{ $item->judul_tugasakhir }}</td>
-                
-                <td>
-                    <a href="{{ url('sidang/' . $item->id) }}">Show</a>
-                    <a href="{{ url('sidang/' . $item->id . '/edit') }}">Edit</a>
-                    <form action="{{ url('sidang/' . $item->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Hapus daftar kolokium ini?')">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table> -->

@@ -9,7 +9,7 @@
       </a>
       <!-- Untuk aktifin button sub menu ========================= -->
       @php
-        $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
+        $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
         $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
         $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
       @endphp
@@ -102,8 +102,8 @@
       </a>
       <div data-menu="staffdept"
         style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/kategoristaff-dept"
-          class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+        <a href="/kategoristaff"
+          class="submenu-link {{ Request::is('kategoristaff') ? 'active-submenu' : '' }}">
           <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
         </a>
         <a href="/staffdept"
@@ -155,33 +155,35 @@
     </aside>
 
 <!-- DAFTAR KATEGORI ARTIKEL -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Create Kategori Artikel</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Tambah Kategori Artikel</h2>
+        </div> 
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
 
-            <form>
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                  <label for="kategori" class="col-form-label">Kategori Artikel</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
-                </div>
-              </div>
-              <!-- Tombol -->
-              <div class="row">
-                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-between">
-                      <button type="button" class="btn btn-secondary">Kembali</button>
-                      <button type="button" class="btn btn-success">Simpan</button>
+                <form action="{{route('kategoriartikel.store')}}" method="POST">
+                  @csrf
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="kategori" class="col-form-label">Kategori Artikel</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                    </div>
                   </div>
-              </div>
-          </form>
+                  <!-- Tombol -->
+                  <div class="row">
+                      <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-success">Simpan</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
       </div>
-  </div>
+    </div>
+  </main>
 </div>
 @endsection
