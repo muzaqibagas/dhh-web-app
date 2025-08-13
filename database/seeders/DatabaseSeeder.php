@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             RuanganSeeder::class,  
             KategoriStaffSeeder::class,   
             SemesterSeeder::class,
-            StaffDeptSeeder::class,         
+            StaffDeptSeeder::class,     
+            KategoriGaleriSeeder::class,    
         ]);
     }
 }

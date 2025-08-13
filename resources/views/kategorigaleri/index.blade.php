@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- SIDEBAR -->
- <div class="main-container">
+<div class="main-container">
   <aside class="sidebar">
     <a href="" class="menu-image-only">
       <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
@@ -159,8 +159,7 @@
     <div class="container-fluid mt-4">
         <div class="adm-header">
             <h2 class="adm-title">Kategori Galeri</h2>
-            <button class="adm-btn-add">
-            <i class="bi bi-plus"></i> Tambah Data</button>
+            <a href="{{route('kategorigaleri.create')}}" class="adm-btn-add text-decoration-none"><i class="bi bi-plus"></i>Tambah Data</a>
         </div> 
         <div class="card shadow-sm">
             <div class="card-body">
@@ -173,63 +172,31 @@
                                 <th style="width: 25%;">Aksi</th>
                             </tr>
                         </thead>
+                        @php
+                          $no = 1;
+                        @endphp
+                        @foreach($kategoriGaleri as $kategoriGaleris)
                         <tbody>
                             <!-- Data Galeri (dummy) -->
                             <tr>
-                                <td>1</td>
-                                <td class="text-start">Prestasi</td>
+                                <td>{{ $no++ }}</td>
+                                <td class="text-start">{{ $kategoriGaleris->nama}}</td>
                                 <td>
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
+
+                                <div class="d-flex justify-content-center gap-2">
+                                  <a href="{{route('kategorigaleri.edit', $kategoriGaleris->id)}}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;"><i class="bi bi-pencil" style="font-size: 18px;"></i></a>
+                                  <form action="{{route('kategorigaleri.destroy', $kategoriGaleris->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" type="submit" style="width: 30px; height: 30px; padding: 0;" onclick="return confirm('Yakin ingin menghapus?')">
+                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                  </form>
+                                </div>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td class="text-start">Akademik</td>
-                                <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <tr>
-                                <td>3</td>
-                                <td class="text-start">Berita</td>
-                                <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <tr>
-                                <td>4</td>
-                                <td class="text-start">Prestasi</td>
-                                <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            </tr>                            
                         </tbody>
+                        @endforeach
                     </table>
                 </div>
             </div>

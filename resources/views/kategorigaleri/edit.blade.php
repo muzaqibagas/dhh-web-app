@@ -158,26 +158,27 @@
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">
-            <h2 class="adm-title">Create Kategori Galeri</h2>
+            <h2 class="adm-title">Edit Kategori Galeri</h2>
         </div> 
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
 
-                <form action="{{route('kategorigaleri.store')}}" method="POST">
+                <form action="{{route('kategorigaleri.update', $kategoriGaleri->id)}}" method="POST">
                   @csrf
+                  @method('PUT')
                   <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
                     <div class="col-sm-2">
                       <label for="kategori" class="col-form-label">Kategori Galeri</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                      <input type="text" name="nama" value="{{$kategoriGaleri->nama}}" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
                     </div>
                   </div>
                   <!-- Tombol -->
                   <div class="row">
                       <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                          <button type="submit" class="btn btn-success">Simpan</button>
+                          <button type="submit" class="btn btn-success">Simpan Perubahan</button>
                       </div>
                   </div>
               </form>

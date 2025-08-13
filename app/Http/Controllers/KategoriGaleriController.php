@@ -12,7 +12,8 @@ class KategoriGaleriController extends Controller
      */
     public function index()
     {
-        return view('kategorigaleri.index');
+        $kategoriGaleri = KategoriGaleri::all();                          
+        return view('kategorigaleri.index', compact('kategoriGaleri'));
     }
 
     /**
@@ -28,7 +29,18 @@ class KategoriGaleriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $insert = KategoriGaleri::create([
+            'nama' => $request->nama,
+        ]);
+
+        if ($insert)
+            return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Disimpan.');
+        else
+            return back()->with('error', 'Kategori Galeri Gagal Disimpan');
     }
 
     /**
@@ -44,7 +56,7 @@ class KategoriGaleriController extends Controller
      */
     public function edit(KategoriGaleri $kategoriGaleri)
     {
-        //
+        return view('kategorigaleri.edit', compact('kategoriGaleri'));
     }
 
     /**
@@ -52,7 +64,19 @@ class KategoriGaleriController extends Controller
      */
     public function update(Request $request, KategoriGaleri $kategoriGaleri)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $update = $kategoriGaleri->update([
+            'nama' => $request->nama,
+        ]);        
+
+
+        if ($update)
+            return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Diupdate.');
+        else
+            return back()->with('error', 'Kategori Galeri Gagal Diupdate');
     }
 
     /**
@@ -60,6 +84,11 @@ class KategoriGaleriController extends Controller
      */
     public function destroy(KategoriGaleri $kategoriGaleri)
     {
-        //
+        $delete = $kategoriGaleri->delete();
+
+        if ($delete)
+            return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeris Berhasil Dihapus');
+        else
+            return back()->with('error', 'Kategori Galeri Gagal Dihapus');
     }
 }
