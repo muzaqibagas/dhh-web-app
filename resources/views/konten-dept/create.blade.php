@@ -168,77 +168,71 @@
       });
     </script>
   </aside>
-  
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Data Pendaftar Kolokium</h2>
-    </div>
-    <div class="adm-card">
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th style="width: 25%;">Nama</th>
-                    <th style="width: 10%;">Form Kolokium</th>
-                    <th style="width: 15%;">Moderator</th>
-                    <th style="width: 10%;">Bukti SPP</th>
-                    <th style="width: 10%;">Kartu Kehadiran</th>
-                    <th style="width: 10%;">Verifikasi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $pendaftar = [
-                        ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabiilah Widiani'],
-                        ['nama' => 'Nurbadillah'],
-                        ['nama' => 'Saniyyah Wafa Nurjihan'],
-                    ];
-                @endphp
 
-                @foreach ($pendaftar as $p)
-                <tr>
-                    <td  class="text-start">{{ $p['nama'] }}</td>
-                    <td>
-                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                        <i class="bi bi-eye"></i> Lihat
-                      </a>
-                    </td>
-                    <td>
-                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
-                          <option selected disabled>pilih mod</option>
-                          <option>Moderator 1</option>
-                          <option>Moderator 2</option>
-                      </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
-                        <i class="bi bi-check-circle-fill"></i>
-                      </button>
-                      <button class="btn btn-danger btn-sm px-2 py-1">
-                        <i class="bi bi-x-circle-fill"></i>
-                      </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+<!-- MAIN KONTEN -->
+<main class="content">
+<div class="container-fluid">
+    <div class="adm-header">
+        <h2 class="adm-title">Tambah Konten Departemen</h2>
     </div>
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form>
+        <div class="row">
+            <!-- Judul -->
+            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+              <div class="col-sm-2">
+                <label for="judul" class="col-form-label">Judul</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
+              </div>
+            </div>
+
+            <!-- Deskripsi -->
+            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
+              <div class="col-sm-2">
+                <label for="deskripsi" class="col-form-label">Deskripsi</label>
+              </div>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- Tombol Simpan -->
+        <div class="text-end">
+            <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>
+<script>
+  document.getElementById('foto').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const previewImage = document.getElementById('preview-image');
+    const previewIcon = document.getElementById('preview-icon');
+
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewImage.classList.remove('d-none');
+        previewIcon.classList.add('d-none');
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      previewImage.src = '';
+      previewImage.classList.add('d-none');
+      previewIcon.classList.remove('d-none');
+    }
+  });
+</script>
 
 @endsection
-        
-    
-

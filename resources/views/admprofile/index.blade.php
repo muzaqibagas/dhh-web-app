@@ -9,7 +9,7 @@
     </a>
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
-      $isStaffDeptActive = Request::is('kategoristaff-dept') || Request::is('staff-dept') || Request::is('ketuadhh');
+      $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
       $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
       $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
     @endphp
@@ -102,8 +102,8 @@
     </a>
     <div data-menu="staffdept"
       style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
-      <a href="/kategoristaff-dept"
-        class="submenu-link {{ Request::is('kategoristaff-dept') ? 'active-submenu' : '' }}">
+      <a href="/kategoristaff"
+        class="submenu-link {{ Request::is('kategoristaff') ? 'active-submenu' : '' }}">
         <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
       </a>
       <a href="/staffdept"
@@ -154,6 +154,7 @@
       </script>
     </aside>
 
+    <!-- MAIN KONTEN -->
   <main class="content">
     <h2 class="page-title">Biodata Admin</h2>
     <div class="col-md-9 px-2 d-flex justify-content-center align-items-center gap-5 w-100 mt-4">

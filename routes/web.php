@@ -224,10 +224,10 @@ Route::delete('kolokium/{kolokium}', [KolokiumController::class, 'destroy'])->na
 Route::get('konten-dept', [KontenDeptController::class, 'index'])->name('konten-dept.index');
 Route::get('konten-dept/create', [KontenDeptController::class, 'create'])->name('konten-dept.create');
 Route::post('konten-dept', [KontenDeptController::class, 'store'])->name('konten-dept.store');
-Route::get('konten-dept/{kontendept}', [KontenDeptController::class, 'show'])->name('konten-dept.show');
-Route::get('konten-dept/{kontendept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
-Route::put('konten-dept/{kontendept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
-Route::delete('konten-dept/{kontendept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
+Route::get('konten-dept/{kontenDept}', [KontenDeptController::class, 'show'])->name('konten-dept.show');
+Route::get('konten-dept/{kontenDept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
+Route::put('konten-dept/{kontenDept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
+Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
 
 //Mitra
 Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
@@ -279,13 +279,13 @@ Route::put('sidang/{sidang}', [SidangController::class, 'update'])->name('sidang
 Route::delete('sidang/{sidang}', [SidangController::class, 'destroy'])->name('sidang.destroy');
 
 // StaffDept
-Route::get('staffdept', [StaffDeptController::class, 'index'])->name('staffdept.index');
-Route::get('staffdept/create', [StaffDeptController::class, 'create'])->name('staffdept.create');
-Route::post('staffdept', [StaffDeptController::class, 'store'])->name('staffdept.store');
-Route::get('staffdept/{staffDept}', [StaffDeptController::class, 'show'])->name('staffdept.show');
-Route::get('staffdept/{staffDept}/edit', [StaffDeptController::class, 'edit'])->name('staffdept.edit');
-Route::put('staffdept/{staffDept}', [StaffDeptController::class, 'update'])->name('staffdept.update');
-Route::delete('staffdept/{staffDept}', [StaffDeptController::class, 'destroy'])->name('staffdept.destroy');
+Route::get('staff-dept', [StaffDeptController::class, 'index'])->name('staffdept.index');
+Route::get('staff-dept/create', [StaffDeptController::class, 'create'])->name('staffdept.create');
+Route::post('staff-dept', [StaffDeptController::class, 'store'])->name('staffdept.store');
+Route::get('staff-dept/{staffDept}', [StaffDeptController::class, 'show'])->name('staffdept.show');
+Route::get('staff-dept/{staffDept}/edit', [StaffDeptController::class, 'edit'])->name('staffdept.edit');
+Route::put('staff-dept/{staffDept}', [StaffDeptController::class, 'update'])->name('staffdept.update');
+Route::delete('staff-dept/{staffDept}', [StaffDeptController::class, 'destroy'])->name('staffdept.destroy');
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');

@@ -168,77 +168,83 @@
       });
     </script>
   </aside>
-  
-<!-- MAIN CONTENT -->
-  <main class="content">
-    <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Data Pendaftar Kolokium</h2>
-    </div>
-    <div class="adm-card">
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th style="width: 25%;">Nama</th>
-                    <th style="width: 10%;">Form Kolokium</th>
-                    <th style="width: 15%;">Moderator</th>
-                    <th style="width: 10%;">Bukti SPP</th>
-                    <th style="width: 10%;">Kartu Kehadiran</th>
-                    <th style="width: 10%;">Verifikasi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $pendaftar = [
-                        ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabiilah Widiani'],
-                        ['nama' => 'Nurbadillah'],
-                        ['nama' => 'Saniyyah Wafa Nurjihan'],
-                    ];
-                @endphp
 
-                @foreach ($pendaftar as $p)
-                <tr>
-                    <td  class="text-start">{{ $p['nama'] }}</td>
-                    <td>
-                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                        <i class="bi bi-eye"></i> Lihat
-                      </a>
-                    </td>
-                    <td>
-                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
-                          <option selected disabled>pilih mod</option>
-                          <option>Moderator 1</option>
-                          <option>Moderator 2</option>
-                      </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
-                        <i class="bi bi-check-circle-fill"></i>
-                      </button>
-                      <button class="btn btn-danger btn-sm px-2 py-1">
-                        <i class="bi bi-x-circle-fill"></i>
-                      </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+<!-- KONTEN DEPARTEMEN -->
+<main class="content">
+<div class="container-fluid mt-4">
+    <div class="adm-header">
+        <h2 class="adm-title">Konten Departemen</h2>
+    </div> 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+
+            <form>
+                <!-- Sejarah -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                    <div class="col-sm-10">
+                        <textarea rows="4" class="form-control" readonly>
+Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.
+                        </textarea>
+                    </div>
+                </div>
+                
+                <!-- Visi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control" readonly>
+Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- Misi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control" readonly>
+Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                    <div class="col-sm-10">
+                        <textarea rows="6" class="form-control" readonly>
+1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
+2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
+3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
+4. Menghasilkan lulusan PS THH yang mempunyai dasar ketrampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- Kebijakan Mutu -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                    <div class="col-sm-10">
+                        <textarea rows="5" class="form-control" readonly>
+Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:
+                        </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+<!-- Tombol -->
+<div>
+  <div class="row">
+    @foreach($kontens as $konten)
+    <div class="mb-3 d-flex justify-content-end">      
+        <a href="{{ route('konten-dept.edit', $konten->id) }}" class="btn btn-success text-decoration-none">Edit Data</a>       
+    </div>
+    @endforeach  
+  </div>
 </div>
 
-@endsection
-        
-    
 
+@endsection

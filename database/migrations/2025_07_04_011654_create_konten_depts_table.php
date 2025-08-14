@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('konten_depts', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->string('judul')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');            
+            $table->text('sejarah')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->text('tujuan')->nullable();
+            $table->text('kebijakanmutu')->nullable();
             $table->timestamps();
         });
     }

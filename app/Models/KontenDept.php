@@ -9,8 +9,11 @@ class KontenDept extends Model
     protected $table = 'konten_depts';
     protected $fillable = [
         'id_user', 
-        'judul', 
-        'deskripsi',
+        'sejarah',
+        'visi',
+        'misi',
+        'tujuan',
+        'kebijakanmutu'
     ];
 
     public function user()

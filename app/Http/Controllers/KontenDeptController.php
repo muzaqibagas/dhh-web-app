@@ -13,7 +13,7 @@ class KontenDeptController extends Controller
     public function index()
     {
         $kontens = KontenDept::all();
-        return view('kontendept.index', compact('kontens'));
+        return view('konten-dept.index', compact('kontens'));
     }
 
     /**
@@ -21,7 +21,7 @@ class KontenDeptController extends Controller
      */
     public function create()
     {
-        return view('kontendept.create');
+        return view('konten-dept.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class KontenDeptController extends Controller
      */
     public function show(KontenDept $kontenDept)
     {
-        return view('kontendept.show', compact('kontenDept'));
+        return view('konten-dept.show', compact('kontenDept'));
     }
 
     /**
@@ -54,7 +54,7 @@ class KontenDeptController extends Controller
      */
     public function edit(KontenDept $kontenDept)
     {
-        return view('kontendept.edit', compact('kontenDept'));
+        return view('konten-dept.edit', compact('kontenDept'));
     }
 
     /**
@@ -64,12 +64,15 @@ class KontenDeptController extends Controller
     {
         $data = $request->validate([
             'id_user' => 'required|exists:users,id',
-            'judul' => 'nullable|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'sejarah' => 'nullable|string',
+            'visi' => 'nullable|string',
+            'misi' => 'nullable|string',
+            'tujuan' => 'nullable|string',
+            'kebijakanmutu' => 'nullable|string',
         ]);
         $update = $kontenDept->update($data);
         if ($update)
-            return redirect()->route('kontendept.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('konten-dept.index')->with('success', 'Data berhasil diperbarui!');
         else
             return back()->with('error', 'Gagal memperbarui data!');
     }
@@ -80,6 +83,6 @@ class KontenDeptController extends Controller
     public function destroy(KontenDept $kontenDept)
     {
         $kontenDept->delete();
-        return redirect()->route('kontendept.index');
+        return redirect()->route('konten-dept.index');
     }
 }
