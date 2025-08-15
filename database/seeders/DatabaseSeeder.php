@@ -28,8 +28,7 @@ class DatabaseSeeder extends Seeder
             KategoriStaffSeeder::class,   
             SemesterSeeder::class,
             StaffDeptSeeder::class,     
-            KategoriGaleriSeeder::class, 
-            KontenDeptSeeder::class,   
+            KategoriGaleriSeeder::class,              
         ]);
     }
 }

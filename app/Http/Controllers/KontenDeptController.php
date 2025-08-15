@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KontenDept;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KontenDeptController extends Controller
 {
@@ -12,8 +13,16 @@ class KontenDeptController extends Controller
      */
     public function index()
     {
-        $kontens = KontenDept::all();
-        return view('konten-dept.index', compact('kontens'));
+        $konten = KontenDept::first();
+
+        if ($konten) {
+            // Jika sudah ada data, langsung arahkan ke halaman show
+            return redirect()->route('konten-dept.show', $konten->id);
+        } else {
+            // Jika belum ada data, arahkan ke halaman create
+            return redirect()->route('konten-dept.create');
+        }
+
     }
 
     /**
@@ -21,6 +30,13 @@ class KontenDeptController extends Controller
      */
     public function create()
     {
+        $existing = KontenDept::first();
+
+        if ($existing) {            
+            return redirect()->route('konten-dept.show', $existing->id)
+                ->with('error', 'Konten Departemen sudah ada, silakan edit data yang ada.');
+        }
+
         return view('konten-dept.create');
     }
 
@@ -28,15 +44,24 @@ class KontenDeptController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'judul' => 'nullable|string|max:255',
-            'deskripsi' => 'nullable|string',
+    {        
+        $existing = KontenDept::first();
+
+        if ($existing) {
+            return redirect()->route('konten-dept.show', $existing->id)->with('error', 'Konten Departemen sudah ada, silakan edit data yang ada.');
+        }
+
+        $data = $request->validate([            
+            'sejarah' => 'nullable|string',
+            'visi' => 'nullable|string',
+            'misi' => 'nullable|string',
+            'tujuan' => 'nullable|string',
+            'kebijakanmutu' => 'nullable|string',
         ]);
+
         $insert = KontenDept::create($data);
         if ($insert)
-            return redirect()->route('kontendept.index')->with('success', 'Data berhasil disimpan!');
+            return redirect()->route('konten-dept.show', $insert->id)->with('success', 'Data berhasil disimpan!');
         else
             return back()->with('error', 'Gagal menyimpan data!');
     }
@@ -62,8 +87,7 @@ class KontenDeptController extends Controller
      */
     public function update(Request $request, KontenDept $kontenDept)
     {
-        $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
+        $data = $request->validate([            
             'sejarah' => 'nullable|string',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
@@ -72,7 +96,7 @@ class KontenDeptController extends Controller
         ]);
         $update = $kontenDept->update($data);
         if ($update)
-            return redirect()->route('konten-dept.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('konten-dept.show', $kontenDept->id)->with('success', 'Data berhasil diperbarui!');
         else
             return back()->with('error', 'Gagal memperbarui data!');
     }
@@ -83,6 +107,6 @@ class KontenDeptController extends Controller
     public function destroy(KontenDept $kontenDept)
     {
         $kontenDept->delete();
-        return redirect()->route('konten-dept.index');
+        return redirect()->route('konten-dept.index')->with('success', 'Data Konten Departemen berhasil dihapus!');
     }
 }

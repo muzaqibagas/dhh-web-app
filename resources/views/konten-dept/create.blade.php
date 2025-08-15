@@ -169,70 +169,80 @@
     </script>
   </aside>
 
-<!-- MAIN KONTEN -->
-<main class="content">
-<div class="container-fluid">
-    <div class="adm-header">
-        <h2 class="adm-title">Tambah Konten Departemen</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-            <!-- Judul -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="judul" class="col-form-label">Judul</label>
+<!-- KONTEN DEPARTEMEN -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Tambah Konten Departemen</h2>
+          {{-- Alert Success --}}
+          @if (session('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
-              </div>
-            </div>
+          @endif
 
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
+          {{-- Alert Error --}}
+          @if (session('error'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ session('error') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
+          @endif
+      </div> 
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <form action="{{ route('konten-dept.store') }}" method="POST">
+                  @csrf
+                  <!-- Sejarah -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="sejarah" rows="4" class="form-control" required>{{ old('sejarah') }}</textarea>
+                      </div>
+                  </div>
+                  
+                  <!-- Visi -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="visi" rows="3" class="form-control" required>{{ old('visi') }}</textarea>
+                      </div>
+                  </div>
 
+                  <!-- Misi -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="misi" rows="3" class="form-control" required>{{ old('misi') }}</textarea>
+                      </div>
+                  </div>
+
+                  <!-- Tujuan -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="tujuan" rows="6" class="form-control" required>{{ old('tujuan') }}</textarea>
+                      </div>
+                  </div>
+
+                  <!-- Kebijakan Mutu -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="kebijakanmutu" rows="5" class="form-control" required>{{ old('kebijakanmutu') }}</textarea>
+                      </div>
+                  </div>
+
+                  <!-- Tombol -->
+                  <div class="mt-4 me-4 d-flex justify-content-end">                      
+                      <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                  </div>
+
+              </form>
           </div>
-
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
-        </div>
-
-      </form>
+      </div>
     </div>
-  </div>
+  </main>
 </div>
-<script>
-  document.getElementById('foto').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const previewImage = document.getElementById('preview-image');
-    const previewIcon = document.getElementById('preview-icon');
-
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.classList.remove('d-none');
-        previewIcon.classList.add('d-none');
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.src = '';
-      previewImage.classList.add('d-none');
-      previewIcon.classList.remove('d-none');
-    }
-  });
-</script>
-
 @endsection

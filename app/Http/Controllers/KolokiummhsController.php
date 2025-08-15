@@ -7,7 +7,6 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -15,12 +14,7 @@ use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 
 class KolokiummhsController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+{    
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +22,6 @@ class KolokiummhsController extends Controller
     {        
         $mahasiswaId = auth()->id();
         $kolokiummhs = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
-
         if ($kolokiummhs) {
             // Sudah pernah daftar → lihat detail
             return redirect()->route('kolokiummhs.show', $kolokiummhs->id);
@@ -122,12 +115,11 @@ class KolokiummhsController extends Controller
         $insert = Kolokiummhs::create($data);
 
         if ($insert) {
-            return redirect()->route('kolokiummhs.index')->with('success', 'Data berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan kolokium.');
+            return redirect()->route('kolokiummhs.show', $kolokiummhs->id)->with('success', 'Data berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan kolokium.');
         } else {
-            return back()->with('error', 'Gagal menyimpan data!');
+            return back()->with('error', 'Gagal menyimpan data kolokium. Silahkan Coba lagi.');
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -139,61 +131,58 @@ class KolokiummhsController extends Controller
 
     public function generatePdf($id)
     {
-        // Ambil data kolokium dari database
         $kolokiummhs = Kolokiummhs::findOrFail($id);
-
-        // Path template PDF
+        
         $template = public_path('pdf/templatekolokium.pdf');
-        $outputPath = public_path("pdf/ditandatangani");
+        $outputPath = public_path("pdf/ditandatanganikolokium");
 
         if (!file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
         }
 
-        $output = $outputPath . "/{$kolokiummhs->nim}_draft.pdf";
-
-        // Mulai generate PDF
+        $output = $outputPath . "/{$kolokiummhs->nim}_draftkolokium.pdf";
+        
         $pdf = new Fpdi();
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
         $pdf->useTemplate($tpl);
 
-        $pdf->SetFont('Helvetica', '', 12);
+        $pdf->SetFont('Times', '', 12);
+        $lineHeight = 4.23 * 1.15;
 
-        // Isi sesuai format
-        $pdf->SetXY(75, 35);
-        $pdf->Write(5, $kolokiummhs->nama);
+        $pdf->SetXY(80, 35);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->nama, 0, 'L');
 
-        $pdf->SetXY(75, 44);
-        $pdf->Write(5, $kolokiummhs->nim);
+        $pdf->SetXY(80, 44);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->nim, 0, 'L');
 
-        $pdf->SetXY(75, 53);
-        $pdf->Write(5, $kolokiummhs->semester->semester ?? '-');
+        $pdf->SetXY(80, 53);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
 
-        $pdf->SetXY(75, 62);
-        $pdf->Write(5, $kolokiummhs->alamat);
+        $pdf->SetXY(80, 62);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->alamat, 0, 'L');
 
-        $pdf->SetXY(75, 70);
-        $pdf->Write(5, $kolokiummhs->judul_kolokium);
+        $pdf->SetXY(80, 70);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');
 
-        $pdf->SetXY(75, 79);
-        $pdf->Write(5, $kolokiummhs->pembimbing1->nama ?? '-');
+        $pdf->SetXY(80, 87);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing1->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(75, 87);
-        $pdf->Write(5, $kolokiummhs->pembimbing2->nama ?? '-');
+        $pdf->SetXY(80, 96);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing2->nama ?? 'hfuibwubuefwbj', 0, 'L');
 
-        $pdf->SetXY(75, 97);
-        $pdf->Write(5, $kolokiummhs->tanggal);
+        $pdf->SetXY(80, 105);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
 
-        $pdf->SetXY(75, 105);
-        $pdf->Write(5, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai);
+        $pdf->SetXY(80, 114);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
 
-        $pdf->SetXY(75, 114);
-        $pdf->Write(5, $kolokiummhs->ruangan->nama ?? '-');
+        $pdf->SetXY(80, 123);
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->ruangan->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(75, 123);
-        $pdf->Write(5, '-');
+        $pdf->SetXY(80, 131);
+        $pdf->MultiCell(100, $lineHeight, '', 0, 'L');
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -209,9 +198,8 @@ class KolokiummhsController extends Controller
     {
         $ruangans = Ruangan::all();
         $semesters = Semester::all();
-        $listDosen = StaffDept::all();
-        $mahasiswas = User::where('role', 'mahasiswa')->get();
-        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'semesters', 'listDosen','mahasiswas'));
+        $listDosen = StaffDept::all();        
+        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'semesters', 'listDosen'));
     }
 
     /**
@@ -271,7 +259,7 @@ class KolokiummhsController extends Controller
         $update = $kolokiummhs->update($data);
 
         if ($update) {
-            return redirect()->route('kolokiummhs.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('kolokiummhs.show', $kolokiummhs->id)->with('success', 'Data berhasil diperbarui!');
         } else {
             return back()->with('error', 'Gagal memperbarui data!');
         }
@@ -284,6 +272,6 @@ class KolokiummhsController extends Controller
     public function destroy(Kolokiummhs $kolokiummhs)
     {
         $kolokiummhs->delete();
-        return redirect()->route('kolokiummhs.index');
+        return redirect()->route('kolokiummhs.index')->with('success', 'Data kolokium berhasil dihapus!');        
     }
 }

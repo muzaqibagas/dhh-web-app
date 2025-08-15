@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class KontenDept extends Model
 {
     protected $table = 'konten_depts';
-    protected $fillable = [
-        'id_user', 
+    protected $fillable = [        
         'sejarah',
         'visi',
         'misi',

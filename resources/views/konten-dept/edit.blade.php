@@ -170,59 +170,67 @@
   </aside>
 
 <!-- KONTEN DEPARTEMEN -->
- <main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Konten Departemen</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Konten Departemen</h2>
+      </div>                    
+      <form action="{{ route('konten-dept.update', $kontenDept->id) }}" method="POST">
+        @csrf
+        @method('PUT')
 
-              <form action="{{ route('konten-dept.update', $kontenDept->id) }}" method="POST">
-                  @csrf
-                  @method('PUT')
+        <div class="card shadow-sm">
+          <div class="card-body">
 
-                  <!-- Sejarah -->
-                  <div class="row mb-3 align-items-center">
-                      <label for="sejarah" class="col-sm-2 col-form-label fw-bold">Sejarah</label>
-                      <div class="col-sm-10">
-                          <input type="text" name="sejarah" id="sejarah" value="{{$kontenDept->sejarah}}" class="form-control" placeholder="Masukkan sejarah">
-                      </div>
+              <!-- Sejarah -->                    
+              <div class="row mb-3 align-items-center">
+                  <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                  <div class="col-sm-10">                        
+                      <textarea name="sejarah" rows="4" class="form-control" required>{{ $kontenDept->sejarah ?? '-' }}</textarea>
                   </div>
+              </div>
 
-                  <!-- Visi -->
-                  <div class="row mb-3 align-items-center">
-                      <label for="visi" class="col-sm-2 col-form-label fw-bold">Visi</label>
-                      <div class="col-sm-10">
-                          <input type="text" name="visi" id="visi" value="{{$kontenDept->visi}}" class="form-control" placeholder="Masukkan visi">
-                      </div>
+              <!-- Visi -->
+              <div class="row mb-3 align-items-center">
+                  <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                  <div class="col-sm-10">                        
+                      <textarea name="visi" rows="3" class="form-control" required>{{ $kontenDept->visi ?? '-'}}</textarea>
                   </div>
+              </div>
 
-                  <!-- Misi -->
-                  <div class="row mb-3 align-items-center">
-                      <label for="misi" class="col-sm-2 col-form-label fw-bold">Misi</label>
-                      <div class="col-sm-10">
-                          <input type="text" name="misi" id="misi" value="{{$kontenDept->misi}}" class="form-control" placeholder="Masukkan misi">
-                      </div>
+              <!-- Misi -->
+              <div class="row mb-3 align-items-center">
+                  <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                  <div class="col-sm-10">                        
+                      <textarea name="misi" rows="3" class="form-control" required>{{ $kontenDept->misi ?? '-' }}</textarea>
                   </div>
+              </div>                                                            
 
-                  <!-- Tombol -->
-                  <div class="row">
-                      <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                          <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                      </div>
+              <!-- Tujuan -->                    
+              <div class="row mb-3 align-items-center">
+                  <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                  <div class="col-sm-10">                        
+                      <textarea name="tujuan" rows="6" class="form-control" required>{{ $kontenDept->tujuan ?? '-' }}</textarea>
                   </div>
-              </form>
+              </div>
+
+              <!-- Kebijakan Mutu -->                    
+              <div class="row mb-3 align-items-center">
+                <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                <div class="col-sm-10">                        
+                  <textarea name="kebijakanmutu" rows="5" class="form-control" required>{{ $kontenDept->kebijakanmutu ?? '-' }}</textarea>
+                </div>
+              </div>
+
+              <!-- Tombol Aksi -->
+              <div class="mt-4 me-4 d-flex justify-content-end">
+                <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+              </div>
+
+          </div>
         </div>
+      </form>  
     </div>
-<!-- Tombol -->
-<div>
-  <div class="row">
-    <div class="mb-3 d-flex justify-content-between align-items-center">
-      <button type="button" class="btn btn-secondary">Kembali</button>
-      <button type="button" class="btn btn-success">Simpan Perubahan</button>
-    </div>
-  </div>
-</div>
+  </main>
+</div>              
 @endsection

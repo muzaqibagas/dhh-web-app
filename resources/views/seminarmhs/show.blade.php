@@ -105,7 +105,16 @@
         <div class="form-group">
           <label>Alamat di Bogor</label>
           <input type="text" placeholder="Masukkan Alamat Lengkap">
-        </div>        
+        </div>
+
+        <div class="form-group">
+          <label>Program Studi</label>
+          <select>
+            <option selected disabled>Pilih Program Studi</option>
+            <option>Hasil Hutan</option>
+            <option>Teknologi Kayu</option>
+          </select>
+        </div>
 
         <div class="form-group">
           <label>Judul Makalah Seminar</label>
