@@ -21,6 +21,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SeminarController;
 use App\Http\Controllers\SidangController;
 use App\Http\Controllers\StaffDeptController;
+use App\Http\Controllers\KetuaDHHController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TipeController;
 use App\Http\Controllers\UndanganController;
@@ -201,6 +202,10 @@ Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name(
 
 // KontenJenjang
 Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');
+Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
+Route::post('kontenjenjang', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
+Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
+Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
@@ -286,6 +291,11 @@ Route::get('staff-dept/{staffDept}', [StaffDeptController::class, 'show'])->name
 Route::get('staff-dept/{staffDept}/edit', [StaffDeptController::class, 'edit'])->name('staffdept.edit');
 Route::put('staff-dept/{staffDept}', [StaffDeptController::class, 'update'])->name('staffdept.update');
 Route::delete('staff-dept/{staffDept}', [StaffDeptController::class, 'destroy'])->name('staffdept.destroy');
+
+// KETUADHH
+Route::get('ketuadhh', [KetuaDHHController::class, 'index'])->name('ketuadhh.index');
+Route::get('ketuadhh/create', [KetuaDHHController::class, 'create'])->name('ketuadhh.create');
+Route::post('ketuadhh', [KetuaDHHController::class, 'store'])->name('ketuadhh.store');
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');

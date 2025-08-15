@@ -151,8 +151,8 @@
           e.preventDefault();
 
           const target = this.getAttribute('data-dropdown');
-          const menu = document.querySelector(`[data-menu="${target}"]`);
-          const arrow = document.querySelector(`[data-arrow="${target}"]`);
+          const menu = document.querySelector([data-menu="${target}"]);
+          const arrow = document.querySelector([data-arrow="${target}"]);
           const isOpen = menu.style.display === 'flex';
 
           // Tutup semua dulu
@@ -169,86 +169,73 @@
     </script>
   </aside>
 
-<!-- Main konten -->
-<div class="container mt-5">
+<!-- KONTEN JENJANG -->
+ <main class="content">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Undangan Sidang</h2>
-    </div>
-    <div class="card shadow-sm mt-4">
+        <h2 class="adm-title">Konten Jenjang</h2>
+    </div> 
+    <div class="card shadow-sm">
         <div class="card-body">
-            <form action="#" method="POST">
-                @csrf
+            <div class="table-responsive">
 
-                @php
-                    $formFields = [
-                        'Nama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih nama</option>
-                                <option>Muzaqi Bagas</option>
-                                <option>Hasna Nabiilah</option>
-                            </select>',
-                        'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
-                        'Judul Praktek Khusus' => '
-                            <div class="input-group">
-                                <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
-                            </div>',
-                        'Hari/Tanggal Sidang' => '
-                            <div class="input-group">
-                                <input type="date" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Waktu Sidang' => '
-                            <div class="input-group">
-                                <input type="time" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Tempat Sidang' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat sidang">',
-                        'Pembimbing Utama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Utama</option>
-                                <option>Nana nyanya M.Ts.</option>
-                            </select>',
-                        'Pembimbing Anggota' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Anggota</option>
-                                <option>-</option>
-                            </select>',
-                        'Ketua Departemen' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Ketua Departemen</option>
-                                <option>-</option>
-                            </select>',
-                        'Pembimbing' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing</option>
-                                <option>Bambang</option>
-                            </select>',
-                        'Ketua Sidang' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Ketua Sidang</option>
-                                <option>Morgan</option>
-                            </select>',
-                    ];
-                @endphp
-
-                @foreach ($formFields as $label => $field)
+            <form>
+                <!-- Sejarah -->
                 <div class="row mb-3 align-items-center">
-                    <label class="col-md-3 col-form-label text-md-start fw-semibold">{{ $label }}</label>
-                    <div class="col-md-9">
-                        {!! $field !!}
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                    <div class="col-sm-10">
+                        <textarea rows="4" class="form-control"> Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.
+                        </textarea>
                     </div>
                 </div>
-                @endforeach
 
-                <!-- Tombol -->
-                <div>
-                  <div class="row">
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                      <button type="button" class="btn btn-secondary">Kembali</button>
-                      <button type="button" class="btn btn-success">Buat Dokumen</button>
+                <!-- Visi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.</textarea>
                     </div>
-                  </div>
+                </div>
+
+                <!-- Misi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.
+                        </textarea>
+                    </div>
+                </div>
+
+                <!-- Tujuan -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                    <div class="col-sm-10">
+                        <textarea rows="3" class="form-control">
+1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
+2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
+3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
+4. Menghasilkan lulusan PS THH yang mempunyai dasar ketrampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.a
+                          </textarea>
+                    </div>
+                </div>
+
+                <!-- Kebijakan Mutu -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                    <div class="col-sm-10">
+                        <textarea rows="5" class="form-control">Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:</textarea>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+<!-- Tombol -->
+<div>
+  <div class="row">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
+      <button type="button" class="btn btn-secondary">Kembali</button>
+      <button type="button" class="btn btn-success">Simpan Perubahan</button>
+    </div>
+  </div>
 </div>
 @endsection

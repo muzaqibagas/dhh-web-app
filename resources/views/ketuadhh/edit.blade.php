@@ -169,86 +169,53 @@
     </script>
   </aside>
 
-<!-- Main konten -->
-<div class="container mt-5">
+<!-- MAIN KONTEN -->
+<main class="content">
+<div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Undangan Sidang</h2>
-    </div>
-    <div class="card shadow-sm mt-4">
+        <h2 class="adm-title">Edit Ketua DHH</h2>
+    </div> 
+    <div class="card shadow-sm">
         <div class="card-body">
-            <form action="#" method="POST">
-                @csrf
+            <div class="table-responsive">
 
-                @php
-                    $formFields = [
-                        'Nama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih nama</option>
-                                <option>Muzaqi Bagas</option>
-                                <option>Hasna Nabiilah</option>
-                            </select>',
-                        'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
-                        'Judul Praktek Khusus' => '
-                            <div class="input-group">
-                                <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
-                            </div>',
-                        'Hari/Tanggal Sidang' => '
-                            <div class="input-group">
-                                <input type="date" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Waktu Sidang' => '
-                            <div class="input-group">
-                                <input type="time" class="text-start form-control form-control-sm">
-                            </div>',
-                        'Tempat Sidang' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat sidang">',
-                        'Pembimbing Utama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Utama</option>
-                                <option>Nana nyanya M.Ts.</option>
-                            </select>',
-                        'Pembimbing Anggota' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Anggota</option>
-                                <option>-</option>
-                            </select>',
-                        'Ketua Departemen' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Ketua Departemen</option>
-                                <option>-</option>
-                            </select>',
-                        'Pembimbing' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing</option>
-                                <option>Bambang</option>
-                            </select>',
-                        'Ketua Sidang' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih Ketua Sidang</option>
-                                <option>Morgan</option>
-                            </select>',
-                    ];
-                @endphp
-
-                @foreach ($formFields as $label => $field)
-                <div class="row mb-3 align-items-center">
-                    <label class="col-md-3 col-form-label text-md-start fw-semibold">{{ $label }}</label>
-                    <div class="col-md-9">
-                        {!! $field !!}
-                    </div>
+            <form>
+                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="nama" class="col-form-label">Nama</label>
                 </div>
-                @endforeach
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama mitra" required>
+                </div>
+                </div>
+                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="foto" class="col-form-label">Foto</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="foto" required>
+                </div>
+                </div>
+                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="jabatan" class="col-form-label">Masa Jabatan</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="jabatan" placeholder="Masukkan tahun" required>
+                </div>
+                </div>
 
                 <!-- Tombol -->
                 <div>
-                  <div class="row">
+                <div class="row">
                     <div class="mb-3 d-flex justify-content-between align-items-center">
-                      <button type="button" class="btn btn-secondary">Kembali</button>
-                      <button type="button" class="btn btn-success">Buat Dokumen</button>
+                        <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                        <button type="button" class="btn btn-success">Simpan</button>
                     </div>
-                  </div>
                 </div>
-            </form>
-        </div>
-    </div>
+                </div>
+          </form>
+      </div>
+  </div>
 </div>
 @endsection

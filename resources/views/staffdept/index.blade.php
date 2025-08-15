@@ -194,7 +194,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data Galeri (dummy) -->
+                        <!-- Data (dummy) -->
                         <tr>
                             <td>1</td>
                             <td>

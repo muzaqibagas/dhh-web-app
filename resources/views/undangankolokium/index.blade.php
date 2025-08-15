@@ -233,10 +233,14 @@
                 </div>
                 @endforeach
 
-                <div class="row">
-                    <div class="col-12 d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">Buat Surat</button>
+                <!-- Tombol -->
+                <div>
+                  <div class="row">
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                      <button type="button" class="btn btn-secondary">Kembali</button>
+                      <button type="button" class="btn btn-success">Buat Dokumen</button>
                     </div>
+                  </div>
                 </div>
             </form>
         </div>

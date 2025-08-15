@@ -171,23 +171,31 @@
 
 <!-- KONTEN MAIN -->
     <main class="content">
-      <div class="adm-header">
-        <h2 class="adm-title">Surat Undangan</h2>
+      <div class="container-fluid mt-4">
+        <div class="adm-header">
+          <h2 class="adm-title">Surat Undangan</h2>
+        </div>
       </div>
       <!-- Status Cards -->
-      <div class="adm-status-cards">
-        <div class="card waiting">
-          <i class="bi bi-lightbulb"></i>
-          <h5>Surat Undangan Kolokium</h5>
-        </div>
-        <div class="card success">
-          <i class="bi bi-laptop"></i>
-          <h5>Surat Undangan Seminar</h5>
-        </div>
-        <div class="card danger">
-          <i class="bi bi-bookmark"></i>
-          <h5>Surat Undangan Sidang</h5>
-        </div>
+      <div class="adm-status-cards"> 
+        <a href="{{route('undangankolokium.index')}}" class="text-decoration-none">
+          <div class="card waiting">
+            <i class="bi bi-lightbulb"></i>
+            <h5>Surat Undangan Kolokium</h5>
+          </div>
+        </a>
+        <a href="{{route('undanganseminar.index')}}" class="text-decoration-none">
+          <div class="card success">
+            <i class="bi bi-laptop"></i>
+            <h5>Surat Undangan Seminar</h5>
+          </div>
+        </a>
+        <a href="{{route('undangansidang.index')}}" class="text-decoration-none">
+          <div class="card danger">
+            <i class="bi bi-bookmark"></i>
+            <h5>Surat Undangan Sidang</h5>
+          </div>
+        </a>
       </div>
     </main>
   </div>

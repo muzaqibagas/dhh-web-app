@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KontenJenjang;
+use App\Models\KetuaDHH;
 use Illuminate\Http\Request;
 
-class KontenJenjangController extends Controller
+class KetuaDHHController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('kontenjenjang.index');
+        return view('ketuadhh.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class KontenJenjangController extends Controller
      */
     public function create()
     {
-        //
+        return view('ketuadhh.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class KontenJenjangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KontenJenjang $kontenJenjang)
+    public function show(KetuaDHH $ketuaDHH)
     {
         //
     }
@@ -42,15 +42,15 @@ class KontenJenjangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KontenJenjang $kontenJenjang)
+    public function edit(KetuaDHH $ketuaDHH)
     {
-        return view('kontenjenjang.index');
+        return view('ketuadhh.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, KontenJenjang $kontenJenjang)
+    public function update(Request $request, KetuaDHH $ketuaDHH)
     {
         //
     }
@@ -58,7 +58,7 @@ class KontenJenjangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KontenJenjang $kontenJenjang)
+    public function destroy(KetuaDHH $ketuaDHH)
     {
         //
     }
