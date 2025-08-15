@@ -170,81 +170,66 @@
   </aside>
 
 <!-- KONTEN DEPARTEMEN -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Konten Departemen</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Tambah Konten Departemen</h2>
+      </div> 
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <form action="{{ route('konten-dept.store') }}" method="POST">
+                  @csrf
 
-            <form>
-                <!-- Sejarah -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
-                    <div class="col-sm-10">
-                        <textarea rows="4" class="form-control" readonly>
-Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.
-                        </textarea>
-                    </div>
-                </div>
-                
-                <!-- Visi -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
-                    <div class="col-sm-10">
-                        <textarea rows="3" class="form-control" readonly>
-Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.
-                        </textarea>
-                    </div>
-                </div>
+                  <!-- Sejarah -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="sejarah" rows="4" class="form-control">{{ old('sejarah') }}</textarea>
+                      </div>
+                  </div>
+                  
+                  <!-- Visi -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Misi -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
-                    <div class="col-sm-10">
-                        <textarea rows="3" class="form-control" readonly>
-Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.
-                        </textarea>
-                    </div>
-                </div>
+                  <!-- Misi -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Tujuan -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
-                    <div class="col-sm-10">
-                        <textarea rows="6" class="form-control" readonly>
-1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
-2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
-3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
-4. Menghasilkan lulusan PS THH yang mempunyai dasar ketrampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.
-                        </textarea>
-                    </div>
-                </div>
+                  <!-- Tujuan -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="tujuan" rows="6" class="form-control">{{ old('tujuan') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Kebijakan Mutu -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
-                    <div class="col-sm-10">
-                        <textarea rows="5" class="form-control" readonly>
-Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:
-                        </textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
+                  <!-- Kebijakan Mutu -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                      <div class="col-sm-10">                        
+                          <textarea name="kebijakanmutu" rows="5" class="form-control">{{ old('kebijakanmutu') }}</textarea>
+                      </div>
+                  </div>
+
+                  <!-- Tombol -->
+                  <div class="mb-3 d-flex justify-content-end">
+                      <a href="{{ route('konten-dept.index') }}" class="btn btn-secondary me-2">Batal</a>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+
+              </form>
+          </div>
+      </div>
     </div>
-<!-- Tombol -->
-<div>
-  <div class="row">
-    @foreach($kontens as $konten)
-    <div class="mb-3 d-flex justify-content-end">      
-        <a href="{{ route('konten-dept.edit', $konten->id) }}" class="btn btn-success text-decoration-none">Edit Data</a>       
-    </div>
-    @endforeach  
-  </div>
+  </main>
 </div>
-
-
 @endsection

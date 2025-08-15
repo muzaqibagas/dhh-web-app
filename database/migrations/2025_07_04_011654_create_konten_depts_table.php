@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('konten_depts', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');            
+            $table->id('id');            
             $table->text('sejarah')->nullable();
             $table->text('visi')->nullable();
             $table->text('misi')->nullable();

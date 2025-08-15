@@ -107,26 +107,26 @@
 
             <div class="form-group">
             <label>Nama</label>
-            <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" required>        
-            <input type="hidden" name="id_mahasiswa" value="{{ $kolokiummhs->id_mahasiswa }}">
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" required>        
+                <input type="hidden" name="id_mahasiswa" value="{{ $kolokiummhs->id_mahasiswa }}">
             </div>
 
             <div class="form-group">
-            <label>NIM</label>
-            <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $kolokiummhs->nim) }}" required>
+                <label>NIM</label>
+                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $kolokiummhs->nim) }}" required>
             </div>
 
             <div class="form-group">
-            <label>Semester</label>
-            <select name="id_semester" required>
-                <option disabled value="">Pilih Semester</option>
-                @foreach ($semesters as $semester)
-                <option value="{{ $semester->id }}" 
-                    {{ old('id_semester', $kolokiummhs->id_semester) == $semester->id ? 'selected' : '' }}>
-                    {{ $semester->semester }}
-                </option>
-                @endforeach
-            </select>
+                <label>Semester</label>
+                <select name="id_semester" required>
+                    <option disabled value="">Pilih Semester</option>
+                    @foreach ($semesters as $semester)
+                    <option value="{{ $semester->id }}" 
+                        {{ old('id_semester', $kolokiummhs->id_semester) == $semester->id ? 'selected' : '' }}>
+                        {{ $semester->semester }}
+                    </option>
+                    @endforeach
+                </select>
             </div>      
 
             <div class="form-group">

@@ -102,23 +102,23 @@
 
             <div class="form-group">
                 <label>Nama</label>
-                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{Auth::user()->nama ?? 'Guest'}}" readonly required>        
-                <input type="hidden" name="id_mahasiswa" value="{{ Auth::user()->id }}">
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" readonly required>        
+                <input type="hidden" name="id_mahasiswa" value="{{ $kolokiummhs->id_mahasiswa }}">
             </div>
 
             <div class="form-group">
                 <label>NIM</label>
-                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{Auth::user()->nim ?? 'Guest'}}" readonly required>
+                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $kolokiummhs->nim)}}" readonly required>
             </div>
             
             <div class="form-group">
                 <label>Semester</label>
-                <input type="text" value="{{ $kolokiummhs->semester->semester ?? '-' }}" readonly>
+                <input type="text" value="{{ $kolokiummhs->semester->semester}}" readonly required>
             </div>
 
             <div class="form-group">
-                <label>Alamat</label>
-                <input type="text" value="{{ $kolokiummhs->alamat }}" readonly>
+                <label>Alamat di Bogor </label>
+                <input type="text" value="{{ $kolokiummhs->alamat ?? '-' }}" readonly required>
             </div> 
 
             <div class="form-group">
