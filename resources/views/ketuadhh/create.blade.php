@@ -178,7 +178,6 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-
             <form>
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
                 <div class="col-sm-2">

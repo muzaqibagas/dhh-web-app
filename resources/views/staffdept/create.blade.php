@@ -211,6 +211,7 @@
                       'Research Gate' => '<input type="text" class="form-control" placeholder="Masukkan link Research Gate">',
                       'Email' => '<input type="email" class="form-control" placeholder="Masukkan email">',
                       'Link Publikasi' => '<textarea class="form-control" rows="3" placeholder="Masukkan link publikasi..."></textarea>',
+                      'Riwayat Pendidikan' => '<textarea class="form-control" rows="3" placeholder="Masukkan riwayat pendidikan..."></textarea>',
                       'Keahlian' => '<textarea class="form-control" rows="3" placeholder="Masukkan keahlian..."></textarea>',
                   ];
               @endphp
