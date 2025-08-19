@@ -83,7 +83,7 @@
 
     <main class="content">
         <div class="kolokium-card">
-        <h2 class="page-title">Edit Kolokium</h2>    
+        <h2 class="page-title">Edit Seminar</h2>    
 
         {{-- Alert Success --}}
         @if (session('success'))
@@ -101,19 +101,19 @@
             </div>
         @endif
 
-        <form action="{{ route('kolokiummhs.update', $kolokiummhs->id) }}" method="POST">
+        <form action="{{ route('seminarmhs.update', $seminarmhs->id) }}" method="POST">
             @csrf
             @method('PUT')   
 
             <div class="form-group">
             <label>Nama</label>
-                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" required>        
-                <input type="hidden" name="id_mahasiswa" value="{{ $kolokiummhs->id_mahasiswa }}">
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $seminarmhs->nama) }}" required>        
+                <input type="hidden" name="id_mahasiswa" value="{{ $seminarmhs->id_mahasiswa }}">
             </div>
 
             <div class="form-group">
                 <label>NIM</label>
-                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $kolokiummhs->nim) }}" required>
+                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $seminarmhs->nim) }}" required>
             </div>
 
             <div class="form-group">
@@ -122,7 +122,7 @@
                     <option disabled value="">Pilih Semester</option>
                     @foreach ($semesters as $semester)
                     <option value="{{ $semester->id }}" 
-                        {{ old('id_semester', $kolokiummhs->id_semester) == $semester->id ? 'selected' : '' }}>
+                        {{ old('id_semester', $seminarmhs->id_semester) == $semester->id ? 'selected' : '' }}>
                         {{ $semester->semester }}
                     </option>
                     @endforeach
@@ -132,12 +132,12 @@
             <div class="form-group">
             <label>Alamat</label>
             <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" 
-                    value="{{ old('alamat', $kolokiummhs->alamat) }}" required>
+                    value="{{ old('alamat', $seminarmhs->alamat) }}" required>
             </div>      
 
             <div class="form-group">
-            <label>Judul Makalah kolokium</label>
-            <textarea name="judul_kolokium" placeholder="Masukkan Judul Makalah" required>{{ old('judul_kolokium', $kolokiummhs->judul_kolokium) }}</textarea>
+            <label>Judul Makalah Seminar</label>
+            <textarea name="judul_seminar" placeholder="Masukkan Judul Makalah" required>{{ old('judul_seminar', $seminarmhs->judul_seminar) }}</textarea>
             </div>
 
             <div class="form-group">
@@ -146,7 +146,7 @@
                 <option disabled value="">Pilih Dosen</option>
                 @foreach ($listDosen as $dosen)
                 <option value="{{ $dosen->id }}" 
-                    {{ old('id_pembimbing1', $kolokiummhs->id_pembimbing1) == $dosen->id ? 'selected' : '' }}>
+                    {{ old('id_pembimbing1', $seminarmhs->id_pembimbing1) == $dosen->id ? 'selected' : '' }}>
                     {{ $dosen->nama }}
                 </option>
                 @endforeach
@@ -159,7 +159,7 @@
                 <option value="">Pilih Dosen</option> {{-- placeholder tetap ada --}}
                 @foreach ($listDosen as $dosen)
                     <option value="{{ $dosen->id }}" 
-                        {{ old('id_pembimbing2', $kolokiummhs->id_pembimbing2) == $dosen->id ? 'selected' : '' }}>
+                        {{ old('id_pembimbing2', $seminarmhs->id_pembimbing2) == $dosen->id ? 'selected' : '' }}>
                         {{ $dosen->nama }}
                     </option>
                 @endforeach                 
@@ -167,18 +167,18 @@
             </div>      
 
             <div class="form-group">
-            <label>Hari/Tanggal kolokium</label>        
+            <label>Hari/Tanggal Seminar</label>        
             <input type="date" name="tanggal" 
-                    value="{{ old('tanggal', $kolokiummhs->tanggal) }}" required>                 
+                    value="{{ old('tanggal', $seminarmhs->tanggal) }}" required>                 
             </div>
 
             <div class="form-group">
-                <label>Waktu Kolokium</label>
+                <label>Waktu Seminar</label>
                 <div class="d-flex align-items-center gap-3">
                     <select id="waktu_mulai" class="w-25" name="waktu_mulai" required>
                     <option value="">--:--</option>
                     @foreach (['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00'] as $time)
-                        <option {{ old('waktu_mulai', \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i')) == $time ? 'selected' : '' }}>
+                        <option {{ old('waktu_mulai', \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i')) == $time ? 'selected' : '' }}>
                             {{ $time }}
                         </option>
                     @endforeach
@@ -187,7 +187,7 @@
                     <select id="waktu_selesai" class="w-25" name="waktu_selesai" required>
                     <option value="">--:--</option>
                     @foreach (['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00'] as $time)
-                        <option {{ old('waktu_selesai', \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i')) == $time ? 'selected' : '' }}>
+                        <option {{ old('waktu_selesai', \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i')) == $time ? 'selected' : '' }}>
                             {{ $time }}
                         </option>
                     @endforeach
@@ -196,12 +196,12 @@
             </div>
 
             <div class="form-group">
-            <label>Tempat Kolokium</label>
+            <label>Tempat Seminar</label>
             <select name="id_ruangan" required>
                 <option disabled value="">Pilih Ruangan</option>
                 @foreach ($ruangans as $ruangan)
                 <option value="{{ $ruangan->id }}" 
-                    {{ old('id_ruangan', $kolokiummhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
+                    {{ old('id_ruangan', $seminarmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
                     {{ $ruangan->nama }}
                 </option>
                 @endforeach
@@ -230,8 +230,8 @@
     <script>
     $(document).ready(function () {
         // Ambil nilai awal dari server
-        let pembimbing1Val = "{{ old('id_pembimbing1', $kolokiummhs->id_pembimbing1) }}";
-        let pembimbing2Val = "{{ old('id_pembimbing2', $kolokiummhs->id_pembimbing2) }}";
+        let pembimbing1Val = "{{ old('id_pembimbing1', $seminarmhs->id_pembimbing1) }}";
+        let pembimbing2Val = "{{ old('id_pembimbing2', $seminarmhs->id_pembimbing2) }}";
 
         // Init Select2
         $('#pembimbing1, #pembimbing2').select2({

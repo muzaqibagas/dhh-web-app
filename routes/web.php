@@ -117,17 +117,8 @@ Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dash
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 
-Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
-Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');
-Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');
-Route::get('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'show'])->name('kolokiummhs.show');
-Route::get('/kolokiummhs/{id}/pdf', [KolokiummhsController::class, 'generatePdf'])->name('kolokiummhs.pdf');
-Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
-Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
-Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
-
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
-Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
+
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
 Route::get('komprehensifmhs', [KomprehensifmhsController::class, 'index'])->name('komprehensifmhs.index');
 Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
@@ -216,15 +207,6 @@ Route::get('kategoristaff/{kategoriStaff}/edit', [KategoriStaffController::class
 Route::put('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'update'])->name('kategoristaff.update');
 Route::delete('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'destroy'])->name('kategoristaff.destroy');
 
-// Kolokium
-Route::get('kolokium', [KolokiumController::class, 'index'])->name('kolokium.index');
-Route::get('kolokium/create', [KolokiumController::class, 'create'])->name('kolokium.create');
-Route::post('kolokium', [KolokiumController::class, 'store'])->name('kolokium.store');
-Route::get('kolokium/{kolokium}', [KolokiumController::class, 'show'])->name('kolokium.show');
-Route::get('kolokium/{kolokium}/edit', [KolokiumController::class, 'edit'])->name('kolokium.edit');
-Route::put('kolokium/{kolokium}', [KolokiumController::class, 'update'])->name('kolokium.update');
-Route::delete('kolokium/{kolokium}', [KolokiumController::class, 'destroy'])->name('kolokium.destroy');
-
 // KontenDept
 Route::get('konten-dept', [KontenDeptController::class, 'index'])->name('konten-dept.index');
 Route::get('konten-dept/create', [KontenDeptController::class, 'create'])->name('konten-dept.create');
@@ -265,6 +247,25 @@ Route::get('ruangan/{ruangan}/edit', [RuanganController::class, 'edit'])->name('
 Route::put('ruangan/{ruangan}', [RuanganController::class, 'update'])->name('ruangan.update');
 Route::delete('ruangan/{ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 
+// Kolokium
+Route::get('kolokium', [KolokiumController::class, 'index'])->name('kolokium.index');
+Route::get('kolokium/create', [KolokiumController::class, 'create'])->name('kolokium.create');
+Route::post('kolokium', [KolokiumController::class, 'store'])->name('kolokium.store');
+Route::get('kolokium/{kolokium}', [KolokiumController::class, 'show'])->name('kolokium.show');
+Route::get('kolokium/{kolokium}/edit', [KolokiumController::class, 'edit'])->name('kolokium.edit');
+Route::put('kolokium/{kolokium}', [KolokiumController::class, 'update'])->name('kolokium.update');
+Route::delete('kolokium/{kolokium}', [KolokiumController::class, 'destroy'])->name('kolokium.destroy');
+
+// Kolokium Mahasiswa form
+Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
+Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');
+Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');
+Route::get('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'show'])->name('kolokiummhs.show');
+Route::get('/kolokiummhs/{id}/pdf', [KolokiummhsController::class, 'generatePdf'])->name('kolokiummhs.pdf');
+Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
+Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
+Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
+
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
 Route::get('seminar/create', [SeminarController::class, 'create'])->name('seminar.create');
@@ -273,6 +274,16 @@ Route::get('seminar/{seminar}', [SeminarController::class, 'show'])->name('semin
 Route::get('seminar/{seminar}/edit', [SeminarController::class, 'edit'])->name('seminar.edit');
 Route::put('seminar/{seminar}', [SeminarController::class, 'update'])->name('seminar.update');
 Route::delete('seminar/{seminar}', [SeminarController::class, 'destroy'])->name('seminar.destroy');
+
+// Seminar Mahasiswa form
+Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
+Route::get('seminarmhs/create', [SeminarmhsController::class, 'create'])->name('seminarmhs.create');
+Route::post('seminarmhs', [SeminarmhsController::class, 'store'])->name('seminarmhs.store');
+Route::get('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'show'])->name('seminarmhs.show');
+Route::get('/seminarmhs/{id}/pdf', [SeminarmhsController::class, 'generatePdf'])->name('seminarmhs.pdf');
+Route::get('seminarmhs/{seminarmhs}/edit', [SeminarmhsController::class, 'edit'])->name('seminarmhs.edit');
+Route::put('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'update'])->name('seminarmhs.update');
+Route::delete('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'destroy'])->name('seminarmhs.destroy');
 
 // Sidang
 Route::get('sidang', [SidangController::class, 'index'])->name('sidang.index');

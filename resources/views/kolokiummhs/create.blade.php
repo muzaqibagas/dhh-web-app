@@ -110,7 +110,7 @@
 
         <div class="form-group">
           <label>NIM</label>
-          <input type="text" name="nim" placeholder="Masukkan NIM" value="{{Auth::user()->nim ?? 'Guest'}}" required>
+          <input type="text" name="nim" placeholder="Masukkan NIM" value="" required>
         </div>
 
         <div class="form-group">
@@ -125,7 +125,7 @@
 
         <div class="form-group">
           <label>Alamat di Bogor</label>
-          <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{Auth::user()->alamat ?? 'Guest'}}" required>
+          <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="" required>
         </div>      
 
         <div class="form-group">

@@ -116,7 +116,7 @@ class SeminarmhsController extends Controller
         $insert = Seminarmhs::create($data);
 
         if ($insert){
-            return redirect()->route('seminarmhs.index')->with('success', 'Data berhasil disimpan! kumpulkan persyaratan sebelum tanggal pelaksanaan seminar');            
+            return redirect()->route('seminarmhs.show', $insert->id)->with('success', 'Data berhasil disimpan! kumpulkan persyaratan sebelum tanggal pelaksanaan seminar');            
         } else {
             return back()->with('error', 'Gagal menyimpan data seminar. Silakan coba lagi.');
         }
@@ -134,7 +134,7 @@ class SeminarmhsController extends Controller
     {
         $seminarmhs = Seminarmhs::findOrFail($id);
         
-        $template = public_path('assets/pdf/template_seminar.pdf');
+        $template = public_path('assets/pdf/templateseminar.pdf');
         $outputPath = public_path("pdf/ditandatanganiseminar");
 
         if (!file_exists($outputPath)) {
@@ -256,10 +256,10 @@ class SeminarmhsController extends Controller
         }
 
         // Update data
-        $seminarmhs->update($data);
+        $update = $seminarmhs->update($data);
 
         if ($update){
-            return redirect()->route('seminarmhs.index')->with('success', 'Data seminar berhasil diperbarui!');
+            return redirect()->route('seminarmhs.show', $seminarmhs->id)->with('success', 'Data seminar berhasil diperbarui!');
         } else {
             return back()->with('error', 'Gagal memperbarui data seminar. Silakan coba lagi.');
         }
