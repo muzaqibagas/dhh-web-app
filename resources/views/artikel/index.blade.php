@@ -169,7 +169,7 @@
     </script>
   </aside>
     
-<!-- Halaman Galeri - Admin Dashboard -->
+<!-- Halaman - Admin Dashboard -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
@@ -177,7 +177,13 @@
           <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
             <i class="bi bi-plus"></i>Tambah Data
           </a>
-    </div> 
+    </div>
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -193,7 +199,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data Galeri (dummy) -->
+                        <!-- Data (dummy) -->
                         <tr>
                             <td>1</td>
                             <td>

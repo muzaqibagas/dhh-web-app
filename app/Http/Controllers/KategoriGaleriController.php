@@ -87,7 +87,7 @@ class KategoriGaleriController extends Controller
         $delete = $kategoriGaleri->delete();
 
         if ($delete)
-            return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeris Berhasil Dihapus');
+            return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Dihapus');
         else
             return back()->with('error', 'Kategori Galeri Gagal Dihapus');
     }

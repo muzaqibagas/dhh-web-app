@@ -29,6 +29,7 @@ use App\Http\Controllers\UndanganKolokiumController;
 use App\Http\Controllers\UndanganSeminarController;
 use App\Http\Controllers\UndanganSidangController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EditPasswordAdmController;
 
 
 // ROUTE MAHASISWA
@@ -126,6 +127,10 @@ Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'in
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
+Route::get('editadmprofile', [AdmProfileController::class, 'edit'])->name('admprofile.edit');
+
+// ROUTE EDIT PASS ADM
+Route::get('editpassadm', [EditPasswordAdmController::class, 'index'])->name('editpassadm.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');
@@ -307,6 +312,10 @@ Route::delete('staff-dept/{staffDept}', [StaffDeptController::class, 'destroy'])
 Route::get('ketuadhh', [KetuaDHHController::class, 'index'])->name('ketuadhh.index');
 Route::get('ketuadhh/create', [KetuaDHHController::class, 'create'])->name('ketuadhh.create');
 Route::post('ketuadhh', [KetuaDHHController::class, 'store'])->name('ketuadhh.store');
+Route::get('ketuadhh/{ketuadhh}', [KetuaDHHController::class, 'show'])->name('ketuadhh.show');
+Route::get('ketuadhh/{ketuadhh}/edit', [KetuaDHHController::class, 'edit'])->name('ketuadhh.edit');
+Route::put('ketuadhh/{ketuadhh}', [KetuaDHHController::class, 'update'])->name('ketuadhh.update');
+Route::delete('ketuadhh/{ketuadhh}', [KetuaDHHController::class, 'destroy'])->name('ketuadhh.destroy');
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');

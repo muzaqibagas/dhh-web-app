@@ -12,7 +12,8 @@
       $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
       $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
       $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
-    @endphp
+      $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editadmprofile') || Request::is('logoutadmprofile');
+      @endphp
 
     <!-- BTN TINGKAT AKHIR===================== -->
     <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
@@ -122,12 +123,30 @@
     </a>
 
       <!-- BTN ADMIN ===================== -->
-      <a href="/admprofile" class="menu active">
-        <div class="menu-left">
-          <i class="bi bi-person-badge"></i> <span> Profil Admin </span>
-        </div>
-        <span class="dropdownArrow"></span>
+    <a href="#" class="menu {{ $isAdminProfileActive ? 'active' : '' }}" data-dropdown="admprofile">
+      <div class="menu-left">
+        <i class="bi bi-person-badge"></i>
+        <span> Profil Admin </span>
+      </div>
+      <span class="dropdownArrow" data-arrow="admprofile">
+        {!! $isAdminProfileActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="admprofile"
+      style="margin-left:24px; flex-direction:column; {{ $isAdminProfileActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/admprofile"
+        class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-person-workspace"></i> Detail Profil Admin
       </a>
+      <a href="/editadmprofile"
+        class="submenu-link {{ Request::is('editadmprofile') ? 'active-submenu' : '' }}">
+        <i class="bi bi-gear-wide-connected"></i> Edit Profil Admin
+      </a>
+      <a href="/logoutadmprofile"
+        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+        <i class="bi bi-box-arrow-right"></i> Log Out
+      </a>
+    </div>
       <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
     
       <script>
@@ -154,53 +173,54 @@
       </script>
     </aside>
 
-    <!-- MAIN KONTEN -->
-  <main class="content">
-    <h2 class="page-title">Biodata Admin</h2>
-    <div class="col-md-9 px-2 d-flex justify-content-center align-items-center gap-5 w-100 mt-4">
-      <div class="d-flex flex-column align-items-center align-self-start">
-        <div class="rounded-circle overflow-hidden mb-3" style="width: 180px; height: 180px; background-color:#f5f5f5">
-          @if($user->foto)
-            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
-          @else
-            <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
-          @endif
-        </div>
-              
-        <button class="btn-edit-photo">        
-          <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
-        </button>    
+<!-- MAIN KONTEN -->
+<main class="content">
+  <h2 class="page-title">Biodata Admin</h2>
+  <div class="col-md-9 px-2 d-flex justify-content-center align-items-center gap-5 w-100 mt-4">
+    <div class="d-flex flex-column align-items-center align-self-start">
+      <div class="rounded-circle overflow-hidden mb-3" style="width: 180px; height: 180px; background-color:#f5f5f5">
+        @if($user->foto)
+          <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
+        @else
+          <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
+        @endif
       </div>
-
-      <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Username</label>
-          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->username ?? 'Guest' }}" readonly>
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Nama</label>
-          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->nama ?? 'Guest' }}" readonly>
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Email</label>
-          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->email ?? 'Guest' }}" readonly>
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Jenis Kelamin</label>
-          <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->jenis_kelamin ?? 'Guest' }}" readonly>
-        </div>        
-      </div>
+            
+      <button class="btn-edit-photo">        
+        <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
+      </button>    
     </div>
+
+    <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
+      <div class="text-start mb-2">
+        <label class="form-label fw-bold mb-0">Username</label>
+        <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->username ?? 'Guest' }}" readonly>
+      </div>
+      <div class="text-start mb-2">
+        <label class="form-label fw-bold mb-0">Nama</label>
+        <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->nama ?? 'Guest' }}" readonly>
+      </div>
+      <div class="text-start mb-2">
+        <label class="form-label fw-bold mb-0">Email</label>
+        <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->email ?? 'Guest' }}" readonly>
+      </div>
+      <div class="text-start mb-2">
+        <label class="form-label fw-bold mb-0">Jenis Kelamin</label>
+        <input type="text" class="form-control" style="background-color:#f5f5f5" value="{{ Auth::user()->jenis_kelamin ?? 'Guest' }}" readonly>
+      </div>        
+    </div>
+  </div>
   </main>
   <script>
-    function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = function(){
-        const output = document.getElementById('preview-image');
-        output.src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
+  function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+      const output = document.getElementById('preview-image');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
   </script>
-</div>
+  </div>
+</main>
 @endsection

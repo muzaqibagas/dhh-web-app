@@ -174,9 +174,6 @@
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Konten Jenjang</h2>
-        <button class="adm-btn-add">
-            <i class="bi bi-plus"></i> Tambah Data
-        </button>
     </div> 
     <div class="card shadow-sm">
         <div class="card-body">

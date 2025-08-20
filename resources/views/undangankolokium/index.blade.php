@@ -170,7 +170,8 @@
   </aside>
 
 <!-- Main konten -->
-<div class="container mt-5">
+<main class="content">
+<div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Undangan Kolokium</h2>
     </div>

@@ -175,70 +175,72 @@
     <div class="adm-header">
         <h2 class="adm-title">Data Pendaftar Kolokium</h2>
     </div>
-    <div class="adm-card">
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center">
-            <thead class="table-light">
-                <tr>
-                    <th style="width: 25%;">Nama</th>
-                    <th style="width: 10%;">Form Kolokium</th>
-                    <th style="width: 15%;">Moderator</th>
-                    <th style="width: 10%;">Bukti SPP</th>
-                    <th style="width: 10%;">Kartu Kehadiran</th>
-                    <th style="width: 10%;">Verifikasi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $pendaftar = [
-                        ['nama' => 'Raisa Mutia Thahir'],
-                        ['nama' => 'Hasna Nabiilah Widiani'],
-                        ['nama' => 'Nurbadillah'],
-                        ['nama' => 'Saniyyah Wafa Nurjihan'],
-                    ];
-                @endphp
+    <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-bordered align-middle">
+                  <thead class="table-light">
+                      <tr>
+                          <th style="width: 25%;">Nama</th>
+                          <th style="width: 10%;">Form Kolokium</th>
+                          <th style="width: 15%;">Moderator</th>
+                          <th style="width: 10%;">Bukti SPP</th>
+                          <th style="width: 10%;">Kartu Kehadiran</th>
+                          <th style="width: 10%;">Verifikasi</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @php
+                          $pendaftar = [
+                              ['nama' => 'Raisa Mutia Thahir'],
+                              ['nama' => 'Hasna Nabiilah Widiani'],
+                              ['nama' => 'Nurbadillah'],
+                              ['nama' => 'Saniyyah Wafa Nurjihan'],
+                          ];
+                      @endphp
 
-                @foreach ($pendaftar as $p)
-                <tr>
-                    <td  class="text-start">{{ $p['nama'] }}</td>
-                    <td>
-                      <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                        <i class="bi bi-eye"></i> Lihat
-                      </a>
-                    </td>
-                    <td>
-                      <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
-                          <option selected disabled>pilih mod</option>
-                          <option>Moderator 1</option>
-                          <option>Moderator 2</option>
-                      </select>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-sm px-2 py-1" style="min-width: 60px;">
-                            <i class="bi bi-eye"></i> Lihat
-                        </a>
-                    </td>
-                    <td>
-                      <button class="btn btn-success btn-sm px-2 py-1 me-1">
-                        <i class="bi bi-check-circle-fill"></i>
-                      </button>
-                      <button class="btn btn-danger btn-sm px-2 py-1">
-                        <i class="bi bi-x-circle-fill"></i>
-                      </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                      @foreach ($pendaftar as $p)
+                      <tr>
+                          <td  class="text-start">{{ $p['nama'] }}</td>
+                          <td>
+                              <a href="#" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1 px-3" style="width: 90px; height: 30px; padding: 0;">
+                                  <i class="bi bi-eye" style="font-size: 18px;"></i> Lihat
+                              </a>
+                          </td>
+                          <td>
+                            <select class="form-select form-select-sm" style="min-width: 120px; padding: 4px 8px;">
+                                <option selected disabled>pilih mod</option>
+                                <option>Moderator 1</option>
+                                <option>Moderator 2</option>
+                            </select>
+                          </td>
+                          <td>
+                              <a href="#" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1 px-3" style="width: 90px; height: 30px; padding: 0;">
+                                  <i class="bi bi-eye" style="font-size: 18px;"></i> Lihat
+                              </a>
+                          </td>
+                          <td>
+                              <a href="#" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1 px-3" style="width: 90px; height: 30px; padding: 0;">
+                                  <i class="bi bi-eye" style="font-size: 18px;"></i> Lihat
+                              </a>
+                          </td>
+                          <td>
+                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                              <i class="bi bi-pencil-fill" style="font-size: 18px;"></i>
+                            </button>
+                            <button class="btn btn-danger"  style="width: 30px; height: 30px; padding: 0;">
+                              <i class="bi bi-trash" style="font-size: 18px;"></i>
+                            </button>
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
+</main>
 
 @endsection
-        
-    
-
