@@ -287,7 +287,7 @@
                         (parseInt(mulai.split(':')[0]) * 60 + parseInt(mulai.split(':')[1]));
             
             // Kalau selisihnya < 120 menit (2 jam), sembunyikan
-            opt.style.display = diff >= 120 ? '' : 'none';
+            opt.style.display = diff >= 60 ? '' : 'none';
         });
 
         // Reset pilihan selesai
