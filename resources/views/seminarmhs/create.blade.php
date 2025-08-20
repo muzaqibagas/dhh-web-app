@@ -240,12 +240,14 @@
       // Inisialisasi Select2
       $('#pembimbing1').select2({
           width: '100%',
-          placeholder: "Pilih Dosen Pembimbing 1"
+          placeholder: "Pilih Dosen Pembimbing 1",
+          allowClear: true,
       });
 
       $('#pembimbing2').select2({
           width: '100%',
-          placeholder: "Pilih Dosen Pembimbing 2"
+          placeholder: "Pilih Dosen Pembimbing 2",
+          allowClear: true,
       });
 
       // Simpan semua opsi awal pembimbing2
@@ -285,7 +287,7 @@
                     (parseInt(mulai.split(':')[0]) * 60 + parseInt(mulai.split(':')[1]));
           
           // Kalau selisihnya < 120 menit (2 jam), sembunyikan
-          opt.style.display = diff >= 120 ? '' : 'none';
+          opt.style.display = diff >= 60 ? '' : 'none';
       });
 
       // Reset pilihan selesai

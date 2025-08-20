@@ -134,7 +134,7 @@ class SeminarmhsController extends Controller
     {
         $seminarmhs = Seminarmhs::findOrFail($id);
         
-        $template = public_path('assets/pdf/templateseminar.pdf');
+        $template = public_path('pdf/templateseminar.pdf');
         $outputPath = public_path("pdf/ditandatanganiseminar");
 
         if (!file_exists($outputPath)) {
@@ -165,19 +165,19 @@ class SeminarmhsController extends Controller
         $pdf->MultiCell(100, $lineHeight, $seminarmhs->alamat, 0, 'L');
 
         $pdf->SetXY(80, 70);
-        $pdf->MultiCell(100, $lineHeight, $seminarmhs->judul_kolokium, 0, 'L');
+        $pdf->MultiCell(100, $lineHeight, $seminarmhs->judul_seminar, 0, 'L');
 
         $pdf->SetXY(80, 87);
         $pdf->MultiCell(100, $lineHeight, $seminarmhs->pembimbing1->nama ?? '-', 0, 'L');
 
         $pdf->SetXY(80, 96);
-        $pdf->MultiCell(100, $lineHeight, $seminarmhs->pembimbing2->nama ?? 'hfuibwubuefwbj', 0, 'L');
+        $pdf->MultiCell(100, $lineHeight, $seminarmhs->pembimbing2->nama ?? '', 0, 'L');
 
         $pdf->SetXY(80, 105);
         $pdf->MultiCell(100, $lineHeight, $seminarmhs->tanggal, 0, 'L');
 
         $pdf->SetXY(80, 114);
-        $pdf->MultiCell(100, $lineHeight, $seminarmhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
+        $pdf->MultiCell(100, $lineHeight, $seminarmhs->waktu_mulai . ' s/d ' . $seminarmhs->waktu_selesai, 0, 'L');
 
         $pdf->SetXY(80, 123);
         $pdf->MultiCell(100, $lineHeight, $seminarmhs->ruangan->nama ?? '-', 0, 'L');
