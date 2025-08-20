@@ -84,84 +84,62 @@
 
   <main class="content">        
     <div class="kolokium-card">
-      <h2 class="page-title">Daftar Seminar</h2>
+      <h2 class="page-title">Detail Pendaftaran Seminar</h2>
 
       <form>
         <div class="form-group">
-          <label>Nama</label>
-          <input type="text" placeholder="Masukkan Nama Lengkap">
+          <label>Nama</label>          
+          <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $seminarmhs->nama) }}" readonly required>
+          <input type="hidden" name="id_mahasiswa" value="{{ $seminarmhs->id_mahasiswa }}">
         </div>
 
         <div class="form-group">
-          <label>NIM</label>
-          <input type="text" placeholder="Masukkan NIM">
+          <label>NIM</label>          
+          <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $seminarmhs->nim)}}" readonly required>
         </div>
 
         <div class="form-group">
           <label>Semester</label>
-          <input type="text" placeholder="Masukkan Semester">
+          <input type="text" value="{{ $seminarmhs->semester->semester}}" placeholder="Masukkan Semester" readonly required>          
         </div>
 
         <div class="form-group">
-          <label>Alamat di Bogor</label>
-          <input type="text" placeholder="Masukkan Alamat Lengkap">
-        </div>
+          <label>Alamat di Bogor</label>          
+          <input type="text" value="{{ $seminarmhs->alamat ?? '-' }}" placeholder="Masukkan Alamat Lengkap" readonly required>
+        </div>        
 
         <div class="form-group">
-          <label>Program Studi</label>
-          <select>
-            <option selected disabled>Pilih Program Studi</option>
-            <option>Hasil Hutan</option>
-            <option>Teknologi Kayu</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Judul Makalah Seminar</label>
-          <textarea placeholder="Masukkan Judul"></textarea>
+          <label>Judul Makalah Seminar</label>          
+          <textarea placeholder="Masukkan Judul" readonly>{{ $seminarmhs->judul_seminar }}</textarea>
         </div>
 
         <div class="form-group">
           <label>Dosen Pembimbing 1</label>
-          <select>
-            <option selected disabled>Pilih Dosen</option>
-            <option>Dosen 1</option>
-            <option>Dosen 2</option>
-          </select>
+          <input type="text" value="{{ $seminarmhs->pembimbing1->nama ?? '-' }}" readonly>
         </div>
 
         <div class="form-group">
           <label>Dosen Pembimbing 2</label>
-          <select>
-            <option selected disabled>Pilih Dosen</option>
-            <option>Dosen 1</option>
-            <option>Dosen 2</option>
-          </select>
+          <input type="text" value="{{ $seminarmhs->pembimbing2->nama ?? '-' }}" readonly>
         </div>
 
         <div class="form-group">
           <label>Hari/Tanggal Seminar</label>
-          <input type="date">
+          <input type="date" value="{{ \Carbon\Carbon::parse($seminarmhs->tanggal)->format('Y-m-d') }}" readonly>                
         </div>
 
         <div class="form-group">
-          <label>Waktu kolokium</label>
-          <select>
-            <option selected disabled>Pilih Waktu</option>
-            <option value="08:00-09:00">08:00 - 09:00</option>
-            <option value="09:00-10:00">09:00 - 10:00</option>
-            <option value="10:00-11:00">10:00 - 11:00</option>
-            <option value="11:00-12:00">11:00 - 12:00</option>
-            <option value="12:00-13:00" disabled>12:00 - 13:00 (Istirahat)</option>
-            <option value="13:00-14:00">13:00 - 14:00</option>
-            <option value="14:00-15:00">14:00 - 15:00</option>
-            <option value="15:00-16:00">15:00 - 16:00</option>
-          </select>
+          <label>Waktu Seminar</label>
+          <div class="d-flex align-items-center gap-3">                    
+              <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i') }}" readonly>
+              <p class="m-0">S/D</p>
+              <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i') }}" readonly>                    
+          </div>
         </div>
 
         <div class="form-group">
           <label>Tempat Seminar</label>
-          <input type="text" placeholder="Masukkan Ruangan">
+          <input type="text" value="{{ $seminarmhs->ruangan->nama ?? '-' }}" readonly>
         </div>
 
         <div class="form-group">
@@ -169,8 +147,9 @@
           <div class="form-static">[Diisi oleh akademik]</div>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn-submit">Submit</button>
+        <div class="form-actions mt-3 d-flex justify-content-end">                
+          <a href="{{ route('seminarmhs.edit', $seminarmhs->id) }}" class="btn btn-warning">Edit</a>                
+          <a href="{{ route('seminarmhs.pdf', $seminarmhs->id) }}" class="btn btn-primary">Download PDF</a>                                   
         </div>
       </form>
     </div>

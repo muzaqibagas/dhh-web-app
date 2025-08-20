@@ -115,7 +115,7 @@ class KolokiummhsController extends Controller
         $insert = Kolokiummhs::create($data);
 
         if ($insert) {
-            return redirect()->route('kolokiummhs.show', $kolokiummhs->id)->with('success', 'Data berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan kolokium.');
+            return redirect()->route('kolokiummhs.show', $insert->id)->with('success', 'Data berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan kolokium.');
         } else {
             return back()->with('error', 'Gagal menyimpan data kolokium. Silahkan Coba lagi.');
         }

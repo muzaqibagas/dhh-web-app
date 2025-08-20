@@ -102,7 +102,7 @@
 
             <div class="form-group">
                 <label>Nama</label>
-                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" readonly required>        
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" readonly required>
                 <input type="hidden" name="id_mahasiswa" value="{{ $kolokiummhs->id_mahasiswa }}">
             </div>
 
@@ -113,17 +113,17 @@
             
             <div class="form-group">
                 <label>Semester</label>
-                <input type="text" value="{{ $kolokiummhs->semester->semester}}" readonly required>
+                <input type="text" value="{{ $kolokiummhs->semester->semester}}" placeholder="Masukkan Semester" readonly required>
             </div>
 
             <div class="form-group">
                 <label>Alamat di Bogor </label>
-                <input type="text" value="{{ $kolokiummhs->alamat ?? '-' }}" readonly required>
+                <input type="text" value="{{ $kolokiummhs->alamat ?? '-' }}" placeholder="Masukkan Alamat Lengkap" readonly required>
             </div> 
 
             <div class="form-group">
                 <label>Judul Makalah Kolokium</label>
-                <textarea readonly>{{ $kolokiummhs->judul_kolokium }}</textarea>
+                <textarea placeholder="Masukkan Judul" readonly>{{ $kolokiummhs->judul_kolokium }}</textarea>
             </div>
 
             <div class="form-group">
@@ -137,8 +137,8 @@
             </div>      
 
             <div class="form-group">
-                <label>Hari/Tanggal Kolokium</label>        
-                <input type="text" value="{{ \Carbon\Carbon::parse($kolokiummhs->tanggal)->translatedFormat('d F Y') }}" readonly>                 
+                <label>Hari/Tanggal Kolokium</label>                        
+                <input type="date" value="{{ \Carbon\Carbon::parse($kolokiummhs->tanggal)->format('Y-m-d') }}" readonly>                
             </div>
 
             <div class="form-group">
