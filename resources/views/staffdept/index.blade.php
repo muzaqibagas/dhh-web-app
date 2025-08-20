@@ -174,9 +174,9 @@
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Staff Departemen</h2>
-        <button class="adm-btn-add">
-            <i class="bi bi-plus"></i> Tambah Data
-        </button>
+            <a href="{{route('staffdept.create')}}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-plus"></i>Tambah Data
+            </a>
     </div> 
     <div class="card shadow-sm">
         <div class="card-body">

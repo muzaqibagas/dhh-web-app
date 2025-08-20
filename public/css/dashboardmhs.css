@@ -893,3 +893,16 @@ body {
   margin-top: 20px;
   font-size: 14px;
 }
+
+
+.btn-lihat {
+    display: inline-flex;          /* bikin sejajar ke samping */
+    align-items: center;           /* tengah vertikal */
+    justify-content: center;       /* tengah horizontal */
+    gap: 4px;                      /* jarak icon & teks */
+    line-height: 1;                /* biar nggak ada jarak aneh */
+}
+
+.btn-lihat i {
+    font-size: 16px;               /* ukuran icon */
+}

@@ -174,64 +174,31 @@
     </aside>
 
 <!-- MAIN KONTEN -->
-  <main class="content">
-    <h2 class="page-title">Edit Biodata Admin</h2>
-    <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="col-md-9 px-2 d-flex justify-content-center align-items-start gap-5 w-100 mt-4">
-      @csrf
-      @method('PUT')
-
-      <!-- FOTO PROFIL -->
-      <div class="d-flex flex-column align-items-center">
-        <div class="rounded-circle overflow-hidden" style="width: 180px; height: 180px; background-color:#f5f5f5">
-          @if($user->foto)
-            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
-          @else
-            <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
-          @endif
+<main class="content">
+    <div class="container-fluid mt-4">
+            <h2 class="page-title">Edit Ketua DHH</h2>
+        </div> 
+        <div class="d-flex justify-content-center align-items-center w-100 mt-4">
+            <div class="card p-4 shadow-sm w-75 border-2" style="border:solid #1b2a6d">
+            <div class="text-start mb-4">
+                <label class="form-label fw-bold mb-0">Password Saat Ini</label>
+                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password saat ini">
+            </div>
+            <div class="text-start mb-4">
+                <label class="form-label fw-bold mb-0">Password Baru</label>
+                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password baru">
+            </div>
+            <div class="text-start mb-4">
+                <label class="form-label fw-bold mb-0">Konfirmasi Password Baru</label>
+                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Konfirmasi password baru">
+            </div>  
+            <div class="row mt-4">
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                    <button type="button" class="btn btn-success">Simpan</button>
+                </div>
+            </div>
         </div>
-
-        <input type="file" name="foto" accept="image/*" class="form-control mt-3" onchange="previewImage(event)">
-      </div>
-
-      <!-- FORM BIODATA -->
-      <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Username</label>
-          <input type="text" class="form-control" name="username" value="{{ old('username', $user->username) }}">
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Nama</label>
-          <input type="text" class="form-control" name="nama" value="{{ old('nama', $user->nama) }}">
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Email</label>
-          <input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}">
-        </div>
-        <div class="text-start mb-2">
-          <label class="form-label fw-bold mb-0">Jenis Kelamin</label>
-          <select class="form-select" name="jenis_kelamin">
-            <option value="Laki-laki" {{ $user->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-            <option value="Perempuan" {{ $user->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-          </select>
-        </div>
-
-        <!-- BUTTONS -->
-        <div class="text-start mt-3">
-          <button type="submit" class="btn btn-success" style="background-color: #28a745;">Simpan</button>
-          <a href="{{ route('admprofile.index') }}" class="btn btn-secondary">Batal</a>
-        </div>
-      </div>
-    </form>
-  </main>
-  <script>
-    function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = function(){
-        const output = document.getElementById('preview-image');
-        output.src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  </script>
-</div>
+    </div>
+</main>
 @endsection

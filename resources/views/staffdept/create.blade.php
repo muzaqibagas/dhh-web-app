@@ -173,7 +173,7 @@
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Undangan Kolokium</h2>
+        <h2 class="adm-title">Create Staff Departemen</h2>
     </div>
     <div class="card shadow-sm">
         <div class="card-body">
@@ -183,36 +183,35 @@
               @php
                   $formFields = [
                       'Nama' => '<input type="text" class="form-control" placeholder="Masukkan nama" required>',
-                      'Riwayat Pendidikan' => '<textarea class="form-control" rows="3" placeholder="Masukkan riwayat pendidikan..."></textarea>',
                       'Foto' => '<input type="file" class="form-control" required>',
-                      'Sinta' => '<input type="text" class="form-control" placeholder="Masukkan link Sinta">',
                       'Kategori' => '
                           <select class="form-select">
                               <option disabled selected>Pilih kategori</option>
                               <option>Organisasi</option>
                               <option>Divisi</option>
                           </select>',
-                      'Google Scholar' => '<input type="text" class="form-control" placeholder="Masukkan link Google Scholar">',
                       'Divisi' => '
                           <select class="form-select">
                               <option disabled selected>Pilih divisi</option>
                               <option>Divisi A</option>
                               <option>Divisi B</option>
                           </select>',
-                      'Scopus' => '<input type="text" class="form-control" placeholder="Masukkan link Scopus">',
                       'Tanggal Lahir' => '<input type="date" class="form-control">',
-                      'Website' => '<input type="url" class="form-control" placeholder="Masukkan link website">',
                       'Jabatan' => '
                           <select class="form-select">
                               <option disabled selected>Pilih jabatan</option>
                               <option>Kepala Departemen</option>
                               <option>Sekretaris Departemen</option>
                           </select>',
-                      'Research Gate' => '<input type="text" class="form-control" placeholder="Masukkan link Research Gate">',
                       'Email' => '<input type="email" class="form-control" placeholder="Masukkan email">',
+                      'Sinta' => '<input type="text" class="form-control" placeholder="Masukkan link Sinta">',
+                      'Google Scholar' => '<input type="text" class="form-control" placeholder="Masukkan link Google Scholar">',
+                      'Google Scholar' => '<input type="text" class="form-control" placeholder="Masukkan link Google Scholar">',
+                      'Website' => '<input type="url" class="form-control" placeholder="Masukkan link website">',
+                      'Research Gate' => '<input type="text" class="form-control" placeholder="Masukkan link Research Gate">',
+                      'Keahlian' => '<textarea class="form-control" rows="3" placeholder="Masukkan keahlian..."></textarea>',
                       'Link Publikasi' => '<textarea class="form-control" rows="3" placeholder="Masukkan link publikasi..."></textarea>',
                       'Riwayat Pendidikan' => '<textarea class="form-control" rows="3" placeholder="Masukkan riwayat pendidikan..."></textarea>',
-                      'Keahlian' => '<textarea class="form-control" rows="3" placeholder="Masukkan keahlian..."></textarea>',
                   ];
               @endphp
 
@@ -226,12 +225,12 @@
                       </div>
                   </div>
               @endforeach
-
-                <div class="row">
-                    <div class="col-12 d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">Buat Surat</button>
-                    </div>
-                </div>
+                  
+                  <div class="row">
+                      <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-success">Simpan</button>
+                      </div>
+                  </div>
             </form>
         </div>
     </div>
