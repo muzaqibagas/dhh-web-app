@@ -62,22 +62,28 @@ class KategoriGaleriController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, KategoriGaleri $kategoriGaleri)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
         ]);
 
+        // cek apakah ada perubahan data
+        if ($kategoriGaleri->nama === $request->nama) {
+            return redirect()->route('kategorigaleri.index')->with('info', 'Tidak ada perubahan data yang disimpan.');
+        }
+
         $update = $kategoriGaleri->update([
             'nama' => $request->nama,
         ]);        
-
 
         if ($update)
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Diupdate.');
         else
             return back()->with('error', 'Kategori Galeri Gagal Diupdate');
     }
+
 
     /**
      * Remove the specified resource from storage.

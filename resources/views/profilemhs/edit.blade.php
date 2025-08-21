@@ -62,11 +62,9 @@
     <!-- FOTO MAHASISWA -->
     <div class="photo-section">
       <div class="photo-placeholder">
-        <i class="bi bi-image"></i>
-      </div>
-      <button class="btn-edit-photo">        
-        <a href="{{ route('profilemhs.edit') }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
-      </button>   
+    </div>
+
+    <input type="file" name="foto" accept="image/*" class="form-control mt-3" onchange="previewImage(event)">
     </div>
 
     <!-- DATA MAHASISWA -->
@@ -74,37 +72,93 @@
       <div class="info-box">
         <div class="info-item">
           <label>Nama</label>
-          <input type="text" value="Muzaqi Bagas" readonly>
+          <input type="text" value="Muzaqi Bagas">
         </div>
         <div class="info-item">
           <label>NIM</label>
-          <form><input type="text" value="J024567XXXX" readonly></form>
+          <form><input type="text" value="J024567XXXX"></form>
         </div>
         <div class="info-item">
           <label>Email</label>
-          <input type="text" value="bagas@apps.ipb.ac.id" readonly>
+          <input type="text" value="bagas@apps.ipb.ac.id">
         </div>
         <div class="info-item">
-          <label>Tanda Tangan</label>
-          <div class="signature-box">
-            <img src="{{ asset('img/signature-placeholder.png') }}" alt="Tanda Tangan">
-          </div>
+        <label>Tanda Tangan</label>
+        <div class="signature-box border" style="width: 100%; height: 150px; background: #fff;">
+            <canvas id="signaturePad" style="width:100%; height:100%;"></canvas>
         </div>
-        <!-- Kalau nanti mau bisa edit -->
-          <div class="form-actions">
-            <!-- <button type="button" class="btn-edit" id="editBtn">
-              <i class="bi bi-pencil-square"></i> Edit
-            </button> -->
-            <button type="submit" class="btn-save" style="display:none;" id="saveBtn">
-              <i class="bi bi-save"></i> Simpan
-            </button>
-          </div>
+        <div class="mt-2">
+            <button type="button" class="btn btn-sm btn-danger" id="clearSignature">Hapus</button>
+        </div>
+        </div>
+
+        <script>
+            const canvas = document.getElementById('signaturePad');
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            // sesuaikan ukuran canvas dengan div
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            function startDraw(e) {
+                drawing = true;
+                ctx.beginPath();
+                ctx.moveTo(getX(e), getY(e));
+            }
+
+            function draw(e) {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = 'black';
+                ctx.lineTo(getX(e), getY(e));
+                ctx.stroke();
+            }
+
+            function endDraw() {
+                drawing = false;
+                ctx.closePath();
+            }
+
+            function getX(e) {
+                return e.clientX - canvas.getBoundingClientRect().left;
+            }
+            function getY(e) {
+                return e.clientY - canvas.getBoundingClientRect().top;
+            }
+
+            // event mouse
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', endDraw);
+            canvas.addEventListener('mouseout', endDraw);
+
+            // event touchscreen (biar bisa tanda tangan di HP juga)
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                startDraw(e.touches[0]);
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                draw(e.touches[0]);
+            });
+            canvas.addEventListener('touchend', endDraw);
+
+            // clear canvas
+            document.getElementById('clearSignature').addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+        </script>
+
+
+        <!-- BUTTONS -->
+        <div class="text-end mt-3">
+          <a href="{{ route('profilemhs.index') }}" class="btn btn-secondary">Batal</a>
+          <button type="submit" class="btn btn-success" style="background-color: #28a745;">Simpan</button>
+        </div>
       </div>
-      
     </div>
-
-    
-
   </div>
 </main>
 

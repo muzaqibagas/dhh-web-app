@@ -12,7 +12,7 @@
       $isStaffDeptActive = Request::is('kategoristaff') || Request::is('staff-dept') || Request::is('ketuadhh');
       $isTingkatAkhirActive = Request::is('undangan') || Request::is('kolokium') || Request::is('seminar') || Request::is('sidang');
       $isKontenActive = Request::is('kategorigaleri') || Request::is('galeri') || Request::is('kategoriartikel') || Request::is('artikel') || Request::is('review-alumni') || Request::is('konten-dept') || Request::is('kontenjenjang') || Request::is('mitra');
-      $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editadmprofile') || Request::is('logoutadmprofile');
+      $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
       @endphp
 
     <!-- BTN TINGKAT AKHIR===================== -->
@@ -138,9 +138,9 @@
         class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
         <i class="bi bi-person-workspace"></i> Detail Profil Admin
       </a>
-      <a href="/editadmprofile"
-        class="submenu-link {{ Request::is('editadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-gear-wide-connected"></i> Edit Profil Admin
+      <a href="/editpassadm"
+        class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
+        <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
       <a href="/logoutadmprofile"
         class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
@@ -194,7 +194,7 @@
             </div>  
             <div class="row mt-4">
                 <div class="mb-3 d-flex justify-content-between align-items-center">
-                    <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                    <a href="{{route('admprofile.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
                     <button type="button" class="btn btn-success">Simpan</button>
                 </div>
             </div>

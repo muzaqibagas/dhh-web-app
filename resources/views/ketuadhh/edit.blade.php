@@ -182,18 +182,18 @@
             <form>
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
                 <div class="col-sm-2">
-                    <label for="nama" class="col-form-label">Nama</label>
-                </div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama mitra" required>
-                </div>
-                </div>
-                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
                     <label for="foto" class="col-form-label">Foto</label>
                 </div>
                 <div class="col-sm-10">
                     <input type="file" class="form-control" id="foto" required>
+                </div>
+                </div>
+                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="nama" class="col-form-label">Nama</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama mitra" required>
                 </div>
                 </div>
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
