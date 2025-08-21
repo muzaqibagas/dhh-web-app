@@ -116,6 +116,7 @@ Route::get('email/verify/{token}', [RegisterController::class, 'verify'])->name(
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
+Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
@@ -202,6 +203,8 @@ Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->
 Route::post('kontenjenjang', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
 Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
 Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
+Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
+Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');

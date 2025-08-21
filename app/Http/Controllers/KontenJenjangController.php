@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KontenJenjang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KontenJenjangController extends Controller
 {
@@ -20,7 +21,7 @@ class KontenJenjangController extends Controller
      */
     public function create()
     {
-        //
+        return view('kontenjenjang.create');
     }
 
     /**
@@ -44,7 +45,8 @@ class KontenJenjangController extends Controller
      */
     public function edit(KontenJenjang $kontenJenjang)
     {
-        return view('kontenjenjang.index');
+        return view('kontenjenjang.edit', compact('kontenJenjang'));
+        
     }
 
     /**

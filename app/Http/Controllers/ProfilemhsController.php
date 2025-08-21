@@ -44,7 +44,7 @@ class ProfilemhsController extends Controller
      */
     public function edit(Profilemhs $profilemhs)
     {
-        //
+        return view('profilemhs.edit');
     }
 
     /**

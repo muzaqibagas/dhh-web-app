@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('konten_jenjangs', function (Blueprint $table) {
             $table->id();
+            $table->text('jenjang')->nullable();
+            $table->text('profil')->nullable();
+            $table->string('foto')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->text('tujuanpendidikan')->nullable();
+            $table->text('kompetensilulusan')->nullable();
+            $table->text('capaianpembelajaran')->nullable();
+            $table->string('leaflet')->nullable();
+            $table->string('sertifikatakreditasi')->nullable();
             $table->timestamps();
         });
     }

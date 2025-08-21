@@ -169,71 +169,107 @@
     </script>
   </aside>
 
-  <!-- KATEGORI GALERI -->
-  <main class="content">
-    <div class="container-fluid mt-4">
-        <div class="adm-header">
-            <h2 class="adm-title">Kategori Galeri</h2>
-            <a href="{{route('kategorigaleri.create')}}" class="adm-btn-add text-decoration-none">
-              <i class="bi bi-plus"></i>Tambah Data
-            </a>
-        </div> 
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-        </div>
-        @endif
-        @if(session('info'))
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-            {{ session('info') }}
-          </div>
-        @endif
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light ">
-                            <tr>
-                                <th style="width: 10%;">No.</th>
-                                <th style="width: 65%;">Kategori Galeri</th>
-                                <th style="width: 25%;">Aksi</th>
-                            </tr>
-                        </thead>
-                        @php
-                          $no = 1;
-                        @endphp
-                        @foreach($kategoriGaleri as $kategoriGaleris)
-                        <tbody>
-                            <!-- Data Galeri (dummy) -->
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td class="text-start">{{ $kategoriGaleris->nama}}</td>
-                                
-                                <td>
-                                <div class="d-flex justify-content-center gap-2">
-                                  <a href="{{route('kategorigaleri.edit', $kategoriGaleris->id)}}" 
-                                    class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                  </a>
-                                  <form action="{{route('kategorigaleri.destroy', $kategoriGaleris->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" type="submit" style="width: 30px; height: 30px; padding: 0;" onclick="return confirm('Yakin ingin menghapus?')">
-                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                  </form>
-                                </div>
-                                </td>
-                            </tr>                        
-                        </tbody>
-                        @endforeach
-                    </table>
+<!-- KONTEN DEPARTEMEN -->
+<main class="content">
+  <div class="container-fluid mt-4">
+    <div class="adm-header">
+        <h2 class="adm-title">Create Konten Jenjang</h2>
+    </div> 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form action="{{ route('kontenjenjang.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <!-- Jenjang -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Jenjang</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="jenjang" value="{{ old('jenjang') }}" class="form-control">
+                    </div>
                 </div>
-            </div>
+
+                <!-- Profil -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
+                    <div class="col-sm-10">
+                        <textarea name="profil" rows="4" class="form-control">{{ old('profil') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Foto -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="foto" class="form-control" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Visi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                    <div class="col-sm-10">
+                        <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Misi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                    <div class="col-sm-10">
+                        <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Tujuan Pendidikan -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
+                    <div class="col-sm-10">
+                        <textarea name="tujuanpendidikan" rows="4" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Kompetensi Lulusan -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
+                    <div class="col-sm-10">
+                        <textarea name="kompetensilulusan" rows="4" class="form-control">{{ old('kompetensilulusan') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Capaian Pembelajaran -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
+                    <div class="col-sm-10">
+                        <textarea name="capaianpembelajaran" rows="4" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Leaflet -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="leaflet" class="form-control" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Sertifikat Akreditasi -->
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="sertifikat_akreditasi" class="form-control" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Tombol -->
+                <div class="mb-3 d-flex justify-content-end">
+                    <a href="{{ route('konten-dept.index') }}" class="btn btn-secondary me-2">Batal</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+
+            </form>
         </div>
     </div>
-  </main>
-</div>
+  </div>
+</main>
+
 @endsection
