@@ -14,7 +14,6 @@ use App\Http\Controllers\KolokiumController;
 use App\Http\Controllers\KontenDeptController;
 use App\Http\Controllers\MitraController;
 use App\Http\Controllers\KontenJenjangController;
-use App\Http\Controllers\PembimbingController;
 use App\Http\Controllers\ReviewAlumniController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RuanganController;
@@ -23,7 +22,6 @@ use App\Http\Controllers\SidangController;
 use App\Http\Controllers\StaffDeptController;
 use App\Http\Controllers\KetuaDHHController;
 use App\Http\Controllers\TemplateController;
-use App\Http\Controllers\TipeController;
 use App\Http\Controllers\UndanganController;
 use App\Http\Controllers\UndanganKolokiumController;
 use App\Http\Controllers\UndanganSeminarController;
@@ -62,14 +60,12 @@ Route::get('/', function () {
 // Route::resource('jenjang', JenjangController::class);
 // Route::resource('kolokium', KolokiumController::class);
 // Route::resource('konten-dept', KontenDeptController::class);
-// Route::resource('pembimbing', PembimbingController::class);
 // Route::resource('review-alumni', ReviewAlumniController::class);
 // Route::resource('ruangan', RuanganController::class);
 // Route::resource('seminar', SeminarController::class);
 // Route::resource('sidang', SidangController::class);
 // Route::resource('staff-dept', StaffDeptController::class);
 // Route::resource('template', TemplateController::class);
-// Route::resource('tipe', TipeController::class);
 // Route::resource('undangan', UndanganController::class);
 // Route::resource('user', UserController::class);
 
@@ -220,15 +216,6 @@ Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy
 Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
 Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create');
 
-// Pembimbing
-Route::get('pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
-Route::get('pembimbing/create', [PembimbingController::class, 'create'])->name('pembimbing.create');
-Route::post('pembimbing', [PembimbingController::class, 'store'])->name('pembimbing.store');
-Route::get('pembimbing/{pembimbing}', [PembimbingController::class, 'show'])->name('pembimbing.show');
-Route::get('pembimbing/{ipembimbingd}/edit', [PembimbingController::class, 'edit'])->name('pembimbing.edit');
-Route::put('pembimbing/{pembimbing}', [PembimbingController::class, 'update'])->name('pembimbing.update');
-Route::delete('pembimbing/{pembimbing}', [PembimbingController::class, 'destroy'])->name('pembimbing.destroy');
-
 // ReviewAlumni
 Route::get('review-alumni', [ReviewAlumniController::class, 'index'])->name('review-alumni.index');
 Route::get('review-alumni/create', [ReviewAlumniController::class, 'create'])->name('review-alumni.create');
@@ -326,15 +313,6 @@ Route::get('template/{template}', [TemplateController::class, 'show'])->name('te
 Route::get('template/{template}/edit', [TemplateController::class, 'edit'])->name('template.edit');
 Route::put('template/{template}', [TemplateController::class, 'update'])->name('template.update');
 Route::delete('template/{template}', [TemplateController::class, 'destroy'])->name('template.destroy');
-
-// Tipe
-Route::get('tipe', [TipeController::class, 'index'])->name('tipe.index');
-Route::get('tipe/create', [TipeController::class, 'create'])->name('tipe.create');
-Route::post('tipe', [TipeController::class, 'store'])->name('tipe.store');
-Route::get('tipe/{tipe}', [TipeController::class, 'show'])->name('tipe.show');
-Route::get('tipe/{tipe}/edit', [TipeController::class, 'edit'])->name('tipe.edit');
-Route::put('tipe/{tipe}', [TipeController::class, 'update'])->name('tipe.update');
-Route::delete('tipe/{tipe}', [TipeController::class, 'destroy'])->name('tipe.destroy');
 
 // Undangan
 Route::get('undangan', [UndanganController::class, 'index'])->name('undangan.index');
