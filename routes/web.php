@@ -109,12 +109,12 @@ Route::get('email/verify/{token}', [RegisterController::class, 'verify'])->name(
 //admprofile.index
 // ROUTE MAHASISWA
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
+
+
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
 Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
-
-Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
 
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
 
@@ -255,6 +255,14 @@ Route::get('/kolokiummhs/{id}/pdf', [KolokiummhsController::class, 'generatePdf'
 Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
 Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
 Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
+
+Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
+Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create');
+Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store');
+Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui');
+Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak');
+Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show');
+Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator');
 
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');

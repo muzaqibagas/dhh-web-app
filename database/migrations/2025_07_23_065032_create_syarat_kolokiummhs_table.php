@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('syarat_kolokiummhs', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');               
+            $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_moderator')->nullable()->constrained('staff_depts')->onDelete('cascade');
+            $table->string('formulir'); // file formulir kolokium
+            $table->string('bukti_sks'); // file bukti SKS
+            $table->string('bukti_spp'); // file SPP
+            $table->string('bukti_kehadiran'); // file kehadiran kolokium
+            $table->enum('status', ['belum_mendaftar', 'pending', 'disetujui', 'ditolak'])->default('belum_mendaftar');                 
             $table->timestamps();
         });
     }
