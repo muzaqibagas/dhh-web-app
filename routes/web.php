@@ -27,7 +27,8 @@ use App\Http\Controllers\UndanganKolokiumController;
 use App\Http\Controllers\UndanganSeminarController;
 use App\Http\Controllers\UndanganSidangController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\EditPasswordAdmController;
+use App\Http\Controllers\EditPasswordMhsController;
 
 // ROUTE MAHASISWA
 use App\Http\Controllers\HomeController;
@@ -116,13 +117,15 @@ Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilem
 Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 
+Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
+
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
-
 Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
-
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
+Route::get('editpassadm', [EditPasswordAdmController::class, 'index'])->name('editpassadm.index');
+Route::get('editpassmhs', [EditPasswordMhsController::class, 'index'])->name('editpassmhs.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');
