@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\AcaraAkademikController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DivisiController;
@@ -55,6 +56,8 @@ use App\Http\Controllers\GuestHomeController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('home', [Controller::class, 'home'])->name('guest.home');
 
 // Route::resource('acara-akademik', AcaraAkademikController::class);
 // Route::resource('artikel', ArtikelController::class);
@@ -119,15 +122,13 @@ Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilem
 Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 
-Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
-
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
+
 Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
+
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
-Route::get('editpassadm', [EditPasswordAdmController::class, 'index'])->name('editpassadm.index');
-Route::get('editpassmhs', [EditPasswordMhsController::class, 'index'])->name('editpassmhs.index');
 
 // Acara Akademik
 Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');
