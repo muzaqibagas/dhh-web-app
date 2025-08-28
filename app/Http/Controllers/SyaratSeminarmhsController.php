@@ -12,7 +12,7 @@ class SyaratSeminarmhsController extends Controller
      */
     public function index()
     {
-        return view('syaratseminarmhs.index');
+        return view('syaratseminarmhs.index');    
     }
 
     /**
