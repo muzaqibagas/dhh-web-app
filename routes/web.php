@@ -29,6 +29,8 @@ use App\Http\Controllers\UndanganSidangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
+use App\Http\Controllers\AdmProfileController;
+
 
 // ROUTE MAHASISWA
 use App\Http\Controllers\HomeController;
@@ -44,8 +46,8 @@ use App\Http\Controllers\SyaratSeminarmhsController;
 use App\Http\Controllers\KomprehensifmhsController;
 use App\Http\Controllers\SyaratKomprehensifmhsController;
 
-// ROUTE ADMIN AKADEMIK
-use App\Http\Controllers\AdmProfileController;
+// ROUTE GUEST DHH
+use App\Http\Controllers\GuestHomeController;
 
 
 
@@ -355,3 +357,6 @@ Route::get('user/{user}', [UserController::class, 'show'])->name('user.show');
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+
+// ROUTE GUEST DHH
+Route::get('guesthome', [GuestHomeController::class, 'index'])->name('guesthome.index');
