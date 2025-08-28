@@ -171,72 +171,64 @@
 
 <!-- KONTEN JENJANG -->
 <main class="content">
-<div class="container-fluid mt-4">
+  <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Konten Jenjang</h2>
-    </div> 
+        <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
+          <i class="bi bi-plus"></i>Tambah Data
+        </a>
+        {{-- Alert Success --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        {{-- Alert Error --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th style="width: 10%;">No.</th>
-                            <th style="width: 65%;">Jenjang</th>
-                            <th style="width: 25%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data Jenjang (dummy) -->
-                        <tr>
-                            <td>1</td>
-                            <td class="text-start">S1</td>
-                            <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td class="text-start">S2</td>
-                            <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td class="text-start">S3</td>
-                            <!-- Tombol Aksi -->
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-eye" style="font-size: 18px;"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-bordered text-center align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">No</th>
+                        <th style="width: 20%">Jenjang</th>
+                        <th style="width: 20%">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @forelse($kontenJenjangs as $key => $konten)
+                      <tr>
+                          <td>{{ $key+1 }}</td>
+                          <td class="text-start">{{ $konten->jenjang->nama }}</td>
+                          <td class="text-center">
+                              <div style="display: flex; justify-content: center; gap: 6px;">
+                                  <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width:30px;height:30px;padding:0;">
+                                      <i class="bi bi-pencil"></i>
+                                  </a>
+                                  <a href="{{ route('kontenjenjang.show', $konten->id) }}" class="btn btn-primary btn-sm" style="width:30px;height:30px;padding:0;">
+                                      <i class="bi bi-eye"></i>
+                                  </a>
+                              </div>
+                          </td>
+                      </tr>
+                  @empty
+                      <tr>
+                          <td colspan="3" class="text-center">Belum ada data</td>
+                      </tr>
+                  @endforelse
+                  </tbody>
+            </table>
         </div>
     </div>
-</div>
+  </div>
+</main>
 @endsection
