@@ -192,13 +192,13 @@ Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jen
 Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
 
 // KontenJenjang
-Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');
-Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
-Route::post('kontenjenjang', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
-Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
-Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
-Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
-Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
+Route::get('kontenjenjangs', [KontenJenjangController::class, 'index'])->name('kontenjenjangs.index');
+Route::get('kontenjenjangs/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
+Route::post('kontenjenjangs', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
+Route::get('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
+Route::get('kontenjenjangs/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
+Route::put('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
+Route::delete('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');

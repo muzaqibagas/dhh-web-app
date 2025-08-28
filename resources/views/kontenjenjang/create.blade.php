@@ -175,7 +175,7 @@
     <div class="adm-header">
         <h2 class="adm-title">Create Konten Jenjang</h2>
     </div> 
-    <div class="card shadow-sm">
+<div class="card shadow-sm">
         <div class="card-body">
             <form action="{{ route('kontenjenjang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -184,20 +184,25 @@
                 <div class="row mb-3 align-items-center">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Jenjang</label>
                     <div class="col-sm-10">
-                        <input type="text" name="jenjang" value="{{ old('jenjang') }}" class="form-control">
+                        <select name="id_jenjang" class="form-control" required>
+                            <option value="">-- Pilih Jenjang --</option>
+                            @foreach($jenjangs as $jenjang)
+                                <option value="{{ $jenjang->id }}">{{ $jenjang->nama }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
                 <!-- Profil -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
                     <div class="col-sm-10">
-                        <textarea name="profil" rows="4" class="form-control">{{ old('profil') }}</textarea>
+                        <textarea name="profil" rows="3" class="form-control">{{ old('profil') }}</textarea>
                     </div>
                 </div>
 
                 <!-- Foto -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
                     <div class="col-sm-10">
                         <input type="file" name="foto" class="form-control" accept="image/*">
@@ -205,7 +210,7 @@
                 </div>
 
                 <!-- Visi -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
                     <div class="col-sm-10">
                         <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
@@ -213,7 +218,7 @@
                 </div>
 
                 <!-- Misi -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
                     <div class="col-sm-10">
                         <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
@@ -221,31 +226,31 @@
                 </div>
 
                 <!-- Tujuan Pendidikan -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
                     <div class="col-sm-10">
-                        <textarea name="tujuanpendidikan" rows="4" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
+                        <textarea name="tujuanpendidikan" rows="3" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
                     </div>
                 </div>
 
                 <!-- Kompetensi Lulusan -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
                     <div class="col-sm-10">
-                        <textarea name="kompetensilulusan" rows="4" class="form-control">{{ old('kompetensilulusan') }}</textarea>
+                        <textarea name="kompetensilulusan" rows="3" class="form-control">{{ old('kompetensilulusan') }}</textarea>
                     </div>
                 </div>
 
                 <!-- Capaian Pembelajaran -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
                     <div class="col-sm-10">
-                        <textarea name="capaianpembelajaran" rows="4" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
+                        <textarea name="capaianpembelajaran" rows="3" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
                     </div>
                 </div>
 
                 <!-- Leaflet -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
                     <div class="col-sm-10">
                         <input type="file" name="leaflet" class="form-control" accept="image/*">
@@ -253,17 +258,16 @@
                 </div>
 
                 <!-- Sertifikat Akreditasi -->
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
                     <div class="col-sm-10">
-                        <input type="file" name="sertifikat_akreditasi" class="form-control" accept="image/*">
+                        <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*">
                     </div>
                 </div>
 
                 <!-- Tombol -->
-                <div class="mb-3 d-flex justify-content-end">
-                    <a href="{{ route('konten-dept.index') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                <div class="text-end">
+                  <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
 
             </form>
@@ -271,5 +275,4 @@
     </div>
   </div>
 </main>
-
 @endsection

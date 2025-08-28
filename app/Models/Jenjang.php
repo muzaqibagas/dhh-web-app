@@ -2,20 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Jenjang extends Model
 {
-    use HasFactory;
+    protected $fillable = ['nama'];
 
-    protected $table = 'jenjangs';
-    protected $fillable = [
-        'nama',
-    ];
-
-    public function users()
+    public function konten()
     {
-        return $this->hasMany(User::class, 'jenjang_id');
+        return $this->hasOne(KontenJenjang::class, 'id_jenjang');
     }
-}
+};
+

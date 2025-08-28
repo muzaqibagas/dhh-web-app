@@ -9,28 +9,26 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('konten_jenjangs', function (Blueprint $table) {
-            $table->id();
-            $table->text('jenjang')->nullable();
-            $table->text('profil')->nullable();
-            $table->string('foto')->nullable();
-            $table->text('visi')->nullable();
-            $table->text('misi')->nullable();
-            $table->text('tujuanpendidikan')->nullable();
-            $table->text('kompetensilulusan')->nullable();
-            $table->text('capaianpembelajaran')->nullable();
-            $table->string('leaflet')->nullable();
-            $table->string('sertifikatakreditasi')->nullable();
-            $table->timestamps();
-        });
+        $table->id();
+        $table->foreignId('id_jenjang')->constrained('jenjangs')->onDelete('cascade');
+        $table->string('jenjang')->nullable(); 
+        $table->text('profil')->nullable();
+        $table->text('visi')->nullable();
+        $table->text('misi')->nullable();
+        $table->text('tujuanpendidikan')->nullable();
+        $table->text('kompetensilulusan')->nullable();
+        $table->text('capaianpembelajaran')->nullable();
+        $table->string('foto')->nullable();
+        $table->string('leaflet')->nullable();
+        $table->string('sertifikatakreditasi')->nullable();
+        $table->timestamps();
+    });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('konten_jenjangs');
     }
