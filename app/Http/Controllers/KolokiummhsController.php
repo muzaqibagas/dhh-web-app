@@ -170,7 +170,7 @@ class KolokiummhsController extends Controller
         $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing1->nama ?? '-', 0, 'L');
 
         $pdf->SetXY(80, 96);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing2->nama ?? 'hfuibwubuefwbj', 0, 'L');
+        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing2->nama ?? '', 0, 'L');
 
         $pdf->SetXY(80, 105);
         $pdf->MultiCell(100, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
