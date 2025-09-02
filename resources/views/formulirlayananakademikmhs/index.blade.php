@@ -65,37 +65,37 @@
     <!-- Satu item formulir -->
     <div class="form-item">
       <span>Rekomendasi Penelitian</span>
-      <a href="{{ asset('formulir/rekomendasi_penelitian.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/FRM-IJIN-ATAU-REKOMENDASI-PENELITIAN-S1.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Pembuatan Surat Keterangan Lulus</span>
-      <a href="{{ asset('formulir/surat_keterangan_lulus.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/FRM-FAHUTAN-21-00-Formulir-Pembuatan-Surat-Keterangan-Lulus.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Distribusi Skripsi-1</span>
-      <a href="{{ asset('formulir/distribusi_skripsi1.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/Form-Distribusi-Skripsi-1.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Tanda Terima Proposal Penelitian</span>
-      <a href="{{ asset('formulir/tanda_terima_proposal.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/TANDA-TERIMA-PROPOSAL-PENELITIAN.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Pelayanan Akademik</span>
-      <a href="{{ asset('formulir/pelayanan_akademik.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/FRM-FAHUTAN-24-00-Formulir-Pelayanan.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Pembuatan Surat Tunjangan Orang Tua</span>
-      <a href="{{ asset('formulir/surat_tunjangan_orangtua.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/FRM-FAHUTAN-22-00-Pembuatan-Surat-Tunjangan-Ortu.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
     <div class="form-item">
       <span>Surat Izin Sakit</span>
-      <a href="{{ asset('formulir/surat_izin_sakit.pdf') }}" class="btn-download" download>Unduh</a>
+      <a href="{{ asset('layanan akademik/FORM-SURAT-IJIN-SAKIT-s1.pdf') }}" class="btn-download" download>Unduh</a>
     </div>
 
   </div> <!-- end form-list-container -->

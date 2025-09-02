@@ -56,56 +56,65 @@
 
 <main class="content">
   <h2 class="page-title">Biodata Mahasiswa</h2>
-
-  <div class="biodata-container">
-    
-    <!-- FOTO MAHASISWA -->
-    <div class="photo-section">
-      <div class="photo-placeholder">
-        <i class="bi bi-image"></i>
+  <div class="id-card-container p-4 shadow-lg rounded-4 d-flex flex-row align-items-center w-100 mt-4" style="background: linear-gradient(135deg, #e0e7ff 60%, #f5f5f5 100%); border: 2px solid #1b2a6d; min-width: 420px;">
+    <div class="id-photo text-center me-4">
+      <div class="rounded-3 overflow-hidden border border-3 border-primary mx-auto" style="width: 200px; height: 300px; background:#fff; margin-bottom: 10px;">
+        @if($user->foto)
+          <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
+        @else
+          <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover">
+        @endif
       </div>
-      <button class="btn-edit-photo">        
-        <a href="{{ route('profilemhs.edit') }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
-      </button>   
+      <a href="{{ route('profilemhs.edit') }}" class="btn btn-primary w-100"><i class="bi bi-pencil-square"></i> Edit Profile</a>
     </div>
-
-    <!-- DATA MAHASISWA -->
-    <div class="info-section">
-      <div class="info-box">
-        <div class="info-item">
-          <label>Nama</label>
-          <input type="text" value="Muzaqi Bagas" readonly>
-        </div>
-        <div class="info-item">
-          <label>NIM</label>
-          <form><input type="text" value="J024567XXXX" readonly></form>
-        </div>
-        <div class="info-item">
-          <label>Email</label>
-          <input type="text" value="bagas@apps.ipb.ac.id" readonly>
-        </div>
-        <div class="info-item">
-          <label>Tanda Tangan</label>
-          <div class="signature-box">
-            <img src="{{ asset('img/signature-placeholder.png') }}" alt="Tanda Tangan">
-          </div>
-        </div>
-        <!-- Kalau nanti mau bisa edit -->
-          <div class="form-actions">
-            <!-- <button type="button" class="btn-edit" id="editBtn">
-              <i class="bi bi-pencil-square"></i> Edit
-            </button> -->
-            <button type="submit" class="btn-save" style="display:none;" id="saveBtn">
-              <i class="bi bi-save"></i> Simpan
-            </button>
-          </div>
+    <div class="id-data flex-grow-1">
+      <div class="mb-2">
+        <label class="form-label fw-bold mb-0">Nama</label>
+        <input type="text" class="form-control form-control-sm" value="{{ $user->nama ?? '-' }}" readonly style="background-color:#f5f5f5;">
       </div>
-      
+      <div class="mb-2">
+        <label class="form-label fw-bold mb-0">NIM</label>
+        <input type="text" class="form-control form-control-sm" value="{{ $user->nim ?? '-' }}" readonly style="background-color:#f5f5f5;">
+      </div>
+      <div class="mb-2">
+        <label class="form-label fw-bold mb-0">Email</label>
+        <input type="text" class="form-control form-control-sm" value="{{ $user->email ?? '-' }}" readonly style="background-color:#f5f5f5;">
+      </div>
+      <div class="mb-2">
+        <label class="form-label fw-bold mb-0">Jenis Kelamin</label><br>
+        <input type="text" class="form-control form-control-sm" value="{{ $user->jenis_kelamin ?? '-' }}" readonly style="background-color:#f5f5f5;">
+      </div>
+      <div class="signature-box w-50" 
+          style="min-height:80px; max-height:100px; display:flex; align-items:center; justify-content:center; background:#fff; border:1.5px solid #1b2a6d; border-radius:6px;">                                         
+        @if($user->tanda_tangan)
+          <img src="{{ asset('signature/' . $user->tanda_tangan) }}" 
+              alt="Tanda Tangan" 
+              style="max-width: 100%; max-height: 100%; object-fit: contain; height: auto; width: auto;">
+        @else
+          <span style="color:#aaa;">Belum ada tanda tangan</span>
+        @endif
+      </div>
     </div>
-
-    
-
   </div>
+  <style>
+    .id-card-container {
+      box-shadow: 0 4px 24px 0 rgba(30, 41, 59, 0.10);
+      border-radius: 18px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+    .id-data label {
+      color: #1b2a6d;
+    }
+    .id-data input, .id-data .form-check-input {
+      font-size: 1em;
+    }
+    .signature-box {
+      min-height: 60px;
+      max-height: 90px;
+      border: 1.5px dashed #1b2a6d;
+    }
+  </style>
 </main>
 
 @endsection

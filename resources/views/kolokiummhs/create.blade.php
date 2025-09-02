@@ -105,7 +105,7 @@
         <div class="form-group">
           <label>Nama</label>
           <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{Auth::user()->nama ?? 'Guest'}}" required>        
-          <input type="hidden" name="                              
+          <input type="hidden" name="id_mahasiswa" value="{{ Auth::id() }}">                      
         </div>
 
         <div class="form-group">

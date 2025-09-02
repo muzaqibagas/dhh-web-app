@@ -29,6 +29,8 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->default('Laki-laki');
             $table->enum('role', ['Admin', 'Mahasiswa'])->default('Mahasiswa');
             $table->string('foto')->nullable();
+            $table->string('tanda_tangan_img')->nullable();
+            $table->string('tanda_tangan')->nullable();
             $table->timestamps();
         });
 

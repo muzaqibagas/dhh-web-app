@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profilemhs;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProfilemhsController extends Controller
@@ -12,7 +13,11 @@ class ProfilemhsController extends Controller
      */
     public function index()
     {
-        return view('profilemhs.index');
+        $user = Auth::user();
+        if ($user->role !== 'Mahasiswa') {
+            abort(403, 'Unauthorized');
+        }
+        return view('profilemhs.index', compact('user'));
     }
 
     /**
@@ -34,7 +39,7 @@ class ProfilemhsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Profilemhs $profilemhs)
+    public function show()
     {
         //
     }
@@ -42,15 +47,16 @@ class ProfilemhsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profilemhs $profilemhs)
+    public function edit()
     {
-        return view('profilemhs.edit');
+        $user = Auth::user();
+        return view('profilemhs.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Profilemhs $profilemhs)
+    public function update(Request $request)
     {
         //
     }
@@ -58,7 +64,7 @@ class ProfilemhsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Profilemhs $profilemhs)
+    public function destroy()
     {
         //
     }

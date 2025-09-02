@@ -182,11 +182,11 @@
 
       <!-- FOTO PROFIL -->
       <div class="d-flex flex-column align-items-center">
-        <div class="rounded-circle overflow-hidden" style="width: 180px; height: 180px; background-color:#f5f5f5">
+        <div class="rounded-circle " style="width: 180px; height: 180px; background-color:#f5f5f5">
           @if($user->foto)
-            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
+            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover rounded-circle">
           @else
-            <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
+            <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover rounded-circle">
           @endif
         </div>
 

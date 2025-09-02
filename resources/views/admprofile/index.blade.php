@@ -182,7 +182,7 @@
         @if($user->foto)
           <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
         @else
-          <img id="preview-image" src="{{ asset('img/default.png') }}" alt="" class="w-100 h-100 object-fit-cover">
+          <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover">
         @endif
       </div>
             
