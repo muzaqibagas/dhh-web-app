@@ -149,45 +149,104 @@ class KolokiummhsController extends Controller
         $pdf->useTemplate($tpl);
 
         $pdf->SetFont('Times', '', 12);
-        $lineHeight = 4.23 * 1.15;
 
-        $pdf->SetXY(80, 35);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->nama, 0, 'L');
+        $labelWidth = 40;   // lebar kolom label
+        $valueWidth = 100;  // lebar kolom isi
+        $lineHeight = 6.5;
 
-        $pdf->SetXY(80, 44);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->nim, 0, 'L');
+        // Nama Mahasiswa
+        $pdf->SetXY(32, 60);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nama, 0, 'L');
 
-        $pdf->SetXY(80, 53);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
+        // NIM
+        $pdf->SetXY(32, 67);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nim, 0, 'L');
 
-        $pdf->SetXY(80, 62);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->alamat, 0, 'L');
+        // Semester
+        $pdf->SetXY(32, 74);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
 
-        $pdf->SetXY(80, 70);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');
+        // Alamat di Bogor
+        $pdf->SetXY(32, 81);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->alamat, 0, 'L');
 
-        $pdf->SetXY(80, 87);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing1->nama ?? '-', 0, 'L');
+        // Hari/Tanggal
+        $pdf->SetXY(32, 103.5);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
 
-        $pdf->SetXY(80, 96);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->pembimbing2->nama ?? '', 0, 'L');
+        // Waktu
+        $pdf->SetXY(32, 110.5);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
 
-        $pdf->SetXY(80, 105);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
+        // Tempat
+        $pdf->SetXY(32, 118);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->ruangan->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(80, 114);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
+        // Judul Kolokium
+        $pdf->SetXY(32, 125);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');                
 
-        $pdf->SetXY(80, 123);
-        $pdf->MultiCell(100, $lineHeight, $kolokiummhs->ruangan->nama ?? '-', 0, 'L');
+        //Mahasiswa yang mendaftarkan kolokium               
+        $yMhs = 184;
+        
+        $xStart = 210;  // posisi X kurung buka
+        $xEnd   = 110; // posisi X kurung tutup
+        $width  = $xEnd - $xStart; // lebar area kurung
 
-        $pdf->SetXY(80, 131);
-        $pdf->MultiCell(100, $lineHeight, '', 0, 'L');
+        $pdf->SetXY($xStart, $yMhs);
+        $pdf->Cell(
+            $width, 
+            $lineHeight, 
+            "(" . ($kolokiummhs->nama ?? '-') . ")", 
+            0, 
+            0, 
+            'C' // <-- ini bikin teks center
+        );
+
+        // Dosen Pembimbing 1 
+        $yPemb1 = 223;
+        
+        $xStart = 5;  // posisi X kurung buka
+        $xEnd   = 110; // posisi X kurung tutup
+        $width  = $xEnd - $xStart; // lebar area kurung
+
+        $pdf->SetXY($xStart, $yPemb1);
+        $pdf->Cell(
+            $width, 
+            $lineHeight, 
+            "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")",             
+            0, 
+            0, 
+            'C' // <-- ini bikin teks center
+        );
+
+        // Untuk pembimbing anggota (misalnya di X kanan, Y sama)
+        $yPemb2 = 223;
+        $xStart2 = 103;  // posisinya harus disesuaikan dengan kurung kanan
+        $xEnd2   = 215;  // sesuaikan dengan kurung kanan
+        $width2  = $xEnd2 - $xStart2;
+
+        $pdf->SetXY($xStart2, $yPemb2);
+        $pdf->Cell(
+            $width2, 
+            $lineHeight, 
+             "(" . ($kolokiummhs->pembimbing2->nama ?? '-') . ")", 
+            0, 
+            0, 
+            'C'
+        );
 
         // Simpan PDF
         $pdf->Output('F', $output);
 
-        // Download
         return response()->download($output);
     }
 
