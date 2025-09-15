@@ -58,6 +58,11 @@ Route::get('/', function () {
 });
 
 Route::get('home', [Controller::class, 'home'])->name('guest.home');
+Route::get('file', [Controller::class, 'file'])->name('guest.file');
+Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
+Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
+Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
+Route::get('sejarah', [Controller::class, 'sejarah'])->name('guest.sejarah');
 
 // Route::resource('acara-akademik', AcaraAkademikController::class);
 // Route::resource('artikel', ArtikelController::class);

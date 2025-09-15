@@ -1,0 +1,715 @@
+/* 🎠 Carousel */
+.guest-carousel-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.guest-carousel-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.guest-carousel-slide.guest-active {
+  opacity: 1;
+}
+
+.guest-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guest-carousel-caption {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  color: white;
+  max-width: 50%;
+  text-align: justify;
+}
+
+.guest-carousel-caption h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.guest-carousel-caption p {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.guest-carousel-prev,
+.guest-carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.guest-carousel-prev { left: 20px; }
+.guest-carousel-next { right: 20px; }
+
+/* 🔴 Overlay merah */
+.guest-carousel-overlay {
+  position: relative;
+  width: 60%;
+  margin: -90px 0 0 0;
+  background: linear-gradient(135deg, #6a070a, #d02828);
+  color: white;
+  padding: 30px;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.guest-overlay-text h3 {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: bold;
+  line-height: 1.4;
+  max-width: 250px;
+  color: white;
+}
+
+.guest-overlay-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.guest-overlay-icons .guest-icon-item {
+  background: #0b2a7c;
+  border: 3px solid gold;
+  border-radius: 10px;
+  padding: 10px;
+  height: 110px;
+  width: 115px;
+  text-align: center;
+}
+
+.guest-overlay-icons .guest-icon-item img {
+  width: 60px;
+  height: 60px;
+}
+
+.guest-overlay-icons .guest-icon-item p {
+  margin-top: 5px;
+  font-size: 12px;
+  color: white;
+}
+
+@media (max-width: 992px) {
+  .guest-carousel-overlay { width: 80%; }
+}
+@media (max-width: 576px) {
+  .guest-carousel-overlay {
+    width: 90%;
+    flex-direction: column;
+    text-align: center;
+  }
+  .guest-overlay-icons { justify-content: center; }
+}
+
+/* ℹ️ About Section */
+.guest-about-section {
+  width: 100%;
+  padding: 60px 10%;
+  background: #fff;
+}
+
+.guest-about-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.guest-about-text { flex: 1; }
+.guest-about-text h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #B61D22;
+}
+.guest-about-text .guest-highlight { color: #000; font-weight: 500; }
+.guest-about-text h3 br+span { color: #B61D22; }
+.guest-about-text p {
+  font-size: 12px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+.guest-about-text a {
+  color: #B61D22;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.guest-btn-about {
+  margin-top: 15px;
+  background: #0b2a7c;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.guest-btn-about:hover { background: #081d56; }
+
+.guest-about-image {
+  flex: 1;
+  text-align: right;
+}
+.guest-about-image img {
+  max-width: 90%;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .guest-about-container { flex-direction: column; text-align: center; }
+  .guest-about-image { text-align: center; }
+}
+
+/* 📰 Blog */
+.guest-blog-section {
+  width: 100%;
+  padding: 60px 10%;
+  background: #fff;
+}
+.guest-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* total 3 kolom */
+  gap: 20px;
+}
+.guest-blog-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.guest-blog-card.guest-featured {
+  grid-column: span 2;
+  height: 400px;
+  }
+
+.guest-blog-card.guest-side {
+  grid-column: span 1;
+}
+.guest-blog-card.small1 { grid-area: small1; }
+.guest-blog-card.small2 { grid-area: small2; }
+.guest-blog-card.small3 { grid-area: small3; }
+
+.guest-blog-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.guest-blog-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.guest-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent 50%);
+  color: white;
+  transition: background 0.3s ease;
+}
+.guest-overlay .guest-meta {
+  font-size: 10px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.guest-overlay h2,
+.guest-overlay h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  color: white;
+}
+.guest-blog-card:hover img { transform: scale(1.08); }
+.guest-blog-card:hover .guest-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent 50%);
+}
+@media(max-width: 992px) {
+  .guest-blog-card.guest-featured { grid-column: span 1; }
+}
+/* Responsive biar di HP tetep rapi */
+@media(max-width: 768px) {
+  .guest-blog-grid {
+    grid-template-areas:
+      "featured"
+      "small1"
+      "small2"
+      "small3";
+    grid-template-columns: 1fr;
+  }
+  .guest-blog-card.guest-featured {
+    height: 250px;
+  }
+}
+/* 🖼 Portfolio */
+.guest-portfolio .guest-portfolio-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin: 0 0 40px;
+  list-style: none;
+}
+
+.guest-portfolio .guest-portfolio-filters li {
+  font-size: 10px;
+  font-weight: 100;
+  padding: 12px 25px;
+  cursor: pointer;
+  background: var(--surface-color);
+  color: var(--default-color);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.guest-portfolio .guest-portfolio-filters li.guest-filter-active {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.guest-portfolio .guest-portfolio-entry {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.guest-portfolio .guest-portfolio-entry .guest-entry-image {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+}
+
+.guest-portfolio .guest-portfolio-entry .guest-entry-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guest-portfolio .guest-portfolio-entry .guest-entry-image .guest-entry-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guest-portfolio .guest-portfolio-entry:hover .guest-entry-image img {
+  transform: scale(1.05);
+}
+.guest-portfolio .guest-portfolio-entry:hover .guest-entry-image .guest-entry-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Wrapper untuk teks di overlay */
+.guest-entry-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* jarak antara meta dan title */
+  align-items: flex-start; /* bisa diganti center/right */
+}
+
+/* Meta (kategori/fasilitas) */
+.guest-entry-meta {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #FFD700; /* contoh emas */
+  letter-spacing: 1px;
+}
+
+/* Judul */
+.guest-entry-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+/* ============================= */
+/* 🎓 Alumni Testimonial Section */
+/* ============================= */
+.guest-rounded-8 {
+  border-radius: 12px;
+}
+
+#guestAlumniCarousel .carousel-item {
+  min-height: 370px;
+}
+
+#guestAlumniCarousel .carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+#guestAlumniCarousel .carousel-item img {
+  border: 3px solid #fff;
+}
+
+
+/* 🎓 Alumni Testimonial Section (Tambahan) */
+/* #guestAlumniCarousel .carousel-item {
+  position: relative;
+  padding: 30px;
+  border-radius: 12px;
+  background: rgba(0, 24, 72, 0.85); /* biru tua transparan */
+  /*color: #fff;} */
+
+#guestAlumniCarousel .carousel-item h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffd900; /* judul nama alumni warna emas */
+}
+
+#guestAlumniCarousel .carousel-item p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #f0f0f0;
+}
+
+#guestAlumniCarousel .carousel-item p.text-white-50 {
+  color: #ddd !important;
+  font-style: italic;
+  text-align: justify;
+}
+
+#guestAlumniCarousel .carousel-inner {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Tambahan styling untuk layar kecil */
+@media (max-width: 767.98px) {
+  #guestAlumniCarousel .carousel-item .row {
+    flex-direction: column; /* gambar di atas, teks di bawah */
+    text-align: center;
+  }
+
+  #guestAlumniCarousel .carousel-item img {
+    max-width: 120px;
+    margin: 0 auto 15px auto; /* biar center */
+  }
+
+  #guestAlumniCarousel .carousel-item h5 {
+    font-size: 1rem;
+  }
+
+  #guestAlumniCarousel .carousel-item p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding: 0 10px; /* biar gak mepet pinggir */
+  }
+}
+
+/* ============================= */
+/* 📚 Program Studi Accordion    */
+/* ============================= */
+.guest-container {
+  background: #001848;
+  padding: 70px 30px;
+  color: #fff;
+}
+
+.guest-title h5 {
+  color: #FFD700;
+  padding-left : 100px;
+}
+
+.guest-title h2 {
+  font-size: 35px;
+  line-height: 1.3;
+  padding-left : 100px;
+}
+
+.guest-accordion .guest-accordion-item {
+  border: 2px solid #ddbc00;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #001848;
+}
+
+.guest-accordion-button {
+  background: #001848;
+  color: #FFD700;
+  font-weight: bold;
+  padding: 15px 20px;
+}
+
+.guest-accordion-button:focus {
+  box-shadow: none;
+}
+
+.guest-accordion-button:not(.collapsed) {
+  background: #FFD700;
+  color: #001848;
+}
+
+.guest-accordion-body {
+  padding: 20px;
+  background: #001848;
+  color: #fff;
+  text-align: justify;
+}
+
+/* ============================= */
+/* 📞 Contact Section            */
+/* ============================= */
+.guest-contact {
+  padding: 60px 0;
+  background: #f9f9f9;
+}
+
+.guest-section-title h2 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #001848;
+}
+
+.guest-contact-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(to right, #680000, #ff0d0d);
+  border-radius: 12px;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+  margin-left: 20px;
+  min-height: 140px;  /* atur sesuai kebutuhan */
+}
+
+.guest-contact-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+.guest-contact-box .icon-box {
+  font-size: 28px;
+  color: #ffffff;
+  padding: 10px;
+}
+
+.guest-contact-box .info-content h4 {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.guest-contact-box .info-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* ============================= */
+/* 🗺 Maps Section               */
+/* ============================= */
+.guest-map-container {
+  margin-top: 40px;
+  margin-left: 25px;
+}
+
+.guest-map-section iframe {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+}
+
+/* ============================= */
+/* File Section               */
+/* ============================= */
+
+.guest-breadcrumb {
+  background: linear-gradient(to right, #7c0019, #ff1b49);
+  color: #fff;
+  padding: 30px 30px;
+  font-size: 14px;
+}
+
+.guest-breadcrumb a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Judul */
+.guest-dc-title {
+  color: #8b0000;
+}
+
+.guest-dc-underline {
+  width: 200px;
+  border: 2px solid #ffcb3d;
+}
+
+/* Card Style */
+.guest-dc-card {
+  background: linear-gradient(135deg, #9d0000, #ff0022);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease-in-out;
+}
+
+.guest-dc-card:hover {
+  transform: translateY(-4px);
+}
+
+.guest-dc-card .btn {
+  background-color: #005ce7;
+  border: none;
+}
+
+/* Semua teks & ikon di dalam card jadi putih */
+.guest-dc-card,
+.guest-dc-card span,
+.guest-dc-card i {
+  color: #fff !important;
+  padding: 2px;
+}
+
+
+.guest-dc-footer-space {
+  margin-bottom: 80px; /*  jarak bawah sebelum footer */
+}
+
+/* ============================= */
+/* Pendidikan Section               */
+/* ============================= */
+.guest-pend-breadcrumb {
+      background: #f8f9fa;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+  .guest-pend-section-title {
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 0.25rem; /* biar deket sama garis gold */
+      background: linear-gradient(90deg, #680000, #ff0d0d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+  .guest-pend-divider {
+      display: inline-block; /* ikut kiri */
+      margin-bottom: 1rem;   /* kasih jarak ke teks setelahnya */
+      max-width: 300px;
+    }
+
+    .guest-pend-footer {
+      background: #001f54;
+      color: #fff;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    .guest-pend-footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .guest-pend-footer a:hover {
+      text-decoration: underline;
+    }
+    .guest-pend-footer-logo {
+      max-width: 250px;
+    }
+
+    /* Title dengan gradasi */
+.guest-section-title {
+  font-weight: 700;
+  background: linear-gradient(90deg, #7a001f, #ffbf00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Tabs styling */
+.guest-staff-tabs .nav-link {
+  font-weight: 600;
+  color: #333;
+  border: none;
+  margin: 0 5px;
+  border-radius: 8px 8px 0 0;
+  background-color: #f5f5f5;
+}
+
+.guest-staff-tabs .nav-link.active {
+  background: linear-gradient(90deg, #7a001f, #003366);
+  color: #fff !important;
+}
+
+/* Card staff */
+.guest-card {
+  background: linear-gradient(180deg, #7a001f, #003366);
+  color: #fff;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.guest-card:hover {
+  transform: translateY(-5px);
+}
+
+.guest-card-img {
+  border-radius: 8px;
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.guest-card-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.guest-card-role {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}

@@ -15,4 +15,29 @@ class Controller extends BaseController
     {
         return view('guest.home');    
     }
+
+    public function file()
+    {
+        return view('guest.file');    
+    }
+
+    public function pendidikans1()
+    {
+        return view('guest.pendidikans1');    
+    }
+
+    public function pendidikans2()
+    {
+        return view('guest.pendidikans2');    
+    }
+
+    public function pendidikans3()
+    {
+        return view('guest.pendidikans3');    
+    }
+
+    public function sejarah()
+    {
+        return view('guest.sejarah');    
+    }
 }
