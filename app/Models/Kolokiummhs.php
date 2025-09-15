@@ -24,6 +24,7 @@ class Kolokiummhs extends Model
         'waktu_mulai',
         'waktu_selesai',
         'judul_kolokium',
+        'link_meeting',         
     ];
 
     public function mahasiswa()
