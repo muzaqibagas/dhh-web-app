@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AcaraAkademikController;
 use App\Http\Controllers\ArtikelController;
@@ -31,7 +33,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\AdmProfileController;
-
 
 // ROUTE MAHASISWA
 use App\Http\Controllers\HomeController;
@@ -64,33 +65,16 @@ Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pen
 Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
 Route::get('sejarah', [Controller::class, 'sejarah'])->name('guest.sejarah');
 
-// Route::resource('acara-akademik', AcaraAkademikController::class);
-// Route::resource('artikel', ArtikelController::class);
-// Route::resource('divisi', DivisiController::class);
-// Route::resource('galeri', GaleriController::class);
-// Route::resource('jenjang', JenjangController::class);
-// Route::resource('kolokium', KolokiumController::class);
-// Route::resource('konten-dept', KontenDeptController::class);
-// Route::resource('review-alumni', ReviewAlumniController::class);
-// Route::resource('ruangan', RuanganController::class);
-// Route::resource('seminar', SeminarController::class);
-// Route::resource('sidang', SidangController::class);
-// Route::resource('staff-dept', StaffDeptController::class);
-// Route::resource('template', TemplateController::class);
-// Route::resource('undangan', UndanganController::class);
-// Route::resource('user', UserController::class);
-
 Route::get('email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('email/verify/{id}/{hash}', function (Request $request) {
-    $request->fulfill(); // sudah benar, fulfill() memverifikasi email
-
+Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); 
     if (Auth::user()->role == 'admin') {
         return redirect()->route('admprofile.index');
     } else {
-        return redirect()->route('dashboardmhs.index');
+        return redirect()->route('profilemhs.edit');
     }
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
@@ -101,26 +85,24 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard-mahasiswa', function () {
-        return view('dashboardmhs.index'); // sesuaikan view-nya
-    })->name('dashboardmhs');
+        return view('profilemhs.edit'); // sesuaikan view-nya
+    })->name('profilemhs');
 
     Route::get('/dashboard-admin', function () {
         return view('admprofile.index'); // sesuaikan view-nya
     })->name('admprofile');
 });
 
-Route::get('login', [LoginmhsController::class, 'index'])->name('login.index');
+Route::get('login', [LoginmhsController::class, 'index'])->name('login');
 Route::post('login', [LoginmhsController::class, 'signin'])->name('login.signin');
 Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout');
 
 Route::get('register', [RegisterController::class, 'index'])->name('register.index');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
-Route::get('email/verify/{token}', [RegisterController::class, 'verify'])->name('verify.email');
 
 //admprofile.index
 // ROUTE MAHASISWA
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
-
 
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
@@ -267,13 +249,16 @@ Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edi
 Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
 Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
 
+//syarat kolokium admin
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
-Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create');
-Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store');
 Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui');
 Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak');
 Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show');
 Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator');
+//syarat kolokium mahasiswa form
+Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create');
+Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store');
+
 
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');

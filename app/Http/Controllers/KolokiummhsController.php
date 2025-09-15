@@ -66,8 +66,7 @@ class KolokiummhsController extends Controller
                 ->with('error', 'Anda sudah mendaftar kolokium, silakan edit data yang ada.');
         }
         
-        $data = $request->validate([
-            'id_ruangan' => 'required|exists:ruangans,id',
+        $data = $request->validate([        
             'id_mahasiswa' => 'required|exists:users,id',
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',              
@@ -79,37 +78,54 @@ class KolokiummhsController extends Controller
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
             'judul_kolokium' => 'required|string|max:255',
+            'id_ruangan'     => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
+            'link_meeting'   => 'required_if:tipe_pelaksanaan,online|nullable|url',  
         ]);
 
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']); 
-        $data['alamat'] = Str::title($data['alamat']); 
-        $data['judul_kolokium'] = Str::title($data['judul_kolokium']);
+        $data['alamat'] = Str::title($data['alamat']);         
+        $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai', 'dalam', 'oleh', 'seperti', 'karena', 
+                       'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun', 
+                       'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
+        $words = explode(' ', Str::lower($data['judul_kolokium']));
 
-        // Hitung hari kerja
-        $tanggalKolokium = Carbon::parse($request->tanggal);
-        $hariIni = Carbon::today();
-
-        $selisihHariKerja = 0;
-        $tanggalCek = $hariIni->copy();
-        while ($tanggalCek->lt($tanggalKolokium)) {
-            if (!$tanggalCek->isWeekend()) {
-                $selisihHariKerja++;
+        foreach ($words as $i => $word) {
+            if ($i === 0 || !in_array($word, $lowerWords)) {
+                $words[$i] = Str::ucfirst($word);
             }
-            $tanggalCek->addDay();
-        }        
+        }
+        $data['judul_kolokium'] = implode(' ', $words);
 
-        if ($selisihHariKerja < 4) {
-            return back()
-                ->withInput()
-                ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
+        if (!$request->id_ruangan && !$request->link_meeting) {
+            return back()->withInput()->with('error', 'Pilih ruangan atau isi link meeting.');
         }
 
-        if ($tanggalKolokium->isWeekend()) {
-            return back()
-                ->withInput()
-                ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
-        }        
+
+        // Hitung hari kerja
+        // $tanggalKolokium = Carbon::parse($request->tanggal);
+        // $hariIni = Carbon::today();
+
+        // $selisihHariKerja = 0;
+        // $tanggalCek = $hariIni->copy();
+        // while ($tanggalCek->lt($tanggalKolokium)) {
+        //     if (!$tanggalCek->isWeekend()) {
+        //         $selisihHariKerja++;
+        //     }
+        //     $tanggalCek->addDay();
+        // }        
+
+        // if ($selisihHariKerja < 4) {
+        //     return back()
+        //         ->withInput()
+        //         ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
+        // }
+
+        // if ($tanggalKolokium->isWeekend()) {
+        //     return back()
+        //         ->withInput()
+        //         ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
+        // }        
 
         // Simpan ke DB dulu
         $insert = Kolokiummhs::create($data);
@@ -160,44 +176,44 @@ class KolokiummhsController extends Controller
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nama, 0, 'L');
 
         // NIM
-        $pdf->SetXY(32, 67);
+        $pdf->SetXY(32, 68);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nim, 0, 'L');
 
         // Semester
-        $pdf->SetXY(32, 74);
+        $pdf->SetXY(32, 75);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
 
         // Alamat di Bogor
-        $pdf->SetXY(32, 81);
+        $pdf->SetXY(32, 82);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->alamat, 0, 'L');
 
         // Hari/Tanggal
-        $pdf->SetXY(32, 103.5);
+        $pdf->SetXY(32, 104);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
 
         // Waktu
-        $pdf->SetXY(32, 110.5);
+        $pdf->SetXY(32, 111.5);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
 
         // Tempat
-        $pdf->SetXY(32, 118);
+        $pdf->SetXY(32, 119);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->ruangan->nama ?? '-', 0, 'L');
 
         // Judul Kolokium
-        $pdf->SetXY(32, 125);
+        $pdf->SetXY(32, 126);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');                
 
         //Mahasiswa yang mendaftarkan kolokium               
-        $yMhs = 184;
+        $yMhs = 188;
         
-        $xStart = 210;  // posisi X kurung buka
+        $xStart = 210; // posisi X kurung buka
         $xEnd   = 110; // posisi X kurung tutup
         $width  = $xEnd - $xStart; // lebar area kurung
 
@@ -284,8 +300,17 @@ class KolokiummhsController extends Controller
         // Format data seperti di store()
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']); 
-        $data['alamat'] = Str::title($data['alamat']); 
-        $data['judul_kolokium'] = Str::title($data['judul_kolokium']);
+        $data['alamat'] = Str::title($data['alamat']);         
+        $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai'];
+        $words = explode(' ', Str::lower($data['judul_kolokium']));
+
+        foreach ($words as $i => $word) {
+            if ($i === 0 || !in_array($word, $lowerWords)) {
+                $words[$i] = Str::ucfirst($word);
+            }
+        }
+        $data['judul_kolokium'] = implode(' ', $words);
+
         $data['waktu_mulai'] = \Carbon\Carbon::parse($data['waktu_mulai'])->format('H:i');
         $data['waktu_selesai'] = \Carbon\Carbon::parse($data['waktu_selesai'])->format('H:i');
 

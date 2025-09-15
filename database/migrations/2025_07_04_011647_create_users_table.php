@@ -24,8 +24,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('verification_token')->nullable();
+            $table->string('password');            
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->default('Laki-laki');
             $table->enum('role', ['Admin', 'Mahasiswa'])->default('Mahasiswa');
             $table->string('foto')->nullable();

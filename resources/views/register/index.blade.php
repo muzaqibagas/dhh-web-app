@@ -47,19 +47,29 @@
         <label>Password</label>
       </div>
 
-      <div class="inputbox">
-        <ion-icon name="male-female-outline"></ion-icon>
-        <select name="jenis_kelamin" required style="width: 100%; padding: 10px; border: none; background: transparent; color: white;">
-          <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
-          <option value="Laki-laki" style="color: black;">Laki-laki</option>
-          <option value="Perempuan" style="color: black;">Perempuan</option>
-        </select>
+      <div class="form-group" style="color:white !important; margin-bottom: 15px !important;">
+          <label>Jenis Kelamin:</label><br>
+
+          <div style="display: flex !important; gap: 30px !important; margin-top: 10px">
+              <div>
+                  <input type="radio" name="jenis_kelamin" id="laki-laki" value="Laki-laki" checked required>
+                  <label for="laki-laki">Laki-laki</label>
+              </div>
+              <div>
+                  <input type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" required>
+                  <label for="perempuan">Perempuan</label>
+              </div>                    
+          </div>
+
+          @error('jenis_kelamin')
+              <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
       </div>
 
       <button>Register</button>
 
       <div class="register">
-        <p>Sudah punya akun? <a href="{{ route('login.index') }}">Login</a></p>
+        <p>Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
       </div>
     </form>
   </section>

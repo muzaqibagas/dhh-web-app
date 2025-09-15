@@ -126,9 +126,9 @@ body {
   text-decoration: none;
   color: #333;
   border-radius: 20px;
-  margin-bottom: 12px;       /* ✅ tambah jarak antar button */
-  border: 2px solid #292E94; /* ✅ stroke untuk default */
-  background: #fff;          /* ✅ tetap putih default */
+  margin-bottom: 12px;
+  border: 2px solid #292E94; 
+  background: #fff;          
   font-weight: 500;
   transition: 0.3s;
 }
@@ -137,7 +137,7 @@ body {
 .sidebar .menu.active {
   background: linear-gradient(to right, #721B29, #292E94);
   color: #fff;
-  border: none; /* ✅ hilangkan stroke kalau aktif */
+  border: none; 
 }
 
 .sidebar .menu:hover {
@@ -301,7 +301,12 @@ body {
 
 .welcome-card h2 {
   margin-bottom: 10px;
-  color: #013880; /* warna senada */
+  color: #013880; 
+}
+
+.welcome-card h4 {
+  margin-bottom: 10px;
+  color: #013880; 
 }
 
 .welcome-card .welcome-text {
