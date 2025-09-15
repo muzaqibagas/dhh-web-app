@@ -100,6 +100,10 @@ Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout
 Route::get('register', [RegisterController::class, 'index'])->name('register.index');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
+Route::get('editpassadm', [EditPasswordAdmController::class, 'index'])->name('editpassadm.index');
+Route::get('editpassmhs', [EditPasswordMhsController::class, 'index'])->name('editpassmhs.index');
+
+
 //admprofile.index
 // ROUTE MAHASISWA
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
