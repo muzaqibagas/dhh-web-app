@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kolokiummhs', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('id_ruangan')->nullable()->constrained('ruangans')->onDelete('cascade');
+            $table->id('id');            
             $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_semester')->constrained('semesters')->onDelete('cascade');
             $table->foreignId('id_pembimbing1')->constrained('staff_depts')->onDelete('cascade');
@@ -25,7 +24,9 @@ return new class extends Migration
             $table->time('waktu_mulai');
             $table->time('waktu_selesai');
             $table->string('judul_kolokium');
-            $table->string('link_meeting')->nullable();                            
+            $table->string('tipe_pelaksanaan')->default('offline');
+            $table->foreignId('id_ruangan')->nullable()->constrained('ruangans')->onDelete('cascade');
+            $table->string('link_meeting')->nullable();                          
             $table->timestamps();
         });
     }

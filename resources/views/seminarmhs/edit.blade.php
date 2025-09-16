@@ -101,7 +101,7 @@
             </div>
         @endif
 
-        <form action="{{ route('seminarmhs.update', $seminarmhs->id) }}" method="POST">
+        <form action="{{ route('seminarmhs.update', $seminarmhs->id) }}" method="POST">        
             @csrf
             @method('PUT')   
 
@@ -170,43 +170,60 @@
             <label>Hari/Tanggal Seminar</label>        
             <input type="date" name="tanggal" 
                     value="{{ old('tanggal', $seminarmhs->tanggal) }}" required>                 
-            </div>
+            </div>            
 
             <div class="form-group">
-                <label>Waktu Seminar</label>
-                <div class="d-flex align-items-center gap-3">
-                    <select id="waktu_mulai" class="w-25" name="waktu_mulai" required>
-                    <option value="">--:--</option>
-                    @foreach (['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00'] as $time)
-                        <option {{ old('waktu_mulai', \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i')) == $time ? 'selected' : '' }}>
-                            {{ $time }}
-                        </option>
-                    @endforeach
-                    </select>
-                    <p class="m-0">S/D</p>
-                    <select id="waktu_selesai" class="w-25" name="waktu_selesai" required>
-                    <option value="">--:--</option>
-                    @foreach (['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00'] as $time)
-                        <option {{ old('waktu_selesai', \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i')) == $time ? 'selected' : '' }}>
-                            {{ $time }}
-                        </option>
-                    @endforeach
-                    </select>
+                <label>Waktu Seminar </label>
+                <div>
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai', $seminarmhs->waktu_mulai) }}" required>
+                        <p class="m-0">S/D</p>
+                        <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai', $seminarmhs->waktu_selesai) }}" required>
+                    </div>
+                    <small id="waktu-error" style="color:red;display:none;">Waktu Seminar Hasil tidak boleh pada jam istirahat (12:00 - 13:00).</small>
+                    @error('waktu_mulai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    @error('waktu_selesai')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
             <div class="form-group">
-            <label>Tempat Seminar</label>
-            <select name="id_ruangan" required>
-                <option disabled value="">Pilih Ruangan</option>
-                @foreach ($ruangans as $ruangan)
-                <option value="{{ $ruangan->id }}" 
-                    {{ old('id_ruangan', $seminarmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
-                    {{ $ruangan->nama }}
-                </option>
-                @endforeach
-            </select>
-            </div>      
+                <label for="tipe">Tipe Pelaksanaan</label>
+                <select id="tipe" name="tipe_pelaksanaan" required>
+                    <option value="offline" {{ old('tipe_pelaksanaan', $seminarmhs->tipe_pelaksanaan) == 'offline' ? 'selected' : '' }}>Offline</option>
+                    <option value="online"  {{ old('tipe_pelaksanaan', $seminarmhs->tipe_pelaksanaan) == 'online' ? 'selected' : '' }}>Online (Zoom/Meet)</option>
+                </select>
+                @error('tipe_pelaksanaan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>  
+
+            <div class="form-group" id="ruangan-field">
+                <label for="id_ruangan">Ruangan</label>
+                <select name="id_ruangan" id="id_ruangan" {{ old('tipe_pelaksanaan', $seminarmhs->tipe_pelaksanaan) == 'offline' ? 'required' : '' }}>
+                    <option value="">Pilih Ruangan</option>
+                    @foreach($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}" 
+                            {{ old('id_ruangan', $seminarmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
+                            {{ $ruangan->nama }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('id_ruangan')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group d-none" id="link-field">
+                <label for="link_meeting">Link Meeting</label>          
+                <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting', $seminarmhs->link_meeting) }}" {{ old('tipe_pelaksanaan', $seminarmhs->tipe_pelaksanaan) == 'online' ? 'required' : '' }}>
+                @error('link_meeting')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>     
 
             <div class="form-group">
             <label>Dosen Moderator</label>
@@ -227,53 +244,202 @@
 
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <script>
-    $(document).ready(function () {
-        // Ambil nilai awal dari server
-        let pembimbing1Val = "{{ old('id_pembimbing1', $seminarmhs->id_pembimbing1) }}";
-        let pembimbing2Val = "{{ old('id_pembimbing2', $seminarmhs->id_pembimbing2) }}";
-
-        // Init Select2
-        $('#pembimbing1, #pembimbing2').select2({
-            width: '100%',
-            placeholder: "Pilih Dosen Pembimbing 2" // biar muncul placeholder kalau null
-        });
-
-        // Simpan opsi awal
-        let originalPembimbing2 = $('#pembimbing2 option').clone();
-
-        function filterPembimbing2(selected1) {
-            $('#pembimbing2').empty();
-            originalPembimbing2.each(function () {
-                if ($(this).val() !== selected1) {
-                    $('#pembimbing2').append($(this).clone());
+        // Pastikan waktu_mulai dan waktu_selesai hanya H:i (tanpa detik) sebelum submit
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function() {
+                const waktuMulai = document.getElementById('waktu_mulai');
+                const waktuSelesai = document.getElementById('waktu_selesai');
+                if (waktuMulai && waktuMulai.value) {
+                    waktuMulai.value = waktuMulai.value.substring(0,5);
+                }
+                if (waktuSelesai && waktuSelesai.value) {
+                    waktuSelesai.value = waktuSelesai.value.substring(0,5);
                 }
             });
-        }
-
-        // Set nilai awal Pembimbing 1
-        if (pembimbing1Val) {
-            $('#pembimbing1').val(pembimbing1Val).trigger('change.select2');
-            filterPembimbing2(pembimbing1Val);
-        }
-
-        // Set nilai awal Pembimbing 2 (hanya kalau ada isinya)
-        if (pembimbing2Val) {
-            $('#pembimbing2').val(pembimbing2Val).trigger('change.select2');
-        } else {
-            $('#pembimbing2').val('').trigger('change.select2'); // kosongkan kalau null
-        }
-
-        // Event ketika Pembimbing 1 berubah
-        $('#pembimbing1').on('change', function () {
-            let selected1 = $(this).val();
-            filterPembimbing2(selected1);
-            $('#pembimbing2').val('').trigger('change.select2'); // reset jadi kosong
         });
-    });
     </script>
 
+    <!-- waktu pendaftaran minimal 4 hari kerja dan sabtu minggu tidak boleh -->
     <script>
+        document.getElementById('tanggal').addEventListener('change', function() {
+            const val = this.value;
+            if (!val) return;
+            const date = new Date(val);
+            const day = date.getDay();
+            // Cek Sabtu/Minggu
+            if (day === 0 || day === 6) {
+                this.value = '';
+                document.getElementById('tanggal-error').textContent = 'Tanggal Sabtu/Minggu tidak bisa dipilih.';
+                document.getElementById('tanggal-error').style.display = 'inline';
+                return;
+            }
+            // Hitung minimal 4 hari kerja dari hari ini
+            let today = new Date();
+            today.setHours(0,0,0,0);
+            let workDays = 0;
+            let tempDate = new Date(today);
+            while (workDays < 4) {
+                tempDate.setDate(tempDate.getDate() + 1);
+                let tempDay = tempDate.getDay();
+                if (tempDay !== 0 && tempDay !== 6) {
+                    workDays++;
+                }
+            }
+            // tempDate sekarang adalah minimal tanggal yang boleh dipilih
+            if (date < tempDate) {
+                this.value = '';
+                document.getElementById('tanggal-error').textContent = 'Tanggal harus minimal 4 hari kerja dari hari ini.';
+                document.getElementById('tanggal-error').style.display = 'inline';
+                return;
+            }
+            document.getElementById('tanggal-error').style.display = 'none';
+        });
+    </script>
+
+    <!-- waktu seminar -->
+    <script>
+        const waktuMulaiInput = document.getElementById('waktu_mulai');
+        const waktuSelesaiInput = document.getElementById('waktu_selesai');
+        const waktuError = document.getElementById('waktu-error');
+
+        function validasiJam(input) {
+        let val = input.value;
+        if (!val) return false;
+
+        if (val < "08:00" || val > "16:00") {
+            input.value = "";
+            waktuError.style.display = "inline";
+            waktuError.textContent = "Jam harus antara 08:00 - 16:00.";
+            return false;
+        }
+        return true;
+        }
+
+        waktuMulaiInput.addEventListener("change", function() {
+        if (!validasiJam(this)) return;
+        
+        if (this.value >= "12:00" && this.value < "13:00") {
+            this.value = "";
+            waktuError.style.display = "inline";
+            waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
+            waktuSelesaiInput.value = "";
+            return;
+        }
+        
+        let [jam, menit] = this.value.split(":").map(Number);
+        jam++;
+        if (jam === 12) jam = 13; // skip istirahat
+        if (jam > 17) jam = 17;   // batas maksimal
+
+        let jamStr = jam.toString().padStart(2, "0");
+        let menitStr = menit.toString().padStart(2, "0");
+        waktuSelesaiInput.value = `${jamStr}:${menitStr}`;
+        waktuError.style.display = "none";
+        });
+
+        waktuSelesaiInput.addEventListener("change", function() {
+        if (!validasiJam(this)) return;
+
+        let mulai = waktuMulaiInput.value;
+
+        if (this.value > "12:00" && this.value <= "13:00") {
+            this.value = "";
+            waktuError.style.display = "inline";
+            waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
+            return;
+        }
+        if (mulai && this.value <= mulai) {
+            this.value = "";
+            waktuError.style.display = "inline";
+            waktuError.textContent = "Waktu selesai harus lebih besar dari waktu mulai.";
+            return;
+        }
+
+        waktuError.style.display = "none";
+        });
+    </script>
+
+    <!-- dosen Pembimbing -->
+    <script>
+        $(document).ready(function () {
+            // Ambil nilai awal dari server
+            let pembimbing1Val = "{{ old('id_pembimbing1', $seminarmhs->id_pembimbing1) }}";
+            let pembimbing2Val = "{{ old('id_pembimbing2', $seminarmhs->id_pembimbing2) }}";
+
+            // Init Select2
+            $('#pembimbing1, #pembimbing2').select2({
+                width: '100%',
+                placeholder: "Pilih Dosen Pembimbing 2" // biar muncul placeholder kalau null
+            });
+
+            // Simpan opsi awal
+            let originalPembimbing2 = $('#pembimbing2 option').clone();
+
+            function filterPembimbing2(selected1) {
+                $('#pembimbing2').empty();
+                originalPembimbing2.each(function () {
+                    if ($(this).val() !== selected1) {
+                        $('#pembimbing2').append($(this).clone());
+                    }
+                });
+            }
+
+            // Set nilai awal Pembimbing 1
+            if (pembimbing1Val) {
+                $('#pembimbing1').val(pembimbing1Val).trigger('change.select2');
+                filterPembimbing2(pembimbing1Val);
+            }
+
+            // Set nilai awal Pembimbing 2 (hanya kalau ada isinya)
+            if (pembimbing2Val) {
+                $('#pembimbing2').val(pembimbing2Val).trigger('change.select2');
+            } else {
+                $('#pembimbing2').val('').trigger('change.select2'); // kosongkan kalau null
+            }
+
+            // Event ketika Pembimbing 1 berubah
+            $('#pembimbing1').on('change', function () {
+                let selected1 = $(this).val();
+                filterPembimbing2(selected1);
+                $('#pembimbing2').val('').trigger('change.select2'); // reset jadi kosong
+            });
+        });
+    </script>
+
+    <!-- ruangan -->
+    <script>
+        const tipe = document.getElementById('tipe');
+        const ruanganField = document.getElementById('ruangan-field');
+        const linkField = document.getElementById('link-field');
+        const idRuangan = document.getElementById('id_ruangan');
+        const linkMeeting = document.getElementById('link_meeting');
+
+        function toggleTipe() {
+            if (tipe.value === 'online') {
+                ruanganField.classList.add('d-none');
+                linkField.classList.remove('d-none');
+                idRuangan.removeAttribute('required');
+                idRuangan.value = ''; // <-- ini penting!
+                linkMeeting.setAttribute('required', 'required');
+            } else {
+                ruanganField.classList.remove('d-none');
+                linkField.classList.add('d-none');
+                idRuangan.setAttribute('required', 'required');
+                linkMeeting.removeAttribute('required');
+            }
+        }
+
+        // jalankan saat pertama kali load
+        toggleTipe();
+
+        // jalankan saat ada perubahan select
+        tipe.addEventListener('change', toggleTipe);
+    </script>
+
+    <!-- <script>
     document.getElementById('waktu_mulai').addEventListener('change', function() {
         let mulai = this.value;
         let selesaiSelect = document.getElementById('waktu_selesai');
@@ -293,7 +459,7 @@
         // Reset pilihan selesai
         selesaiSelect.value = '';
     });
-    </script>
+    </script> -->
 
 @endpush
 

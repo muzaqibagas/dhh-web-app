@@ -171,7 +171,7 @@
             </div>
             <small id="waktu-error" style="color:red;display:none;">Waktu Kolokium tidak boleh pada jam istirahat (12:00 - 13:00).</small>
           </div>
-        </div>            
+        </div>     
 
         <div class="form-group">
           <label for="tipe">Tipe Pelaksanaan</label>
@@ -183,7 +183,7 @@
 
         <div class="form-group" id="ruangan-field">
           <label for="id_ruangan">Ruangan</label>
-          <select name="id_ruangan" id="id_ruangan" required>
+          <select name="id_ruangan" id="id_ruangan">
             <option selected disable>Pilih Ruangan</option>
             @foreach($ruangans as $ruangan)
               <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
@@ -193,7 +193,7 @@
 
         <div class="form-group d-none" id="link-field">
           <label for="link_meeting">Link Meeting</label>          
-          <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." required>
+          <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/...">
         </div>
 
         <div class="form-group">
@@ -314,10 +314,10 @@
 
       waktuError.style.display = "none";
     });
-    </script>
+  </script>
 
-    <!-- dosen Pembimbing -->
-    <script>
+  <!-- dosen Pembimbing -->
+  <script>
     $(document).ready(function () {
         // Inisialisasi Select2
         $('#pembimbing1').select2({
@@ -373,9 +373,9 @@
         linkField.classList.add('d-none');
         document.getElementById('id_ruangan').setAttribute('required', 'required');
         document.getElementById('link_meeting').removeAttribute('required');
+        document.getElementById('link_meeting').value = '';
       }
     }
-
 
     // jalankan saat pertama kali halaman load
     toggleTipe();

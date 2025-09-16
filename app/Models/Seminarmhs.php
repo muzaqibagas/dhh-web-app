@@ -24,6 +24,8 @@ class Seminarmhs extends Model
         'waktu_mulai',
         'waktu_selesai',
         'judul_seminar',
+        'link_meeting',
+        'tipe_pelaksanaan',
     ];
 
     public function mahasiswa()

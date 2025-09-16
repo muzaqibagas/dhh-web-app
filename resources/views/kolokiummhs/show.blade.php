@@ -151,9 +151,20 @@
             </div>
 
             <div class="form-group">
+                <label>Tipe Pelaksanaan</label>
+                <input type="text" value="{{ ucfirst($kolokiummhs->tipe_pelaksanaan) }}" readonly>
+            </div>
+             
+            <div class="form-group">
                 <label>Tempat Kolokium</label>
-                <input type="text" value="{{ $kolokiummhs->ruangan->nama ?? '-' }}" readonly>
-            </div>      
+                @if ($kolokiummhs->tipe_pelaksanaan === 'offline')
+                    <input type="text" value="{{ $kolokiummhs->ruangan->nama ?? '-' }}" readonly>
+                @elseif ($kolokiummhs->tipe_pelaksanaan === 'online')
+                    <input type="text" value="{{ $kolokiummhs->link_meeting ?? '-' }}" readonly>
+                @else
+                    <input type="text" value="-" readonly>
+                @endif
+            </div>            
 
             <div class="form-group">
                 <label>Dosen Moderator</label>

@@ -138,9 +138,20 @@
         </div>
 
         <div class="form-group">
-          <label>Tempat Seminar</label>
-          <input type="text" value="{{ $seminarmhs->ruangan->nama ?? '-' }}" readonly>
+          <label>Tipe Pelaksanaan</label>
+          <input type="text" value="{{ ucfirst($seminarmhs->tipe_pelaksanaan) }}" readonly>
         </div>
+
+        <div class="form-group">
+          <label>Tempat Seminar</label>
+          @if ($seminarmhs->tipe_pelaksanaan === 'offline')
+            <input type="text" value="{{ $seminarmhs->ruangan->nama ?? '-' }}" readonly>
+          @elseif ($seminarmhs->tipe_pelaksanaan === 'online')
+            <input type="text" value="{{ $seminarmhs->link_meeting ?? '-' }}" readonly>
+          @else
+            <input type="text" value="-" readonly>
+          @endif
+        </div>  
 
         <div class="form-group">
           <label>Dosen Moderator</label>

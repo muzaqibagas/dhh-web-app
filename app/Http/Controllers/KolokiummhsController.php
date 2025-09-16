@@ -78,9 +78,16 @@ class KolokiummhsController extends Controller
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
             'judul_kolokium' => 'required|string|max:255',
-            'id_ruangan'     => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
-            'link_meeting'   => 'required_if:tipe_pelaksanaan,online|nullable|url',  
+            'id_ruangan' => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
+            'link_meeting' => 'required_if:tipe_pelaksanaan,online|nullable|url',
+            'tipe_pelaksanaan' => 'required|in:offline,online',
         ]);
+        // Set field sesuai tipe pelaksanaan
+        if ($data['tipe_pelaksanaan'] === 'online') {
+            $data['id_ruangan'] = null;
+        } else {
+            $data['link_meeting'] = null;
+        }
 
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']); 
@@ -99,33 +106,7 @@ class KolokiummhsController extends Controller
 
         if (!$request->id_ruangan && !$request->link_meeting) {
             return back()->withInput()->with('error', 'Pilih ruangan atau isi link meeting.');
-        }
-
-
-        // Hitung hari kerja
-        // $tanggalKolokium = Carbon::parse($request->tanggal);
-        // $hariIni = Carbon::today();
-
-        // $selisihHariKerja = 0;
-        // $tanggalCek = $hariIni->copy();
-        // while ($tanggalCek->lt($tanggalKolokium)) {
-        //     if (!$tanggalCek->isWeekend()) {
-        //         $selisihHariKerja++;
-        //     }
-        //     $tanggalCek->addDay();
-        // }        
-
-        // if ($selisihHariKerja < 4) {
-        //     return back()
-        //         ->withInput()
-        //         ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
-        // }
-
-        // if ($tanggalKolokium->isWeekend()) {
-        //     return back()
-        //         ->withInput()
-        //         ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
-        // }        
+        }        
 
         // Simpan ke DB dulu
         $insert = Kolokiummhs::create($data);
@@ -185,25 +166,33 @@ class KolokiummhsController extends Controller
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
 
-        // Alamat di Bogor
+        // Alamat
         $pdf->SetXY(32, 82);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->alamat, 0, 'L');
 
         // Hari/Tanggal
+        Carbon::setLocale('id');
+        $hariTanggal = Carbon::parse($kolokiummhs->tanggal)->translatedFormat('l, d F Y');
         $pdf->SetXY(32, 104);
-        $pdf->Cell($labelWidth, $lineHeight);
-        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->tanggal, 0, 'L');
+        $pdf->Cell($labelWidth, $lineHeight);        
+        $pdf->MultiCell($valueWidth, $lineHeight, $hariTanggal, 0, 'L');
 
         // Waktu
         $pdf->SetXY(32, 111.5);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
 
-        // Tempat
+        // Tempat offline
         $pdf->SetXY(32, 119);
         $pdf->Cell($labelWidth, $lineHeight);
-        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->ruangan->nama ?? '-', 0, 'L');
+        $tempat = '-';
+        if (!empty($kolokiummhs->ruangan?->nama)) {
+            $tempat = $kolokiummhs->ruangan->nama;
+        } elseif (!empty($kolokiummhs->link_meeting)) {
+            $tempat = $kolokiummhs->link_meeting;
+        }
+        $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');        
 
         // Judul Kolokium
         $pdf->SetXY(32, 126);
@@ -235,14 +224,7 @@ class KolokiummhsController extends Controller
         $width  = $xEnd - $xStart; // lebar area kurung
 
         $pdf->SetXY($xStart, $yPemb1);
-        $pdf->Cell(
-            $width, 
-            $lineHeight, 
-            "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")",             
-            0, 
-            0, 
-            'C' // <-- ini bikin teks center
-        );
+        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")",             0, 0, 'C');
 
         // Untuk pembimbing anggota (misalnya di X kanan, Y sama)
         $yPemb2 = 223;
@@ -251,14 +233,7 @@ class KolokiummhsController extends Controller
         $width2  = $xEnd2 - $xStart2;
 
         $pdf->SetXY($xStart2, $yPemb2);
-        $pdf->Cell(
-            $width2, 
-            $lineHeight, 
-             "(" . ($kolokiummhs->pembimbing2->nama ?? '-') . ")", 
-            0, 
-            0, 
-            'C'
-        );
+        $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -281,9 +256,8 @@ class KolokiummhsController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Kolokiummhs $kolokiummhs)
-    {
-        $data = $request->validate([
-            'id_ruangan' => 'required|exists:ruangans,id',
+    {        
+        $data = $request->validate([            
             'id_mahasiswa' => 'required|exists:users,id', 
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
@@ -295,13 +269,18 @@ class KolokiummhsController extends Controller
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai', 
             'judul_kolokium' => 'required|string|max:255',
+            'id_ruangan' => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
+            'link_meeting' => 'required_if:tipe_pelaksanaan,online|nullable|url',
+            'tipe_pelaksanaan' => 'required|in:offline,online',
         ]);
 
         // Format data seperti di store()
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']); 
-        $data['alamat'] = Str::title($data['alamat']);         
-        $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai'];
+        $data['alamat'] = Str::title($data['alamat']);  
+        $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai', 'dalam', 'oleh', 'seperti', 'karena', 
+                       'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun', 
+                       'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
         $words = explode(' ', Str::lower($data['judul_kolokium']));
 
         foreach ($words as $i => $word) {
@@ -309,8 +288,7 @@ class KolokiummhsController extends Controller
                 $words[$i] = Str::ucfirst($word);
             }
         }
-        $data['judul_kolokium'] = implode(' ', $words);
-
+        $data['judul_kolokium'] = implode(' ', $words);               
         $data['waktu_mulai'] = \Carbon\Carbon::parse($data['waktu_mulai'])->format('H:i');
         $data['waktu_selesai'] = \Carbon\Carbon::parse($data['waktu_selesai'])->format('H:i');
 
@@ -318,28 +296,13 @@ class KolokiummhsController extends Controller
         $tanggalKolokium = Carbon::parse($request->tanggal);
         $hariIni = Carbon::today();
 
-        $selisihHariKerja = 0;
-        $tanggalCek = $hariIni->copy();
-        while ($tanggalCek->lt($tanggalKolokium)) {
-            if (!$tanggalCek->isWeekend()) {
-                $selisihHariKerja++;
-            }
-            $tanggalCek->addDay();
-        }        
-
-        if ($selisihHariKerja < 4) {
-            return back()
-                ->withInput()
-                ->with('error', 'Tanggal kolokium minimal harus lebih dari 4 hari kerja dari hari ini. Harap pilih tanggal lain.');
+        // Set field sesuai tipe pelaksanaan
+        if ($data['tipe_pelaksanaan'] === 'online') {
+            $data['id_ruangan'] = null;
+        } else {
+            $data['link_meeting'] = null;
         }
-
-        if ($tanggalKolokium->isWeekend()) {
-            return back()
-                ->withInput()
-                ->with('error', 'Tanggal kolokium tidak boleh jatuh pada hari Sabtu atau Minggu. Harap pilih hari kerja.');
-        }   
-
-        // Update data
+        
         $update = $kolokiummhs->update($data);
 
         if ($update) {

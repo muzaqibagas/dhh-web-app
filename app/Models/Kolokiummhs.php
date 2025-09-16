@@ -24,7 +24,8 @@ class Kolokiummhs extends Model
         'waktu_mulai',
         'waktu_selesai',
         'judul_kolokium',
-        'link_meeting',         
+        'link_meeting',
+        'tipe_pelaksanaan',
     ];
 
     public function mahasiswa()
@@ -52,7 +53,6 @@ class Kolokiummhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
     }
 
-    
     public function acaraAkademik()
     {
         return $this->hasMany(AcaraAkademik::class, 'id_kolokium');
