@@ -10,6 +10,7 @@
 <div class="container my-5">
 
   <!-- SEJARAH -->
+   <section class="sej-section">
   <h2 class="guest-pend-section-title">Sejarah</h2>
   <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
   <p style="text-align: justify;">
@@ -18,6 +19,44 @@
     dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu,
     dan desain serta keteknikan struktur kayu.
   </p>
+<!-- KETUA DARI MASA KE MASA -->
+<section class="guest-ketua-section my-5">
+  <h2 class="guest-pend-section-title text-center">Ketua Departemen dari Masa ke Masa</h2>
+  <img src="img/batasgold.png" class="guest-pend-divider d-block mx-auto" alt="divider">
+
+  <div class="guest-ketua-timeline d-flex flex-wrap justify-content-center gap-4 mt-4">
+    <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 1">
+      <h5>Dr. Nama Ketua</h5>
+      <p>1969 – 1975</p>
+    </div>
+    <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 2">
+      <h5>Prof. Nama Ketua</h5>
+      <p>1975 – 1985</p>
+    </div>
+    <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 3">
+      <h5>Ir. Nama Ketua</h5>
+      <p>1985 – 1995</p>
+    </div>
+        <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 1">
+      <h5>Dr. Nama Ketua</h5>
+      <p>1969 – 1975</p>
+    </div>
+    <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 2">
+      <h5>Prof. Nama Ketua</h5>
+      <p>1975 – 1985</p>
+    </div>
+    <div class="guest-ketua-card text-center">
+      <img src="img/pairsan.jpg" alt="Ketua 3">
+      <h5>Ir. Nama Ketua</h5>
+      <p>1985 – 1995</p>
+    </div>
+  </div>
+</section>
 
   <!-- VISI & MISI -->
   <div class="row my-4">
@@ -65,73 +104,141 @@
     <li>Menjalankan manajemen mutu berbasis transparansi dan akuntabilitas.</li>
   </ol>
 
-  <!-- STAFF -->
-  <h2 class="guest-section-title text-center mt-5">Staff Departemen Hasil Hutan</h2>
+    <h2 style="text-align: center;">Staff Departemen Hasil Hutan</h2>
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs justify-content-center guest-staff-tabs" id="guestStaffTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="guest-org-tab" data-bs-toggle="tab" data-bs-target="#guest-org" type="button" role="tab">
-        Struktur Organisasi
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="guest-dosen-tab" data-bs-toggle="tab" data-bs-target="#guest-dosen" type="button" role="tab">
-        Tenaga Pendidik/Dosen
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="guest-kependidikan-tab" data-bs-toggle="tab" data-bs-target="#guest-kependidikan" type="button" role="tab">
-        Tenaga Kependidikan
-      </button>
-    </li>
-  </ul>
-
-  <!-- Tab Content -->
-  <div class="tab-content guest-staff-content mt-4" id="guestStaffTabContent">
-
-    <!-- Struktur Organisasi -->
-    <div class="tab-pane fade show active" id="guest-org" role="tabpanel">
-      <div class="row g-4">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-          <div class="guest-card text-center p-3">
-            <img src="img/buistie.jpg" class="img-fluid guest-card-img" alt="Staff">
-            <h5 class="guest-card-name mt-2">Dr. Isti S. Rahayu</h5>
-            <p class="guest-card-role">Ketua DHH / Ketua PS S1</p>
-          </div>
-        </div>
-        <!-- tambah card lainnya -->
-      </div>
+    <!-- Tabs -->
+    <div class="sej-tabs">
+      <button class="sej-tab-button active" data-tab="sej-struktur">Struktur Organisasi</button>
+      <button class="sej-tab-button" data-tab="sej-dosen">Tenaga Pendidik/Dosen</button>
+      <button class="sej-tab-button" data-tab="sej-kependidikan">Tenaga Kependidikan</button>
     </div>
 
-    <!-- Dosen -->
-    <div class="tab-pane fade" id="guest-dosen" role="tabpanel">
-      <div class="row g-4">
-        @for ($i = 0; $i < 4; $i++)
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-          <div class="guest-card text-center p-3">
-            <img src="img/pairsan.jpg" class="img-fluid guest-card-img" alt="Dosen">
-            <h5 class="guest-card-name mt-2">Dr. Irfan Alisaputra</h5>
-            <p class="guest-card-role">Sekretaris DHH</p>
-          </div>
+    <!-- Tab Contents -->
+    <div id="sej-struktur" class="sej-tab-content active">
+      <div class="sej-card-grid"> <!-- baris satu -->
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
         </div>
-        @endfor
-      </div>
-    </div>
 
-    <!-- Kependidikan -->
-    <div class="tab-pane fade" id="guest-kependidikan" role="tabpanel">
-      <div class="row g-4">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-          <div class="guest-card text-center p-3">
-            <img src="img/pairsan.jpg" class="img-fluid guest-card-img" alt="Kependidikan">
-            <h5 class="guest-card-name mt-2">Prof. I Wayan Darmawan</h5>
-            <p class="guest-card-role">Ketua PS S2 &amp; S3 ITHH</p>
-          </div>
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+      </div>
+
+      <div class="sej-card-grid"> <!-- baris dua -->
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/buistie.jpg" alt="Ketua">
+          <h4>Dr. Istie S. Rahayu</h4>
+          <p>Ketua DHH / Ketua PS S1</p>
         </div>
       </div>
     </div>
 
+    <div id="sej-dosen" class="sej-tab-content">
+      <div class="sej-card-grid">
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Dosen 1">
+          <h4>Dr. Mahdi Mubarok</h4>
+          <p>Komisi Kemahasiswaan</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Dosen 1">
+          <h4>Dr. Mahdi Mubarok</h4>
+          <p>Komisi Kemahasiswaan</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Dosen 1">
+          <h4>Dr. Mahdi Mubarok</h4>
+          <p>Komisi Kemahasiswaan</p>
+        </div>
+
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Dosen 1">
+          <h4>Dr. Mahdi Mubarok</h4>
+          <p>Komisi Kemahasiswaan</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="sej-kependidikan" class="sej-tab-content">
+      <div class="sej-card-grid">
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Staf">
+          <h4>Prof. Dr. I. Wayan Darmawan</h4>
+          <p>Kepala PS S2/S3</p>
+        </div>
+        
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Staf">
+          <h4>Prof. Dr. I. Wayan Darmawan</h4>
+          <p>Kepala PS S2/S3</p>
+        </div>
+        
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Staf">
+          <h4>Prof. Dr. I. Wayan Darmawan</h4>
+          <p>Kepala PS S2/S3</p>
+        </div>
+        
+        <div class="sej-staff-card">
+          <img src="img/pairsan.jpg" alt="Staf">
+          <h4>Prof. Dr. I. Wayan Darmawan</h4>
+          <p>Kepala PS S2/S3</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll('.sej-tab-button');
+    const contents = document.querySelectorAll('.sej-tab-content');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
   </div>
 </div>
 @endsection

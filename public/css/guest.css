@@ -645,6 +645,20 @@
       margin-bottom: 1rem;   /* kasih jarak ke teks setelahnya */
       max-width: 300px;
     }
+    
+    /* Foto DHH */
+    .guest-pend-img-foto {
+      max-width: 500%;   /* lebih besar */
+      height: auto;
+    }
+
+
+    /* HP kecil */
+    @media (max-width: 768px) {
+      .guest-pend-img-foto {
+        max-width: 60%;  /* biar nggak terlalu besar di HP */
+      }
+    }
 
     .guest-pend-footer {
       background: #001f54;
@@ -663,53 +677,131 @@
       max-width: 250px;
     }
 
-    /* Title dengan gradasi */
-.guest-section-title {
-  font-weight: 700;
-  background: linear-gradient(90deg, #7a001f, #ffbf00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* === Tabs === */
+.sej-tabs {
+  display: flex;
+  flex-wrap: wrap; /* biar kalau sempit, tab turun ke bawah */
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+  margin-bottom: 0; /* biar nempel ke box */
+  position: relative;
+  z-index: 2; /* biar tab di atas konten */
 }
 
-/* Tabs styling */
-.guest-staff-tabs .nav-link {
-  font-weight: 600;
-  color: #333;
+.sej-tab-button {
+  padding: 10px 25px;
   border: none;
-  margin: 0 5px;
-  border-radius: 8px 8px 0 0;
-  background-color: #f5f5f5;
-}
-
-.guest-staff-tabs .nav-link.active {
-  background: linear-gradient(90deg, #7a001f, #003366);
-  color: #fff !important;
-}
-
-/* Card staff */
-.guest-card {
-  background: linear-gradient(180deg, #7a001f, #003366);
+  border-radius: 8px 8px 0 0; /* sudut atas melengkung */
+  background: #0a2d4d; /* biru tua */
   color: #fff;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-}
-
-.guest-card:hover {
-  transform: translateY(-5px);
-}
-
-.guest-card-img {
-  border-radius: 8px;
-  max-height: 220px;
-  object-fit: cover;
-}
-
-.guest-card-name {
-  font-size: 1.1rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.guest-card-role {
+.sej-tab-button:hover {
+  opacity: 0.85;
+}
+
+.sej-tab-button.active {
+  background: #680000; /* coklat kemerahan untuk tab aktif */
+}
+
+/* === Tab Content Box === */
+.sej-tab-content {
+  display: none;
+  background: linear-gradient(to bottom, #690000, #0a2d4d); /* gradasi merah ke biru tua */
+  color: #fff;
+  padding: 30px 20px;
+  border-radius: 15px 15px 15px 15px; /* sudut bawah melengkung */
+  text-align: center;
+}
+
+.sej-tab-content.active {
+  display: block;
+}
+
+/* === Staff Cards === */
+.sej-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 30px; /* jarak antar card */
+  justify-content: center; /* biar baris terakhir selalu di tengah */
+  justify-items: center; /* isi tiap card rata tengah */
+  max-width: 1100px; /* biar nggak terlalu melebar */
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.sej-staff-card {
+  text-align: center;
+  width: 200px; /* biar proporsional, semua seragam */
+}
+
+.sej-staff-card img {
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: 150px;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* animasi halus */
+}
+
+.sej-staff-card img:hover {
+  transform: translateY(-8px); /* geser ke atas */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* kasih bayangan biar hidup */
+}
+
+.sej-staff-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.sej-staff-card p {
   font-size: 0.9rem;
   opacity: 0.9;
+}
+
+
+/* === Responsive Breakpoints === */
+@media (max-width: 992px) {
+  .sej-card-grid {
+    grid-template-columns: repeat(3, 1fr); /* tablet: 3 kolom */
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sej-card-grid {
+    grid-template-columns: repeat(2, 1fr); /* hp besar: 2 kolom */
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sej-card-grid {
+    grid-template-columns: 1fr; /* hp kecil: 1 kolom */
+    max-width: 300px;
+  }
+}
+
+/* CSS Ketua */
+.guest-ketua-card img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #FFD700;
+  margin-bottom: 10px;
+}
+.guest-ketua-card h5 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.guest-ketua-card p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
 }

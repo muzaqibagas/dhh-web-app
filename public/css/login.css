@@ -172,3 +172,16 @@ button:hover {
     height: 45px;
   }
 }
+
+/* Chrome, Safari, Edge */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important; /* ganti warna text kalau perlu */
+  transition: background-color 5000s ease-in-out 0s; /* trik biar ga ketimpa */
+}
+
+/* Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -moz-text-fill-color: #fff !important;
+}

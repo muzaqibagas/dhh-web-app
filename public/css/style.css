@@ -7,7 +7,7 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #013880; /* Background color for the entire website, including individual sections */
+  --background-color: #002b60; /* Background color for the entire website, including individual sections */
   --default-color: rgba(255, 255, 255, 0.8); /* Default color used for the majority of the text content across the entire website */
   --heading-color: #e0e9f2; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #721B29; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
@@ -48,7 +48,7 @@
 
 /* Warna dasar */
 :root {
-  --biru: #013880;
+  --biru: #002b60;
   --emas: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #FFD700);
 }
 
@@ -84,7 +84,7 @@
 
 .nav-menu a {
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
   font-weight: 500;
   transition: 0.3s;
 }
@@ -119,7 +119,7 @@
 }
 
 .dropdown-menu li a {
-  color: #fff;
+  color: #000000;
 }
 
 .dropdown-menu li a:hover {
@@ -130,6 +130,17 @@
   max-height: 40px;  /* kecil */
 }
 
+.navbar .dropdown-menu {
+  background-color: #002b60 !important;
+}
+
+.navbar .dropdown-menu a {
+  color: #fff !important;
+}
+
+.navbar .dropdown-menu a:hover {
+  color: #FFD700 !important;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -146,7 +157,6 @@
     margin-top: 10px;
   }
 }
-
 
 /*--------------------------------------------------------------
 # Global Footer
@@ -348,3 +358,4 @@ textarea, input, select {
     overflow-x: auto;
   }
 }
+

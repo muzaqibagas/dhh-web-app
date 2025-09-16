@@ -22,22 +22,22 @@
     <!-- RIGHT MENU -->
     <nav class="navbar">
       <ul class="nav-menu d-flex">
-        <li><a href="#">Beranda</a></li>
-        <li><a href="#">Departemen</a></li>
+        <li><a href="/home">Beranda</a></li>
+        <li><a href="/sejarah">Departemen</a></li>
         
         <!-- Dropdown Pendidikan -->
         <li class="dropdown">
           <a href="#">Pendidikan ▾</a>
           <ul class="dropdown-menu">
-            <li><a href="#">Sarjana</a></li>
-            <li><a href="#">Magister</a></li>
-            <li><a href="#">Doktor</a></li>
+            <li><a href="/pendidikans1">Sarjana/S1</a></li>
+            <li><a href="/pendidikans2">Magister/S2</a></li>
+            <li><a href="pendidikans3">Doktor/S3</a></li>
           </ul>
         </li>
         
-        <li><a href="#">Alumni</a></li>
-        <li><a href="#">Artikel</a></li>
-        <li><a href="#">Gallery</a></li>
+        <li><a href="/alumni">Alumni</a></li>
+        <li><a href="/artikel">Artikel</a></li>
+        <li><a href="/gallery">Gallery</a></li>
       </ul>
     </nav>
 

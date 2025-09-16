@@ -88,11 +88,7 @@
           </div>
         </div>
       </div>
-</div>
-  </div>
 
-  <!-- Footer Spacing -->
-  <div class="guest-dc-footer-space"></div>
 
 @endsection
 
