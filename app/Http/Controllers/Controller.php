@@ -40,4 +40,14 @@ class Controller extends BaseController
     {
         return view('guest.sejarah');    
     }
+
+    public function galleryguest()
+    {
+        return view('guest.gallery');    
+    }
+
+    public function artikelguest()
+    {
+        return view('guest.artikelguest');    
+    }
 }

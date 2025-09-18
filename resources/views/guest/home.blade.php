@@ -76,35 +76,35 @@
         }, 5000);
     </script>
 
-    <section class="guest-about-section">
-        <div class="guest-about-container">
+<!-- <section class="guest-about-section"> -->
+<section class="guest-galery-section">
+  <div class="guest-about-container">
+    <!-- KIRI: TEKS -->
+    <div class="guest-about-text" data-aos="fade-up">
+        <h3><span class="guest-highlight">Apa itu</span> <br>DEPARTEMEN HASIL HUTAN?</h3>
+        <p>Departemen Hasil Hutan (DHH), Fakultas Kehutanan dan Lingkungan, Institut Pertanian Bogor
+            merupakan pelopor pengembangan Ilmu Pengetahuan dan Teknologi Hasil Hutan di Indonesia.
+            DHH telah terakreditasi sebagai Program Studi Unggul (nilai A) oleh Badan Akreditasi Nasional
+            Perguruan Tinggi (BAN-PT).
+        </p>
+        <p>Pada tahun 2015, DHH juga telah terakreditasi internasional oleh Society of Wood Science
+            and Technology (SWST). Bidang keilmuan dasar yang diterapkan meliputi Biologi, Fisika,
+            Kimia, Keteknikan, Ekonomi dan Manajemen.
+        </p>
+        <p>Departemen Hasil Hutan terdiri atas
+            <a href="#">Program Studi S1</a> (Teknologi Hasil Hutan),
+            <a href="#">Program Studi S2</a> (Ilmu dan Teknologi Hasil Hutan), dan
+            <a href="#">Program Studi S3</a> (Ilmu dan Teknologi Hasil Hutan).
+        </p>
+        <button class="guest-btn-about">Lihat Selengkapnya</button>
+    </div>
 
-            <!-- KIRI: TEKS -->
-            <div class="guest-about-text" data-aos="fade-up">
-                <h3><span class="guest-highlight">Apa itu</span> <br>DEPARTEMEN HASIL HUTAN?</h3>
-                <p>Departemen Hasil Hutan (DHH), Fakultas Kehutanan dan Lingkungan, Institut Pertanian Bogor
-                    merupakan pelopor pengembangan Ilmu Pengetahuan dan Teknologi Hasil Hutan di Indonesia.
-                    DHH telah terakreditasi sebagai Program Studi Unggul (nilai A) oleh Badan Akreditasi Nasional
-                    Perguruan Tinggi (BAN-PT).
-                </p>
-                <p>Pada tahun 2015, DHH juga telah terakreditasi internasional oleh Society of Wood Science
-                    and Technology (SWST). Bidang keilmuan dasar yang diterapkan meliputi Biologi, Fisika,
-                    Kimia, Keteknikan, Ekonomi dan Manajemen.
-                </p>
-                <p>Departemen Hasil Hutan terdiri atas
-                    <a href="#">Program Studi S1</a> (Teknologi Hasil Hutan),
-                    <a href="#">Program Studi S2</a> (Ilmu dan Teknologi Hasil Hutan), dan
-                    <a href="#">Program Studi S3</a> (Ilmu dan Teknologi Hasil Hutan).
-                </p>
-                <button class="guest-btn-about">Lihat Selengkapnya</button>
-            </div>
-
-            <!-- KANAN: FOTO -->
-            <div class="guest-about-image" data-aos="fade-up">
-                <img src="img/foto-dhh.png" alt="Mahasiswa DHH">
-            </div>
-        </div>
-    </section>
+    <!-- KANAN: FOTO -->
+    <div class="guest-about-image" data-aos="fade-up">
+        <img src="img/foto-dhh.png" alt="Mahasiswa DHH">
+    </div>
+  </div>
+</section>
 
     <script>
         AOS.init({
@@ -113,297 +113,138 @@
         });
     </script>
 
-    <section class="guest-blog-section">
-        <div class="guest-blog-grid">
-
-            <!-- Featured (besar) -->
-            <div class="guest-blog-card guest-featured">
-                <div class="guest-blog-image">
-                    <img src="https://picsum.photos/800/500?random=1" alt="Blog Featured">
-                    <div class="guest-overlay">
-                        <div class="guest-meta">
-                            <span>Apr. 14th, 2025</span> | <span>Technology</span>
-                        </div>
-                        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
-                    </div>
+    <!-- <section class="guest-blog-section"> -->
+<section class="guest-galery-section">
+  <div class="guest-blog-grid">
+    <!-- Featured (besar) -->
+    <div class="guest-blog-card guest-featured">
+        <div class="guest-blog-image">
+            <img src="https://picsum.photos/800/500?random=1" alt="Blog Featured">
+            <div class="guest-overlay">
+                <div class="guest-meta">
+                    <span>Apr. 14th, 2025</span> | <span>Technology</span>
                 </div>
-            </div>
-
-            <!-- Card biasa -->
-            <div class="guest-blog-card guest-side">
-                <div class="guest-blog-image">
-                    <img src="https://picsum.photos/600/500?random=2" alt="Blog 2">
-                    <div class="guest-overlay">
-                        <div class="guest-meta">
-                            <span>Apr. 14th, 2025</span> | <span>Security</span>
-                        </div>
-                        <h3>Sed do eiusmod tempor incididunt ut labore</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="guest-blog-card">
-                <div class="guest-blog-image">
-                    <img src="https://picsum.photos/600/400?random=3" alt="Blog 3">
-                    <div class="guest-overlay">
-                        <div class="guest-meta">
-                            <span>Apr. 14th, 2025</span> | <span>Career</span>
-                        </div>
-                        <h3>Ut enim ad minim veniam, quis nostrud exercitation</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="guest-blog-card">
-                <div class="guest-blog-image">
-                    <img src="https://picsum.photos/600/400?random=4" alt="Blog 4">
-                    <div class="guest-overlay">
-                        <div class="guest-meta">
-                            <span>Apr. 14th, 2025</span> | <span>Cloud</span>
-                        </div>
-                        <h3>Adipiscing elit, sed do eiusmod tempor incididunt</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="guest-blog-card">
-                <div class="guest-blog-image">
-                    <img src="https://picsum.photos/600/400?random=5" alt="Blog 5">
-                    <div class="guest-overlay">
-                        <div class="guest-meta">
-                            <span>Apr. 14th, 2025</span> | <span>Programming</span>
-                        </div>
-                        <h3>Excepteur sint occaecat cupidatat non proident</h3>
-                    </div>
-                </div>
+                <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="guest-portfolio section mx-2 mx-md-5">
-
-        <!-- Section Title -->
-        <div class="container">
-          <h3 class="guest-pend-section-title">Gallery
-          <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
-          </h3>
-        </div><!-- End Section Title -->
-
-        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-                <ul class="guest-portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
-                    <li data-filter="*" class="guest-filter-active">
-                        <i class="bi bi-grid-2x2"></i> All Projects
-                    </li>
-                    <li data-filter=".filter-ui">
-                        <i class="bi bi-phone"></i> Prestasi
-                    </li>
-                    <li data-filter=".filter-development">
-                        <i class="bi bi-code-slash"></i> Akademik
-                    </li>
-                    <li data-filter=".filter-photography">
-                        <i class="bi bi-camera"></i> Fasilitas
-                    </li>
-                    <li data-filter=".filter-marketing">
-                        <i class="bi bi-graph-up"></i> Berita
-                    </li>
-                </ul>
-
-                <div class="row g-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-ui">
-                        <article class="guest-portfolio-entry">
-                            <figure class="guest-entry-image">
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                    class="img-fluid" alt="" loading="lazy">
-                                <div class="guest-entry-overlay">
-                                    <div class="overlay-content">
-                                        <div class="guest-entry-meta">Fasilitas</div>
-                                        <h3 class="guest-entry-title">Divisi Kimia Hasil Hutan</h3>
-                                        <div class="guest-entry-links">
-                                            <a href="https://dthh.ipb.ac.id/wp-content/uploads/2021/08/IMG_8613-scaled.jpg"
-                                                class="glightbox" data-gallery="portfolio-gallery-ui"
-                                                data-glightbox="title: Mobile Banking App; description: Praesent commodo cursus magna, vel scelerisque nisl consectetur.">
-                                                <i class="bi bi-arrows-angle-expand"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                    <!-- End Portfolio Item -->
+    <!-- Card biasa -->
+    <div class="guest-blog-card guest-side">
+        <div class="guest-blog-image">
+            <img src="https://picsum.photos/600/500?random=2" alt="Blog 2">
+            <div class="guest-overlay">
+                <div class="guest-meta">
+                    <span>Apr. 14th, 2025</span> | <span>Security</span>
                 </div>
+                <h3>Sed do eiusmod tempor incididunt ut labore</h3>
             </div>
         </div>
-    </section><!-- End Portfolio Section -->
+    </div>
+
+    <div class="guest-blog-card">
+        <div class="guest-blog-image">
+            <img src="https://picsum.photos/600/400?random=3" alt="Blog 3">
+            <div class="guest-overlay">
+                <div class="guest-meta">
+                    <span>Apr. 14th, 2025</span> | <span>Career</span>
+                </div>
+                <h3>Ut enim ad minim veniam, quis nostrud exercitation</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="guest-blog-card">
+        <div class="guest-blog-image">
+            <img src="https://picsum.photos/600/400?random=4" alt="Blog 4">
+            <div class="guest-overlay">
+                <div class="guest-meta">
+                    <span>Apr. 14th, 2025</span> | <span>Cloud</span>
+                </div>
+                <h3>Adipiscing elit, sed do eiusmod tempor incididunt</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="guest-blog-card">
+        <div class="guest-blog-image">
+            <img src="https://picsum.photos/600/400?random=5" alt="Blog 5">
+            <div class="guest-overlay">
+                <div class="guest-meta">
+                    <span>Apr. 14th, 2025</span> | <span>Programming</span>
+                </div>
+                <h3>Excepteur sint occaecat cupidatat non proident</h3>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+        <!-- Filter -->
+  <section class="guest-galery-section">
+    <ul class="guest-galery-filters">
+    <li class="guest-galery-filter active" data-filter="all">Semua</li>
+    <li class="guest-galery-filter" data-filter="akademik">Akademik</li>
+    <li class="guest-galery-filter" data-filter="sdgs">SDGS</li>
+    <li class="guest-galery-filter" data-filter="prestasi">Prestasi</li>
+    <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas</li>
+    <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan</li>
+    </ul>
+
+    <!-- Grid Foto -->
+    <div class="guest-galery-grid">
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    <div class="guest-galery-item" data-category="sdgs">
+        <img src="img/bglogin.jpg" alt="SDGS">
+    </div>
+    <div class="guest-galery-item" data-category="prestasi">
+        <img src="img/bglogin.jpg" alt="Prestasi">
+    </div>
+    <div class="guest-galery-item" data-category="fasilitas">
+        <img src="img/bglogin.jpg" alt="Fasilitas">
+    </div>
+    <div class="guest-galery-item" data-category="kegiatan">
+        <img src="img/bglogin.jpg" alt="Kegiatan">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+        <div class="guest-galery-item" data-category="kegiatan">
+        <img src="img/bglogin.jpg" alt="Kegiatan">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    </div>
+</section>
+<script>
+  const filters = document.querySelectorAll(".guest-galery-filter");
+  const items = document.querySelectorAll(".guest-galery-item");
+
+  filters.forEach(filter => {
+    filter.addEventListener("click", () => {
+      // ubah aktif
+      filters.forEach(f => f.classList.remove("active"));
+      filter.classList.add("active");
+
+      const category = filter.dataset.filter;
+
+      items.forEach(item => {
+        if (category === "all" || item.dataset.category === category) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });
+</script>
 
 <!-- Alumni Testimonial Section -->
- 
-<section class="py-5 text-white">
-  <div class="container">
+
+<section class="guest-galery-section">
       <h3 class="guest-pend-section-title">Gallery
       <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
       </h3>
@@ -541,75 +382,77 @@
 </section>
 
 <!-- Program Studi Accordion -->
-<div class="container guest-container">
-  <div class="row">
-    <div class="col-md-4 mb-4 guest-title">
-      <h5 class="fw-bold">Program Studi</h5>
-      <h2 class="fw-bold">Departemen<br>Hasil Hutan</h2>
-    </div>
-    <div class="col-md-8">
-      <div class="accordion guest-accordion" id="guestAccordion">
+<section class="guest-galery-section">
+  <div class="container guest-container">
+    <div class="row">
+      <div class="col-md-4 mb-4 guest-title">
+        <h5 class="fw-bold">Program Studi</h5>
+        <h2 class="fw-bold">Departemen<br>Hasil Hutan</h2>
+      </div>
+      <div class="col-md-8">
+        <div class="accordion guest-accordion" id="guestAccordion">
 
-        <!-- S1 -->
-        <div class="accordion-item guest-accordion-item mb-3">
-          <h2 class="accordion-header" id="guestHeadingOne">
-            <button class="accordion-button guest-accordion-button collapsed" type="button"
-              data-bs-toggle="collapse" data-bs-target="#guestCollapseOne" aria-expanded="false"
-              aria-controls="guestCollapseOne">
-              Program Studi S1 : Teknologi Hasil Hutan
-            </button>
-          </h2>
-          <div id="guestCollapseOne" class="accordion-collapse collapse"
-            aria-labelledby="guestHeadingOne" data-bs-parent="#guestAccordion">
-            <div class="accordion-body guest-accordion-body">
-              Program Studi Teknologi Hasil Hutan merupakan salah satu program studi yang ada di
-              Departemen Hasil Hutan Fakultas Kehutanan dan Lingkungan IPB. Program Studi Teknologi Hasil Hutan memperoleh
-              akreditasi A berdasarkan keputusan dari Badan Akreditasi Nasional - Perguruan Tinggi (BAN-PT) No.
-              0140/SK/BAN-PT/Akred/S/I/2017 tanggal 10 Januari 2017 dan berlaku sampai tanggal 10 Januari 2022.
+          <!-- S1 -->
+          <div class="accordion-item guest-accordion-item mb-3">
+            <h2 class="accordion-header" id="guestHeadingOne">
+              <button class="accordion-button guest-accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#guestCollapseOne" aria-expanded="false"
+                aria-controls="guestCollapseOne">
+                Program Studi S1 : Teknologi Hasil Hutan
+              </button>
+            </h2>
+            <div id="guestCollapseOne" class="accordion-collapse collapse"
+              aria-labelledby="guestHeadingOne" data-bs-parent="#guestAccordion">
+              <div class="accordion-body guest-accordion-body">
+                Program Studi Teknologi Hasil Hutan merupakan salah satu program studi yang ada di
+                Departemen Hasil Hutan Fakultas Kehutanan dan Lingkungan IPB. Program Studi Teknologi Hasil Hutan memperoleh
+                akreditasi A berdasarkan keputusan dari Badan Akreditasi Nasional - Perguruan Tinggi (BAN-PT) No.
+                0140/SK/BAN-PT/Akred/S/I/2017 tanggal 10 Januari 2017 dan berlaku sampai tanggal 10 Januari 2022.
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- S2 -->
-        <div class="accordion-item guest-accordion-item mb-3">
-          <h2 class="accordion-header" id="guestHeadingTwo">
-            <button class="accordion-button guest-accordion-button collapsed" type="button"
-              data-bs-toggle="collapse" data-bs-target="#guestCollapseTwo" aria-expanded="false"
-              aria-controls="guestCollapseTwo">
-              Program Studi S2 : Ilmu dan Teknologi Hasil Hutan
-            </button>
-          </h2>
-          <div id="guestCollapseTwo" class="accordion-collapse collapse"
-            aria-labelledby="guestHeadingTwo" data-bs-parent="#guestAccordion">
-            <div class="accordion-body guest-accordion-body">
-              Program Studi S2 Ilmu dan Teknologi Hasil Hutan (PS THH) diselenggarakan oleh Departemen
-              Hasil Hutan (DHH) IPB dengan sistem kurikulum Mayor-Minor, yang mulai diterapkan sejak tahun ajaran 2007/2008.
+          <!-- S2 -->
+          <div class="accordion-item guest-accordion-item mb-3">
+            <h2 class="accordion-header" id="guestHeadingTwo">
+              <button class="accordion-button guest-accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#guestCollapseTwo" aria-expanded="false"
+                aria-controls="guestCollapseTwo">
+                Program Studi S2 : Ilmu dan Teknologi Hasil Hutan
+              </button>
+            </h2>
+            <div id="guestCollapseTwo" class="accordion-collapse collapse"
+              aria-labelledby="guestHeadingTwo" data-bs-parent="#guestAccordion">
+              <div class="accordion-body guest-accordion-body">
+                Program Studi S2 Ilmu dan Teknologi Hasil Hutan (PS THH) diselenggarakan oleh Departemen
+                Hasil Hutan (DHH) IPB dengan sistem kurikulum Mayor-Minor, yang mulai diterapkan sejak tahun ajaran 2007/2008.
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- S3 -->
-        <div class="accordion-item guest-accordion-item mb-3">
-          <h2 class="accordion-header" id="guestHeadingThree">
-            <button class="accordion-button guest-accordion-button collapsed" type="button"
-              data-bs-toggle="collapse" data-bs-target="#guestCollapseThree" aria-expanded="false"
-              aria-controls="guestCollapseThree">
-              Program Studi S3 : Ilmu dan Teknologi Hasil Hutan
-            </button>
-          </h2>
-          <div id="guestCollapseThree" class="accordion-collapse collapse"
-            aria-labelledby="guestHeadingThree" data-bs-parent="#guestAccordion">
-            <div class="accordion-body guest-accordion-body">
-              Program Studi S3 Rekayasa dan Peningkatan Mutu Hasil Hutan (S3 RPM) dikelola oleh
-              Departemen Hasil Hutan (DHH) IPB dengan sistem kurikulum Mayor-Minor yang berlaku sejak tahun ajaran 2007/2008.
+          <!-- S3 -->
+          <div class="accordion-item guest-accordion-item mb-3">
+            <h2 class="accordion-header" id="guestHeadingThree">
+              <button class="accordion-button guest-accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#guestCollapseThree" aria-expanded="false"
+                aria-controls="guestCollapseThree">
+                Program Studi S3 : Ilmu dan Teknologi Hasil Hutan
+              </button>
+            </h2>
+            <div id="guestCollapseThree" class="accordion-collapse collapse"
+              aria-labelledby="guestHeadingThree" data-bs-parent="#guestAccordion">
+              <div class="accordion-body guest-accordion-body">
+                Program Studi S3 Rekayasa dan Peningkatan Mutu Hasil Hutan (S3 RPM) dikelola oleh
+                Departemen Hasil Hutan (DHH) IPB dengan sistem kurikulum Mayor-Minor yang berlaku sejak tahun ajaran 2007/2008.
+              </div>
             </div>
           </div>
-        </div>
 
-      </div> <!-- end accordion -->
+        </div> <!-- end accordion -->
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- Contact Section -->
 <section id="guestContact" class="guest-contact section">

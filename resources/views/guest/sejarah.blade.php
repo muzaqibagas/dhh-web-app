@@ -114,6 +114,7 @@
     </div>
 
     <!-- Tab Contents -->
+  <section>
     <div id="sej-struktur" class="sej-tab-content active">
       <div class="sej-card-grid"> <!-- baris satu -->
         <div class="sej-staff-card">
@@ -140,8 +141,8 @@
           <p>Ketua DHH / Ketua PS S1</p>
         </div>
       </div>
-
-      <div class="sej-card-grid"> <!-- baris dua -->
+        <!-- baris dua -->
+      <div class="sej-card-grid"> 
         <div class="sej-staff-card">
           <img src="img/buistie.jpg" alt="Ketua">
           <h4>Dr. Istie S. Rahayu</h4>
@@ -167,31 +168,65 @@
         </div>
       </div>
     </div>
-
+    
     <div id="sej-dosen" class="sej-tab-content">
-      <div class="sej-card-grid">
-        <div class="sej-staff-card">
-          <img src="img/pairsan.jpg" alt="Dosen 1">
-          <h4>Dr. Mahdi Mubarok</h4>
-          <p>Komisi Kemahasiswaan</p>
-        </div>
+      <div class="sej-division">
+        <h3 class="sej-division-title">Divisi Biokomposit</h3>
 
-        <div class="sej-staff-card">
-          <img src="img/pairsan.jpg" alt="Dosen 1">
-          <h4>Dr. Mahdi Mubarok</h4>
-          <p>Komisi Kemahasiswaan</p>
-        </div>
+        <div class="sej-card-grid">
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
 
-        <div class="sej-staff-card">
-          <img src="img/pairsan.jpg" alt="Dosen 1">
-          <h4>Dr. Mahdi Mubarok</h4>
-          <p>Komisi Kemahasiswaan</p>
-        </div>
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
 
-        <div class="sej-staff-card">
-          <img src="img/pairsan.jpg" alt="Dosen 1">
-          <h4>Dr. Mahdi Mubarok</h4>
-          <p>Komisi Kemahasiswaan</p>
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
+
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sej-division">
+        <h3 class="sej-division-title">Divisi Biokomposit</h3>
+
+        <div class="sej-card-grid">
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
+
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
+
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
+
+          <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Dosen 1">
+            <h4>Dr. Mahdi Mubarok</h4>
+            <p>Komisi Kemahasiswaan</p>
+          </div>
         </div>
       </div>
     </div>
