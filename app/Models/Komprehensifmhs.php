@@ -24,6 +24,8 @@ class Komprehensifmhs extends Model
         'waktu_mulai',
         'waktu_selesai',
         'judul_tugasakhir',
+        'link_meeting',
+        'tipe_pelaksanaan',
     ];
 
     public function mahasiswa()

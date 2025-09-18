@@ -164,13 +164,19 @@
                     </option>
                 @endforeach                 
             </select>
-            </div>      
+            </div>                  
 
             <div class="form-group">
-            <label>Hari/Tanggal Seminar</label>        
-            <input type="date" name="tanggal" 
-                    value="{{ old('tanggal', $seminarmhs->tanggal) }}" required>                 
-            </div>            
+                <label>Hari/Tanggal seminar</label>                            
+                <div>
+                    <input type="date" id="tanggal" name="tanggal" 
+                        value="{{ old('tanggal', $seminarmhs->tanggal) }}" required>
+                    <small id="tanggal-error" style="color:red;display:none;">Tanggal Sabtu/Minggu tidak bisa dipilih.</small>
+                    @error('tanggal')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
 
             <div class="form-group">
                 <label>Waktu Seminar </label>
@@ -372,7 +378,8 @@
             // Init Select2
             $('#pembimbing1, #pembimbing2').select2({
                 width: '100%',
-                placeholder: "Pilih Dosen Pembimbing 2" // biar muncul placeholder kalau null
+                placeholder: "Pilih Dosen Pembimbing 2",
+                allowClear: true,
             });
 
             // Simpan opsi awal

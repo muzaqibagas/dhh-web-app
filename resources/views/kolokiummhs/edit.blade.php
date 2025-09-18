@@ -397,7 +397,8 @@
             // Init Select2
             $('#pembimbing1, #pembimbing2').select2({
                 width: '100%',
-                placeholder: "Pilih Dosen Pembimbing 2" // biar muncul placeholder kalau null
+                placeholder: "Pilih Dosen Pembimbing 2",
+                allowClear: true,
             });
 
             // Simpan opsi awal

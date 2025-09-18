@@ -97,6 +97,7 @@ class SeminarmhsController extends Controller
         if (!$request->id_ruangan && !$request->link_meeting) {
             return back()->withInput()->with('error', 'Pilih ruangan atau isi link meeting.');
         }
+        
         $insert = Seminarmhs::create($data);
         if ($insert) {
             return redirect()->route('seminarmhs.show', $insert->id)->with('success', 'Data seminar berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan seminar.');
@@ -156,8 +157,10 @@ class SeminarmhsController extends Controller
         $pdf->MultiCell($valueWidth, $lineHeight, $hariTanggal, 0, 'L');
         // Waktu
         $pdf->SetXY(32, 126);
-        $pdf->Cell($labelWidth, $lineHeight);
-        $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->waktu_mulai . ' s/d ' . $seminarmhs->waktu_selesai, 0, 'L');
+        $pdf->Cell($labelWidth, $lineHeight);        
+        $waktuMulai = \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i');
+        $waktuSelesai = \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i');
+        $pdf->MultiCell($valueWidth, $lineHeight, $waktuMulai . ' s/d ' . $waktuSelesai, 0, 'L');
         // Tempat offline
         $pdf->SetXY(32, 132.5);
         $pdf->Cell($labelWidth, $lineHeight);
