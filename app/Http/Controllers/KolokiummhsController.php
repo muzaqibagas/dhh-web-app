@@ -165,26 +165,28 @@ class KolokiummhsController extends Controller
         $pdf->SetXY(32, 75);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
-
+        //no hp
         // Alamat
-        $pdf->SetXY(32, 82);
+        $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->alamat, 0, 'L');
 
         // Hari/Tanggal
         Carbon::setLocale('id');
         $hariTanggal = Carbon::parse($kolokiummhs->tanggal)->translatedFormat('l, d F Y');
-        $pdf->SetXY(32, 104);
+        $pdf->SetXY(32, 118);
         $pdf->Cell($labelWidth, $lineHeight);        
         $pdf->MultiCell($valueWidth, $lineHeight, $hariTanggal, 0, 'L');
 
         // Waktu
-        $pdf->SetXY(32, 111.5);
+        $pdf->SetXY(32, 126);
         $pdf->Cell($labelWidth, $lineHeight);
-        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->waktu_mulai . ' s/d ' . $kolokiummhs->waktu_selesai, 0, 'L');
+        $waktuMulai = \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i');
+        $waktuSelesai = \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i');
+        $pdf->MultiCell($valueWidth, $lineHeight, $waktuMulai . ' s/d ' . $waktuSelesai, 0, 'L');        
 
         // Tempat offline
-        $pdf->SetXY(32, 119);
+        $pdf->SetXY(32, 132.5);
         $pdf->Cell($labelWidth, $lineHeight);
         $tempat = '-';
         if (!empty($kolokiummhs->ruangan?->nama)) {
@@ -195,7 +197,7 @@ class KolokiummhsController extends Controller
         $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');        
 
         // Judul Kolokium
-        $pdf->SetXY(32, 126);
+        $pdf->SetXY(32, 140);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');                
 

@@ -120,7 +120,7 @@
 			</div>
 			<div class="form-group">
 				<label>Hari/Tanggal Sidang</label>
-				<input type="date" value="{{ \Carbon\Carbon::parse($komprehensifmhs->tanggal)->format('Y-m-d') }}" readonly>
+				<input type="date" value="{{ \Carbon\Carbon::parse($komprehensifmhs->tanggal)->format('Y-m-d') }}" readonly>				
 			</div>
 			<div class="form-group">
 				<label>Waktu Sidang</label>
@@ -129,11 +129,17 @@
 					<p class="m-0">S/D</p>
 					<input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($komprehensifmhs->waktu_selesai)->format('H:i') }}" readonly>
 				</div>
-			</div>
+			</div>			
 			<div class="form-group">
 				<label>Tempat Sidang</label>
-				<input type="text" value="{{ $komprehensifmhs->ruangan->nama ?? '-' }}" readonly>
-			</div>
+				@if ($komprehensifmhs->tipe_pelaksanaan === 'offline')
+					<input type="text" value="{{ $komprehensifmhs->ruangan->nama ?? '-' }}" readonly>
+				@elseif ($komprehensifmhs->tipe_pelaksanaan === 'online')
+					<input type="text" value="{{ $komprehensifmhs->link_meeting ?? '-' }}" readonly>
+				@else
+					<input type="text" value="-" readonly>
+				@endif
+			</div>  
 			<div class="form-group">
 				<label>Ketua Sidang</label>
 				<div class="form-static">[Diisi oleh akademik]</div>

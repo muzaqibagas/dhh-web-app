@@ -85,6 +85,18 @@
   <main class="content">        
     <div class="kolokium-card">
       <h2 class="page-title">Detail Pendaftaran Seminar</h2>
+      @if (session('success'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session('success') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			@endif
+			@if (session('error'))
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					{{ session('error') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			@endif
 
       <form>
         <div class="form-group">
@@ -125,7 +137,7 @@
 
         <div class="form-group">
           <label>Hari/Tanggal Seminar</label>
-          <input type="date" value="{{ \Carbon\Carbon::parse($seminarmhs->tanggal)->format('Y-m-d') }}" readonly>                
+          <input type="date" value="{{ \Carbon\Carbon::parse($seminarmhs->tanggal)->format('Y-m-d') }}" readonly>
         </div>
 
         <div class="form-group">

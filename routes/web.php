@@ -263,7 +263,6 @@ Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKol
 Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create');
 Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store');
 
-
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
 Route::get('seminar/create', [SeminarController::class, 'create'])->name('seminar.create');

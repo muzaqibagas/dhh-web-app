@@ -79,7 +79,7 @@ body {
   flex-shrink: 0;
   transition: transform 0.3s ease;
   z-index: 1000;
-  position: sticky;      /* nempel di viewport */
+  position: fixed !important;      /* nempel di viewport */
   top: 50px;             /* jarak dari atas, tepat di bawah topbar */
   height: fit-content; /* penuh layar minus topbar */
   overflow-y: auto;
@@ -320,6 +320,7 @@ body {
 .content {
   flex: 1;
   padding: 30px;
+  margin-left: 260px;
   transition: margin-left 0.4s ease; /* default transisi */
 
 }

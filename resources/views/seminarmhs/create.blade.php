@@ -124,8 +124,8 @@
           </div>
 
           <div class="form-group">
-            <label>Alamat di Bogor</label>
-            <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{ old('alamat') }}" required>            
+            <label>Alamat di Bogor</label>            
+            <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{ Auth::user()->alamat ?? '' }}" required>
           </div>
 
           <div class="form-group">
@@ -157,7 +157,7 @@
             <label>Hari/Tanggal Seminar</label>
             <div>
               <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
-              <small id="tanggal-error" style="color:red;display:none;">Tanggal Sabtu/Minggu tidak bisa dipilih.</small>              
+              <small id="tanggal-error" style="color:red;display:none;">Tanggal Sabtu/Minggu tidak bisa dipilih.</small>
             </div>
           </div>
 
@@ -216,6 +216,7 @@
 @push('script')
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <!-- waktu pendaftaran minimal 4 hari kerja dan sabtu minggu tidak boleh -->
+  <!-- tanggal -->
   <script>
     document.getElementById('tanggal').addEventListener('change', function() {
         const val = this.value;
