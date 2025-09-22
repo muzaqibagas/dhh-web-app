@@ -124,33 +124,111 @@
           </div>
         </div>
 
-        <!-- BOTTOM: secondary featured + more items (example) -->
-        <div class="guest-artikel-mid-row">
-          <div class="guest-artikel-mid-left">
-            <img src="img/bglogin.jpg" alt="">
-            <div class="guest-artikel-mid-caption">
-              <span class="guest-artikel-badge guest-artikel-badge--berita">Berita</span>
-              <h4>Forest Products Department IPB dibanjiri banyak undangan</h4>
+        <div class="guest-artikel-bottom-grid">
+            <div class="guest-artikel-bottom-card">
+                <img src="img/bglogin.jpg" alt="">
+                <div class="guest-artikel-bottom-body">
+                <span class="guest-artikel-category">Akademik</span>
+                <h4>DHH diberi pujian dalam seminar</h4>
+                <div class="guest-artikel-bottom-meta">14 Apr 2025</div>
+                </div>
             </div>
-          </div>
-          <div class="guest-artikel-mid-right">
-            <div class="guest-artikel-mid-small">
+
+            <div class="guest-artikel-bottom-card">
+                <img src="img/bglogin.jpg" alt="">
+                <div class="guest-artikel-bottom-body">
+                <span class="guest-artikel-category">Prestasi</span>
+                <h4>Penghargaan departemen terbaik</h4>
+                <div class="guest-artikel-bottom-meta">14 Apr 2025</div>
+                </div>
+            </div>
+
+            <div class="guest-artikel-bottom-card">
+                <img src="img/bglogin.jpg" alt="">
+                <div class="guest-artikel-bottom-body">
+                <span class="guest-artikel-category">Berita</span>
+                <h4>Forest Products Department IPB dibanjiri undangan</h4>
+                <div class="guest-artikel-bottom-meta">14 Apr 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE: 3 COLUMNS OF LISTS -->
+        <div class="guest-artikel-columns">
+          <!-- Column 1 -->
+          <div class="guest-artikel-list-col">
+            <div class="guest-artikel-list-item">
               <img src="img/bglogin.jpg" alt="">
-              <div class="guest-artikel-mid-caption">
-                <span class="guest-artikel-badge guest-artikel-badge--akademik">Akademik</span>
-                <h5>DHH diberi pujian dalam seminar</h5>
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--prestasi small">Prestasi</span>
+                <h4>Departemen Hasil Hutan mendapatkan penghargaan sebagai departemen terbaik</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
               </div>
             </div>
-            <div class="guest-artikel-mid-small">
+            <!-- repeat items -->
+            <div class="guest-artikel-list-item">
               <img src="img/bglogin.jpg" alt="">
-              <div class="guest-artikel-mid-caption">
-                <span class="guest-artikel-badge guest-artikel-badge--prestasi">Prestasi</span>
-                <h5>Penghargaan departemen terbaik</h5>
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--akademik small">Akademik</span>
+                <h4>DHH aktif menghadiri kegiatan seminar internasional</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
+              </div>
+            </div>
+            <!-- add more list items as needed -->
+          </div>
+
+          <!-- Column 2 -->
+          <div class="guest-artikel-list-col">
+            <div class="guest-artikel-list-item">
+              <img src="img/bglogin.jpg" alt="">
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--akademik small">Akademik</span>
+                <h4>Berbagai kegiatan akademik dan pengabdian masyarakat</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
+              </div>
+            </div>
+            <div class="guest-artikel-list-item">
+              <img src="img/bglogin.jpg" alt="">
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--sdgs small">SDGS</span>
+                <h4>Inisiatif SDGs: program konservasi dan penelitian</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="guest-artikel-list-col">
+            <div class="guest-artikel-list-item">
+              <img src="img/bglogin.jpg" alt="">
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--berita small">Berita</span>
+                <h4>Informasi penting terkait kegiatan departemen</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
+              </div>
+            </div>
+            <div class="guest-artikel-list-item">
+              <img src="img/bglogin.jpg" alt="">
+              <div class="guest-artikel-list-body">
+                <span class="guest-artikel-badge guest-artikel-badge--karir small">Karir</span>
+                <h4>Peluang karir & beasiswa untuk mahasiswa</h4>
+                <div class="guest-artikel-list-meta">
+                  <span class="guest-artikel-date">14 Apr 2025</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </main>
 
       <!-- SIDEBAR -->

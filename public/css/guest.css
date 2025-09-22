@@ -1149,30 +1149,75 @@
   background: none;
   padding: 0;
 }
-
-/* === Small List Items (3 kolom) === */
-.guest-artikel-list-item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: #fff;
-  padding: 8px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+/* === Bottom 3 Articles Grid === */
+.guest-artikel-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
 }
-.guest-artikel-list-body h4 {
-  margin: 0 0 6px;
-  font-size: 0.9rem;
-  color: #222;
-  line-height: 1.3;
-  font-weight: 600;
 
-  /* biar max 2 baris */
+.guest-artikel-bottom-card {
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.guest-artikel-bottom-card img {
+  width: 100%;
+  height: 160px; /* tinggi gambar seragam */
+  object-fit: cover;
+}
+
+.guest-artikel-bottom-body {
+  padding: 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-artikel-bottom-body h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 8px 0;
+  line-height: 1.3;
+  
+  /* max 2 baris */
   display: -webkit-box;
-  -webkit-line-clamp: 2;  /* batas 2 baris */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 2.6em;  /* tinggi tetap biar rata */
+  min-height: 2.6em;
 }
-.guest-artikel-list-meta { font-size: 0.8rem; color: #888; }
+
+.guest-artikel-bottom-meta {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: auto; /* dorong ke bawah */
+}
+
+/* === Responsive Breakpoints === */
+@media (max-width: 992px) {
+  .guest-artikel-bottom-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .guest-artikel-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.guest-artikel-search {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
