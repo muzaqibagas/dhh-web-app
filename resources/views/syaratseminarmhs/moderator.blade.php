@@ -172,7 +172,7 @@
     <main class="content">        
         <div class="container-fluid mt-4">        
             <div class="adm-header">
-                <h2 class="adm-title">Preview PDF Kolokium Ditandatangani</h2>
+                <h2 class="adm-title">Preview PDF Seminar Ditandatangani</h2>
             </div>
             <div class="card shadow-sm">                   
                 <div class="card-body bg-light">
@@ -186,7 +186,7 @@
                         @endif
                     </div>
 
-                    <form action="{{ route('syaratkolokiummhs.tambahModerator' , $syaratKolokiummhs->id) }}" method="POST" class="row g-3">                    
+                    <form action="{{ route('syaratseminarmhs.tambahModerator' , $syaratSeminarmhs->id) }}" method="POST" class="row g-3">                                                                
                         @csrf
                         <input type="hidden" name="nim" value="{{ $nim }}">                           
                         <div class="d-flex flex-column gap-3">    
@@ -196,7 +196,7 @@
                                     <option value="">-- Pilih Moderator --</option>
                                     @foreach($listModerator as $dosen)
                                         <option value="{{ $dosen->id }}" 
-                                            {{ $syaratKolokiummhs->id_moderator == $dosen->id ? 'selected' : '' }}>
+                                            {{ $syaratSeminarmhs->id_moderator == $dosen->id ? 'selected' : '' }}>
                                             {{ $dosen->nama }}
                                         </option>
                                     @endforeach

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\SyaratSeminarmhs;
+use App\Models\StaffDept;
+use App\Models\User;
 use Illuminate\Http\Request;
+use setasign\Fpdi\Fpdi;
+use setasign\Fpdf\Fpdf;
+use Illuminate\Support\Str;
 
 class SyaratSeminarmhsController extends Controller
 {
@@ -12,7 +17,38 @@ class SyaratSeminarmhsController extends Controller
      */
     public function index()
     {
-        return view('syaratseminarmhs.index');    
+        $listModerator = StaffDept::all();
+        $pendaftar = SyaratSeminarmhs::with('mahasiswa')
+            ->where('status', '!=', 'ditolak') // ⬅️ filter supaya yg ditolak tidak tampil
+            ->get();
+        return view('syaratseminarmhs.index', compact('pendaftar', 'listModerator'));
+    }
+
+    public function setujui($id)
+    {
+        $syarat = SyaratSeminarmhs::findOrFail($id);
+        $syarat->update(['status' => 'disetujui']);
+
+        return redirect()->back()->with('success', 'Pendaftaran disetujui.');
+    }
+
+    public function tolak($id)
+    {
+        $syarat = SyaratSeminarmhs::findOrFail($id);
+
+        $user = $syarat->mahasiswa; // pastikan relasi mahasiswa() ada
+        $folderName = $user->nama . '_' . $user->nim;
+        $folderPath = public_path('syarat_seminar/' . $folderName);
+
+        // hapus folder beserta isinya
+        if (\File::exists($folderPath)) {
+            \File::deleteDirectory($folderPath);
+        }
+
+        // update status jadi ditolak
+        $syarat->update(['status' => 'ditolak']);
+
+        return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
     }
 
     /**
@@ -20,7 +56,10 @@ class SyaratSeminarmhsController extends Controller
      */
     public function create()
     {
-        //
+        $mahasiswaId = auth()->id();
+        $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();        
+
+        return view('syaratseminarmhs.create', compact('syarat'));
     }
 
     /**
@@ -28,15 +67,128 @@ class SyaratSeminarmhsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mahasiswaId = auth()->id();
+
+        $existing = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
+        if ($existing && $existing->status === 'disetujui') {
+            return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
+        }
+
+        $data = $request->validate([            
+            'formulir' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'bukti_sks' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'bukti_spp' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'bukti_kehadiran' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+
+        $data = [
+            'id_mahasiswa' => $mahasiswaId,
+            'status' => 'pending',
+        ];
+
+        $user = auth()->user();
+        $folderName = $user->nama . '_' . $user->nim;
+        $destinationPath = public_path('syarat_seminar/' . $folderName);
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        $nim = $user->nim;
+        if ($request->hasFile('formulir')) {
+            $file = $request->file('formulir');
+            $fileName = 'formulir_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $data['formulir'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+        }
+
+        if ($request->hasFile('bukti_sks')) {
+            $file = $request->file('bukti_sks');
+            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $data['bukti_sks'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+        }
+
+        if ($request->hasFile('bukti_spp')) {
+            $file = $request->file('bukti_spp');
+            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $data['bukti_spp'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+        }
+
+        if ($request->hasFile('bukti_kehadiran')) {
+            $file = $request->file('bukti_kehadiran');
+            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $data['bukti_kehadiran'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+        }
+
+        SyaratSeminarmhs::create($data);
+
+        return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(SyaratSeminarmhs $syaratSeminarmhs)
+    public function show(SyaratSeminarmhs $syaratSeminarmhs)    
     {
-        //
+        $nim = $syaratSeminarmhs->mahasiswa?->nim ?? '-';
+        $listModerator = StaffDept::all();
+        
+        $formulirPath = $syaratSeminarmhs->formulir;
+        $ext = pathinfo($formulirPath, PATHINFO_EXTENSION); 
+
+        return view('syaratseminarmhs.moderator', compact('syaratSeminarmhs', 'nim', 'formulirPath', 'ext', 'listModerator'));
+    }
+
+    public function tambahModerator(Request $request, SyaratSeminarmhs $syaratSeminarmhs)
+    {        
+        $request->validate([
+            'moderator' => 'required|string|max:255'
+        ]);
+
+        $nim = $syaratSeminarmhs->mahasiswa->nim;
+        $moderatorId = $request->moderator;
+
+        $moderator = StaffDept::findOrFail($moderatorId)->nama;
+        
+        $syaratSeminarmhs->update([
+            'id_moderator' => $moderatorId
+        ]);
+
+        $source = public_path($syaratSeminarmhs->formulir);
+        $outputDir = public_path("syarat_seminar/edited");
+
+        if (!file_exists($outputDir)) {
+            mkdir($outputDir, 0777, true);
+        }
+
+        $outputFile = "formulir_seminar_{$nim}_final.pdf";
+        $outputPath = $outputDir . '/' . $outputFile;
+
+        // Proses PDF
+        $pdf = new Fpdi();
+        $pageCount = $pdf->setSourceFile($source);
+
+        for ($i = 1; $i <= $pageCount; $i++) {
+            $pdf->AddPage();
+            $tpl = $pdf->importPage($i);
+            $pdf->useTemplate($tpl);
+
+            // Tambahkan nama moderator di halaman terakhir
+            if ($i === $pageCount) {
+                $pdf->SetFont('Times', '', 12);                
+
+                $pdf->SetXY(80,131); // posisi teks, sesuaikan jika perlu
+                $pdf->Write(5, $moderator);
+            }
+        }
+
+        // Simpan file hasil edit
+        $pdf->Output('F', $outputPath);        
+
+        // Download file final ke user
+        return response()->download($outputPath);    
     }
 
     /**
@@ -44,7 +196,7 @@ class SyaratSeminarmhsController extends Controller
      */
     public function edit(SyaratSeminarmhs $syaratSeminarmhs)
     {
-        //
+        
     }
 
     /**

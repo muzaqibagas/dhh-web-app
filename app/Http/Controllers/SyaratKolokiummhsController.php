@@ -10,7 +10,6 @@ use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 use Illuminate\Support\Str;
 
-
 class SyaratKolokiummhsController extends Controller
 {
     /**
@@ -20,9 +19,9 @@ class SyaratKolokiummhsController extends Controller
     {
         $listModerator = StaffDept::all();
         $pendaftar = SyaratKolokiummhs::with('mahasiswa')
-            ->where('status', '!=', 'ditolak') // ⬅️ filter supaya yg ditolak tidak tampil
+            ->where('status', '!=', 'ditolak') 
             ->get();
-        return view('syaratKolokiummhs.index', compact('pendaftar', 'listModerator'));
+        return view('syaratkolokiummhs.index', compact('pendaftar', 'listModerator'));
     }
 
     public function setujui($id)
@@ -60,7 +59,7 @@ class SyaratKolokiummhsController extends Controller
         $mahasiswaId = auth()->id();
         $syarat = SyaratKolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();        
 
-        return view('syaratKolokiummhs.create', compact('syarat'));
+        return view('syaratkolokiummhs.create', compact('syarat'));
     }
 
     /**
@@ -72,7 +71,7 @@ class SyaratKolokiummhsController extends Controller
 
         $existing = SyaratKolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
         if ($existing && $existing->status === 'disetujui') {
-            return redirect()->back()->with('error', 'Berkas pendaftaran Kolokium Anda sudah disetujui.');
+            return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
         }
 
         $data = $request->validate([            
@@ -98,7 +97,6 @@ class SyaratKolokiummhsController extends Controller
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
-
 
         // Simpan file sesuai masing-masing, gunakan NIM sebagai bagian nama file
         $nim = $user->nim;
@@ -132,7 +130,7 @@ class SyaratKolokiummhsController extends Controller
 
         SyaratKolokiummhs::create($data);
 
-        return redirect()->back()->with('success', 'Dokumen berhasil diupload!');
+        return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
     /**
@@ -146,9 +144,8 @@ class SyaratKolokiummhsController extends Controller
         $formulirPath = $syaratKolokiummhs->formulir;
         $ext = pathinfo($formulirPath, PATHINFO_EXTENSION); 
 
-        return view('syaratKolokiummhs.moderator', compact('syaratKolokiummhs', 'nim', 'formulirPath', 'ext', 'listModerator'));
+        return view('syaratkolokiummhs.moderator', compact('syaratKolokiummhs', 'nim', 'formulirPath', 'ext', 'listModerator'));
     }
-
 
     public function tambahModerator(Request $request, SyaratKolokiummhs $syaratKolokiummhs)
     {

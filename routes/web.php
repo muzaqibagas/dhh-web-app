@@ -115,11 +115,6 @@ Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilem
 Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
 
-Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index');
-
-Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
-
-
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
 
@@ -255,15 +250,29 @@ Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edi
 Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
 Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
 
-//syarat kolokium admin
-Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index');
-Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui');
-Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak');
-Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show');
-Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator');
-//syarat kolokium mahasiswa form
-Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create');
-Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store');
+Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index'); //syarat kolokium admin
+Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create'); //syarat kolokium mahasiswa form
+Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store'); //syarat kolokium mahasiswa form
+Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui'); //syarat kolokium admin
+Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
+Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
+Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
+
+Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index'); //syarat seminar admin
+Route::get('syaratseminarmhs/create', [SyaratSeminarmhsController::class, 'create'])->name('syaratseminarmhs.create'); //syarat seminar mahasiswa form
+Route::post('syaratseminarmhs', [SyaratSeminarmhsController::class, 'store'])->name('syaratseminarmhs.store'); //syarat seminar mahasiswa form
+Route::post('syaratseminarmhs/{id}/setujui', [SyaratSeminarmhsController::class, 'setujui'])->name('syaratseminarmhs.setujui'); //syarat seminar admin
+Route::post('syaratseminarmhs/{id}/tolak', [SyaratSeminarmhsController::class, 'tolak'])->name('syaratseminarmhs.tolak'); //syarat seminar admin
+Route::get('syaratseminarmhs/{syaratSeminarmhs}', [SyaratSeminarmhsController::class, 'show'])->name('syaratseminarmhs.show'); //syarat seminar admin
+Route::post('syaratseminarmhs/{syaratSeminarmhs}/tambah-moderator', [SyaratSeminarmhsController::class, 'tambahModerator'])->name('syaratseminarmhs.tambahModerator'); //syarat seminar admin
+
+Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
+Route::get('syaratkomprehensifmhs/create', [SyaratKomprehensifmhsController::class, 'create'])->name('syaratkomprehensifmhs.create'); //syarat seminar mahasiswa form
+Route::post('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'store'])->name('syaratkomprehensifmhs.store'); //syarat seminar mahasiswa form
+Route::post('syaratkomprehensifmhs/{id}/setujui', [SyaratKomprehensifmhsController::class, 'setujui'])->name('syaratkomprehensifmhs.setujui'); //syarat seminar admin
+Route::post('syaratkomprehensifmhs/{id}/tolak', [SyaratKomprehensifmhsController::class, 'tolak'])->name('syaratkomprehensifmhs.tolak'); //syarat seminar admin
+Route::get('syaratkomprehensifmhs/{syaratKomprehensifmhs}', [SyaratKomprehensifmhsController::class, 'show'])->name('syaratkomprehensifmhs.show'); //syarat seminar admin
+Route::post('syaratkomprehensifmhs/{syaratKomprehensifmhs}/tambah-moderator', [SyaratKomprehensifmhsController::class, 'tambahModerator'])->name('syaratkomprehensifmhs.tambahModerator'); //syarat seminar admin
 
 // Seminar
 Route::get('seminar', [SeminarController::class, 'index'])->name('seminar.index');
@@ -337,7 +346,6 @@ Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->na
 
 // Undangan Kolokium
 Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
-
 
 // Undangan Seminar
 Route::get('undanganseminar', [UndanganSeminarController::class, 'index'])->name('undanganseminar.index');

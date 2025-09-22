@@ -2,131 +2,252 @@
 
 @section('content')
 <!-- SIDEBAR -->
-  <div class="main-container">
-    <aside class="sidebar">
-      <a href="#" class="menu-image-only">
-        <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
-      </a>
-      
-      <a href="/dashboardmhs" class="menu ">
-        <div class="menu-left">
-          <i class="bi bi-house-door-fill"></i> <span> Beranda </span>
-        </div>
-      </a>
-      <a href="/profilemhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-person"></i> <span> Profil Mahasiswa </span>
-        </div>
-      </a>
-      <a href="/formulirlayananakademikmhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-file-earmark-text"></i> <span> Formulir Layanan Akademik </span>
-        </div>
-      </a>
-      <!-- <a href="#" class="menu"><i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir</a> -->
-      <a href="#" class="menu {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'active' : '' }}" id="dropdownToggle">
-          <i class="bi bi-mortarboard"></i> Mahasiswa Tingkat Akhir
-          <span id="dropdownArrow" style="font-size:0.8em; margin-left:6px;">
-              {{-- kalau ada di salah satu submenu → panah kebuka ▼ --}}
-              {!! request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? '&#9660;' : '&#9650;' !!}
-          </span>
-      </a>
+<div class="main-container">
+  <aside class="sidebar">
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
+    <!-- Untuk aktifin button sub menu ========================= -->
+    @php
+      $isTingkatAkhirActive = 
+        Request::is('undangan') || Request::is('undangankolokium') || Request::is('undanganseminar') || Request::is('undangansidang') || 
+        Request::is('kolokium') || 
+        Request::is('seminar') || 
+        Request::is('sidang');
+      $isKontenActive = 
+        Request::is('kategorigaleri') || Request::is('kategorigaleri/create') || Request::is('kategorigaleri/*/edit') || 
+        Request::is('galeri') || Request::is('galeri/create') || Request::is('galeri/*/edit') || 
+        Request::is('kategoriartikel') || Request::is('kategoriartikel/create') || Request::is('kategoriartikel/*/edit') || 
+        Request::is('artikel') || Request::is('artikel/create') || Request::is('artikel/*/edit') || 
+        Request::is('review-alumni') || Request::is('review-alumni/create') || Request::is('review-alumni/*/edit') |
+        Request::is('konten-dept') || Request::is('konten-dept/show') || Request::is('konten-dept/*/edit') || 
+        Request::is('kontenjenjang') || Request::is('kontenjenjang/show') || Request::is('kontenjenjang/*/edit') || 
+        Request::is('mitra'); Request::is('mitra/create') || Request::is('mitra/*/edit') || 
+      $isStaffDeptActive = 
+        Request::is('kategoristaff') || Request::is('kategoristaff/create') || Request::is('kategoristaff/*/edit') |
+        Request::is('staff-dept') || Request::is('staff-dept/create') || Request::is('staff-dept/*/edit') |
+        Request::is('ketuadhh') || Request::is('ketuadhh/create') || Request::is('ketuadhh/*/edit');
+      @endphp
 
-      <div id="dropdownMenu" 
-          style="margin-left:24px; flex-direction:column; 
-              {{ request()->is('kolokiummhs','syaratkolokiummhs','seminarmhs','syaratseminarmhs','komprehensifmhs','syaratkomprehensifmhs') ? 'display:flex;' : 'display:none;' }}">
-        
-          <a href="/kolokiummhs" 
-            class="submenu-link {{ request()->is('kolokiummhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-check2-circle"></i> Kolokium
-          </a>
-          <a href="/syaratkolokiummhs" 
-            class="submenu-link {{ request()->is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Kolokium
-          </a>
-          <a href="/seminarmhs" 
-            class="submenu-link {{ request()->is('seminarmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-calendar-event"></i> Seminar
-          </a>
-          <a href="/syaratseminarmhs" 
-            class="submenu-link {{ request()->is('syaratseminarmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Seminar
-          </a>
-          <a href="/komprehensifmhs" 
-            class="submenu-link {{ request()->is('komprehensifmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-journal-text"></i> Komprehensif
-          </a>
-          <a href="/syaratkomprehensifmhs" 
-            class="submenu-link {{ request()->is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
-              <i class="bi bi-info-circle"></i> Syarat Komprehensif
-          </a>
+    <!-- BTN TINGKAT AKHIR===================== -->
+    <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+      <div class="menu-left">
+        <i class="bi bi-mortarboard"></i>
+        <span> Tingkat Akhir </span>
       </div>
-
-      <a href="/dashboardmhs" class="menu">
-        <div class="menu-left">
-          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
-        </div>
+      <span class="dropdownArrow" data-arrow="tingkatakhir">
+        {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="tingkatakhir"
+      style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/undangan"
+        class="submenu-link {{ Request::is('undangan', 'undangankolokium', 'undanganseminar', 'undangansidang') ? 'active-submenu' : '' }}">
+        <i class="bi bi-envelope-open"></i> Undangan
       </a>
+      <a href="/kolokium"
+        class="submenu-link {{ Request::is('kolokium') ? 'active-submenu' : '' }}">
+        <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
+      </a>
+      <a href="/seminar"
+        class="submenu-link {{ Request::is('seminar') ? 'active-submenu' : '' }}">
+        <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
+      </a>
+      <a href="/sidang"
+        class="submenu-link {{ Request::is('sidang') ? 'active-submenu' : '' }}">
+        <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
+      </a>
+    </div>
 
-      <script>
-        document.getElementById('dropdownToggle').addEventListener('click', function(e) {
+    <!-- BTN KONTEN ===================== -->
+    <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+      <div class="menu-left">
+        <i class="bi bi-collection"></i>
+        <span> Konten </span>
+      </div>
+      <span class="dropdownArrow" data-arrow="konten">
+        {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="konten"
+      style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/kategorigaleri"
+        class="submenu-link {{ Request::is('kategorigaleri', 'kategorigaleri/create', 'kategorigaleri/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-clipboard-check"></i> Kategori Galeri
+      </a>
+      <a href="/galeri"
+        class="submenu-link {{ Request::is('galeri', 'galeri/create', 'galeri/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-images"></i> Galeri
+      </a>
+      <a href="/kategoriartikel"
+        class="submenu-link {{ Request::is('kategoriartikel', 'kategoriartikel/create', 'kategoriartikel/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-clipboard-check"></i> Kategori Artikel
+      </a>
+      <a href="/artikel"
+        class="submenu-link {{ Request::is('artikel', 'artikel/create', 'artikel/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-layout-text-window"></i> Artikel
+      </a>
+      <a href="/review-alumni"
+        class="submenu-link {{ Request::is('review-alumni', 'review-alumni/create', 'review-alumni/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-star"></i>  Review Alumni
+      </a>
+      <a href="/konten-dept"
+        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-laptop"></i> Konten Departemen
+      </a>
+      <a href="/kontenjenjang"
+        class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-house-door"></i> Konten Jenjang
+      </a>
+      <a href="/mitra"
+        class="submenu-link {{ Request::is('mitra', 'mitra/create', 'mitra/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-person-check"></i> Mitra
+      </a>
+    </div>
+
+    <!-- BTN SDM ===================== -->
+    <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
+      <div class="menu-left">
+        <i class="bi bi-people-fill"></i>
+        <span> Sumber Daya Manusia </span>
+      </div>
+      <span class="dropdownArrow" data-arrow="staffdept">
+        {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="staffdept"
+      style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/kategoristaff"
+        class="submenu-link {{ Request::is('kategoristaff', 'kategoristaff/create', 'kategoristaff/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
+      </a>
+      <a href="/staff-dept"
+        class="submenu-link {{ Request::is('staff-dept', 'staff-dept/create', 'staff-dept/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-check2-circle"></i> Staff Departemen
+      </a>
+      <a href="/ketuadhh"
+        class="submenu-link {{ Request::is('ketuadhh', 'ketuadhh/create', 'ketuadhh/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-calendar-event"></i> Ketua DHH
+      </a>
+    </div>
+    
+    <!-- PEMBATAS EMAS ===================== -->
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
+
+    <!-- BTN ADMIN ===================== -->
+    <a href="/admprofile" class="menu">
+      <div class="menu-left">
+        <i class="bi bi-person-badge"></i> <span> Profil Admin </span>
+      </div>
+      <span class="dropdownArrow"></span>
+    </a>
+    <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
+  
+    <script>
+      document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
           e.preventDefault();
-          var menu = document.getElementById('dropdownMenu');
-          var arrow = document.getElementById('dropdownArrow');
-          var isOpen = menu.style.display === 'flex';
-          menu.style.display = isOpen ? 'none' : 'flex';
-          arrow.innerHTML = isOpen ? '&#9650;' : '&#9660;'; // atas: &#9650;, bawah: &#9660;
-       });
-      </script>
 
-    </aside>
+          const target = this.getAttribute('data-dropdown');
+          const menu = document.querySelector(`[data-menu="${target}"]`);
+          const arrow = document.querySelector(`[data-arrow="${target}"]`);
+          const isOpen = menu.style.display === 'flex';
 
-    <!-- MAIN CONTENT -->
-    <main class="content">
+          // Tutup semua dulu
+          document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+          document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-        <div class="syarat-card">
-            <h2 class="page-title">Persyaratan Sidang Akhir</h2>
-
-            <ol class="syarat-list">
-                <li><b>Formulir Pendaftaran Ujian Akhir Sarjana</b><br>
-                    Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
-                </li>
-                <li><b>Telah Menyelesaikan Seluruh Mata Kuliah.</b><br>
-                    Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
-                </li>
-                <li><b>Bukti Pelunasan SPP</b><br>
-                    Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
-                </li>
-                <li><b>Buku Konsultasi</b><br>
-                    Mahasiswa diminta menyerahkan buku konsultasi yang telah diisi lengkap dan ditandatangani oleh dosen pembimbing.
-                </li>
-                <li><b>Draft Skripsi yang Siap Ujian</b><br>
-                    Mahasiswa diminta membawa draft skripsi yang telah ditandatangani oleh Komisi Pembimbing dan Ketua Departemen. (Sebanyak 3-4 eksemplar wajib diserahkan secara fisik ke bagian TU.)
-                </li>
-                <li><b>Proceeding dan Ringkasan (CD & Hardcopy)</b><br>
-                    Mahasiswa diminta membawa proceeding (berbahasa Inggris) dan ringkasan skripsi. Siapkan juga 1 CD dan 1 hardcopy masing-masing untuk diserahkan secara langsung ke TU.
-                </li>
-            </ol>
-
-            <div class="upload-section">
-                <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
-                <div class="form-group">
-                    <label>Upload Formulir Pendaftaran Sidang Akhir</label>
-                    <input type="file">
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Bukti TF / SPP Lunas</label>
-                    <input type="file">
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-submit">Simpan</button>
-                </div>
-            </div>
-
+          // Kalau belum terbuka, buka
+          if (!isOpen) {
+            menu.style.display = 'flex';
+            arrow.innerHTML = '&#9660;';
+          }
+        });
+      });
+    </script>
+  </aside>
+  
+<!-- MAIN CONTENT -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Data Pendaftar Komprehensif</h2>
         </div>
-
-    </main>
+        <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered align-middle mb-0">
+                      <thead class="table-light">
+                          <tr>
+                              <th class="text-center align-middle" style="width: 22%;">Nama</th>
+                              <th class="text-center align-middle" style="width: 13%;">Form Komprehensif</th>                              
+                              <th class="text-center align-middle" style="width: 13%;">Bukti 110 SKS</th>
+                              <th class="text-center align-middle" style="width: 13%;">Bukti SPP</th>
+                              <th class="text-center align-middle" style="width: 13%;">Kartu Kehadiran</th>
+                              <th class="text-center align-middle" style="width: 13%;">Verifikasi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($pendaftar as $pendaftars)
+                          <tr>
+                              <td class="align-middle text-center">{{ $pendaftars->mahasiswa->nama }}</td>
+                              <td class="align-middle text-center">
+                                @if($pendaftars->formulir)
+                                  <a href="{{ route('syaratkomprehensifmhs.show', $pendaftars->id) }}" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                                                                                                                          
+                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                                  </a>
+                                @endif
+                              </td>                              
+                              <td class="align-middle text-center">
+                                @if($pendaftars->bukti_sks)
+                                  <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                      <p class="bi bi-eye" style="font-size: 18px"> Lihat</p> 
+                                  </a>
+                                @endif
+                              </td>
+                              <td class="align-middle text-center">
+                                @if($pendaftars->bukti_spp)
+                                  <a href="{{asset($pendaftars->bukti_spp)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                                  </a>
+                                @endif
+                              </td>
+                              <td class="align-middle text-center">
+                                @if($pendaftars->bukti_kehadiran)
+                                  <a href="{{asset($pendaftars->bukti_kehadiran)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">
+                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p> 
+                                  </a>
+                                @endif
+                              </td>
+                              <td>     
+                                 @if ($pendaftars->status == 'pending')                           
+                                  <form action="{{ route('syaratkomprehensifmhs.setujui', $pendaftars->id) }}" method="POST" class="d-inline">
+                                      @csrf
+                                      <button type="submit" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                                      </button>
+                                  </form>                                       
+                                  
+                                  <form action="{{ route('syaratkomprehensifmhs.tolak', $pendaftars->id) }}" method="POST" class="d-inline">
+                                      @csrf
+                                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                          <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                                      </button>
+                                  </form>
+                                @elseif ($pendaftars->status == 'disetujui')
+                                  <span class="text-success fw-bold">Disetujui</span>
+                                @endif
+                              </td>
+                          </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>              
+            </div>          
+        </div>
+    </div>
+  </main>
 </div>
 @endsection

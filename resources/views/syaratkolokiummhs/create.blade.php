@@ -83,82 +83,80 @@
 
     <!-- MAIN CONTENT -->
     <main class="content">
-
-        <div class="syarat-card">
-            <h2 class="page-title">Persyaratan Kolokium</h2>
-
-            {{-- Alert Success --}}
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            {{-- Alert Error --}}
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif                        
-              <ol class="syarat-list">
-                  <li><b>Batas Waktu Pengurusan Administrasi</b><br>
-                      Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
-                  </li>
-                  <li><b>Formulir Pendaftaran Kolokium</b><br>
-                      Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB).
-                  </li>
-                  <li><b>Bukti Telah Menyelesaikan Minimal 110 SKS</b><br>
-                      Lampirkan bukti jumlah SKS yang telah ditempuh, dengan total minimal 110 SKS.
-                  </li>
-                  <li><b>Status Mahasiswa Aktif (Telah Melunasi SPP)</b><br>
-                      Unggah bukti pembayaran atau tangkapan layar status mahasiswa aktif (TF/SPP Lunas) dari sistem akademik.
-                  </li>
-                  <li><b>Makalah Kolokium</b><br>
-                      Unggah makalah kolokium dalam bentuk foto atau hasil scan yang jelas.
-                  </li>
-                  <li><b>Map Folio (4 Buah)</b><br>
-                      Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi jurusan setelah semua dokumen diunggah secara daring.
-                  </li>
-              </ol>
-
-            @if($syarat && $syarat->status === 'disetujui')
-              <div class="alert alert-success">
-                  Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi.
+      <div class="syarat-card">
+          <h2 class="page-title">Persyaratan Kolokium</h2>
+          {{-- Alert Success --}}
+          @if (session('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-            @else
-              <div class="upload-section">
-                  <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
-                  <form action="{{ route('syaratkolokiummhs.store') }}" method="POST" enctype="multipart/form-data">
-                      @csrf
-                      <div class="form-group">
-                          <label>Upload Formulir Pendaftaran Kolokium</label>
-                          <input type="file" name="formulir" accept=".pdf,.jpg,.jpeg,.png" required>
-                      </div>
+          @endif
 
-                      <div class="form-group">
-                          <label>Upload Bukti Menyelesaikan 110 SKS</label>
-                          <input type="file" name="bukti_sks" accept=".pdf,.jpg,.jpeg,.png" required>
-                      </div>
-
-                      <div class="form-group">
-                          <label>Upload Bukti TF / SPP Lunas</label>
-                          <input type="file" name="bukti_spp" accept=".pdf,.jpg,.jpeg,.png" required>
-                      </div>                      
-
-                      <div class="form-group">
-                        <label>Upload Bukti Kehadiran Kolokium</label>
-                        <input type="file" name="bukti_kehadiran" accept=".pdf,.jpg,.jpeg,.png" required>
-                      </div>
-
-                      <div class="form-actions">
-                          <button type="submit" class="btn-submit">Simpan</button>
-                      </div>
-                  </form>
+          {{-- Alert Error --}}
+          @if (session('error'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ session('error') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-            @endif
-        </div>
+          @endif                        
+            <ol class="syarat-list">
+                <li><b>Batas Waktu Pengurusan Administrasi</b><br>
+                    Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
+                </li>
+                <li><b>Formulir Pendaftaran Kolokium</b><br>
+                    Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB).
+                </li>
+                <li><b>Bukti Telah Menyelesaikan Minimal 110 SKS</b><br>
+                    Lampirkan bukti jumlah SKS yang telah ditempuh, dengan total minimal 110 SKS.
+                </li>
+                <li><b>Status Mahasiswa Aktif (Telah Melunasi SPP)</b><br>
+                    Unggah bukti pembayaran atau tangkapan layar status mahasiswa aktif (TF/SPP Lunas) dari sistem akademik.
+                </li>
+                <li><b>Makalah Kolokium</b><br>
+                    Unggah makalah kolokium dalam bentuk foto atau hasil scan yang jelas.
+                </li>
+                <li><b>Map Folio (4 Buah)</b><br>
+                    Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi jurusan setelah semua dokumen diunggah secara daring.
+                </li>
+            </ol>
+
+          @if($syarat && $syarat->status === 'disetujui')
+            <div class="alert alert-success">
+                Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi.
+            </div>
+          @else
+            <div class="upload-section">
+                <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
+                <form action="{{ route('syaratkolokiummhs.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label>Upload Formulir Pendaftaran Kolokium</label>
+                        <input type="file" name="formulir" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Bukti Menyelesaikan 110 SKS</label>
+                        <input type="file" name="bukti_sks" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Bukti TF / SPP Lunas</label>
+                        <input type="file" name="bukti_spp" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>                      
+
+                    <div class="form-group">
+                      <label>Upload Bukti Kehadiran Kolokium</label>
+                      <input type="file" name="bukti_kehadiran" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+          @endif
+      </div>
     </main>
 </div>
 
