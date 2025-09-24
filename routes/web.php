@@ -33,6 +33,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\AdmProfileController;
+use App\Http\Controllers\AdmRecapDataController;
 
 // ROUTE MAHASISWA
 use App\Http\Controllers\HomeController;
@@ -343,6 +344,10 @@ Route::get('undangan/{undangan}', [UndanganController::class, 'show'])->name('un
 Route::get('undangan/{undangan}/edit', [UndanganController::class, 'edit'])->name('undangan.edit');
 Route::put('undangan/{undangan}', [UndanganController::class, 'update'])->name('undangan.update');
 Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->name('undangan.destroy');
+
+// Recap Data Admin
+Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
+
 
 // Undangan Kolokium
 Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');

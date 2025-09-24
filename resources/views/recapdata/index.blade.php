@@ -19,10 +19,10 @@
         Request::is('galeri') || Request::is('galeri/create') || Request::is('galeri/*/edit') || 
         Request::is('kategoriartikel') || Request::is('kategoriartikel/create') || Request::is('kategoriartikel/*/edit') || 
         Request::is('artikel') || Request::is('artikel/create') || Request::is('artikel/*/edit') || 
-        Request::is('review-alumni') || Request::is('review-alumni/create') || Request::is('review-alumni/*/edit') |
+        Request::is('review-alumni') || Request::is('review-alumni/create') || Request::is('review-alumni/*/edit') || 
         Request::is('konten-dept') || Request::is('konten-dept/show') || Request::is('konten-dept/*/edit') || 
         Request::is('kontenjenjang') || Request::is('kontenjenjang/show') || Request::is('kontenjenjang/*/edit') || 
-        Request::is('mitra'); Request::is('mitra/create') || Request::is('mitra/*/edit') || 
+        Request::is('mitra') || Request::is('mitra/create') || Request::is('mitra/*/edit');
       $isStaffDeptActive = 
         Request::is('kategoristaff') || Request::is('kategoristaff/create') || Request::is('kategoristaff/*/edit') |
         Request::is('staff-dept') || Request::is('staff-dept/create') || Request::is('staff-dept/*/edit') |
@@ -169,13 +169,13 @@
     </script>
   </aside>
     
-<!-- Halaman - Artikel Admin Dashboard -->
+<!-- Halaman - RECAP DATA ADMIN -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Artikel</h2>
           <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i>Tambah Data
+            <i class="bi bi-download"></i>Download File Excel
           </a>
     </div>
     @if(session('success'))
@@ -191,26 +191,23 @@
                     <thead class="table-light ">
                         <tr>
                             <th>No.</th>
-                            <th>Foto</th>
-                            <th>Tanggal</th>
-                            <th>Judul</th>
-                            <th>Nama Kategori</th>
-                            <th>Aksi</th>
+                            <th>Edit/Hapus</th>
+                            <th>Nama</th>
+                            <th>NIM</th>
+                            <th>Pembimbing 1</th>
+                            <th>Pembimbing 2</th>
+                            <th>Sem Genap</th>
+                            <th>Kolokium</th>
+                            <th>Seminar</th>
+                            <th>Ujian</th>
+                            <th>Ket. Sem. Ganjil 2024/2025</th>
+                            <th>Genap 2024/2025</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Data (dummy) -->
                         <tr>
                             <td>1</td>
-                            <td>
-                                <img src="https://i.pinimg.com/736x/44/e5/5a/44e55a856086223e0988b5445a46753d.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td>12/03/2025</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Penerimaan Sertifikat Webinar berhasil mendapatkan sebanyak 1234 audience</td>
-                            <td>Prestasi</td>
                             <td>
                             <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
@@ -219,28 +216,39 @@
                                 <i class="bi bi-trash" style="font-size: 18px;"></i>
                             </button>
                             </td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Hasna Nabiilah Widiani</td>
+                            <td>J0403221043</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Bagas Saputra</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Nanaa Caine</td>
+                            <td>8</td>
+                            <td>22/09/2023</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">22/09/2023</td>
+                            <td>22/09/2023</td>
+                            <td>SKL sudah</td>
+                            <td>Lulus</td>
                         </tr>
+
                         <tr>
                             <td>2</td>
-                            <td><img src="https://i.pinimg.com/236x/a2/30/cd/a230cdb07b8c98ffe445617dbf566860.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                            <td>
+                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-trash" style="font-size: 18px;"></i>
+                            </button>
                             </td>
-                            <td>13/03/2024</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Video profile DHH</td>
-                            <td>Akademik</td>
-                            <!-- Tombol Aksi -->
-                        <td class="text-center">
-                            <div style="display: flex; justify-content: center; gap: 6px;">
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
-                            </div>
-                        </td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Jaki Bagasim</td>
+                            <td>J0403221099</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Bagas Saputra</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Nanaa Caine</td>
+                            <td>8</td>
+                            <td>22/09/2023</td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">22/09/2023</td>
+                            <td>22/09/2023</td>
+                            <td>SKL sudah</td>
+                            <td>Lulus</td>
+                        </tr>
                         <!-- Tambahkan baris lain sesuai kebutuhan -->
                     </tbody>
                 </table>
@@ -249,29 +257,3 @@
     </div>
 </div>
 @endsection
-
-<!-- 
-<h1>Daftar Artikel</h1>
-<a href="{{ url('artikel/create') }}">Tambah Artikel</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Judul</th>
-        <th>Aksi</th>
-    </tr>
-@foreach($artikels as $item)
-    <tr>
-        <td>{{ $item->id }}</td>
-        <td>{{ $item->judul }}</td>
-        <td>
-            <a href="{{ url('artikel/' . $item->id) }}">Show</a>
-            <a href="{{ url('artikel/' . $item->id . '/edit') }}">Edit</a>
-            <form action="{{ url('artikel/' . $item->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    @endforeach
-</table> -->

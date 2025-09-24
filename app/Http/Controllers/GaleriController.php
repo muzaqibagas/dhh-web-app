@@ -60,7 +60,7 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        $kategori = Kategori::all();
+        $kategori = KategoriGaleri::all();
         return view('galeri.edit', compact('galeri', 'kategori'));
     }
 
@@ -71,7 +71,7 @@ class GaleriController extends Controller
     {
         $data = $request->validate([
             'id_user' => 'required|exists:users,id',
-            'id_kategori' => 'required|exists:kategoris,id',
+            'id_kategori' => 'required|exists:kategori_galeris,id',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|string|max:255',
             'tipe' => 'required|in:gambar,video',
