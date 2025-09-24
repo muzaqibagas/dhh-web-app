@@ -193,8 +193,8 @@
             <div class="col-sm-10">
               <select name="tipe" id="tipe" class="form-select" required>
                 <option value="">Pilih tipe</option>
-                <option value="foto">Foto</option>
-                <option value="video">Video</option>
+                <option value="gambar">Gambar</option>
+                <option value="video">Video</option>  
               </select>
             </div>
           </div>
@@ -202,11 +202,11 @@
           <div class="row mb-3">
             <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
             <div class="col-sm-10">
-              <select name="kategori" id="kategori" class="form-select" required>
+              <select name="id_kategorigaleri" id="kategori" class="form-select" required>
                 <option value="">Pilih kategori</option>
-                <option value="kegiatan">Kegiatan</option>
-                <option value="prestasi">Prestasi</option>
-                <option value="umum">Umum</option>
+                @foreach ($kategorigaleri as $kategori)
+                  <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                @endforeach
               </select>
             </div>
           </div>
@@ -216,15 +216,33 @@
             <div class="col-sm-10">
               <input type="date" name="tanggal" id="tanggal" class="form-control" required>
             </div>
-          </div>
+          </div>          
 
-          <div class="row mb-3" id="file-upload-wrapper" style="display: none;">
-            <label for="file" class="text-start col-sm-2 col-form-label">Upload</label>
+          <div class="row mb-3" id="gambar-upload-wrapper" style="display: none;">
+            <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
             <div class="col-sm-10">
-              <input type="file" name="file" id="file" class="form-control">
-              <div id="preview" class="mt-3"></div>
+              <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
+              <div id="preview-gambar" class="mt-3"></div>
             </div>
           </div>
+
+          <!-- Untuk Video -->
+          <div class="row mb-3" id="video-upload-wrapper" style="display: none;">
+            <label for="video_file" class="text-start col-sm-2 col-form-label">Upload Video</label>
+            <div class="col-sm-10">
+              <input type="file" name="video_file" id="video_file" class="form-control" accept="video/*">
+              <div id="preview-video" class="mt-3"></div>
+            </div>
+          </div>
+
+          <div class="row mb-3" id="url-upload-wrapper" style="display: none;">
+            <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
+            <div class="col-sm-10">
+              <input type="url" name="video_url" id="video_url" class="form-control" placeholder="https://youtube.com/..." >
+              <div id="preview-url" class="mt-3"></div>
+            </div>
+          </div>
+
 
           <div class="text-end">
             <button type="submit" class="btn btn-success">Simpan</button>
@@ -236,42 +254,151 @@
 </div>
 
 <script>
-  document.getElementById('tipe').addEventListener('change', function() {
-    const fileWrapper = document.getElementById('file-upload-wrapper');
-    const preview = document.getElementById('preview');
-    fileWrapper.style.display = this.value ? 'flex' : 'none';
-    preview.innerHTML = '';
-    document.getElementById('file').value = null;
-  });
+  const tipeSelect = document.getElementById('tipe');
 
-  document.getElementById('file').addEventListener('change', function(e) {
-    const preview = document.getElementById('preview');
-    preview.innerHTML = '';
+  // Input
+  const gambarInput = document.getElementById('gambar');
+  const videoFileInput = document.getElementById('video_file');
+  const videoUrlInput = document.getElementById('video_url');
 
+  // Wrapper
+  const gambarWrapper = document.getElementById('gambar-upload-wrapper');
+  const videoWrapper = document.getElementById('video-upload-wrapper');
+  const urlWrapper = document.getElementById('url-upload-wrapper');
+
+  // Preview
+  const previewGambar = document.getElementById('preview-gambar');
+  const previewVideo = document.getElementById('preview-video');
+  const previewUrl = document.getElementById('preview-url');
+
+  function resetInputs() {
+    gambarInput.value = '';
+    videoFileInput.value = '';
+    videoUrlInput.value = '';
+    previewGambar.innerHTML = '';
+    previewVideo.innerHTML = '';
+    previewUrl.innerHTML = '';
+  }
+
+  function updateInputState() {
+    const tipe = tipeSelect.value;
+
+    if (tipe === 'gambar') {
+      gambarWrapper.style.display = 'flex';
+      videoWrapper.style.display = 'none';
+      urlWrapper.style.display = 'none';
+
+      gambarInput.required = true;
+      videoFileInput.required = false;
+      videoUrlInput.required = false;
+
+      videoFileInput.disabled = true;
+      videoUrlInput.disabled = true;
+    } else if (tipe === 'video') {
+      gambarWrapper.style.display = 'none';
+      videoWrapper.style.display = 'flex';
+      urlWrapper.style.display = 'flex';
+
+      gambarInput.required = false;
+      videoFileInput.disabled = false;
+      videoUrlInput.disabled = false;
+
+      enforceVideoRule(); // cek apakah salah satu wajib diisi
+    } else {
+      gambarWrapper.style.display = 'none';
+      videoWrapper.style.display = 'none';
+      urlWrapper.style.display = 'none';
+    }
+
+    resetInputs();
+  }
+
+  tipeSelect.addEventListener('change', updateInputState);
+  updateInputState();
+
+  // Wajib isi salah satu (file video atau url)
+  function enforceVideoRule() {
+    if (tipeSelect.value === 'video') {
+      if (videoFileInput.value) {
+        videoUrlInput.required = false;
+        videoFileInput.required = false;
+        videoUrlInput.disabled = true;
+      } else if (videoUrlInput.value) {
+        videoFileInput.required = false;
+        videoUrlInput.required = false;
+        videoFileInput.disabled = true;
+      } else {
+        videoFileInput.required = true;
+        videoUrlInput.required = true;
+        videoFileInput.disabled = false;
+        videoUrlInput.disabled = false;
+      }
+    }
+  }
+
+  videoFileInput.addEventListener('input', enforceVideoRule);
+  videoUrlInput.addEventListener('input', enforceVideoRule);
+
+  // Preview gambar
+  gambarInput.addEventListener('change', function(e) {
+    previewGambar.innerHTML = '';
     const file = e.target.files[0];
-    if (file) {
-      const type = file.type;
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = function(event) {
-        if (type.startsWith('image/')) {
-          const img = document.createElement('img');
-          img.src = event.target.result;
-          img.className = 'img-thumbnail';
-          img.style.maxHeight = '200px';
-          preview.appendChild(img);
-        } else if (type.startsWith('video/')) {
-          const video = document.createElement('video');
-          video.src = event.target.result;
-          video.controls = true;
-          video.className = 'w-100';
-          video.style.maxHeight = '300px';
-          preview.appendChild(video);
-        } else {
-          preview.innerText = 'Format tidak didukung.';
-        }
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.className = 'img-thumbnail';
+        img.style.maxHeight = '200px';
+        previewGambar.appendChild(img);
       };
       reader.readAsDataURL(file);
     }
   });
+
+  // Preview video file
+  videoFileInput.addEventListener('change', function(e) {
+    previewVideo.innerHTML = '';
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.src = URL.createObjectURL(file);
+      video.controls = true;
+      video.className = 'w-100';
+      video.style.maxHeight = '300px';
+      previewVideo.appendChild(video);
+    }
+    enforceVideoRule();
+  });
+
+  // Preview video URL (YouTube embed)
+  videoUrlInput.addEventListener('input', function(e) {
+    previewUrl.innerHTML = '';
+    const url = e.target.value;
+    if (url) {
+      let embedUrl = url;
+      let videoId = null;
+
+      if (url.includes('youtube.com/watch?v=')) {
+        videoId = url.split('v=')[1].split('&')[0];
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1].split('?')[0];
+      }
+
+      if (videoId) {
+        embedUrl = 'https://www.youtube.com/embed/' + videoId;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.width = '320';
+      iframe.height = '180';
+      iframe.src = embedUrl;
+      iframe.frameBorder = '0';
+      iframe.allowFullscreen = true;
+      previewUrl.appendChild(iframe);
+    }
+    enforceVideoRule();
+  });
 </script>
+
 @endsection

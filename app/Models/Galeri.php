@@ -12,7 +12,7 @@ class Galeri extends Model
     protected $table = 'galeris';
     protected $fillable = [
         'id_user', 
-        'id_kategorigaleris', 
+        'id_kategorigaleri', 
         'judul', 
         'tanggal', 
         'tipe', 
