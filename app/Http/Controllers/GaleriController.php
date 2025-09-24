@@ -32,14 +32,37 @@ class GaleriController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_kategori' => 'required|exists:kategoris,id',
+            'id_kategorigaleri' => 'required|exists:kategori_galeris,id',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|string|max:255',
             'tipe' => 'required|in:gambar,video',
-            'video' => 'nullable|string|max:255',
-            'gambar' => 'nullable|string|max:255',
+            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
+            'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',
+            'video_url' => 'nullable|url'
         ]);
+
+        if ($request->tipe == 'gambar' && $request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('galeri_upload/gambar'), $filename);
+            $data['gambar'] = 'galeri_upload/gambar/' . $filename;
+            $data['video'] = null;
+        }
+
+        if ($request->tipe == 'video') {
+            if ($request->hasFile('video_file')) {
+                $file = $request->file('video_file');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('galeri_upload/video'), $filename);
+                $data['video'] = 'galeri_upload/video/' . $filename;
+            } elseif ($request->filled('video_url')) {
+                $data['video'] = $request->video_url; // simpan link URL
+            }
+            $data['gambar'] = null;
+        }
+
+        $data['id_user'] = auth()->id();
+
         $insert = Galeri::create($data);
         if ($insert)
             return redirect()->route('galeri.index')->with('success', 'Data berhasil disimpan!');
@@ -59,9 +82,9 @@ class GaleriController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Galeri $galeri)
-    {
-        $kategori = Kategori::all();
-        return view('galeri.edit', compact('galeri', 'kategori'));
+    {        
+        $kategorigaleri = KategoriGaleri::all();
+        return view('galeri.edit', compact('galeri', 'kategorigaleri'));
     }
 
     /**
@@ -70,14 +93,45 @@ class GaleriController extends Controller
     public function update(Request $request, Galeri $galeri)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_kategori' => 'required|exists:kategoris,id',
+            'id_kategorigaleri' => 'required|exists:kategori_galeris,id',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|string|max:255',
             'tipe' => 'required|in:gambar,video',
-            'video' => 'nullable|string|max:255',
-            'gambar' => 'nullable|string|max:255',
+            'video_url' => 'nullable|string|max:255',
+            'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',
+            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
         ]);
+
+        // Handle gambar
+        if ($request->tipe == 'gambar' && $request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('galeri_upload/gambar'), $filename);
+            $data['gambar'] = 'galeri_upload/gambar/' . $filename;
+            $data['video'] = null;
+        }
+
+        // Handle video
+        if ($request->tipe == 'video') {
+            if ($request->hasFile('video_file')) {
+                $file = $request->file('video_file');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('galeri_upload/video'), $filename);
+                $data['video'] = 'galeri_upload/video/' . $filename;
+            } elseif ($request->filled('video_url')) {
+                $data['video'] = $request->video_url;
+            }
+            $data['gambar'] = null;
+        }
+    
+        $data['id_user'] = auth()->id();
+
+        $galeri->fill($data);
+
+        if (!$galeri->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan pada data.');
+        }
+
         $update = $galeri->update($data);
         if ($update)
             return redirect()->route('galeri.index')->with('success', 'Data berhasil diperbarui!');

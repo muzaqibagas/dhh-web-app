@@ -151,8 +151,8 @@
           e.preventDefault();
 
           const target = this.getAttribute('data-dropdown');
-          const menu = document.querySelector(`[data-menu="${target}"]`);
-          const arrow = document.querySelector(`[data-arrow="${target}"]`);
+          const menu = document.querySelector([data-menu="${target}"]);
+          const arrow = document.querySelector([data-arrow="${target}"]);
           const isOpen = menu.style.display === 'flex';
 
           // Tutup semua dulu
@@ -169,69 +169,272 @@
     </script>
   </aside>
 
-  <!-- MAIN KONTEN -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+        <h2 class="adm-title">Edit Data Galeri</h2>
+      </div>
+      @if(session('info'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+              {{ session('info') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+      @endif
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card shadow-sm p-4">
+            <form action="{{ route('galeri.update', $galeri->id) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
 
-    <h1>Edit Galeri</h1>
+              <div class="row mb-3">
+                <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
+                <div class="col-sm-10">
+                  <input type="text" name="judul" id="judul" class="form-control"
+                         value="{{ old('judul', $galeri->judul) }}" required>
+                </div>
+              </div>
 
-    <form action="{{ route('galeri.update', $galeri->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+              <div class="row mb-3">
+                <label for="tipe" class="text-start col-sm-2 col-form-label">Tipe</label>
+                <div class="col-sm-10">
+                  <select name="tipe" id="tipe" class="form-select" required>
+                    <option value="">Pilih tipe</option>
+                    <option value="gambar" {{ $galeri->tipe == 'gambar' ? 'selected' : '' }}>Gambar</option>
+                    <option value="video" {{ $galeri->tipe == 'video' ? 'selected' : '' }}>Video</option>
+                  </select>
+                </div>
+              </div>
 
-        <label for="judul">Judul:</label>
-        <input type="text" name="judul" id="judul" value="{{ $galeri->judul }}"><br>
+              <div class="row mb-3">
+                <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
+                <div class="col-sm-10">
+                  <select name="id_kategorigaleri" id="kategori" class="form-select" required>
+                    <option value="">Pilih kategori</option>
+                    @foreach ($kategorigaleri as $kategori)
+                      <option value="{{ $kategori->id }}"
+                        {{ $galeri->id_kategorigaleri == $kategori->id ? 'selected' : '' }}>
+                        {{ $kategori->nama }}
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
 
-        <label for="tanggal">Tanggal:</label>
-        <input type="date" name="tanggal" id="tanggal" value="{{ $galeri->tanggal }}"><br>
+              <div class="row mb-3">
+                <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
+                <div class="col-sm-10">
+                  <input type="date" name="tanggal" id="tanggal" class="form-control"
+                         value="{{ old('tanggal', $galeri->tanggal) }}" required>
+                </div>
+              </div>
 
-        <label for="tipe">Tipe:</label>
-        <select name="tipe" id="tipe" onchange="toggleMediaInput()">
-            <option value="gambar" {{ $galeri->tipe == 'gambar' ? 'selected' : '' }}>Gambar</option>
-            <option value="video" {{ $galeri->tipe == 'video' ? 'selected' : '' }}>Video</option>
-        </select><br>
+              {{-- Upload Gambar --}}
+              <div class="row mb-3" id="gambar-upload-wrapper" style="display:none;">
+                <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
+                <div class="col-sm-10">
+                  <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
+                  @if($galeri->tipe == 'gambar' && $galeri->gambar)
+                    <div class="mt-3">
+                      <img src="{{ asset($galeri->gambar) }}" class="img-thumbnail" style="max-height:200px;">
+                    </div>
+                  @endif
+                  <div id="preview-gambar" class="mt-3"></div>
+                </div>
+              </div>
 
-        <div id="gambar-input">
-            <label for="gambar">Upload Gambar Baru:</label>
-            <input type="file" name="gambar" id="gambar" accept="image/*"><br>
-            <small>Gambar saat ini: {{ $galeri->gambar }}</small><br>
+              {{-- Upload Video --}}
+              <div class="row mb-3" id="video-upload-wrapper" style="display:none;">
+                <label for="video_file" class="text-start col-sm-2 col-form-label">Upload Video</label>
+                <div class="col-sm-10">
+                  <input type="file" name="video_file" id="video_file" class="form-control" accept="video/*">
+                  @if($galeri->tipe == 'video' && $galeri->video && !Str::startsWith($galeri->video, ['http', 'https']))
+                    <div class="mt-3">                      
+                      <video src="{{ asset($galeri->video) }}" controls class="w-100" style="max-height:300px;"></video>
+                    </div>
+                  @endif
+                  <div id="preview-video" class="mt-3"></div>
+                </div>
+              </div>
+
+              {{-- URL Video --}}
+              <div class="row mb-3" id="url-upload-wrapper" style="display:none;">
+                <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
+                <div class="col-sm-10">
+                  <input type="url" name="video_url" id="video_url" class="form-control" value="" placeholder="https://youtube.com/...">                  
+                  @if($galeri->tipe == 'video' && $galeri->video)
+                    @php
+                      preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
+                      $youtubeId = $matches[1] ?? null;
+                    @endphp
+
+                    @if($youtubeId)
+                    <div class="mt-3">
+                      <iframe width="300" height="180" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>                          
+                    </div>                          
+                    @else
+                      <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
+                    @endif
+                  @endif
+
+                  <div id="preview-url" class="mt-3"></div>
+                </div>
+              </div>
+
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  const tipeSelect = document.getElementById('tipe');
 
-        <div id="video-input">
-            <label for="video">Video (link):</label>
-            <input type="text" name="video" id="video" value="{{ $galeri->video }}"><br>
-        </div>
+  // Input
+  const gambarInput = document.getElementById('gambar');
+  const videoFileInput = document.getElementById('video_file');
+  const videoUrlInput = document.getElementById('video_url');
 
-        <label for="id_user">User ID:</label>
-        <input type="number" name="id_user" id="id_user" value="{{ $galeri->id_user }}"><br>
+  // Wrapper
+  const gambarWrapper = document.getElementById('gambar-upload-wrapper');
+  const videoWrapper = document.getElementById('video-upload-wrapper');
+  const urlWrapper = document.getElementById('url-upload-wrapper');
 
-        <label for="id_kategori">Kategori:</label>
-        <select name="id_kategori" id="id_kategori">
-            @foreach ($kategori as $kat)
-                <option value="{{ $kat->id }}" {{ $galeri->id_kategori == $kat->id ? 'selected' : '' }}>
-                    {{ $kat->nama }}
-                </option>
-            @endforeach
-        </select><br>
+  // Preview
+  const previewGambar = document.getElementById('preview-gambar');
+  const previewVideo = document.getElementById('preview-video');
+  const previewUrl = document.getElementById('preview-url');
 
-        <button type="submit">Update</button>
-        <a href="{{ url('galeri') }}">kembali</a>
-    </form>
+  function resetInputs() {
+    gambarInput.value = '';
+    videoFileInput.value = '';
+    videoUrlInput.value = '';
+    previewGambar.innerHTML = '';
+    previewVideo.innerHTML = '';
+    previewUrl.innerHTML = '';
+  }
 
-    <script>
-        function toggleMediaInput() {
-            const tipe = document.getElementById('tipe').value;
-            const gambarInput = document.getElementById('gambar-input');
-            const videoInput = document.getElementById('video-input');
+  function updateInputState() {
+    const tipe = tipeSelect.value;
 
-            if (tipe === 'gambar') {
-                gambarInput.style.display = 'block';
-                videoInput.style.display = 'none';
-            } else {
-                gambarInput.style.display = 'none';
-                videoInput.style.display = 'block';
-            }
-        }
+    if (tipe === 'gambar') {
+      gambarWrapper.style.display = 'flex';
+      videoWrapper.style.display = 'none';
+      urlWrapper.style.display = 'none';
 
-        // Atur visibilitas sesuai data saat halaman dibuka
-        document.addEventListener('DOMContentLoaded', toggleMediaInput);
-    </script>
+      gambarInput.required = true;
+      videoFileInput.required = false;
+      videoUrlInput.required = false;
+
+    } else if (tipe === 'video') {
+      gambarWrapper.style.display = 'none';
+      videoWrapper.style.display = 'flex';
+      urlWrapper.style.display = 'flex';
+
+      gambarInput.required = false;
+      videoFileInput.disabled = false;
+      videoUrlInput.disabled = false;
+
+      enforceVideoRule(); // cek apakah salah satu sudah terisi
+    } else {
+      gambarWrapper.style.display = 'none';
+      videoWrapper.style.display = 'none';
+      urlWrapper.style.display = 'none';
+    }    
+  }
+
+
+  tipeSelect.addEventListener('change', updateInputState);
+  updateInputState();
+
+  // Wajib isi salah satu (file video atau url)
+  function enforceVideoRule() {
+    if (tipeSelect.value === 'video') {
+      if (videoFileInput.value) {
+        videoUrlInput.required = false;
+        videoFileInput.required = false;
+        videoUrlInput.disabled = true;
+        videoFileInput.disabled = false;
+      } else if (videoUrlInput.value) {
+        videoFileInput.disabled = true;
+        videoUrlInput.disabled = false;
+        videoFileInput.required = false;
+        videoUrlInput.required = false;
+      } else {
+        videoFileInput.disabled = false;
+        videoUrlInput.disabled = false;
+        videoFileInput.required = true;
+        videoUrlInput.required = true;
+      }
+    }
+  }
+
+  videoFileInput.addEventListener('input', enforceVideoRule);
+  videoUrlInput.addEventListener('input', enforceVideoRule);
+
+  // Preview gambar
+  gambarInput.addEventListener('change', function(e) {
+    previewGambar.innerHTML = '';
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.className = 'img-thumbnail';
+        img.style.maxHeight = '200px';
+        previewGambar.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Preview video file
+  videoFileInput.addEventListener('change', function(e) {
+    previewVideo.innerHTML = '';
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.src = URL.createObjectURL(file);
+      video.controls = true;
+      video.className = 'w-100';
+      video.style.maxHeight = '300px';
+      previewVideo.appendChild(video);
+    }
+    enforceVideoRule();
+  });
+
+  // Preview video URL (YouTube embed)
+  videoUrlInput.addEventListener('input', function(e) {
+    previewUrl.innerHTML = '';
+    const url = e.target.value;
+    if (url) {
+      let embedUrl = url;
+      let videoId = null;
+
+      if (url.includes('youtube.com/watch?v=')) {
+        videoId = url.split('v=')[1].split('&')[0];
+      } else if (url.includes('youtu.be/')) {
+        videoId = url.split('youtu.be/')[1].split('?')[0];
+      }
+
+      if (videoId) {
+        embedUrl = 'https://www.youtube.com/embed/' + videoId;
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.width = '320';
+      iframe.height = '180';
+      iframe.src = embedUrl;
+      iframe.frameBorder = '0';
+      iframe.allowFullscreen = true;
+      previewUrl.appendChild(iframe);
+    }
+    enforceVideoRule();
+  });
+</script>
 @endsection

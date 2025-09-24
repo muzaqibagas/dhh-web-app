@@ -170,110 +170,82 @@
   </aside>
     
 <!-- MAIN CONTENT -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Galeri</h2>
-        <a href="{{route('galeri.create')}}" class="adm-btn-add text-decoration-none">
-          <i class="bi bi-plus"></i>Tambah Data
-        </a>
-    </div>
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th>No.</th>
-                            <th>Foto</th>
-                            <th>Tanggal</th>
-                            <th>Judul</th>
-                            <th>Tipe</th>
-                            <div> <th>Nama Kategori</th> </div>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data Galeri (dummy) -->
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://image-cdn.flowgpt.com/trans-images/1747063875154-2f5a3123-e2a4-43aa-98dc-3c46b1fe0f46.default.webp" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td>12/03/2025</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce iaculis in massa eget bibendum. Nulla posuere consectetur lorem, ac feugiat ex aliquet quis. Vestibulum fringilla convallis orci, in tincidunt neque gravida at.</td>
-                            <td>Foto</td>
-                            <td>Prestasi</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Fm042tHJbvReJ34V8xGfs0QItSEiAu3t8g&s" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td>13/03/2024</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Video profile DHH</td>
-                            <td>Video</td>
-                            <td>Akademik</td>
-                            <!-- Tombol Aksi -->
-                        <td class="text-center">
-                            <div style="display: flex; justify-content: center; gap: 6px;">
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <!-- Tambahkan baris lain sesuai kebutuhan -->
-                    </tbody>
-                </table>
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Daftar Galeri</h2>
+            <a href="{{route('galeri.create')}}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-plus"></i>Tambah Data
+            </a>
+        </div>
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>No.</th>
+                                <th>Foto</th>
+                                <th>Tanggal</th>
+                                <th>Judul</th>
+                                <th>Tipe</th>
+                                <div> <th>Nama Kategori</th> </div>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($galeris as $i => $galeri)
+                          <tr>
+                              <td>{{ $i+1 }}</td>
+                              <td>
+                                  @if($galeri->tipe == 'gambar' && $galeri->gambar)
+                                      <img src="{{ asset($galeri->gambar) }}" alt="foto" class="img-thumbnail" style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                  @elseif($galeri->tipe == 'video')
+                                      @if(Str::startsWith($galeri->video, ['http', 'https']))
+                                          @php
+                                              preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
+                                              $youtubeId = $matches[1] ?? null;
+                                          @endphp
+                                          @if($youtubeId)
+                                              <iframe width="80" height="45" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>
+                                          @else
+                                              <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
+                                          @endif
+                                      @else
+                                          <video src="{{ asset($galeri->video) }}" controls style="max-width: 80px; max-height: 80px;"></video>
+                                      @endif
+                                  @endif
+                              </td>
+                              <td>{{ $galeri->tanggal }}</td>
+                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $galeri->judul }}</td>
+                              <td>{{ ucfirst($galeri->tipe) }}</td>
+                              <td>{{ $galeri->kategoriGaleri->nama ?? '-' }}</td>
+                              <td class="text-center">
+                                  <a href="{{ route('galeri.edit', $galeri->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                  </a>
+                                  <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST" style="display:inline;">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                          <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                      </button>
+                                  </form>
+                              </td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+  </main>
 </div>
 @endsection
-
-<!-- <h1>Daftar Galeri</h1>
-<a href="{{ url('galeri/create') }}">Tambah Galeri</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Nama</th>
-        <th>Aksi</th>
-    </tr>
-    @foreach($galeris as $item)
-    <tr>
-        <td>{{ $item->id }}</td>
-        <td>{{ $item->judul }}</td>
-        <td>
-            <a href="{{ url('galeri/' . $item->id) }}">Show</a>
-            <a href="{{ url('galeri/' . $item->id . '/edit') }}">Edit</a>
-            <form action="{{ url('galeri/' . $item->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    @endforeach
-</table> -->
