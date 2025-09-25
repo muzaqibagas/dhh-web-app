@@ -50,4 +50,9 @@ class Controller extends BaseController
     {
         return view('guest.artikelguest');    
     }
+
+    public function artikeldetail()
+    {
+        return view('guest.artikeldetail');    
+    }
 }

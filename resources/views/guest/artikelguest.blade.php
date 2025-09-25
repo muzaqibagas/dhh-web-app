@@ -237,7 +237,7 @@
           <input type="text" placeholder="Cari artikel..." class="guest-artikel-search">
         </div>
 
-        <div class="guest-artikel-side-card">
+        <!-- <div class="guest-artikel-side-card">
           <h4>Kategori Artikel</h4>
           <ul class="guest-artikel-categories">
             <li>Akademik</li>
@@ -246,7 +246,36 @@
             <li>Sustainable Development Goals (SDG's)</li>
             <li>Karir</li>
           </ul>
+        </div> -->
+        <div class="guest-artikel-detail-sidebar">
+          <h4 class="guest-artikel-detail-sidebar-title">Kategori Artikel</h4>
+          <ul class="guest-artikel-detail-categories">
+            <li>Akademik</li>
+            <li>Berita</li>
+            <li>Prestasi Civitas</li>
+            <li>Sustainable Development Goals (SDG's)</li>
+            <li>Karir</li>
+          </ul>
         </div>
+        
+        <div class="guest-artikel-detail-sidebar">
+          <h4 class="guest-artikel-detail-sidebar-title">Berita Terkini</h4>
+          <ul class="guest-artikel-detail-latest">
+            <li>
+              <a href="#">Diponegoro Social Political Competition penyelenggara BEM Fisip Universitas Diponegoro (Juara 3)</a>
+              <span class="date">Juli 23, 2025</span>
+            </li>
+            <li>
+              <a href="#">Asia Pacific Forestry Commission penyelenggara International Forestry Students Association</a>
+              <span class="date">Juli 9, 2025</span>
+            </li>
+            <li>
+              <a href="#">The 45th International Forestry Students Symposium tanggal 2-17 Juli 2025 di Afrika Selatan</a>
+              <span class="date">Juli 9, 2025</span>
+            </li>
+          </ul>
+        </div>
+
       </aside>
     </div> <!-- layout -->
   </div> <!-- container -->
