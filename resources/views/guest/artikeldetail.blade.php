@@ -13,7 +13,7 @@
     <div class="col-lg-8 col-md-12">
       <h1 class="guest-artikel-detail-title">
         Dua Mahasiswa IPB University Berjaya di Pemilihan Mahasiswa Berprestasi Nasional 2023
-      </h1>
+      </h1>      
       <p class="guest-artikel-detail-meta">
         Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; Juli 24, 2025
       </p>

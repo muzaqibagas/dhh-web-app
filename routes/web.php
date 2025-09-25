@@ -352,7 +352,6 @@ Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->na
 // Recap Data Admin
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
 
-
 // Undangan Kolokium
 Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
 

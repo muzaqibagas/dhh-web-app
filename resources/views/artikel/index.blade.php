@@ -223,9 +223,7 @@
                                     class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                     <i class="bi bi-pencil" style="font-size: 18px;"></i>
                                   </a>
-                                  <form action="{{ route('artikel.destroy', $artikel->id) }}" 
-                                        method="POST" 
-                                        onsubmit="return confirm('Yakin hapus data ini?')">
+                                  <form action="{{ route('artikel.destroy', $artikel->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 

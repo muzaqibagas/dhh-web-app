@@ -7,6 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use App\Models\Artikel;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -51,8 +53,9 @@ class Controller extends BaseController
         return view('guest.artikelguest');    
     }
 
-    public function artikeldetail()
+    public function artikeldetail(Artikel $artikel)
     {
-        return view('guest.artikeldetail');    
+        $artikels = Artikel::all();        
+        return view('guest.artikeldetail', compact('artikels'));    
     }
 }
