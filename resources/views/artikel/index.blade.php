@@ -168,110 +168,82 @@
       });
     </script>
   </aside>
-    
-<!-- Halaman - Admin Dashboard -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Artikel</h2>
-          <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i>Tambah Data
-          </a>
-    </div>
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th>No.</th>
-                            <th>Foto</th>
-                            <th>Tanggal</th>
-                            <th>Judul</th>
-                            <th>Nama Kategori</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data (dummy) -->
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://i.pinimg.com/736x/44/e5/5a/44e55a856086223e0988b5445a46753d.jpg" 
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Daftar Artikel</h2>
+              <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
+                <i class="bi bi-plus"></i>Tambah Data
+              </a>
+        </div>
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>No.</th>
+                                <th>Foto</th>
+                                <th>Tanggal</th>
+                                <th>Judul</th>
+                                <th>Nama Kategori</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($artikels as $index => $artikel)
+                            <tr>
+                              <td>{{ $index + 1 }}</td>
+                              <td>
+                                @if($artikel->foto)
+                                  <img src="{{ asset($artikel->foto) }}" 
                                     alt="foto" 
                                     class="img-thumbnail"
                                     style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td>12/03/2025</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Penerimaan Sertifikat Webinar berhasil mendapatkan sebanyak 1234 audience</td>
-                            <td>Prestasi</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="https://i.pinimg.com/236x/a2/30/cd/a230cdb07b8c98ffe445617dbf566860.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td>13/03/2024</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Video profile DHH</td>
-                            <td>Akademik</td>
-                            <!-- Tombol Aksi -->
-                        <td class="text-center">
-                            <div style="display: flex; justify-content: center; gap: 6px;">
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                @else
+                                  <span class="text-muted">-</span>
+                                @endif
+                              </td>
+                              <td>{{ \Carbon\Carbon::parse($artikel->tanggal)->format('d/m/Y') }}</td>
+                              <td class="text-start text-truncate" style="max-width: 200px;">
+                                {{ $artikel->judul }}
+                              </td>
+                              <td>{{ $artikel->kategoriartikel->nama ?? '-' }}</td>
+                              <td class="text-center">
+                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                  <a href="{{ route('artikel.edit', $artikel->id) }}" 
+                                    class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                     <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <!-- Tambahkan baris lain sesuai kebutuhan -->
-                    </tbody>
-                </table>
+                                  </a>
+                                  <form action="{{ route('artikel.destroy', $artikel->id) }}" 
+                                        method="POST" 
+                                        onsubmit="return confirm('Yakin hapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm" 
+                                            style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                  </form>
+                                </div>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+  </main>
 </div>
 @endsection
-
-<!-- 
-<h1>Daftar Artikel</h1>
-<a href="{{ url('artikel/create') }}">Tambah Artikel</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Judul</th>
-        <th>Aksi</th>
-    </tr>
-@foreach($artikels as $item)
-    <tr>
-        <td>{{ $item->id }}</td>
-        <td>{{ $item->judul }}</td>
-        <td>
-            <a href="{{ url('artikel/' . $item->id) }}">Show</a>
-            <a href="{{ url('artikel/' . $item->id . '/edit') }}">Edit</a>
-            <form action="{{ url('artikel/' . $item->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    @endforeach
-</table> -->

@@ -12,7 +12,7 @@ class Artikel extends Model
     protected $table = 'artikels';
     protected $fillable = [
         'id_user', 
-        'id_kategori', 
+        'id_kategoriartikel', 
         'foto', 
         'judul', 
         'tanggal', 
@@ -24,8 +24,8 @@ class Artikel extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function kategori()
+    public function kategoriartikel()
     {
-        return $this->belongsTo(Kategori::class, 'id_kategori');
+        return $this->belongsTo(KategoriArtikel::class, 'id_kategoriartikel');
     }
 }

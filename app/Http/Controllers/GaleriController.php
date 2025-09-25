@@ -34,7 +34,7 @@ class GaleriController extends Controller
         $data = $request->validate([
             'id_kategorigaleri' => 'required|exists:kategori_galeris,id',
             'judul' => 'nullable|string|max:255',
-            'tanggal' => 'nullable|string|max:255',
+            'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
             'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
             'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',
@@ -95,7 +95,7 @@ class GaleriController extends Controller
         $data = $request->validate([
             'id_kategorigaleri' => 'required|exists:kategori_galeris,id',
             'judul' => 'nullable|string|max:255',
-            'tanggal' => 'nullable|string|max:255',
+            'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
             'video_url' => 'nullable|string|max:255',
             'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',

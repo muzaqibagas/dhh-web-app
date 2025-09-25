@@ -261,8 +261,8 @@
               <div class="row mb-3" id="url-upload-wrapper" style="display:none;">
                 <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
                 <div class="col-sm-10">
-                  <input type="url" name="video_url" id="video_url" class="form-control" value="" placeholder="https://youtube.com/...">                  
-                  @if($galeri->tipe == 'video' && $galeri->video)
+                  <input type="url" name="video_url" id="video_url" class="form-control" value="" placeholder="https://youtube.com/...">                                    
+                  @if(isset($galeri) && $galeri->tipe == 'video' && $galeri->video)
                     @php
                       preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
                       $youtubeId = $matches[1] ?? null;

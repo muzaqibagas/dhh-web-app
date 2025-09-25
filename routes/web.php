@@ -57,6 +57,9 @@ use App\Http\Controllers\GuestHomeController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/artikeledit', function () {
+    return view('artikel.edit');
+});
 
 Route::get('home', [Controller::class, 'home'])->name('guest.home');
 Route::get('file', [Controller::class, 'file'])->name('guest.file');

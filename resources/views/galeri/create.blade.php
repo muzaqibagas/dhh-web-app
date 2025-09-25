@@ -239,6 +239,7 @@
             <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
             <div class="col-sm-10">
               <input type="url" name="video_url" id="video_url" class="form-control" placeholder="https://youtube.com/..." >
+              
               <div id="preview-url" class="mt-3"></div>
             </div>
           </div>

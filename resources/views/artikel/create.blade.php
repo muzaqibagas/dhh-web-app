@@ -170,87 +170,91 @@
   </aside>
 
 <!-- KONTEN -->
-<main class="content">
-<div class="container-fluid">
-    <div class="adm-header">
-        <h2 class="adm-title">Tambah Data Artikel</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-          <!-- Kolom Kiri: Form -->
-          <div class="col-lg-8">
+  <main class="content">
+    <div class="container-fluid">
+      <div class="adm-header">
+          <h2 class="adm-title">Tambah Data Artikel</h2>
+      </div>
+      <div class="container mt-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form action="{{ route('artikel.store') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row">
+                <!-- Kolom Kiri: Form -->
+                <div class="col-lg-8">
 
-            <!-- Judul -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="judul" class="col-form-label">Judul</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
-              </div>
-            </div>
+                  <!-- Judul -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="judul" class="col-form-label">Judul</label>
+                    </div>
+                    <div class="col-sm-10">                
+                      <input type="text" class="form-control" id="judul" name="judul" placeholder="Tulis judul.." required>
+                    </div>
+                  </div>
 
-            <!-- Tanggal -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="tanggal" class="col-form-label">Tanggal</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="date" class="form-control" id="tanggal" required>
-              </div>
-            </div>
+                  <!-- Tanggal -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="tanggal" class="col-form-label">Tanggal</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="" required>
+                    </div>
+                  </div>
 
-            <!-- Kategori -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="kategori" class="col-form-label">Kategori</label>
-              </div>
-              <div class="col-sm-10">
-                <select class="form-select" id="kategori" required>
-                  <option value="">Pilih kategori</option>
-                  <option value="kegiatan">Kegiatan</option>
-                  <option value="prestasi">Prestasi</option>
-                  <option value="umum">Umum</option>
-                </select>
-              </div>
-            </div>
+                  <!-- Kategori -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="kategori" class="col-form-label">Kategori</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <select class="form-select" id="kategori" name="id_kategoriartikel" required>
+                        <option value="">Pilih kategori</option>
+                          @foreach($kategoriartikel as $kategori)
+                              <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                  </div>
 
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
+                  <!-- Deskripsi -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
+                    <div class="col-sm-2">
+                      <label for="deskripsi" class="col-form-label">Deskripsi</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+                    </div>
+                  </div>
 
+                </div>
+
+                <!-- Kolom Kanan: Upload Gambar -->
+                <div class="col-lg-4 text-center mb-3">
+                  <label class="text-start form-label fw-bold d-block">Foto</label>
+                  <!-- Tempat preview -->
+                  <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
+                      <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
+                      <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+                  </div>
+                  <!-- Input File -->
+                      <input type="file" name="foto" class="form-control" id="foto" accept="image/*" required>
+                </div>
+              </div>
+
+              <!-- Tombol Simpan -->
+              <div class="text-end">
+                  <button type="submit" class="btn btn-success">Simpan</button>
+              </div>
+
+            </form>
           </div>
-
-          <!-- Kolom Kanan: Upload Gambar -->
-          <div class="col-lg-4 text-center mb-3">
-            <label class="text-start form-label fw-bold d-block">Foto</label>
-            <!-- Tempat preview -->
-            <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
-                <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
-                <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-            </div>
-            <!-- Input File -->
-                <input type="file" class="form-control" id="foto" accept="image/*">
-            </div>
-            </div>
-
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
         </div>
-
-      </form>
+      </div>
     </div>
-  </div>
+  </main>
 </div>
 <script>
   document.getElementById('foto').addEventListener('change', function (event) {

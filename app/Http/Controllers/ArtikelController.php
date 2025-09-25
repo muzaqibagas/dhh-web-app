@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artikel;
+use App\Models\KategoriArtikel;
 use Illuminate\Http\Request;
 
 class ArtikelController extends Controller
@@ -21,7 +22,8 @@ class ArtikelController extends Controller
      */
     public function create()
     {
-        return view('artikel.create');
+        $kategoriartikel = KategoriArtikel::all();
+        return view('artikel.create', compact('kategoriartikel'));
     }
 
     /**
@@ -31,21 +33,26 @@ class ArtikelController extends Controller
     {
         $data = $request->validate([
             'id_user' => 'nullable|exists:users,id',
-            'id_kategori' => 'nullable|exists:kategoris,id',
-            'foto' => 'nullable|string|max:255',
+            'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
-            'tanggal' => 'nullable|date',
-            'deskripsi' => 'nullable|string',
+            'tanggal' => 'nullable|date',            
+            'deskripsi' => 'nullable|string|max:5000',
         ]);
 
-        // Isi id_user dengan user login jika ada, atau default 1
-        if (empty($data['id_user'])) {
-            $data['id_user'] = auth()->id() ?? 1;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            // Simpan langsung ke folder public/artikel
+            $file->move(public_path('foto_artikel'), $filename);
+
+            // Simpan path ke database (misalnya: artikel/xxxx.jpg)
+            $data['foto'] = 'foto_artikel/' . $filename;
         }
-        // Isi id_kategori dengan kategori pertama jika tidak ada
-        if (empty($data['id_kategori'])) {
-            $data['id_kategori'] = \App\Models\Kategori::query()->first()?->id ?? 1;
-        }
+
+
+        $data['id_user'] = auth()->id();        
 
         $insert = Artikel::create($data);
         if ($insert)
@@ -67,7 +74,8 @@ class ArtikelController extends Controller
      */
     public function edit(Artikel $artikel)
     {
-        return view('artikel.edit', compact('artikel'));
+        $kategoriartikel = KategoriArtikel::all();
+        return view('artikel.edit', compact('artikel', 'kategoriartikel'));
     }
 
     /**
@@ -76,13 +84,21 @@ class ArtikelController extends Controller
     public function update(Request $request, Artikel $artikel)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_kategori' => 'required|exists:kategoris,id',
-            'foto' => 'nullable|string|max:255',
+            'id_user' => 'required|exists:users,id',        
+            'kategori_artikel' => 'nullable|exists:kategori_artikels,id',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'deskripsi' => 'nullable|string',
         ]);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('artikel'), $filename);
+            $data['foto'] = 'artikel/' . $filename;
+        }
+
         $update = $artikel->update($data);
         if ($update)
             return redirect()->route('artikel.index')->with('success', 'Data berhasil diperbarui!');

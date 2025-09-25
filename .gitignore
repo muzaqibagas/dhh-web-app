@@ -16,6 +16,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/galeri_upload/video/
 /storage/*.key
 /storage/pail
 /vendor
