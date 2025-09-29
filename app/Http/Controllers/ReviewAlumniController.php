@@ -30,15 +30,26 @@ class ReviewAlumniController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
+            'id_user' => 'nullable|exists:users,id',
             'nama' => 'nullable|string|max:255',
             'angkatan' => 'nullable|string|max:255',
+            'profesi' => 'nullable|string|max:255',
             'review' => 'nullable|string',
-            'foto' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
+
+        $data['id_user'] = auth()->id();        
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('foto_alumni'), $filename);
+            $data['foto'] = 'foto_alumni/' . $filename;
+        }
+
         $insert = ReviewAlumni::create($data);
         if ($insert)
-            return redirect()->route('reviewalumni.index')->with('success', 'Data berhasil disimpan!');
+            return redirect()->route('review-alumni.index')->with('success', 'Data berhasil disimpan!');
         else
             return back()->with('error', 'Gagal menyimpan data!');
     }
@@ -65,15 +76,26 @@ class ReviewAlumniController extends Controller
     public function update(Request $request, ReviewAlumni $reviewAlumni)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
+            'id_user' => 'nullable|exists:users,id',
             'nama' => 'nullable|string|max:255',
             'angkatan' => 'nullable|string|max:255',
+            'profesi' => 'nullable|string|max:255',
             'review' => 'nullable|string',
             'foto' => 'nullable|string|max:255',
         ]);
+
+        $data['id_user'] = auth()->id();
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('foto_alumni'), $filename);
+            $data['foto'] = 'foto_alumni/' . $filename;
+        }
+
         $update = $reviewAlumni->update($data);
         if ($update)
-            return redirect()->route('reviewalumni.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('review-alumni.index')->with('success', 'Data berhasil diperbarui!');
         else
             return back()->with('error', 'Gagal memperbarui data!');
     }
@@ -84,6 +106,6 @@ class ReviewAlumniController extends Controller
     public function destroy(ReviewAlumni $reviewAlumni)
     {
         $reviewAlumni->delete();
-        return redirect()->route('reviewalumni.index');
+        return redirect()->route('review-alumni.index');
     }
 }

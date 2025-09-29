@@ -179,7 +179,9 @@
     <div class="container mt-4">
       <div class="card shadow-sm">
         <div class="card-body">
-          <form>
+          <form action="{{ route('artikel.update', $artikel->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <div class="row">
               <!-- Kolom Kiri: Form -->
               <div class="col-lg-8">
@@ -189,8 +191,8 @@
                   <div class="col-sm-2">
                     <label for="judul" class="col-form-label">Judul</label>
                   </div>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="judul" placeholder="Tulis judul.." required>
+                  <div class="col-sm-10">                    
+                    <input type="text" class="form-control" name="judul" id="judul" value="{{ old('judul', $artikel->judul) }}" required>
                   </div>
                 </div>
 
@@ -199,8 +201,8 @@
                   <div class="col-sm-2">
                     <label for="tanggal" class="col-form-label">Tanggal</label>
                   </div>
-                  <div class="col-sm-10">
-                    <input type="date" class="form-control" id="tanggal" required>
+                  <div class="col-sm-10">                    
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $artikel->tanggal) }}" required>
                   </div>
                 </div>
 
@@ -209,12 +211,14 @@
                   <div class="col-sm-2">
                     <label for="kategori" class="col-form-label">Kategori</label>
                   </div>
-                  <div class="col-sm-10">
-                    <select class="form-select" id="kategori" required>
+                  <div class="col-sm-10">                    
+                    <select name="id_kategoriartikel" class="form-select" id="kategori" required>
                       <option value="">Pilih kategori</option>
-                      <option value="kegiatan">Kegiatan</option>
-                      <option value="prestasi">Prestasi</option>
-                      <option value="umum">Umum</option>
+                      @foreach($kategoriartikel as $kategori)
+                        <option value="{{ $kategori->id }}" {{ $artikel->id_kategoriartikel == $kategori->id ? 'selected' : '' }}>
+                          {{ $kategori->nama }}
+                        </option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
@@ -224,8 +228,8 @@
                   <div class="col-sm-2">
                     <label for="deskripsi" class="col-form-label">Deskripsi</label>
                   </div>
-                  <div class="col-sm-10">
-                    <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+                  <div class="col-sm-10">                    
+                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" placeholder="Deskripsi" required>{{ old('deskripsi', $artikel->deskripsi) }}</textarea>
                   </div>
                 </div>
 
@@ -236,19 +240,18 @@
                 <label class="text-start form-label fw-bold d-block">Foto</label>
                 <!-- Tempat preview -->
                 <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
-                    <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
-                    <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+                    <i id="preview-icon" class="bi bi-card-image fs-1 text-muted" @if($artikel->foto) style="display:none;" @endif></i>                                        
+                    <img id="preview-image" src="{{ $artikel->foto ? asset($artikel->foto) : '' }}" class="img-fluid rounded @if(!$artikel->foto) d-none @endif" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
                 </div>
-                <!-- Input File -->
-                    <input type="file" class="form-control" id="foto" accept="image/*">
+                <!-- Input File -->                    
+                    <input type="file" class="form-control" name="foto" id="foto" accept="image/*">
                 </div>
-                </div>
+              </div>
 
             <!-- Tombol Simpan -->
             <div class="text-end">
                 <button type="submit" class="btn btn-success">Simpan</button>
             </div>
-
           </form>
         </div>
       </div>
@@ -263,7 +266,6 @@
 
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
-
       reader.onload = function (e) {
         previewImage.src = e.target.result;
         previewImage.classList.remove('d-none');
@@ -272,10 +274,20 @@
 
       reader.readAsDataURL(file);
     } else {
-      previewImage.src = '';
-      previewImage.classList.add('d-none');
-      previewIcon.classList.remove('d-none');
+        @if($artikel->foto)
+          previewImage.src = "{{ asset($artikel->foto) }}";
+          previewImage.classList.remove('d-none');
+          previewIcon.classList.add('d-none');
+        @else
+          previewImage.src = '';
+          previewImage.classList.add('d-none');
+          previewIcon.classList.remove('d-none');
+        @endif
     }
   });
+</script>
+<script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('deskripsi');
 </script>
 @endsection

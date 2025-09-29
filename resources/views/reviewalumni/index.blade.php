@@ -169,74 +169,67 @@
     </script>
   </aside>
     
-<!-- Review Alumni - Admin Dashboard -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Review Alumni</h2>
-          <a href="{{route('review-alumni.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i>Tambah Data
-          </a>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th>No.</th>
-                            <th>Foto</th>
-                            <th>Nama</th>
-                            <th>Angkatan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data Galeri (dummy) -->
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://pbs.twimg.com/media/GoKuxoSasAE9xO9.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Hasna Nabiilah Widiani</td>
-                            <td>60</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="https://i.pinimg.com/236x/a2/30/cd/a230cdb07b8c98ffe445617dbf566860.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Anggito Rangkuti Bagas Muzaqi</td>
-                            <td>59</td>
-                            <!-- Tombol Aksi -->
-                        <td class="text-center">
-                            <div style="display: flex; justify-content: center; gap: 6px;">
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <!-- Tambahkan baris lain sesuai kebutuhan -->
-                    </tbody>
-                </table>
+  <!-- Review Alumni - Admin Dashboard -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Review Alumni</h2>
+              <a href="{{route('review-alumni.create')}}" class="adm-btn-add text-decoration-none">
+                <i class="bi bi-plus"></i>Tambah Data
+              </a>
+        </div> 
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>No.</th>
+                                <th>Foto</th>
+                                <th>Nama</th>
+                                <th>Angkatan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($reviews as $index => $review)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>
+                                  @if($review->foto)
+                                    <img src="{{ asset($review->foto) }}" 
+                                      alt="foto" 
+                                      class="img-thumbnail"
+                                      style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                  @else         
+                                    <span class="text-muted">-</span>
+                                  @endif                         
+                                </td>
+                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $review->nama }}</td>
+                                <td>{{ $review->angkatan }}</td>
+                                <td>
+                                  <div style="display: flex; justify-content: center; gap: 6px;">                                    
+                                    <a href="{{route('review-alumni.edit', $review->id)}}" 
+                                      class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                    </a>
+                                    <form action="{{ route('review-alumni.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                          <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                      </button>
+                                    </form>
+                                  </div>
+                                </td>
+                            </tr>                            
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+  </main>
 </div>
 @endsection

@@ -229,14 +229,31 @@
                               <td class="text-center">
                                   <a href="{{ route('galeri.edit', $galeri->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                       <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                  </a>
-                                  <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST" style="display:inline;">
-                                      @csrf
-                                      @method('DELETE')
-                                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                          <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                      </button>
-                                  </form>
+                                  </a>                                  
+                                  <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $galeri->id }}">
+                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                  </button>
+                                  <div class="modal fade" id="hapusModal{{ $galeri->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                          <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                          <div>Apakah Anda yakin ingin menghapus data ini?</div>                                          
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                          <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')                                            
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>                                  
                               </td>
                           </tr>
                           @endforeach

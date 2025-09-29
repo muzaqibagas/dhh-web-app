@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use App\Models\KategoriArtikel;
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 class ArtikelController extends Controller
 {
@@ -39,18 +40,32 @@ class ArtikelController extends Controller
             'tanggal' => 'nullable|date',            
             'deskripsi' => 'nullable|string|max:5000',
         ]);
+        
+        $cleanDeskripsi = Purifier::clean($data['deskripsi']);
+        $data['deskripsi'] = $cleanDeskripsi;
+
+        $kataHubung = [
+            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun'
+        ];
+
+        if (!empty($data['judul'])) {
+            $data['judul'] = implode(' ', array_map(function($word, $idx) use ($kataHubung) {
+                $word = strtolower($word);
+                if ($idx !== 0 && in_array($word, $kataHubung)) {
+                    return $word;
+                }
+                return ucfirst($word);
+            }, explode(' ', $data['judul']), array_keys(explode(' ', $data['judul']))));
+        }
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-
-            // Simpan langsung ke folder public/artikel
+            
             $file->move(public_path('foto_artikel'), $filename);
-
-            // Simpan path ke database (misalnya: artikel/xxxx.jpg)
+            
             $data['foto'] = 'foto_artikel/' . $filename;
         }
-
 
         $data['id_user'] = auth()->id();        
 
@@ -84,20 +99,38 @@ class ArtikelController extends Controller
     public function update(Request $request, Artikel $artikel)
     {
         $data = $request->validate([
-            'id_user' => 'required|exists:users,id',        
-            'kategori_artikel' => 'nullable|exists:kategori_artikels,id',
+            'id_user' => 'nullable|exists:users,id',                   
+            'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',             
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'deskripsi' => 'nullable|string',
         ]);
 
+        $data['id_user'] = auth()->id();
+
+        $kataHubung = [
+            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun'
+        ];
+
+        if (!empty($data['judul'])) {
+            $data['judul'] = implode(' ', array_map(function($word, $idx) use ($kataHubung) {
+                $word = strtolower($word);
+                if ($idx !== 0 && in_array($word, $kataHubung)) {
+                    return $word;
+                }
+                return ucfirst($word);
+            }, explode(' ', $data['judul']), array_keys(explode(' ', $data['judul']))));
+        }
+
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('artikel'), $filename);
-            $data['foto'] = 'artikel/' . $filename;
+            $file->move(public_path('foto_artikel'), $filename);
+            $data['foto'] = 'foto_artikel/' . $filename;
         }
+
+        $data['deskripsi'] = Purifier::clean($data['deskripsi']);
 
         $update = $artikel->update($data);
         if ($update)

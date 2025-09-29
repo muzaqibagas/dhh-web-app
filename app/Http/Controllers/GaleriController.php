@@ -104,6 +104,9 @@ class GaleriController extends Controller
 
         // Handle gambar
         if ($request->tipe == 'gambar' && $request->hasFile('gambar')) {
+            if ($galeri->gambar && file_exists(public_path($galeri->gambar))) {
+                unlink(public_path($galeri->gambar));
+            }
             $file = $request->file('gambar');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('galeri_upload/gambar'), $filename);
@@ -113,6 +116,9 @@ class GaleriController extends Controller
 
         // Handle video
         if ($request->tipe == 'video') {
+            if ($galeri->video && !filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
+                unlink(public_path($galeri->video));
+            }
             if ($request->hasFile('video_file')) {
                 $file = $request->file('video_file');
                 $filename = time() . '_' . $file->getClientOriginalName();
@@ -144,6 +150,15 @@ class GaleriController extends Controller
      */
     public function destroy(Galeri $galeri)
     {
+        // Hapus file gambar jika ada
+        if ($galeri->gambar && file_exists(public_path($galeri->gambar))) {
+            unlink(public_path($galeri->gambar));
+        }
+        // Hapus file video jika ada dan bukan URL
+        if ($galeri->video && !filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
+            unlink(public_path($galeri->video));
+        }
+
         $galeri->delete();
         return redirect()->route('galeri.index');
     }
