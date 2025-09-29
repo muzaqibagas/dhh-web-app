@@ -1368,10 +1368,14 @@
 .guest-artikel-detail-image {
   position: relative;
 }
+
 .guest-artikel-detail-image img {
   width: 100%;
+  height: 500px;        /* tinggi seragam, ubah sesuai kebutuhan */
+  object-fit: cover;    /* crop gambar agar proporsional */
   border-radius: 8px;
 }
+
 .guest-artikel-detail-tag {
   position: absolute;
   bottom: 10px;

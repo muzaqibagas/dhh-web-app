@@ -14,8 +14,9 @@
       <h1 class="guest-artikel-detail-title">
         {{ $artikel->judul }}
       </h1>      
+
       <p class="guest-artikel-detail-meta">
-        Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; Juli 24, 2025
+        Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; {{ \Carbon\Carbon::parse($artikel->created_at)->translatedFormat('F d, Y') }}
       </p>
 
       <div class="guest-artikel-detail-image mb-4">
@@ -24,8 +25,9 @@
       </div>
 
       <div class="guest-artikel-detail-content">
-        <p>{!! nl2br(e($artikel->deskripsi)) !!}</p>                
+          {!! $artikel->deskripsi !!}          
       </div>
+
     </div>
 
     <!-- Sidebar -->

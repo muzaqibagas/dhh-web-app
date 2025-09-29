@@ -256,6 +256,7 @@
     </div>
   </main>
 </div>
+
 <script>
   document.getElementById('foto').addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -279,13 +280,9 @@
     }
   });
 </script>
+<script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('deskripsi');
+</script>
 
 @endsection
-
-<!-- <h1>Tambah Artikel</h1>
-<form action="{{ url('artikel') }}" method="POST">
-    @csrf
-    <label>Judul:</label>
-    <input type="text" name="judul" required>
-    <button type="submit">Simpan</button>
-</form> -->

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('nama')->nullable();
             $table->string('angkatan')->nullable();
+            $table->string('profesi')->nullable();
             $table->text('review')->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();

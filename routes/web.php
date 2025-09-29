@@ -223,10 +223,10 @@ Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.crea
 Route::get('review-alumni', [ReviewAlumniController::class, 'index'])->name('review-alumni.index');
 Route::get('review-alumni/create', [ReviewAlumniController::class, 'create'])->name('review-alumni.create');
 Route::post('review-alumni', [ReviewAlumniController::class, 'store'])->name('review-alumni.store');
-Route::get('review-alumni/{reviewalumni}', [ReviewAlumniController::class, 'show'])->name('review-alumni.show');
-Route::get('review-alumni/{reviewalumni}/edit', [ReviewAlumniController::class, 'edit'])->name('review-alumni.edit');
-Route::put('review-alumni/{reviewalumni}', [ReviewAlumniController::class, 'update'])->name('review-alumni.update');
-Route::delete('review-alumni/{reviewalumni}', [ReviewAlumniController::class, 'destroy'])->name('review-alumni.destroy');
+Route::get('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'show'])->name('review-alumni.show');
+Route::get('review-alumni/{reviewAlumni}/edit', [ReviewAlumniController::class, 'edit'])->name('review-alumni.edit');
+Route::put('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'update'])->name('review-alumni.update');
+Route::delete('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'destroy'])->name('review-alumni.destroy');
 
 // Ruangan
 Route::get('ruangan', [RuanganController::class, 'index'])->name('ruangan.index');

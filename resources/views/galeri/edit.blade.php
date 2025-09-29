@@ -235,7 +235,7 @@
                 <div class="col-sm-10">
                   <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
                   @if($galeri->tipe == 'gambar' && $galeri->gambar)
-                    <div class="mt-3">
+                    <div class="mt-3" id="old-gambar-preview">
                       <img src="{{ asset($galeri->gambar) }}" class="img-thumbnail" style="max-height:200px;">
                     </div>
                   @endif
@@ -249,7 +249,7 @@
                 <div class="col-sm-10">
                   <input type="file" name="video_file" id="video_file" class="form-control" accept="video/*">
                   @if($galeri->tipe == 'video' && $galeri->video && !Str::startsWith($galeri->video, ['http', 'https']))
-                    <div class="mt-3">                      
+                    <div class="mt-3" id="old-video-preview">                      
                       <video src="{{ asset($galeri->video) }}" controls class="w-100" style="max-height:300px;"></video>
                     </div>
                   @endif
@@ -269,7 +269,7 @@
                     @endphp
 
                     @if($youtubeId)
-                    <div class="mt-3">
+                    <div class="mt-3" id="old-url-preview">
                       <iframe width="300" height="180" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>                          
                     </div>                          
                     @else
@@ -379,7 +379,9 @@
   // Preview gambar
   gambarInput.addEventListener('change', function(e) {
     previewGambar.innerHTML = '';
-    const file = e.target.files[0];
+    const oldPreview = document.getElementById('old-gambar-preview');
+    if (oldPreview) oldPreview.style.display = 'none';
+    const file = e.target.files[0];    
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = function(event) {
@@ -396,6 +398,8 @@
   // Preview video file
   videoFileInput.addEventListener('change', function(e) {
     previewVideo.innerHTML = '';
+    const oldPreview = document.getElementById('old-video-preview');
+    if (oldPreview) oldPreview.style.display = 'none';
     const file = e.target.files[0];
     if (file && file.type.startsWith('video/')) {
       const video = document.createElement('video');
@@ -411,6 +415,8 @@
   // Preview video URL (YouTube embed)
   videoUrlInput.addEventListener('input', function(e) {
     previewUrl.innerHTML = '';
+    const oldPreview = document.getElementById('old-url-preview');
+    if (oldPreview) oldPreview.style.display = 'none';
     const url = e.target.value;
     if (url) {
       let embedUrl = url;

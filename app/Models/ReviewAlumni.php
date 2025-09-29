@@ -11,6 +11,7 @@ class ReviewAlumni extends Model
         'id_user', 
         'nama', 
         'angkatan', 
+        'profesi',
         'review', 
         'foto'
     ];

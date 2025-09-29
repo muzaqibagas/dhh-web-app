@@ -15,7 +15,7 @@
       </h1>      
       <p class="guest-artikel-detail-meta">
         Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; Juli 24, 2025
-      </p>
+      </p>          
 
       <div class="guest-artikel-detail-image mb-4">
         <img src="img/bglogin.jpg" alt="Detail Artikel">

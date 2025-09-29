@@ -171,72 +171,86 @@
     
 <!-- KONTEN -->
 <main class="content">
-<div class="container-fluid">
-    <div class="adm-header">
-        <h2 class="adm-title">Tambah Data Review Alumni</h2>
-    </div>
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <form>
-        <div class="row">
-          <!-- Kolom Kiri: Form -->
-          <div class="col-lg-8">
+  <div class="container-fluid">
+      <div class="adm-header">
+          <h2 class="adm-title">Tambah Data Review Alumni</h2>
+      </div>
+      <div class="container mt-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form action="{{ route('review-alumni.store') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row">
+                <!-- Kolom Kiri: Form -->
+                <div class="col-lg-8">
 
-            <!-- Nama Alumni -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="nama" class="col-form-label">Nama</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="nama" placeholder="Tulis nama alumni.." required>
-              </div>
-            </div>
+                  <!-- Nama Alumni -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="nama" class="col-form-label">Nama</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="text" name="nama" class="form-control" id="nama" placeholder="Tulis nama alumni.." required>
+                    </div>
+                  </div>
 
-            <!-- Angkatan -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-              <div class="col-sm-2">
-                <label for="angkatan" class="col-form-label">Angkatan</label>
-              </div>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="angkatan" placeholder="Tulis angkatan.." required>
-              </div>
-            </div>
+                  <!-- Angkatan -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="angkatan" class="col-form-label">Angkatan</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="text" name="angkatan" class="form-control" id="angkatan" placeholder="Tulis angkatan.." required>
+                    </div>
+                  </div>
 
-            <!-- Deskripsi -->
-            <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-              <div class="col-sm-2">
-                <label for="deskripsi" class="col-form-label">Deskripsi</label>
-              </div>
-              <div class="col-sm-10">
-                <textarea class="form-control" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
-              </div>
-            </div>
+                  <!-- profesi -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="profesi" class="col-form-label">Profesi</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="text" name="profesi" class="form-control" id="profesi" placeholder="deskripsikan profesi.." required>
+                    </div>
+                  </div>
 
+                  <!-- Deskripsi -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
+                    <div class="col-sm-2">
+                      <label for="deskripsi" class="col-form-label">Deskripsi</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" name="review" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Kolom Kanan: Upload Gambar -->
+                <div class="col-lg-4 text-center mb-3">
+                  <label class="text-start form-label fw-bold d-block">Foto</label>
+                  <!-- Tempat preview -->
+                  <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
+                      <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
+                      <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+                  </div>
+                  <!-- Input File -->
+                      <input type="file" name="foto" class="form-control" id="foto" accept="image/*">
+                  </div>
+                  </div>
+
+              <!-- Tombol Simpan -->
+              <div class="text-end">
+                  <button type="submit" class="btn btn-success">Simpan</button>
+              </div>
+
+            </form>
           </div>
-
-          <!-- Kolom Kanan: Upload Gambar -->
-          <div class="col-lg-4 text-center mb-3">
-            <label class="text-start form-label fw-bold d-block">Foto</label>
-            <!-- Tempat preview -->
-            <div id="preview-container" class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">
-                <i id="preview-icon" class="bi bi-card-image fs-1 text-muted"></i>
-                <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-            </div>
-            <!-- Input File -->
-                <input type="file" class="form-control" id="foto" accept="image/*">
-            </div>
-            </div>
-
-        <!-- Tombol Simpan -->
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
         </div>
-
-      </form>
-    </div>
+      </div>
   </div>
-</div>
+</main>
+
 <script>
   document.getElementById('foto').addEventListener('change', function (event) {
     const file = event.target.files[0];
