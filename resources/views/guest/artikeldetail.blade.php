@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
   <a href="#">Home</a> / <span>Detail Artikel</span>

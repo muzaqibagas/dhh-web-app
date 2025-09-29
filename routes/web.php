@@ -71,6 +71,7 @@ Route::get('sejarah', [Controller::class, 'sejarah'])->name('guest.sejarah');
 Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
 Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
+Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
 
 Route::get('email/verify', function () {
     return view('auth.verify-email');
