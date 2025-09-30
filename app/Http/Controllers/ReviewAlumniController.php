@@ -81,12 +81,15 @@ class ReviewAlumniController extends Controller
             'angkatan' => 'nullable|string|max:255',
             'profesi' => 'nullable|string|max:255',
             'review' => 'nullable|string',
-            'foto' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
         $data['id_user'] = auth()->id();
 
         if ($request->hasFile('foto')) {
+            if ($reviewAlumni->foto && file_exists(public_path($reviewAlumni->foto))) {
+                unlink(public_path($reviewAlumni->foto));
+            }
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('foto_alumni'), $filename);
