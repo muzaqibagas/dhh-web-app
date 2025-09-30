@@ -3,16 +3,16 @@
 @section('content')
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
-  <a href="#">Home</a> / <span>Pendidikan S3</span>
+  <a href="#">Home</a> / <span>Artikel</span>
 </div>
 
-<section class="guest-artikel-section">
-  <div class="container guest-artikel-wrap">
-
-    <h2 class="guest-artikel-title">Artikel</h2>
-    <div class="guest-artikel-underline"></div>
-    <p class="guest-artikel-desc">Dapatkan informasi terbaru seputar kegiatan, pencapaian, serta perkembangan di Departemen Hasil Hutan IPB. Kami menghadirkan artikel dan berita terkini sebagai bentuk transparansi dan dokumentasi perjalanan kami.</p>
-
+<section class="guest-artikel-detail-section container my-5">
+  <div class="row">
+<!-- Gallery -->
+  <h2 class="guest-galery-title">Artikel</h2>
+  <p class="guest-galery-desc">
+    Artikel-artikel ini merupakan media untuk menyampaikan informasi, penelitian, serta pemikiran dari Departemen Hasil Hutan, yang diharapkan dapat memberikan kontribusi bagi ilmu pengetahuan dan masyarakat.
+  </p>
     <div class="guest-artikel-layout">
       <!-- MAIN CONTENT -->
       <main class="guest-artikel-main">
@@ -231,52 +231,77 @@
         </div>
       </main>
 
-      <!-- SIDEBAR -->
-      <aside class="guest-artikel-sidebar">
-        <div class="guest-artikel-searchbox">
-          <input type="text" placeholder="Cari artikel..." class="guest-artikel-search">
-        </div>
+<!-- SIDEBAR -->
+<aside class="guest-artikel-sidebar">
 
-        <!-- <div class="guest-artikel-side-card">
-          <h4>Kategori Artikel</h4>
-          <ul class="guest-artikel-categories">
-            <li>Akademik</li>
-            <li>Berita</li>
-            <li>Prestasi Civitas</li>
-            <li>Sustainable Development Goals (SDG's)</li>
-            <li>Karir</li>
-          </ul>
-        </div> -->
-        <div class="guest-artikel-detail-sidebar">
-          <h4 class="guest-artikel-detail-sidebar-title">Kategori Artikel</h4>
-          <ul class="guest-artikel-detail-categories">
-            <li>Akademik</li>
-            <li>Berita</li>
-            <li>Prestasi Civitas</li>
-            <li>Sustainable Development Goals (SDG's)</li>
-            <li>Karir</li>
-          </ul>
-        </div>
-        
-        <div class="guest-artikel-detail-sidebar">
-          <h4 class="guest-artikel-detail-sidebar-title">Berita Terkini</h4>
-          <ul class="guest-artikel-detail-latest">
-            <li>
-              <a href="#">Diponegoro Social Political Competition penyelenggara BEM Fisip Universitas Diponegoro (Juara 3)</a>
-              <span class="date">Juli 23, 2025</span>
-            </li>
-            <li>
-              <a href="#">Asia Pacific Forestry Commission penyelenggara International Forestry Students Association</a>
-              <span class="date">Juli 9, 2025</span>
-            </li>
-            <li>
-              <a href="#">The 45th International Forestry Students Symposium tanggal 2-17 Juli 2025 di Afrika Selatan</a>
-              <span class="date">Juli 9, 2025</span>
-            </li>
-          </ul>
-        </div>
+  <div class="guest-artikel-searchbox">
+    <input type="text" placeholder="Cari artikel..." class="guest-artikel-search">
+  </div>
 
-      </aside>
+  <!-- Dropdown Kategori Artikel -->
+  <details class="guest-dropdown mobile-only">
+    <summary>Kategori Artikel</summary>
+    <ul class="guest-artikel-detail-categories">
+      <li>Akademik</li>
+      <li>Berita</li>
+      <li>Prestasi Civitas</li>
+      <li>Sustainable Development Goals (SDG's)</li>
+      <li>Karir</li>
+    </ul>
+  </details>
+
+  <!-- Sidebar versi desktop -->
+  <div class="guest-artikel-detail-sidebar desktop-only">
+    <h4 class="guest-artikel-detail-sidebar-title">Kategori Artikel</h4>
+    <ul class="guest-artikel-detail-categories">
+      <li>Akademik</li>
+      <li>Berita</li>
+      <li>Prestasi Civitas</li>
+      <li>Sustainable Development Goals (SDG's)</li>
+      <li>Karir</li>
+    </ul>
+  </div>
+
+  <!-- Dropdown Berita Terkini -->
+  <details class="guest-dropdown mobile-only">
+    <summary>Berita Terkini</summary>
+    <ul class="guest-artikel-detail-latest">
+      <li>
+        <a href="#">Diponegoro Social Political Competition penyelenggara BEM Fisip Universitas Diponegoro (Juara 3)</a>
+        <span class="date">Juli 23, 2025</span>
+      </li>
+      <li>
+        <a href="#">Asia Pacific Forestry Commission penyelenggara International Forestry Students Association</a>
+        <span class="date">Juli 9, 2025</span>
+      </li>
+      <li>
+        <a href="#">The 45th International Forestry Students Symposium tanggal 2-17 Juli 2025 di Afrika Selatan</a>
+        <span class="date">Juli 9, 2025</span>
+      </li>
+    </ul>
+  </details>
+
+  <!-- Sidebar versi desktop -->
+  <div class="guest-artikel-detail-sidebar desktop-only">
+    <h4 class="guest-artikel-detail-sidebar-title">Berita Terkini</h4>
+    <ul class="guest-artikel-detail-latest">
+      <li>
+        <a href="#">Diponegoro Social Political Competition penyelenggara BEM Fisip Universitas Diponegoro (Juara 3)</a>
+        <span class="date">Juli 23, 2025</span>
+      </li>
+      <li>
+        <a href="#">Asia Pacific Forestry Commission penyelenggara International Forestry Students Association</a>
+        <span class="date">Juli 9, 2025</span>
+      </li>
+      <li>
+        <a href="#">The 45th International Forestry Students Symposium tanggal 2-17 Juli 2025 di Afrika Selatan</a>
+        <span class="date">Juli 9, 2025</span>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+
     </div> <!-- layout -->
   </div> <!-- container -->
 </section>

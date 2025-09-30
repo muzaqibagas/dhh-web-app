@@ -58,4 +58,9 @@ class Controller extends BaseController
         $artikels = Artikel::all();        
         return view('guest.artikeldetail', compact('artikels'));    
     }
+
+    public function alumnikami()
+    {
+        return view('guest.alumnikami');    
+    }
 }

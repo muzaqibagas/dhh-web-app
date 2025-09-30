@@ -92,22 +92,22 @@
     </div>
 
     <!-- BTN SDM ===================== -->
-    <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
+    <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staff-dept">
       <div class="menu-left">
         <i class="bi bi-people-fill"></i>
         <span> Sumber Daya Manusia </span>
       </div>
-      <span class="dropdownArrow" data-arrow="staffdept">
+      <span class="dropdownArrow" data-arrow="staff-dept">
         {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
       </span>
     </a>
-    <div data-menu="staffdept"
+    <div data-menu="staff-dept"
       style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
       <a href="/kategoristaff"
         class="submenu-link {{ Request::is('kategoristaff') ? 'active-submenu' : '' }}">
         <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
       </a>
-      <a href="/staffdept"
+      <a href="/staff-dept"
         class="submenu-link {{ Request::is('staff-dept') ? 'active-submenu' : '' }}">
         <i class="bi bi-check2-circle"></i> Staff Departemen
       </a>
@@ -149,29 +149,29 @@
     </div>
       <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
     
-      <script>
-        document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-          toggle.addEventListener('click', function(e) {
-            e.preventDefault();
+    <script>
+      document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
 
-            const target = this.getAttribute('data-dropdown');
-            const menu = document.querySelector(`[data-menu="${target}"]`);
-            const arrow = document.querySelector(`[data-arrow="${target}"]`);
-            const isOpen = menu.style.display === 'flex';
+          const target = this.getAttribute('data-dropdown');
+          const menu = document.querySelector(`[data-menu="${target}"]`);
+          const arrow = document.querySelector(`[data-arrow="${target}"]`);
+          const isOpen = menu.style.display === 'flex';
 
-            // Tutup semua dulu
-            document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-            document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+          // Tutup semua dulu
+          document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+          document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-            // Kalau belum terbuka, buka
-            if (!isOpen) {
-              menu.style.display = 'flex';
-              arrow.innerHTML = '&#9660;';
-            }
-          });
+          // Kalau belum terbuka, buka
+          if (!isOpen) {
+            menu.style.display = 'flex';
+            arrow.innerHTML = '&#9660;';
+          }
         });
-      </script>
-    </aside>
+      });
+    </script>
+  </aside>
 
 <!-- MAIN KONTEN -->
 <main class="content">

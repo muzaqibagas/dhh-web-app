@@ -11,8 +11,13 @@
         <div class="guest-about-container">
 
             <!-- KIRI: TEKS -->
+            <!-- KANAN: FOTO -->
+            <div class="guest-about-image" data-aos="fade-up">
+                <img src="img/mhsdhh.png" alt="Mahasiswa DHH">
+            </div>
+
             <div class="guest-about-text" data-aos="fade-up">
-            <h3 class="guest-pend-section-title">Profil Program Studi S1</h3>
+            <h4 class="guest-pend-section-title">Profil Program Studi S1</h4>
             <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
                 <p style="text-align: justify;">
                   Program Studi S2 Ilmu dan Teknologi Hasil Hutan IPB berkomitmen menjadi pusat unggulan
@@ -22,7 +27,7 @@
                 </p>
 
                 
-            <h3 class="guest-pend-section-title">Kompetensi Lulusan</h3>
+            <h4 class="guest-pend-section-title">Kompetensi Lulusan</h4>
             <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
             <p style="text-align: justify;">
                 Kompetensi lulusan PS THH adalah mempunyai Dasar Ketrampilan, Kemampuan Analisis dan Sintesis yang andal, 
@@ -35,14 +40,8 @@
               <li>Kompetensi bagian Rekayasa dan Desain Bangunan Kayu (keteknikan kayu, sifat fisik dan mekanisme kayu, uji destruktif kayu, dan proteksi bangunan kayu)</li>
               <li>Kompetensi Bagian Kimia Hasil Hutan (kimia hasil hutan, teknologi pulp dan kertas, dan pengolahan hasil hutan non kayu)</li>
             </ul>
-
-
             </div>
 
-            <!-- KANAN: FOTO -->
-            <div class="guest-about-image" data-aos="fade-up">
-                <img src="img/mhsdhh.png" alt="Mahasiswa DHH">
-            </div>
         </div>
     </section>
 

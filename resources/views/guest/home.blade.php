@@ -180,19 +180,28 @@
   </div>
 </section>
 
-        <!-- Filter -->
-  <section class="guest-galery-section">
+<section class="guest-galery-section">
+
+
+  <!-- Gallery -->
+  <h2 class="guest-galery-title">Gallery</h2>
+  <p class="guest-galery-desc">
+    Sebagaimana hutan menyimpan jejak kehidupan, galeri ini menyimpan jejak langkah kami dalam berkegiatan, belajar, dan tumbuh bersama.
+  </p>
+
+    <!-- Filter -->
     <ul class="guest-galery-filters">
-    <li class="guest-galery-filter active" data-filter="all">Semua</li>
-    <li class="guest-galery-filter" data-filter="akademik">Akademik</li>
-    <li class="guest-galery-filter" data-filter="sdgs">SDGS</li>
-    <li class="guest-galery-filter" data-filter="prestasi">Prestasi</li>
-    <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas</li>
-    <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan</li>
+      <li class="guest-galery-filter active" data-filter="all">Semua</li>
+      <li class="guest-galery-filter" data-filter="akademik">Akademik</li>
+      <li class="guest-galery-filter" data-filter="sdgs">SDGS</li>
+      <li class="guest-galery-filter" data-filter="prestasi">Prestasi</li>
+      <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas</li>
+      <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan</li>
     </ul>
 
     <!-- Grid Foto -->
-    <div class="guest-galery-grid">
+    <div class="guest-galery-grid guest-galery-grid-5">
+
     <div class="guest-galery-item" data-category="akademik">
         <img src="img/bglogin.jpg" alt="Akademik">
     </div>
@@ -217,20 +226,36 @@
     <div class="guest-galery-item" data-category="akademik">
         <img src="img/bglogin.jpg" alt="Akademik">
     </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
     </div>
 </section>
 <script>
   const filters = document.querySelectorAll(".guest-galery-filter");
   const items = document.querySelectorAll(".guest-galery-item");
+  const grid = document.querySelector(".guest-galery-grid");
 
   filters.forEach(filter => {
     filter.addEventListener("click", () => {
-      // ubah aktif
       filters.forEach(f => f.classList.remove("active"));
       filter.classList.add("active");
 
       const category = filter.dataset.filter;
 
+      // ubah layout grid
+      if (category === "all") {
+        grid.classList.remove("guest-galery-grid-3");
+        grid.classList.add("guest-galery-grid-5");
+      } else {
+        grid.classList.remove("guest-galery-grid-5");
+        grid.classList.add("guest-galery-grid-3");
+      }
+
+      // filter item
       items.forEach(item => {
         if (category === "all" || item.dataset.category === category) {
           item.classList.remove("hidden");
@@ -240,6 +265,7 @@
       });
     });
   });
+
 </script>
 
 <!-- Alumni Testimonial Section -->

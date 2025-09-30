@@ -174,74 +174,58 @@
   </aside>
 
 <!-- DAFTAR MITRA -->
- <main class="content">
+<main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Daftar Mitra</h2>
-        <a href="{{route('mitra.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i> Tambah Data
-        </a>
+        <h2 class="adm-title">Edit Data Mitra</h2>
     </div> 
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-    @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
+    @if(session('info'))
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{session('info')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
     @endif
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th style="width: 5%;">No.</th>
-                            <th style="width: 25%;">Foto</th>
-                            <th style="width: 45%;">Nama Mitra</th>
-                            <th style="width: 35%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($mitras as $index => $mitra)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                              @if($mitra->foto)
-                                <img src="{{ asset($mitra->foto) }}"
-                                  alt="foto mitra"
-                                  class="img-thumbnail"
-                                  style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                              @else
-                                <span class="text-muted">-</span>
-                              @endif
-                            </td>
-                            <td class="text-start">{{ $mitra -> nama }}</td>
-                            <td>
-                              <div style="display: flex; justify-content: center; gap: 6px;">
-                                <a href="{{ route('mitra.edit', $mitra->id)}}"
-                                  class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                  <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </a>
-                                <form action="{{ route('mitra.destroy', $mitra->id) }}" method="POST" onsubmit="return confirm('yakin hapus data ini?')">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                  </button>
-                                </form>
-                              </div>
-                            </td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+            <form action="{{ route('mitra.update', $mitra->id) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @method('PUT')
+              <!-- update data -->
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                  <label for="mitra" class="col-form-label">Mitra</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="text" name="nama" class="form-control" id="mitra" value="{{ old('nama', $mitra->nama) }}" placeholder="Masukkan nama mitra" required>
+                </div>
+              </div>
+                <!-- pre-review logo mitra-->
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                  <label for="logo" class="col-form-label">Logo</label>                
+                </div>
+                <!-- input file -->
+                <div class="col-sm-10">
+                  <input type="file" name="foto" class="form-control" id="logo" accept="image/*">
+                </div>
+                <div class="d-flex justify-content-center mt-3 w-100">
+                    <div id='prereview-container' class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">                    
+                        <img id="preview-image" src="{{ $mitra->foto ? asset($mitra->foto) : '' }}" alt="Preview" class="img-fluid rounded @if(!$mitra->foto) d-none @endif" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
+                </div>
+              </div>
+
+              <!-- Tombol -->
+              <div class="row">
+                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-between">
+                      <button type="button" class="btn btn-secondary">Kembali</button>
+                      <button type="submit" class="btn btn-success">Simpan</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
 </div>
 @endsection
