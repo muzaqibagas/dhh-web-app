@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mitras', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->string('nama')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

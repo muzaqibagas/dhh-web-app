@@ -218,6 +218,11 @@ Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy
 //Mitra
 Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
 Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create');
+Route::post('mitra', [MitraController::class, 'store'])->name('mitra.store');
+Route::get('mitra/{mitra}', [MitraController::class, 'show'])->name('mitra.show');
+Route::get('mitra/{mitra}/edit', [MitraController::class, 'edit'])->name('mitra.edit');
+Route::put('mitra/{mitra}', [MitraController::class, 'update'])->name('mitra.update');
+Route::delete('mitra/{mitra}', [MitraController::class, 'destroy'])->name('mitra.destroy');
 
 // ReviewAlumni
 Route::get('review-alumni', [ReviewAlumniController::class, 'index'])->name('review-alumni.index');
