@@ -109,7 +109,9 @@ class MitraController extends Controller
             unlink(public_path($mitra->foto));
         }
 
+        $nama = $mitra->nama; // simpan nama dulu sebelum delete
+
         $mitra->delete();
-        return redirect()->route('mitra.index');
+        return redirect()->route('mitra.index')->with('success', "Data $nama berhasil dihapus");
     }
 }

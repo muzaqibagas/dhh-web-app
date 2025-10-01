@@ -178,6 +178,18 @@
               <i class="bi bi-plus"></i>Tambah Data
             </a>
     </div> 
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -194,17 +206,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data (dummy) -->
+                      @foreach($staffdepts as $index => $staff)
                         <tr>
-                            <td>1</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>
-                                <img src="https://image-cdn.flowgpt.com/trans-images/1747063875154-2f5a3123-e2a4-43aa-98dc-3c46b1fe0f46.default.webp" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                              @if($staff->foto)
+                                <img src="{{ asset($staff->foto) }}"
+                                  alt="foto pimpinan dhh"
+                                  class="img-thumbnail"
+                                  style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                              @else
+                                <span class="text-muted">-</span>
+                              @endif
                             </td>
-                            <td class="text-start">Divisi</td>
-                            <td class="text-start">Biokomposit</td>
+                            <td class="text-start">{{ $staff->kategoristaffdepts->nama ?? '-' }}</td>
+                            <td class="text-start">{{ $staff->kategoridivisis->nama ?? '-' }}</td>
                             <td class="text-start">Prof. Dr. Ir. I Wayan Darmawan, M.Sc</td>
                             <td class="text-start">Ketua PS S2 dan PS S3 ITHH</td>
                             <td>

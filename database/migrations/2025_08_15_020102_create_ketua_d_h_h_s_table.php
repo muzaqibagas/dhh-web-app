@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ketua_d_h_h_s', function (Blueprint $table) {
+        Schema::create('ketua_dhhs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->string('nama')->nullable();
+            $table->string('foto')->nullable();            
+            $table->integer('tahun_mulai')->nullable();
+            $table->integer('tahun_selesai')->nullable();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ketua_d_h_h_s');
+        Schema::dropIfExists('ketua_dhhs');
     }
 };

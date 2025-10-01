@@ -177,60 +177,106 @@
     </div>
     <div class="card shadow-sm">
         <div class="card-body">
-          <form action="#" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('staffdept.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="nama" class="col-form-label">Nama</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Staff" required>
+                </div>
+              </div>
 
-              @php
-                  $formFields = [
-                      'Nama' => '<input type="text" class="form-control" placeholder="Masukkan nama" required>',
-                      'Foto' => '<input type="file" class="form-control" required>',
-                      'Kategori' => '
-                          <select class="form-select">
-                              <option disabled selected>Pilih kategori</option>
-                              <option>Organisasi</option>
-                              <option>Divisi</option>
-                          </select>',
-                      'Divisi' => '
-                          <select class="form-select">
-                              <option disabled selected>Pilih divisi</option>
-                              <option>Divisi A</option>
-                              <option>Divisi B</option>
-                          </select>',
-                      'Tanggal Lahir' => '<input type="date" class="form-control">',
-                      'Jabatan' => '
-                          <select class="form-select">
-                              <option disabled selected>Pilih jabatan</option>
-                              <option>Kepala Departemen</option>
-                              <option>Sekretaris Departemen</option>
-                          </select>',
-                      'Email' => '<input type="email" class="form-control" placeholder="Masukkan email">',
-                      'Sinta' => '<input type="text" class="form-control" placeholder="Masukkan link Sinta">',
-                      'Google Scholar' => '<input type="text" class="form-control" placeholder="Masukkan link Google Scholar">',
-                      'Google Scholar' => '<input type="text" class="form-control" placeholder="Masukkan link Google Scholar">',
-                      'Website' => '<input type="url" class="form-control" placeholder="Masukkan link website">',
-                      'Research Gate' => '<input type="text" class="form-control" placeholder="Masukkan link Research Gate">',
-                      'Keahlian' => '<textarea class="form-control" rows="3" placeholder="Masukkan keahlian..."></textarea>',
-                      'Link Publikasi' => '<textarea class="form-control" rows="3" placeholder="Masukkan link publikasi..."></textarea>',
-                      'Riwayat Pendidikan' => '<textarea class="form-control" rows="3" placeholder="Masukkan riwayat pendidikan..."></textarea>',
-                  ];
-              @endphp
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="foto" class="col-form-label">Foto</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="file" name="foto" class="form-control" id="foto" placeholder="No file selected" required>
+                </div>
+              </div>
 
-              @foreach ($formFields as $label => $field)
-                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                      <div class="col-sm-2">
-                          <label class="col-form-label">{{ $label }}</label>
-                      </div>
-                      <div class="col-sm-10">
-                          {!! $field !!}
-                      </div>
+              <div class="row mb-3">
+                <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
+                <div class="col-sm-10">
+                  <select name="id_kategoristaff" id="kategori" class="form-select" required>
+                    <option value="">Pilih kategori</option>
+                    @foreach ($kategoriStaffs as $kategori)
+                      <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="divisi" class="text-start col-sm-2 col-form-label">Divisi</label>
+                <div class="col-sm-10">
+                  <select name="id_divisi" id="kategoridivisi" class="form-select" required>
+                    <option value="">Pilih kategori</option>
+                    @foreach ($divisis as $kategoridivisi)
+                      <option value="{{ $kategoridivisi->id }}">{{ $kategoridivisi->nama }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
+                <div class="col-sm-10">
+                  <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+                </div>
+              </div>   
+
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="email" class="col-form-label">Email</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Email" required>
+                </div>
+              </div>
+
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="sinta" class="col-form-label">Sinta</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="sinta" name="sinta" class="form-control" id="sinta" placeholder="Masukkan link sinta" required>
+                </div>
+              </div>
+
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="google_scholar" class="col-form-label">Google Scholar</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="google_scholar" name="google_scholar" class="form-control" id="google_scholar" placeholder="Masukkan link google scholar" required>
+                </div>
+              </div>
+
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="website" class="col-form-label">Website</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="website" name="website" class="form-control" id="website" placeholder="Masukkan link website pribadi" required>
+                </div>
+              </div>
+
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                    <label for="researchgate" class="col-form-label">Research Gate</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="researchgate" name="researchgate" class="form-control" id="researchgate" placeholder="Masukkan link website research gate" required>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                      <button type="submit" class="btn btn-success">Simpan</button>
                   </div>
-              @endforeach
-                  
-                  <div class="row">
-                      <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                          <button type="submit" class="btn btn-success">Simpan</button>
-                      </div>
-                  </div>
+              </div>
             </form>
         </div>
     </div>

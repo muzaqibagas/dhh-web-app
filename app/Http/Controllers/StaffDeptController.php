@@ -23,8 +23,8 @@ class StaffDeptController extends Controller
      */
     public function create()
     {
-        $kategoriStaffs = \App\Models\KategoriStaff::all();
-        $divisis = \App\Models\Divisi::all();
+        $kategoriStaffs = KategoriStaff::all();
+        $divisis = Divisi::all();
         return view('staffdept.create', compact('kategoriStaffs', 'divisis'));
     }
 
@@ -86,8 +86,8 @@ class StaffDeptController extends Controller
      */
     public function edit(StaffDept $staffDept)
     {
-        $kategoriStaffs = \App\Models\KategoriStaff::all();
-        $divisis = \App\Models\Divisi::all();
+        $kategoriStaffs = KategoriStaff::all();
+        $divisis = Divisi::all();
         return view('staffdept.edit', compact('staffDept', 'kategoriStaffs', 'divisis'));
     }
 
@@ -116,24 +116,24 @@ class StaffDeptController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            // Hapus file foto lama jika ada
-            if ($staffDept->foto && file_exists(public_path('img/' . $staffDept->foto))) {
-                unlink(public_path('img/' . $staffDept->foto));
-            }
-
-            // Simpan file foto baru
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('img'), $filename);
-            $staffdepts['foto'] = $filename;
+            $file->move(public_path('foto_staffdept'), $filename);
+            $data['foto'] = 'foto_staffdept/' . $filename;
         }
 
-        $update = $staffDept->update($staffdepts);
+        $staffDept->fill($data);
 
+        if (!$staffDept->isDirty()) {
+            return back()->with('info', 'Tidak ada data yang diubah');
+        }
+
+        $update = $staffDept->update($data);
         if ($update)
-            return redirect()->route('staffdept.index')->with('success', 'Data berhasil diperbarui!');
+            return redirect()->route('staffdept.index')->with('success', 'Data Pimpinan DHH Berhasil Diupdate');
         else
-            return back()->with('error', 'Gagal memperbarui data!');
+            return redirect()->route('error', 'Gagal mengupdate data ketua dhh');
+        
     }
 
     /**
@@ -141,7 +141,13 @@ class StaffDeptController extends Controller
      */
     public function destroy(StaffDept $staffDept)
     {
-        $staffDept->delete();
-        return redirect()->route('staffdept.index');
+        if ($staffdept->foto && file_exists(public_path($staffdept->foto))) {
+            unlink(public_path($staffdept->foto));
+        }
+
+        $nama = $staffdept->nama; // simpan nama dulu sebelum delete
+
+        $staffdept->delete();
+        return redirect()->route('staffdept.index')->with('success', "Data $nama berhasil dihapus");
     }
 }

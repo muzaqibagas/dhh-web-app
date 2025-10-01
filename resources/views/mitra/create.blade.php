@@ -203,8 +203,8 @@
               </div>
               <!-- Tombol -->
               <div class="row">
-                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-between">
-                      <button type="button" class="btn btn-secondary">Kembali</button>
+                  <div class="mb-3 d-flex justify-content-between align-items-center">
+                      <a href="{{route('mitra.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
                       <button type="submit" class="btn btn-success">Simpan</button>
                   </div>
               </div>

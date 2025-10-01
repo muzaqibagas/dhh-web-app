@@ -169,47 +169,56 @@
     </script>
   </aside>
 
-<!-- DAFTAR Ketua -->
+<!-- create Ketua -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Create Ketua DHH</h2>
+        <h2 class="adm-title">Create Pimpinan DHH</h2>
     </div> 
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-            <form>
+
+            <form action="{{ route('ketuadhh.store') }}" method="POST" enctype="multipart/form-data">
+              @csrf
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="foto" class="col-form-label">Foto</label>
+                  <div class="col-sm-2">
+                      <label for="nama" class="col-form-label">Nama</label>
+                  </div>
+                  <div class="col-sm-10">
+                      <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Pimpinan" required>
+                  </div>
                 </div>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" id="foto" required>
-                </div>
-                </div>
+
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="nama" class="col-form-label">Nama</label>
+                  <div class="col-sm-2">
+                    <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
+                  </div>
+                  <div class="col-sm-10 d-flex align-items-center">
+                    <input type="number" name="tahun_mulai" id="tahun_mulai"
+                      class="form-control me-2" placeholder="Tahun mulai" min="1900" max="3000" required>
+                    <span class="mx-2">s/d</span>
+                    <input type="number" name="tahun_selesai" id="tahun_selesai"
+                      class="form-control ms-2" placeholder="Tahun selesai" min="1900" max="3000" required>
+                  </div>
                 </div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama mitra" required>
-                </div>
-                </div>
+                
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="jabatan" class="col-form-label">Masa Jabatan</label>
+                  <div class="col-sm-2">
+                      <label for="foto" class="col-form-label">Foto</label>
+                  </div>
+                  <div class="col-sm-10">
+                      <input type="file" name="foto" class="form-control" id="foto" placeholder="No file selected" required>
+                  </div>
                 </div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="jabatan" placeholder="Masukkan tahun" required>
-                </div>
-                </div>
+
 
                 <!-- Tombol -->
                 <div>
                 <div class="row">
                     <div class="mb-3 d-flex justify-content-between align-items-center">
                         <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
-                        <button type="button" class="btn btn-success">Simpan</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </div>
                 </div>

@@ -189,13 +189,13 @@ Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jen
 Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
 
 // KontenJenjang
-Route::get('kontenjenjangs', [KontenJenjangController::class, 'index'])->name('kontenjenjangs.index');
-Route::get('kontenjenjangs/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
-Route::post('kontenjenjangs', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
-Route::get('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
-Route::get('kontenjenjangs/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
-Route::put('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
-Route::delete('kontenjenjangs/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
+Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');
+Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
+Route::post('kontenjenjang', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
+Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
+Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
+Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
+Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
@@ -336,6 +336,10 @@ Route::delete('staff-dept/{staffDept}', [StaffDeptController::class, 'destroy'])
 Route::get('ketuadhh', [KetuaDHHController::class, 'index'])->name('ketuadhh.index');
 Route::get('ketuadhh/create', [KetuaDHHController::class, 'create'])->name('ketuadhh.create');
 Route::post('ketuadhh', [KetuaDHHController::class, 'store'])->name('ketuadhh.store');
+Route::get('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'show'])->name('ketuadhh.show');
+Route::get('ketuadhh/{ketuaDHH}/edit', [KetuaDHHController::class, 'edit'])->name('ketuadhh.edit');
+Route::put('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'update'])->name('ketuadhh.update');
+Route::delete('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'destroy'])->name('ketuadhh.destroy');
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');

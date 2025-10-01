@@ -173,11 +173,23 @@
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Ketua DHH dari Masa ke Masa</h2>
+        <h2 class="adm-title">Pimpinan DHH dari Masa ke Masa</h2>
           <a href="{{route('ketuadhh.create')}}" class="adm-btn-add text-decoration-none">
               <i class="bi bi-plus"></i>Tambah Data
           </a>
     </div> 
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -192,45 +204,46 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Data (dummy) -->
+                      @foreach($ketua_dhhs as $index => $ketuadhh)
                         <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/elementor/thumbs/IMG_1779-scaled-r4venwg5tzcl4qnp91irruvp7jf2hroqgzqnu27als.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                          <td>{{ $index + 1 }}</td>
+                          <td>
+                            @if($ketuadhh->foto)
+                              <img src="{{ asset($ketuadhh->foto) }}"
+                                alt="foto pimpinan dhh"
+                                class="img-thumbnail"
+                                style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                            @else
+                              <span class="text-muted">-</span>
+                            @endif
+                          </td>
+                          <td class="text-start">{{ $ketuadhh -> nama }}</td>
+                          <td class="text-center">
+                            @if($ketuadhh->tahun_mulai && $ketuadhh->tahun_selesai)
+                                {{ $ketuadhh->tahun_mulai }} - {{ $ketuadhh->tahun_selesai }}
+                            @elseif($ketuadhh->tahun_mulai && !$ketuadhh->tahun_selesai)
+                                {{ $ketuadhh->tahun_mulai }} - sekarang
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
                             </td>
-                            <td class="text-start">Dr. Istie S Rahayu, S.Hut.,M.Si</td>
-                            <td class="text-center">2003 - sekarang</td>
                             <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
+                              <div style="display: flex; justify-content: center; gap: 6px;">
+                                <a href="{{ route('ketuadhh.edit', $ketuadhh->id) }}" 
+                                  class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                </a>
+                                <form action="{{ route('ketuadhh.destroy', $ketuadhh->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                  </button>
+                                </form>
+                              </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <img src="https://dthh.ipb.ac.id/wp-content/uploads/elementor/thumbs/IMG_1779-scaled-r4venwg5tzcl4qnp91irruvp7jf2hroqgzqnu27als.jpg" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td class="text-start">Dr. Istie S Rahayu, S.Hut.,M.Si</td>
-                            <td class="text-center">2003 - sekarang</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                        </tr>
+                      @endforeach
                     </tbody>
                 </table>
             </div>

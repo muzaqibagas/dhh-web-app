@@ -53,12 +53,12 @@
 
     <!-- Filter -->
     <ul class="guest-galery-filters">
-      <li class="guest-galery-filter active" data-filter="all">Semua</li>
-      <li class="guest-galery-filter" data-filter="akademik">Akademik</li>
-      <li class="guest-galery-filter" data-filter="sdgs">SDGS</li>
-      <li class="guest-galery-filter" data-filter="prestasi">Prestasi</li>
-      <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas</li>
-      <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan</li>
+      <li class="guest-galery-filter active" data-filter="all">Semua 57</li>
+      <li class="guest-galery-filter" data-filter="akademik">Akademik 16</li>
+      <li class="guest-galery-filter" data-filter="sdgs">SDGS 11</li>
+      <li class="guest-galery-filter" data-filter="prestasi">Prestasi 23</li>
+      <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas 7</li>
+      <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan 10</li>
     </ul>
 
     <!-- Grid Foto -->

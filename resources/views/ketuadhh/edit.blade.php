@@ -173,44 +173,65 @@
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
-        <h2 class="adm-title">Edit Ketua DHH</h2>
+        <h2 class="adm-title">Edit Pimpinan DHH</h2>
     </div> 
+    @if(session('info'))
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{session('info')}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    @endif
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
 
-            <form>
+                <form action="{{ route('ketuadhh.update', $ketuaDHH->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <!-- UPDATE DATA -->
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="foto" class="col-form-label">Foto</label>
+                  <div class="col-sm-2">
+                      <label for="nama" class="col-form-label">Nama</label>
+                  </div>
+                  <div class="col-sm-10">
+                      <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama', $ketuaDHH->nama) }}" placeholder="Masukkan Nama Pimpinan" required>
+                  </div>
                 </div>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" id="foto" required>
-                </div>
-                </div>
+
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="nama" class="col-form-label">Nama</label>
+                  <div class="col-sm-2">
+                    <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
+                  </div>
+                  <div class="col-sm-10 d-flex align-items-center">
+                    <input type="number" name="tahun_mulai" id="tahun_mulai"
+                      class="form-control me-2" placeholder="Tahun mulai" min="1900" max="3000" value="{{ old('tahun_mulai', $ketuaDHH->tahun_mulai) }}" required>
+                    <span class="mx-2">s/d</span>
+                    <input type="number" name="tahun_selesai" id="tahun_selesai"
+                      class="form-control ms-2" placeholder="Tahun selesai" min="1900" max="3000" value="{{ old('tahun_selesai', $ketuaDHH->tahun_selesai) }}" required>
+                  </div>
                 </div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama mitra" required>
-                </div>
-                </div>
+                <!-- pre-review foto pimpinan-->
                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="jabatan" class="col-form-label">Masa Jabatan</label>
-                </div>
+                  <div class="col-sm-2">
+                      <label for="foto" class="col-form-label">Foto</label>
+                  </div>
+                  <!-- input file -->
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="jabatan" placeholder="Masukkan tahun" required>
+                  <input type="file" name="foto" class="form-control" id="logo" accept="image/*">
                 </div>
+                <div class="d-flex justify-content-center mt-3 w-100">
+                    <div id='prereview-container' class="border rounded bg-light d-flex align-items-center justify-content-center mb-2" style="height: 150px;">                    
+                        <img id="preview-image" src="{{ $ketuaDHH->foto ? asset($ketuaDHH->foto) : '' }}" alt="Preview" class="img-fluid rounded @if(!$ketuaDHH->foto) d-none @endif" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
                 </div>
+              </div>
 
                 <!-- Tombol -->
                 <div>
                 <div class="row">
                     <div class="mb-3 d-flex justify-content-between align-items-center">
                         <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
-                        <button type="button" class="btn btn-success">Simpan</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </div>
                 </div>
