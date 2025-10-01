@@ -62,13 +62,6 @@ body {
   position: absolute; /* keluar dari flow flex */
 }
 
-.main-container.collapsed .content {
-  flex: 1;
-  padding: 30px;
-  margin-left: 260px; /* sama dengan lebar sidebar */
-  transition: margin-left 0.4s ease;
-}
-
 /* kalau sidebar di-collapse */
 .main-container.collapsed .content {
   margin-left: 0;
@@ -226,16 +219,10 @@ body {
   color: #FFD700; /* emas saat hover */
 }
 
-/* Supaya smooth toggle */
-.sidebar {
-  transition: transform 0.3s ease;
-}
-
 /* Kalau sidebar hidden, content full width */
 .sidebar.collapsed + .content {
   margin-left: 0;
   transition: margin-left 2s ease;
-
 }
 
 /* === SUBMENU === */
@@ -315,8 +302,8 @@ body {
 .content {
   flex: 1;
   padding: 30px;
+  margin-left: 260px;
   transition: margin-left 0.4s ease; /* default transisi */
-
 }
 
 .content h2 {

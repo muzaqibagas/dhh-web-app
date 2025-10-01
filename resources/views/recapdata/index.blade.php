@@ -170,7 +170,7 @@
   </aside>
     
 <!-- Halaman - RECAP DATA ADMIN -->
-<main class="content">
+<main class="content overflow-x-auto">
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Artikel</h2>
@@ -187,7 +187,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered align-middle">
+                <table class="table w-auto table-bordered align-middle">
                     <thead class="table-light ">
                         <tr>
                             <th>No.</th>

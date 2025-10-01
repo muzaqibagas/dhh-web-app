@@ -1,0 +1,262 @@
+@extends('layouts.app')
+
+@section('content')
+
+<!-- ======= Breadcrumb ======= -->
+<div class="guest-breadcrumb py-2 px-3">
+  <a href="#">Home</a> / <span>Departemen</span>
+</div>
+
+<div class="container my-5">
+
+  <!-- SEJARAH -->
+    <section class="sej-section">
+        <h2 class="guest-pend-section-title">Sejarah</h2>
+        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+        <p style="text-align: justify;">
+            {{ $kontenDept->sejarah ?? '-' }}
+        </p>
+    </section>
+    <!-- KETUA DARI MASA KE MASA -->
+    <section class="guest-ketua-section my-5">
+    <h2 class="guest-pend-section-title text-center">Ketua Departemen dari Masa ke Masa</h2>
+    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider d-block mx-auto" alt="divider">
+
+    <div class="guest-ketua-timeline d-flex flex-wrap justify-content-center gap-4 mt-4">
+        <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 1">
+        <h5>Dr. Nama Ketua</h5>
+        <p>1969 – 1975</p>
+        </div>
+        <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 2">
+        <h5>Prof. Nama Ketua</h5>
+        <p>1975 – 1985</p>
+        </div>
+        <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 3">
+        <h5>Ir. Nama Ketua</h5>
+        <p>1985 – 1995</p>
+        </div>
+            <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 1">
+        <h5>Dr. Nama Ketua</h5>
+        <p>1969 – 1975</p>
+        </div>
+        <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 2">
+        <h5>Prof. Nama Ketua</h5>
+        <p>1975 – 1985</p>
+        </div>
+        <div class="guest-ketua-card text-center">
+        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 3">
+        <h5>Ir. Nama Ketua</h5>
+        <p>1985 – 1995</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- VISI & MISI -->
+    <div class="row my-4">
+        <div class="col-lg-6 col-md-12 mb-4">
+        <h3 class="guest-pend-section-title">Visi</h3>
+        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+        <p style="text-align: justify;">
+            {{ $kontenDept->visi ?? '-'}}
+        </p>
+        </div>
+        <div class="col-lg-6 col-md-12 mb-4">
+        <h3 class="guest-pend-section-title">Misi</h3>
+        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+        <p style="text-align: justify;">
+            {{ $kontenDept->misi ?? '-' }}
+        </p>
+        </div>
+    </div>
+
+    <!-- TUJUAN -->
+    <h3 class="guest-pend-section-title">Tujuan</h3>
+    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+    <p style="text-align: justify;">
+        {!! nl2br(e($kontenDept->tujuan ?? '-')) !!}
+    </p>
+
+    <!-- KEBIJAKAN MUTU -->
+    <h3 class="guest-pend-section-title">Kebijakan Mutu</h3>
+    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+    <p style="text-align: justify;">
+        {!! nl2br(e($kontenDept->kebijakanmutu ?? '-')) !!}
+    </p>    
+
+    <h2 style="text-align: center;">Staff Departemen Hasil Hutan</h2>
+
+    <!-- Tabs -->
+    <div class="sej-tabs">
+    <button class="sej-tab-button active" data-tab="sej-struktur">Struktur Organisasi</button>
+    <button class="sej-tab-button" data-tab="sej-dosen">Tenaga Pendidik/Dosen</button>
+    <button class="sej-tab-button" data-tab="sej-kependidikan">Tenaga Kependidikan</button>
+    </div>
+
+        <!-- Tab Contents -->
+    <section>
+        <div id="sej-struktur" class="sej-tab-content active">
+        <div class="sej-card-grid"> <!-- baris satu -->
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+        </div>
+            <!-- baris dua -->
+        <div class="sej-card-grid"> 
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+
+            <div class="sej-staff-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
+            <h4>Dr. Istie S. Rahayu</h4>
+            <p>Ketua DHH / Ketua PS S1</p>
+            </div>
+        </div>
+        </div>
+        
+        <div id="sej-dosen" class="sej-tab-content">
+        <div class="sej-division">
+            <h3 class="sej-division-title">Divisi Biokomposit</h3>
+
+            <div class="sej-card-grid">
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+            </div>
+        </div>
+
+        <div class="sej-division">
+            <h3 class="sej-division-title">Divisi Biokomposit</h3>
+
+            <div class="sej-card-grid">
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+
+            <div class="sej-staff-card">
+                <img src="img/pairsan.jpg" alt="Dosen 1">
+                <h4>Dr. Mahdi Mubarok</h4>
+                <p>Komisi Kemahasiswaan</p>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <div id="sej-kependidikan" class="sej-tab-content">
+        <div class="sej-card-grid">
+            <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Staf">
+            <h4>Prof. Dr. I. Wayan Darmawan</h4>
+            <p>Kepala PS S2/S3</p>
+            </div>
+            
+            <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Staf">
+            <h4>Prof. Dr. I. Wayan Darmawan</h4>
+            <p>Kepala PS S2/S3</p>
+            </div>
+            
+            <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Staf">
+            <h4>Prof. Dr. I. Wayan Darmawan</h4>
+            <p>Kepala PS S2/S3</p>
+            </div>
+            
+            <div class="sej-staff-card">
+            <img src="img/pairsan.jpg" alt="Staf">
+            <h4>Prof. Dr. I. Wayan Darmawan</h4>
+            <p>Kepala PS S2/S3</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <script>
+        const buttons = document.querySelectorAll('.sej-tab-button');
+        const contents = document.querySelectorAll('.sej-tab-content');
+
+        buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+        });
+    </script>  
+</div>
+@endsection

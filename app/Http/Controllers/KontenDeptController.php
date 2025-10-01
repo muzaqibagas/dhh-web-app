@@ -74,6 +74,12 @@ class KontenDeptController extends Controller
         return view('konten-dept.show', compact('kontenDept'));
     }
 
+    public function sejarah(KontenDept $kontenDept)
+    {
+        $konten = KontenDept::first();
+        return view('konten-dept.sejarah', compact('konten', 'kontenDept'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

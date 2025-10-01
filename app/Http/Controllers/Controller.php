@@ -20,7 +20,7 @@ class Controller extends BaseController
 
     public function file()
     {
-        return view('guest.file');    
+        return view('guest.file');
     }
 
     public function pendidikans1()
@@ -38,10 +38,10 @@ class Controller extends BaseController
         return view('guest.pendidikans3');    
     }
 
-    public function sejarah()
-    {
-        return view('guest.sejarah');    
-    }
+    // public function sejarah()
+    // {
+    //     return view('guest.sejarah');    
+    // }
 
     public function galleryguest()
     {
@@ -54,9 +54,8 @@ class Controller extends BaseController
     }
 
     public function artikeldetail(Artikel $artikel)
-    {
-        $artikels = Artikel::all();        
-        return view('guest.artikeldetail', compact('artikels'));    
+    {        
+        return view('guest.artikeldetail');    
     }
 
     public function alumnikami()
