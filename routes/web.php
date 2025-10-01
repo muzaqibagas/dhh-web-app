@@ -339,12 +339,6 @@ Route::post('ketuadhh', [KetuaDHHController::class, 'store'])->name('ketuadhh.st
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');
-Route::get('template/create', [TemplateController::class, 'create'])->name('template.create');
-Route::post('template', [TemplateController::class, 'store'])->name('template.store');
-Route::get('template/{template}', [TemplateController::class, 'show'])->name('template.show');
-Route::get('template/{template}/edit', [TemplateController::class, 'edit'])->name('template.edit');
-Route::put('template/{template}', [TemplateController::class, 'update'])->name('template.update');
-Route::delete('template/{template}', [TemplateController::class, 'destroy'])->name('template.destroy');
 
 // Undangan
 Route::get('undangan', [UndanganController::class, 'index'])->name('undangan.index');

@@ -187,7 +187,7 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered align-middle">
+                <table class="table w-auto table-bordered align-middle">
                     <thead class="table-light ">
                         <tr>
                             <th>No.</th>
