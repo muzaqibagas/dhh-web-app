@@ -170,109 +170,110 @@
   </aside>
 
 <!-- KONTEN DEPARTEMEN -->
-<main class="content">
-  <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Create Konten Jenjang</h2>
-    </div> 
-<div class="card shadow-sm">
-        <div class="card-body">
-            <form action="{{ route('kontenjenjang.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Create Konten Jenjang</h2>
+      </div> 
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <form action="{{ route('kontenjenjang.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
 
-                <!-- Jenjang -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Jenjang</label>
-                    <div class="col-sm-10">
-                        <select name="id_jenjang" class="form-control" required>
-                            <option value="">-- Pilih Jenjang --</option>
-                            @foreach($jenjangs as $jenjang)
-                                <option value="{{ $jenjang->id }}">{{ $jenjang->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                  <!-- Jenjang -->
+                  <div class="row mb-3 align-items-center">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Jenjang</label>
+                      <div class="col-sm-10">
+                          <select name="id_jenjang" class="form-control" required>
+                              <option value="">-- Pilih Jenjang --</option>
+                              @foreach($jenjangs as $jenjang)
+                                  <option value="{{ $jenjang->id }}">{{ $jenjang->nama }}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
 
-                <!-- Profil -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
-                    <div class="col-sm-10">
-                        <textarea name="profil" rows="3" class="form-control">{{ old('profil') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Profil -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
+                      <div class="col-sm-10">
+                          <textarea name="profil" rows="3" class="form-control">{{ old('profil') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Foto -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="foto" class="form-control" accept="image/*">
-                    </div>
-                </div>
+                  <!-- Foto -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
+                      <div class="col-sm-10">
+                          <input type="file" name="foto" class="form-control" accept="image/*">
+                      </div>
+                  </div>
 
-                <!-- Visi -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
-                    <div class="col-sm-10">
-                        <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Visi -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
+                      <div class="col-sm-10">
+                          <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Misi -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
-                    <div class="col-sm-10">
-                        <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Misi -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
+                      <div class="col-sm-10">
+                          <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Tujuan Pendidikan -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
-                    <div class="col-sm-10">
-                        <textarea name="tujuanpendidikan" rows="3" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Tujuan Pendidikan -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
+                      <div class="col-sm-10">
+                          <textarea name="tujuanpendidikan" rows="3" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Kompetensi Lulusan -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
-                    <div class="col-sm-10">
-                        <textarea name="kompetensilulusan" rows="3" class="form-control">{{ old('kompetensilulusan') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Kompetensi Lulusan -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
+                      <div class="col-sm-10">
+                          <textarea name="kompetensilulusan" rows="3" class="form-control">{{ old('kompetensilulusan') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Capaian Pembelajaran -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
-                    <div class="col-sm-10">
-                        <textarea name="capaianpembelajaran" rows="3" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
-                    </div>
-                </div>
+                  <!-- Capaian Pembelajaran -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
+                      <div class="col-sm-10">
+                          <textarea name="capaianpembelajaran" rows="3" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
+                      </div>
+                  </div>
 
-                <!-- Leaflet -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="leaflet" class="form-control" accept="image/*">
-                    </div>
-                </div>
+                  <!-- Leaflet -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
+                      <div class="col-sm-10">
+                          <input type="file" name="leaflet" class="form-control" accept="image/*">
+                      </div>
+                  </div>
 
-                <!-- Sertifikat Akreditasi -->
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*">
-                    </div>
-                </div>
+                  <!-- Sertifikat Akreditasi -->
+                  <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
+                      <div class="col-sm-10">
+                          <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*">
+                      </div>
+                  </div>
 
-                <!-- Tombol -->
-                <div class="text-end">
-                  <button type="submit" class="btn btn-success">Simpan</button>
-                </div>
+                  <!-- Tombol -->
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                  </div>
 
-            </form>
-        </div>
+              </form>
+          </div>
+      </div>
     </div>
-  </div>
-</main>
+  </main>
+</div>
 @endsection

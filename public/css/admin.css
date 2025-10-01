@@ -62,6 +62,13 @@ body {
   position: absolute; /* keluar dari flow flex */
 }
 
+.main-container.collapsed .content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 260px; /* sama dengan lebar sidebar */
+  transition: margin-left 0.4s ease;
+}
+
 /* kalau sidebar di-collapse */
 .main-container.collapsed .content {
   margin-left: 0;

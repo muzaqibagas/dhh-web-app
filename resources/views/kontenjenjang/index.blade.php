@@ -170,65 +170,66 @@
   </aside>
 
 <!-- KONTEN JENJANG -->
-<main class="content">
-  <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Konten Jenjang</h2>
-        <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
-          <i class="bi bi-plus"></i>Tambah Data
-        </a>
-        {{-- Alert Success --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Konten Jenjang</h2>
+          <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
+            <i class="bi bi-plus"></i>Tambah Data
+          </a>
+          {{-- Alert Success --}}
+          @if (session('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          @endif
 
-        {{-- Alert Error --}}
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-    </div>
+          {{-- Alert Error --}}
+          @if (session('error'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ session('error') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          @endif
+      </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-bordered text-center align-middle">
-                <thead>
-                    <tr>
-                        <th style="width: 5%">No</th>
-                        <th style="width: 20%">Jenjang</th>
-                        <th style="width: 20%">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  @forelse($kontenJenjangs as $key => $konten)
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <table class="table table-bordered text-center align-middle">
+                  <thead>
                       <tr>
-                          <td>{{ $key+1 }}</td>
-                          <td class="text-start">{{ $konten->jenjang->nama }}</td>
-                          <td class="text-center">
-                              <div style="display: flex; justify-content: center; gap: 6px;">
-                                  <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width:30px;height:30px;padding:0;">
-                                      <i class="bi bi-pencil"></i>
-                                  </a>
-                                  <a href="{{ route('kontenjenjang.show', $konten->id) }}" class="btn btn-primary btn-sm" style="width:30px;height:30px;padding:0;">
-                                      <i class="bi bi-eye"></i>
-                                  </a>
-                              </div>
-                          </td>
+                          <th style="width: 5%">No</th>
+                          <th style="width: 20%">Jenjang</th>
+                          <th style="width: 20%">Aksi</th>
                       </tr>
-                  @empty
-                      <tr>
-                          <td colspan="3" class="text-center">Belum ada data</td>
-                      </tr>
-                  @endforelse
-                  </tbody>
-            </table>
-        </div>
+                  </thead>
+                  <tbody>
+                    @forelse($kontenJenjangs as $key => $konten)
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td class="text-start">{{ $konten->jenjang->nama }}</td>
+                            <td class="text-center">
+                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                    <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width:30px;height:30px;padding:0;">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{{ route('kontenjenjang.show', $konten->id) }}" class="btn btn-primary btn-sm" style="width:30px;height:30px;padding:0;">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="text-center">Belum ada data</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+              </table>
+          </div>
+      </div>
     </div>
-  </div>
-</main>
+  </main>
+</div>
 @endsection
