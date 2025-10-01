@@ -170,7 +170,7 @@
   </aside>
     
 <!-- Halaman - RECAP DATA ADMIN -->
-<main class="content">
+<main class="content overflow-x-auto">
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Artikel</h2>
