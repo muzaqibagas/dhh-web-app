@@ -211,6 +211,7 @@ Route::get('konten-dept', [KontenDeptController::class, 'index'])->name('konten-
 Route::get('konten-dept/create', [KontenDeptController::class, 'create'])->name('konten-dept.create');
 Route::post('konten-dept', [KontenDeptController::class, 'store'])->name('konten-dept.store');
 Route::get('konten-dept/{kontenDept}', [KontenDeptController::class, 'show'])->name('konten-dept.show');
+Route::get('sejarah/{kontenDept}', [KontenDeptController::class, 'sejarah'])->name('konten-dept.sejarah');
 Route::get('konten-dept/{kontenDept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
 Route::put('konten-dept/{kontenDept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
 Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');

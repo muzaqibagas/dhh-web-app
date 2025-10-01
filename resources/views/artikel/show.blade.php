@@ -16,7 +16,7 @@
       </h1>      
 
       <p class="guest-artikel-detail-meta">
-        Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; {{ \Carbon\Carbon::parse($artikel->created_at)->translatedFormat('F d, Y') }}
+        Fahutan, Teknologi Hasil Hutan &nbsp; | &nbsp; {{ \Carbon\Carbon::parse($artikel->created_at)->locale('id')->translatedFormat('F d, Y') }}
       </p>
 
       <div class="guest-artikel-detail-image mb-4">
@@ -24,8 +24,8 @@
         <span class="guest-artikel-detail-tag">SDGS Goals 12</span>
       </div>
 
-      <div class="guest-artikel-detail-content">
-          {!! $artikel->deskripsi !!}          
+      <div class="guest-artikel-detail-content" style="text-align: justify;">
+          {!! nl2br(e($artikel->deskripsi ?? '-')) !!}
       </div>
 
     </div>

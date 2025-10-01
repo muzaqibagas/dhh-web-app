@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use App\Models\KategoriArtikel;
 use Illuminate\Http\Request;
-use Mews\Purifier\Facades\Purifier;
 
 class ArtikelController extends Controller
 {
@@ -39,10 +38,7 @@ class ArtikelController extends Controller
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',            
             'deskripsi' => 'nullable|string|max:5000',
-        ]);
-        
-        $cleanDeskripsi = Purifier::clean($data['deskripsi']);
-        $data['deskripsi'] = $cleanDeskripsi;
+        ]);            
 
         $kataHubung = [
             'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun'
@@ -128,9 +124,7 @@ class ArtikelController extends Controller
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('foto_artikel'), $filename);
             $data['foto'] = 'foto_artikel/' . $filename;
-        }
-
-        $data['deskripsi'] = Purifier::clean($data['deskripsi']);
+        }        
 
         $update = $artikel->update($data);
         if ($update)
