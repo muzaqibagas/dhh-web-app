@@ -195,9 +195,9 @@
 
                   <!-- Profil -->
                   <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
+                      <label class="col-sm-2 col-form-label fw-bold text-start">Profile</label>
                       <div class="col-sm-10">
-                          <textarea name="profil" rows="3" class="form-control">{{ old('profil') }}</textarea>
+                          <textarea name="profil" rows="3" class="form-control" placeholder="Profile Program Studi..." required>{{ old('profil') }}</textarea>
                       </div>
                   </div>
 
@@ -205,7 +205,8 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
                       <div class="col-sm-10">
-                          <input type="file" name="foto" class="form-control" accept="image/*">
+                          <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-foto')" required>
+                          <img id="preview-foto" class="img-thumbnail mt-2 d-none" width="150">
                       </div>
                   </div>
 
@@ -213,7 +214,7 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
                       <div class="col-sm-10">
-                          <textarea name="visi" rows="3" class="form-control">{{ old('visi') }}</textarea>
+                          <textarea name="visi" rows="3" class="form-control" placeholder="Visi...">{{ old('visi') }}</textarea>
                       </div>
                   </div>
 
@@ -221,7 +222,7 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
                       <div class="col-sm-10">
-                          <textarea name="misi" rows="3" class="form-control">{{ old('misi') }}</textarea>
+                          <textarea name="misi" rows="3" class="form-control" placeholder="Misi...">{{ old('misi') }}</textarea>
                       </div>
                   </div>
 
@@ -229,7 +230,7 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
                       <div class="col-sm-10">
-                          <textarea name="tujuanpendidikan" rows="3" class="form-control">{{ old('tujuanpendidikan') }}</textarea>
+                          <textarea name="tujuanpendidikan" rows="3" class="form-control" placeholder="Tujuan Pendidikan...">{{ old('tujuanpendidikan') }}</textarea>
                       </div>
                   </div>
 
@@ -237,7 +238,7 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
                       <div class="col-sm-10">
-                          <textarea name="kompetensilulusan" rows="3" class="form-control">{{ old('kompetensilulusan') }}</textarea>
+                          <textarea name="kompetensilulusan" rows="3" class="form-control" placeholder="Kompetensi Lulusan..." required>{{ old('kompetensilulusan') }}</textarea>
                       </div>
                   </div>
 
@@ -245,7 +246,7 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
                       <div class="col-sm-10">
-                          <textarea name="capaianpembelajaran" rows="3" class="form-control">{{ old('capaianpembelajaran') }}</textarea>
+                          <textarea name="capaianpembelajaran" rows="3" class="form-control" placeholder="Capaian Pembelajaran..." required>{{ old('capaianpembelajaran') }}</textarea>
                       </div>
                   </div>
 
@@ -253,7 +254,8 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
                       <div class="col-sm-10">
-                          <input type="file" name="leaflet" class="form-control" accept="image/*">
+                          <input type="file" name="leaflet" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-leaflet')">
+                          <img id="preview-leaflet" class="img-thumbnail mt-2 d-none" width="150">
                       </div>
                   </div>
 
@@ -261,8 +263,16 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
                       <div class="col-sm-10">
-                          <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*">
+                          <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-akreditasi')" required>
+                          <img id="preview-akreditasi" class="img-thumbnail mt-2 d-none" width="150">
                       </div>
+                  </div>
+                  <!-- Deskripsi Akreditasi -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">                    
+                    <label class="col-sm-2 preview-akreditasicol-form-label fw-bold text-start">Deskripsi Akreditasi</label>                    
+                    <div class="col-sm-10">                
+                      <input type="text" class="form-control" id="deskripsiakreditasi" name="deskripsiakreditasi" value="{{ old('deskripsiakreditasi') }}" placeholder="Deskripsi Akreditasi..." required>
+                    </div>
                   </div>
 
                   <!-- Tombol -->
@@ -276,4 +286,20 @@
     </div>
   </main>
 </div>
+
+<script>
+function previewImage(event, previewId) {
+    const input = event.target;
+    const preview = document.getElementById(previewId);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('d-none');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection

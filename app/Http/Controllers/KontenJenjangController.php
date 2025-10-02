@@ -31,61 +31,112 @@ class KontenJenjangController extends Controller
         $validated = $request->validate([
             'id_jenjang' => 'required|exists:jenjangs,id|unique:konten_jenjangs,id_jenjang',
             'profil' => 'nullable|string',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
             'capaianpembelajaran' => 'nullable|string',
-            'leaflet' => 'nullable|image',
-            'sertifikatakreditasi' => 'nullable|image',
+            'leaflet' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'deskripsiakreditasi' => 'nullable|string|max:255',            
         ]);
 
         // handle file upload
-        foreach (['foto', 'leaflet', 'sertifikatakreditasi'] as $field) {
+         $directories = [
+            'foto' => 'foto_jenjang/foto',
+            'leaflet' => 'foto_jenjang/leaflet',
+            'sertifikatakreditasi' => 'foto_jenjang/sertifikatakreditasi',
+        ];
+
+        foreach ($directories as $field => $path) {
             if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('uploads', 'public');
+                $file = $request->file($field);
+                $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
+
+                // bikin folder kalau belum ada
+                if (!file_exists(public_path($path))) {
+                    mkdir(public_path($path), 0777, true);
+                }
+
+                $file->move(public_path($path), $filename);
+                $validated[$field] = $path . '/' . $filename;
             }
         }
 
         KontenJenjang::create($validated);
 
-        return redirect()->route('kontenjenjangs.index')->with('success', 'Konten jenjang berhasil ditambahkan.');
+        return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function show(KontenJenjang $kontenJenjang)
     {
-        return view('kontenjenjang.edit', compact('kontenJenjang'));
+        return view('kontenjenjang.show', compact('kontenJenjang'));
+    }
+
+    public function edit(KontenJenjang $kontenJenjang)
+    {
+        return view('kontenjenjang.edit', compact('kontenJenjang'));        
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, KontenJenjang $kontenJenjang)
     {
         $validated = $request->validate([
             'profil' => 'nullable|string',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
             'capaianpembelajaran' => 'nullable|string',
-            'leaflet' => 'nullable|image',
-            'sertifikatakreditasi' => 'nullable|image',
+            'leaflet' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'deskripsiakreditasi' => 'nullable|string|max:255',
         ]);
 
-        foreach (['foto', 'leaflet', 'sertifikatakreditasi'] as $field) {
+        $directories = [
+            'foto' => 'foto_jenjang/foto',
+            'leaflet' => 'foto_jenjang/leaflet',
+            'sertifikatakreditasi' => 'foto_jenjang/sertifikatakreditasi',
+        ];
+
+        foreach ($directories as $field => $path) {
             if ($request->hasFile($field)) {
-                $validated[$field] = $request->file($field)->store('uploads', 'public');
+                $file = $request->file($field);
+                $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
+
+                // bikin folder kalau belum ada
+                if (!file_exists(public_path($path))) {
+                    mkdir(public_path($path), 0777, true);
+                }
+
+                // hapus file lama kalau ada
+                if ($kontenJenjang->$field && file_exists(public_path($kontenJenjang->$field))) {
+                    unlink(public_path($kontenJenjang->$field));
+                }
+
+                $file->move(public_path($path), $filename);
+                $validated[$field] = $path . '/' . $filename;
             }
         }
 
         $kontenJenjang->update($validated);
 
         return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil diperbarui.');
-    }
-
-    public function show(KontenJenjang $kontenJenjang)
+    }   
+    
+    public function destroy(KontenJenjang $kontenJenjang)
     {
-        return view('kontenjenjang.show', compact('kontenJenjang'));
+        // Hapus file terkait jika ada
+        foreach (['foto', 'leaflet', 'sertifikatakreditasi'] as $field) {
+            if ($kontenJenjang->$field && file_exists(public_path($kontenJenjang->$field))) {
+                unlink(public_path($kontenJenjang->$field));
+            }
+        }
+
+        $kontenJenjang->delete();
+
+        return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil dihapus.');
     }
 }

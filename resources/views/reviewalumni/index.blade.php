@@ -178,6 +178,21 @@
                 <i class="bi bi-plus"></i>Tambah Data
               </a>
         </div> 
+        {{-- Alert Success --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        {{-- Alert Error --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
@@ -209,8 +224,7 @@
                                 <td>{{ $review->angkatan }}</td>
                                 <td>
                                   <div style="display: flex; justify-content: center; gap: 6px;">                                    
-                                    <a href="{{route('review-alumni.edit', $review->id)}}" 
-                                      class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                    <a href="{{route('review-alumni.edit', $review->id)}}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                       <i class="bi bi-pencil" style="font-size: 18px;"></i>
                                     </a>
                                     <form action="{{ route('review-alumni.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">

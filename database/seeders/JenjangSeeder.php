@@ -13,7 +13,7 @@ class JenjangSeeder extends Seeder
      */
     public function run(): void
     {
-        $jenjangs = ['D3', 'D4', 'S1', 'S2', 'S3'];
+        $jenjangs = ['S1', 'S2', 'S3'];
 
         foreach ($jenjangs as $nama) {
             DB::table('jenjangs')->insert([
