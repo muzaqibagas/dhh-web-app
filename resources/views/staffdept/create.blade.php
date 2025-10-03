@@ -169,36 +169,45 @@
     </script>
   </aside>
 
-<!-- MAIN KONTEN -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
+
+  <!-- MAIN KONTEN -->
+  <main class="content">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
         <h2 class="adm-title">Create Staff Departemen</h2>
-    </div>
-    <div class="card shadow-sm">
+      </div>
+      <div class="card shadow-sm">
         <div class="card-body">
           <form action="{{ route('staffdept.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="nama" class="col-form-label">Nama</label>
-                </div>
-                <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Staff" required>
-                </div>
-              </div>
-
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="foto" class="col-form-label">Foto</label>
-                </div>
-                <div class="col-sm-10">
-                    <input type="file" name="foto" class="form-control" id="foto" placeholder="No file selected" required>
-                </div>
-              </div>
-
+              
+              {{-- NAMA --}}
               <div class="row mb-3">
-                <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
+                <label for="nama" class="col-sm-2 col-form-label text-start">Nama</label>
+                <div class="col-sm-10">
+                  <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Staff" required>
+                </div>
+              </div>
+
+              {{-- NIP --}}
+              <div class="row mb-3">
+                <label for="nip" class="col-sm-2 col-form-label text-start">NIP</label>
+                <div class="col-sm-10">
+                  <input type="text" name="nip" class="form-control" id="nip" placeholder="Masukkan NIP" required>
+                </div>
+              </div>
+
+              {{-- FOTO --}}
+              <div class="row mb-3">
+                <label for="foto" class="col-sm-2 col-form-label text-start">Foto</label>
+                <div class="col-sm-10">
+                  <input type="file" name="foto" class="form-control" id="foto" required>
+                </div>
+              </div>
+
+              {{-- KATEGORI --}}
+              <div class="row mb-3">
+                <label for="kategori" class="col-sm-2 col-form-label text-start">Kategori</label>
                 <div class="col-sm-10">
                   <select name="id_kategoristaff" id="kategori" class="form-select" required>
                     <option value="">Pilih kategori</option>
@@ -209,76 +218,128 @@
                 </div>
               </div>
 
+              {{-- DIVISI --}}
               <div class="row mb-3">
-                <label for="divisi" class="text-start col-sm-2 col-form-label">Divisi</label>
+                <label for="divisi" class="col-sm-2 col-form-label text-start">Divisi</label>
                 <div class="col-sm-10">
-                  <select name="id_divisi" id="kategoridivisi" class="form-select" required>
-                    <option value="">Pilih kategori</option>
-                    @foreach ($divisis as $kategoridivisi)
-                      <option value="{{ $kategoridivisi->id }}">{{ $kategoridivisi->nama }}</option>
+                  <select name="id_divisi" id="divisi" class="form-select" required>
+                    <option value="">Pilih divisi</option>
+                    @foreach ($divisis as $divisi)
+                      <option value="{{ $divisi->id }}">{{ $divisi->nama }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
 
+              {{-- JABATAN --}}
               <div class="row mb-3">
-                <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
+                <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan</label>
                 <div class="col-sm-10">
-                  <input type="date" name="tanggal" id="tanggal" class="form-control" required>
-                </div>
-              </div>   
-
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="email" class="col-form-label">Email</label>
-                </div>
-                <div class="col-sm-10">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Email" required>
+                  <select name="id_jabatan" id="jabatan" class="form-select" required>
+                    <option value="">Pilih jabatan</option>
+                    @foreach ($jabatans as $jabatan)
+                      <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
 
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="sinta" class="col-form-label">Sinta</label>
-                </div>
+              {{-- TANGGAL --}}
+              <div class="row mb-3">
+                  <label for="tanggal_lahir" class="col-sm-2 col-form-label text-start">Tanggal Lahir</label>
                 <div class="col-sm-10">
-                    <input type="sinta" name="sinta" class="form-control" id="sinta" placeholder="Masukkan link sinta" required>
+                  <input type="date" 
+                        name="tanggal_lahir" 
+                        id="tanggal_lahir" 
+                        class="form-control" 
+                        value="{{ old('tanggal_lahir', $staffDept->tanggal_lahir ?? '') }}"
+                        required>
+                </div>
+              </div>  
+
+              {{-- EMAIL --}}
+              <div class="row mb-3">
+                <label for="email" class="col-sm-2 col-form-label text-start">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Email" required>
                 </div>
               </div>
 
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="google_scholar" class="col-form-label">Google Scholar</label>
-                </div>
+              {{-- SCOPUS --}}
+              <div class="row mb-3">
+                <label for="scopus" class="col-sm-2 col-form-label text-start">Scopus</label>
                 <div class="col-sm-10">
-                    <input type="google_scholar" name="google_scholar" class="form-control" id="google_scholar" placeholder="Masukkan link google scholar" required>
+                  <input type="text" name="scopus" class="form-control" id="scopus" placeholder="Masukkan link Scopus" required>
                 </div>
               </div>
 
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="website" class="col-form-label">Website</label>
-                </div>
+              {{-- SINTA --}}
+              <div class="row mb-3">
+                <label for="sinta" class="col-sm-2 col-form-label text-start">Sinta</label>
                 <div class="col-sm-10">
-                    <input type="website" name="website" class="form-control" id="website" placeholder="Masukkan link website pribadi" required>
+                  <input type="text" name="sinta" class="form-control" id="sinta" placeholder="Masukkan link Sinta" required>
                 </div>
               </div>
 
-              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                <div class="col-sm-2">
-                    <label for="researchgate" class="col-form-label">Research Gate</label>
-                </div>
+              {{-- GOOGLE SCHOLAR --}}
+              <div class="row mb-3">
+                <label for="google_scholar" class="col-sm-2 col-form-label text-start">Google Scholar</label>
                 <div class="col-sm-10">
-                    <input type="researchgate" name="researchgate" class="form-control" id="researchgate" placeholder="Masukkan link website research gate" required>
+                  <input type="text" name="google_scholar" class="form-control" id="google_scholar" placeholder="Masukkan link Google Scholar" required>
                 </div>
               </div>
+
+              {{-- WEBSITE --}}
+              <div class="row mb-3">
+                <label for="website" class="col-sm-2 col-form-label text-start">Website</label>
+                <div class="col-sm-10">
+                  <input type="text" name="website" class="form-control" id="website" placeholder="Masukkan link website pribadi" required>
+                </div>
+              </div>
+
+              {{-- RESEARCH GATE --}}
+              <div class="row mb-3">
+                <label for="researchgate" class="col-sm-2 col-form-label text-start">ResearchGate</label>
+                <div class="col-sm-10">
+                  <input type="text" name="researchgate" class="form-control" id="researchgate" placeholder="Masukkan link ResearchGate" required>
+                </div>
+              </div>
+
+              {{-- KEAHLIAN --}}
+              <div class="row mb-3">
+                <label for="keahlian" class="col-sm-2 col-form-label text-start">Keahlian</label>
+                <div class="col-sm-10">
+                  <textarea name="keahlian" class="form-control" id="keahlian" rows="3" placeholder="Masukkan bidang keahlian" required></textarea>
+                </div>
+              </div>
+
+              {{-- LINK PUBLIKASI --}}
+              <div class="row mb-3">
+                <label for="publikasi" class="col-sm-2 col-form-label text-start">Link Publikasi</label>
+                <div class="col-sm-10">
+                  <textarea name="publikasi" class="form-control" id="publikasi" rows="3" placeholder="Masukkan link publikasi" required></textarea>
+                </div>
+              </div>
+
+              {{-- RIWAYAT PENDIDIKAN --}}
+              <div class="row mb-3">
+                <label for="riwayat_pendidikan" class="col-sm-2 col-form-label text-start">Riwayat Pendidikan</label>
+                <div class="col-sm-10">
+                  <textarea name="riwayat_pendidikan" class="form-control" id="riwayat_pendidikan" rows="3" placeholder="Masukkan riwayat pendidikan" required></textarea>
+                </div>
+              </div>
+
+              {{-- BUTTON SUBMIT --}}
               <div class="row">
-                  <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                      <button type="submit" class="btn btn-success">Simpan</button>
-                  </div>
+                <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                  <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
               </div>
-            </form>
+
+          </form>
         </div>
+      </div>
     </div>
+  </main>
 </div>
 @endsection

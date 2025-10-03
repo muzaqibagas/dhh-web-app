@@ -228,7 +228,6 @@
                       <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
                     </div>
                   </div>
-
                 </div>
 
                 <!-- Kolom Kanan: Upload Gambar -->

@@ -13,6 +13,7 @@ class StaffDept extends Model
     protected $fillable = [        
         'id_kategoristaff', 
         'id_divisi',
+        'id_jabatan',
         'foto', 
         'nama', 
         'tanggal_lahir',
@@ -25,7 +26,8 @@ class StaffDept extends Model
         'scopus', 
         'researchgate',
         'website', 
-        'minat_penelitian', 
+        'keahlian',
+        'publikasi',
         'riwayat_pendidikan',
     ];
 
@@ -42,5 +44,10 @@ class StaffDept extends Model
     public function divisi()
     {
         return $this->belongsTo(Divisi::class, 'id_divisi');
+    }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan');
     }
 }

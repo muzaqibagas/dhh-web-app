@@ -168,16 +168,16 @@
       });
     </script>
   </aside>
-    
-<!-- Daftar Staff Departemen - Admin Dashboard -->
+    <!-- Daftar Staff Departemen - Admin Dashboard -->
 <main class="content">
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Daftar Staff Departemen</h2>
-            <a href="{{route('staffdept.create')}}" class="adm-btn-add text-decoration-none">
-              <i class="bi bi-plus"></i>Tambah Data
-            </a>
+        <a href="{{route('staffdept.create')}}" class="adm-btn-add text-decoration-none">
+            <i class="bi bi-plus"></i> Tambah Data
+        </a>
     </div> 
+
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -190,11 +190,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
     @endif
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered align-middle">
-                    <thead class="table-light ">
+                    <thead class="table-light">
                         <tr>
                             <th>No.</th>
                             <th>Foto</th>
@@ -206,55 +207,46 @@
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($staffdepts as $index => $staff)
+                        @forelse($staffdepts as $index => $staff)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>
-                              @if($staff->foto)
-                                <img src="{{ asset($staff->foto) }}"
-                                  alt="foto pimpinan dhh"
-                                  class="img-thumbnail"
-                                  style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                              @else
-                                <span class="text-muted">-</span>
-                              @endif
+                                @if($staff->foto)
+                                    <img src="{{ asset($staff->foto) }}"
+                                        alt="foto staff"
+                                        class="img-thumbnail"
+                                        style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
                             </td>
-                            <td class="text-start">{{ $staff->kategoristaffdepts->nama ?? '-' }}</td>
-                            <td class="text-start">{{ $staff->kategoridivisis->nama ?? '-' }}</td>
-                            <td class="text-start">Prof. Dr. Ir. I Wayan Darmawan, M.Sc</td>
-                            <td class="text-start">Ketua PS S2 dan PS S3 ITHH</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
+                            <td>{{ $staff->kategoristaff->nama ?? '-' }}</td>
+                            <td>{{ $staff->divisi->nama ?? '-' }}</td>
+                            <td>{{ $staff->nama ?? '-' }}</td>
+                            <td>{{ $staff->jabatan->nama ?? '-' }}</td>
+                            <td class="text-center">
+                                <div style="display:flex; justify-content:center; gap:6px;">
+                                    <a href="{{ route('staffdept.edit', $staff->id) }}" 
+                                       class="btn btn-success btn-sm" 
+                                       style="width:30px; height:30px; padding:0;">
+                                        <i class="bi bi-pencil" style="font-size:18px;"></i>
+                                    </a>
+                                    <form action="{{ route('staffdept.destroy', $staff->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" style="width:30px; height:30px; padding:0;"
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                            <i class="bi bi-trash" style="font-size:18px;"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
+                        @empty
                         <tr>
-                            <td>2</td>
-                            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4Fm042tHJbvReJ34V8xGfs0QItSEiAu3t8g&s" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                            </td>
-                            <td class="text-start">Tendik/Dosen</td>
-                            <td class="text-start">Manajemen Industri HH</td>
-                            <td class="text-start">Prof. Dr. Ir. Trisna Priadi, M.Eng.Sc</td>
-                            <td class="text-start">Komisi Pendidikan dan PL</td>
-                            <!-- Tombol Aksi -->
-                        <td class="text-center">
-                            <div style="display: flex; justify-content: center; gap: 6px;">
-                                <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                </button>
-                                <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <!-- Tambahkan baris lain sesuai kebutuhan -->
+                            <td colspan="7" class="text-center">Belum ada data staff</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -262,70 +254,3 @@
     </div>
 </div>
 @endsection
-
-
-
-    <!-- <div class="container position-relative">
-        <h1>Daftar Staff Departemen</h1>
-
-        <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('staffdept.create') }}" class="btn btn-primary">+ Tambah Staff</a>
-        </div>
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Nama</th>
-                    <th>NIP</th>
-                    <th>Jabatan</th>
-                    <th>Email</th>
-                    <th>Divisi</th>
-                    <th>Kategori</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($staffdepts as $staff)
-                    <tr>
-                        <td>
-                            @if($staff->foto)
-                                <img src="{{ asset('img/' . $staff->foto) }}" alt="Foto" width="60">
-                            @else
-                                Tidak Ada
-                            @endif
-                        </td>
-                        <td>{{ $staff->nama }}</td>
-                        <td>{{ $staff->nip }}</td>
-                        <td>{{ $staff->jabatan }}</td>
-                        <td>{{ $staff->email }}</td>
-                        <td>{{ $staff->divisi->nama ?? '-' }}</td>
-                        <td>{{ $staff->kategoristaff->nama ?? '-' }}</td>
-                        <td>
-                            <a href="{{ route('staffdept.show', $staff->id) }}" class="btn btn-primary btn-sm">show</a>
-                            <a href="{{ route('staffdept.edit', $staff->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-                            <form action="{{ route('staffdept.destroy', $staff->id) }}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-
-                @if ($staffdepts->isEmpty())
-                    <tr>
-                        <td colspan="8" class="text-center">Belum ada data staff</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div> -->
