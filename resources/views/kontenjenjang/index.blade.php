@@ -176,23 +176,23 @@
           <h2 class="adm-title">Konten Jenjang</h2>
           <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
             <i class="bi bi-plus"></i>Tambah Data
-          </a>
-          {{-- Alert Success --}}
-          @if (session('success'))
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  {{ session('success') }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-          @endif
-
-          {{-- Alert Error --}}
-          @if (session('error'))
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  {{ session('error') }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-          @endif
+          </a>          
       </div>
+      {{-- Alert Success --}}
+      @if (session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+      @endif
+
+      {{-- Alert Error --}}
+      @if (session('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ session('error') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+      @endif
 
       <div class="card shadow-sm">
           <div class="card-body">
@@ -210,13 +210,17 @@
                             <td>{{ $key+1 }}</td>
                             <td class="text-start">{{ $konten->jenjang->nama }}</td>
                             <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                    <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width:30px;height:30px;padding:0;">
-                                        <i class="bi bi-pencil"></i>
+                                <div style="display: flex; justify-content: center; gap: 6px;">                                                                           
+                                    <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
                                     </a>
-                                    <a href="{{ route('kontenjenjang.show', $konten->id) }}" class="btn btn-primary btn-sm" style="width:30px;height:30px;padding:0;">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
+                                    <form action="{{ route('kontenjenjang.destroy', $konten->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                          <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                      </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

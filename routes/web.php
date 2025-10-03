@@ -215,7 +215,7 @@ Route::get('sejarah/{kontenDept}', [KontenDeptController::class, 'sejarah'])->na
 Route::get('konten-dept/{kontenDept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
 Route::put('konten-dept/{kontenDept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
 Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
-
+                            
 //Mitra
 Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
 Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create');

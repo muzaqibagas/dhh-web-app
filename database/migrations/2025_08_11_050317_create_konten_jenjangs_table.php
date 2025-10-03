@@ -12,9 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('konten_jenjangs', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('id_jenjang')->constrained('jenjangs')->onDelete('cascade');
-        $table->string('jenjang')->nullable(); 
+        $table->id('id');
+        $table->foreignId('id_jenjang')->constrained('jenjangs')->onDelete('cascade');        
         $table->text('profil')->nullable();
         $table->text('visi')->nullable();
         $table->text('misi')->nullable();
@@ -24,6 +23,7 @@ return new class extends Migration
         $table->string('foto')->nullable();
         $table->string('leaflet')->nullable();
         $table->string('sertifikatakreditasi')->nullable();
+        $table->string('deskripsiakreditasi')->nullable();
         $table->timestamps();
     });
     }

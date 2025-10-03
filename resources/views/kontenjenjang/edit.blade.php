@@ -151,8 +151,8 @@
           e.preventDefault();
 
           const target = this.getAttribute('data-dropdown');
-          const menu = document.querySelector([data-menu="${target}"]);
-          const arrow = document.querySelector([data-arrow="${target}"]);
+          const menu = document.querySelector(`[data-menu="${target}"]`);
+          const arrow = document.querySelector(`[data-arrow="${target}"]`);
           const isOpen = menu.style.display === 'flex';
 
           // Tutup semua dulu
@@ -171,71 +171,142 @@
 
 <!-- KONTEN JENJANG -->
  <main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Konten Jenjang</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
+    <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Konten Jenjang</h2>
+      </div> 
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <div class="table-responsive">
+                <form action="{{ route('kontenjenjang.update', $kontenJenjang->id) }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @method('PUT')
 
-            <form>
-                <!-- Sejarah -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
+                  <!-- Jenjang -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Jenjang</label>
                     <div class="col-sm-10">
-                        <textarea rows="4" class="form-control"> Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.
-                        </textarea>
+                      <input type="text" class="form-control" 
+                        value="{{ $kontenJenjang->jenjang->nama }}" readonly>
+                      <input type="hidden" name="id_jenjang" value="{{ $kontenJenjang->id_jenjang }}">
                     </div>
-                </div>
+                  </div>
 
-                <!-- Visi -->
-                <div class="row mb-3 align-items-center">
+
+                  <!-- Profil -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Profil</label>
+                    <div class="col-sm-10">
+                      <textarea name="profil" rows="3" class="form-control" placeholder="Profile Program Studi..." required>{{ old('profil', $kontenJenjang->profil) }}</textarea>
+                    </div>
+                  </div>
+
+                  <!-- Foto -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
+                    <div class="col-sm-10">
+                      <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-foto')" required>
+                      @if($kontenJenjang->foto)
+                        <img id="preview-foto" src="{{ asset($kontenJenjang->foto) }}" alt="Foto" class="img-thumbnail mt-2" width="150">
+                      @endif
+                    </div>
+                  </div>
+
+                  <!-- Visi -->
+                  <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
                     <div class="col-sm-10">
-                        <textarea rows="3" class="form-control">Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.</textarea>
+                      <textarea name="visi" rows="3" class="form-control"  placeholder="Visi...">{{ old('visi', $kontenJenjang->visi) }}</textarea>
                     </div>
-                </div>
+                  </div>
 
-                <!-- Misi -->
-                <div class="row mb-3 align-items-center">
+                  <!-- Misi -->
+                  <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
                     <div class="col-sm-10">
-                        <textarea rows="3" class="form-control">Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.
-                        </textarea>
+                      <textarea name="misi" rows="3" class="form-control" placeholder="Misi...">{{ old('misi', $kontenJenjang->misi) }}</textarea>
                     </div>
-                </div>
+                  </div>
 
-                <!-- Tujuan -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
+                  <!-- Tujuan Pendidikan -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan Pendidikan</label>
                     <div class="col-sm-10">
-                        <textarea rows="3" class="form-control">
-1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
-2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
-3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
-4. Menghasilkan lulusan PS THH yang mempunyai dasar ketrampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.a
-                          </textarea>
+                      <textarea name="tujuanpendidikan" rows="3" class="form-control" placeholder="Tujuan Pendidikan...">{{ old('tujuanpendidikan', $kontenJenjang->tujuanpendidikan) }}</textarea>
                     </div>
-                </div>
+                  </div>
 
-                <!-- Kebijakan Mutu -->
-                <div class="row mb-3 align-items-center">
-                    <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
+                  <!-- Kompetensi Lulusan -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Kompetensi Lulusan</label>
                     <div class="col-sm-10">
-                        <textarea rows="5" class="form-control">Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:</textarea>
+                      <textarea name="kompetensilulusan" rows="3" class="form-control" placeholder="Kompetensi Lulusan..." required>{{ old('kompetensilulusan', $kontenJenjang->kompetensilulusan) }}</textarea>
                     </div>
-                </div>
-            </form>
-        </div>
+                  </div>
+
+                  <!-- Capaian Pembelajaran -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Capaian Pembelajaran</label>
+                    <div class="col-sm-10">
+                      <textarea name="capaianpembelajaran" rows="3" class="form-control" placeholder="Capaian Pembelajaran..." required>{{ old('capaianpembelajaran', $kontenJenjang->capaianpembelajaran) }}</textarea>
+                    </div>
+                  </div>
+
+                  <!-- Leaflet -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
+                    <div class="col-sm-10">
+                      <input type="file" name="leaflet" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-leaflet')">                      
+                      @if($kontenJenjang->leaflet)
+                        <img id="preview-leaflet" src="{{ asset($kontenJenjang->leaflet) }}" alt="Leaflet" class="img-thumbnail mt-2" width="150">                        
+                      @endif
+                    </div>
+                  </div>
+
+                  <!-- Sertifikat Akreditasi -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
+                    <div class="col-sm-10">
+                      <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-akreditasi')" required>
+                      @if($kontenJenjang->sertifikatakreditasi)
+                      <img id="preview-akreditasi" src="{{ asset($kontenJenjang->sertifikatakreditasi) }}" alt="Akreditasi" class="img-thumbnail mt-2" width="150">                                                
+                      @endif
+                    </div>
+                  </div>
+
+                  <!-- Deskripsi Akreditasi -->
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label fw-bold text-start">Deskripsi Akreditasi</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="deskripsiakreditasi" class="form-control" value="{{ old('deskripsiakreditasi', $kontenJenjang->deskripsiakreditasi) }}" required>
+                    </div>
+                  </div>
+
+                  <!-- Tombol -->
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-success">Update</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>      
     </div>
-<!-- Tombol -->
-<div>
-  <div class="row">
-    <div class="mb-3 d-flex justify-content-between align-items-center">
-      <button type="button" class="btn btn-secondary">Kembali</button>
-      <button type="button" class="btn btn-success">Simpan Perubahan</button>
-    </div>
-  </div>
+  </main>
 </div>
+
+<script>
+  function previewImage(input, previewId) {
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById(previewId);
+        preview.src = e.target.result;
+        preview.classList.remove('d-none');
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+</script>
+
 @endsection
