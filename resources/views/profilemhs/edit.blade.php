@@ -228,11 +228,13 @@
     let drawing = false;
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+
     function startDraw(e) {
       drawing = true;
       ctx.beginPath();
       ctx.moveTo(getX(e), getY(e));
     }
+
     function draw(e) {
       if (!drawing) return;
       ctx.lineWidth = 2;
@@ -240,20 +242,23 @@
       ctx.strokeStyle = 'black';
       ctx.lineTo(getX(e), getY(e));
       ctx.stroke();
-      // update preview
-      updateCanvasPreview();
     }
+
     function endDraw() {
+      if (!drawing) return;
       drawing = false;
       ctx.closePath();
+      // update preview SEKALI SAJA ketika selesai menggambar
       updateCanvasPreview();
     }
+
     function getX(e) {
       return e.clientX - canvas.getBoundingClientRect().left;
     }
     function getY(e) {
       return e.clientY - canvas.getBoundingClientRect().top;
     }
+
     function updateCanvasPreview() {
       const previewSignBox = document.getElementById('preview-sign-box');
       previewSignBox.innerHTML = '';
@@ -266,10 +271,14 @@
       // Simpan ke hidden input
       document.getElementById('tanda_tangan').value = canvas.toDataURL();
     }
+
+    // Mouse event
     canvas.addEventListener('mousedown', startDraw);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', endDraw);
     canvas.addEventListener('mouseout', endDraw);
+
+    // Touch event
     canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
       startDraw(e.touches[0]);
@@ -279,12 +288,14 @@
       draw(e.touches[0]);
     });
     canvas.addEventListener('touchend', endDraw);
+
+    // Clear canvas
     document.getElementById('clearSignature').addEventListener('click', () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       document.getElementById('tanda_tangan').value = ''; // kosongin hidden input
       const previewSignBox = document.getElementById('preview-sign-box');
       previewSignBox.innerHTML = '<span style="color:#aaa;">Belum ada tanda tangan</span>';
-    });    
+    });   
   </script>
 @endpush  
 @endsection
