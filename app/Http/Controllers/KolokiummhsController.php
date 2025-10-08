@@ -7,6 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
+use App\Models\KetuaDhh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -129,38 +130,30 @@ class KolokiummhsController extends Controller
     public function generatePdf($id)
     {
         $kolokiummhs = Kolokiummhs::findOrFail($id);
-        
+        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();        
         $template = public_path('pdf/templatekolokium.pdf');
         $outputPath = public_path("pdf/ditandatanganikolokium");
-
         if (!file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
         }
-
-        $output = $outputPath . "/{$kolokiummhs->nim}_draftkolokium.pdf";
-        
+        $output = $outputPath . "/{$kolokiummhs->nim}_draftkolokium.pdf";    
         $pdf = new Fpdi();
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
         $pdf->useTemplate($tpl);
-
         $pdf->SetFont('Times', '', 12);
-
-        $labelWidth = 40;   // lebar kolom label
-        $valueWidth = 100;  // lebar kolom isi
+        $labelWidth = 40;   
+        $valueWidth = 100;  
         $lineHeight = 6.5;
-
         // Nama Mahasiswa
         $pdf->SetXY(32, 60);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nama, 0, 'L');
-
         // NIM
         $pdf->SetXY(32, 68);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->nim, 0, 'L');
-
         // Semester
         $pdf->SetXY(32, 75);
         $pdf->Cell($labelWidth, $lineHeight);
@@ -170,21 +163,18 @@ class KolokiummhsController extends Controller
         $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->alamat, 0, 'L');
-
         // Hari/Tanggal
         Carbon::setLocale('id');
         $hariTanggal = Carbon::parse($kolokiummhs->tanggal)->translatedFormat('l, d F Y');
         $pdf->SetXY(32, 118);
         $pdf->Cell($labelWidth, $lineHeight);        
         $pdf->MultiCell($valueWidth, $lineHeight, $hariTanggal, 0, 'L');
-
         // Waktu
         $pdf->SetXY(32, 126);
         $pdf->Cell($labelWidth, $lineHeight);
         $waktuMulai = \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i');
         $waktuSelesai = \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i');
         $pdf->MultiCell($valueWidth, $lineHeight, $waktuMulai . ' s/d ' . $waktuSelesai, 0, 'L');        
-
         // Tempat offline
         $pdf->SetXY(32, 132.5);
         $pdf->Cell($labelWidth, $lineHeight);
@@ -195,47 +185,39 @@ class KolokiummhsController extends Controller
             $tempat = $kolokiummhs->link_meeting;
         }
         $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');        
-
         // Judul Kolokium
         $pdf->SetXY(32, 140);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');                
-
-        //Mahasiswa yang mendaftarkan kolokium               
-        $yMhs = 188;
-        
-        $xStart = 210; // posisi X kurung buka
-        $xEnd   = 110; // posisi X kurung tutup
-        $width  = $xEnd - $xStart; // lebar area kurung
-
+        //tanda tangan mahasiswa
+        $yMhs = 188;        
+        $xStart = 210; 
+        $xEnd   = 110; 
+        $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yMhs);
-        $pdf->Cell(
-            $width, 
-            $lineHeight, 
-            "(" . ($kolokiummhs->nama ?? '-') . ")", 
-            0, 
-            0, 
-            'C' // <-- ini bikin teks center
+        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->nama ?? '-') . ")", 0, 0, 'C' // <-- ini bikin teks center
         );
-
         // Dosen Pembimbing 1 
         $yPemb1 = 223;
-        
-        $xStart = 5;  // posisi X kurung buka
-        $xEnd   = 110; // posisi X kurung tutup
-        $width  = $xEnd - $xStart; // lebar area kurung
-
+        $xStart = 5;  
+        $xEnd   = 110; 
+        $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yPemb1);
         $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")",             0, 0, 'C');
-
-        // Untuk pembimbing anggota (misalnya di X kanan, Y sama)
+        // Dosen Pembimbing 2 
         $yPemb2 = 223;
-        $xStart2 = 103;  // posisinya harus disesuaikan dengan kurung kanan
-        $xEnd2   = 215;  // sesuaikan dengan kurung kanan
+        $xStart2 = 103;  
+        $xEnd2   = 215;  
         $width2  = $xEnd2 - $xStart2;
-
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
+        //ketua dhh
+        $yKetua = 263; 
+        $xStart3 = 55;  
+        $xEnd3   = 160; 
+        $width3  = $xEnd3 - $xStart3;
+        $pdf->SetXY($xStart3, $yKetua);
+        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -303,6 +285,12 @@ class KolokiummhsController extends Controller
             $data['id_ruangan'] = null;
         } else {
             $data['link_meeting'] = null;
+        }
+
+        $kolokiummhs->fill($data);
+
+        if (!$kolokummhs->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
         
         $update = $kolokiummhs->update($data);

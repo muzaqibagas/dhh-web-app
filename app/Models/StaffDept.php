@@ -13,7 +13,7 @@ class StaffDept extends Model
     protected $fillable = [        
         'id_kategoristaff', 
         'id_divisi',
-        'id_jabatan',
+        'jabatan',
         'foto', 
         'nama', 
         'tanggal_lahir',

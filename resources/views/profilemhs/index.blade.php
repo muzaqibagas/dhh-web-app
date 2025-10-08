@@ -104,73 +104,57 @@
         <i class="bi bi-box-arrow-right"></i>
         <span> Keluar Akun </span>
       </div>
-    </a>    
-      <script>
-        document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-          toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const target = this.getAttribute('data-dropdown');
-            const menu = document.querySelector(`[data-menu="${target}"]`);
-            const arrow = document.querySelector(`[data-arrow="${target}"]`);
-            const isOpen = menu.style.display === 'flex';
-
-            // Tutup semua dulu
-            document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-            document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
-
-            // Kalau belum terbuka, buka
-            if (!isOpen) {
-              menu.style.display = 'flex';
-              arrow.innerHTML = '&#9660;';
-            }
-          });
-        });
-      </script>
-    </aside>
-
-<main class="content">
-  <h2 class="page-title">Biodata Mahasiswa</h2>
-  <div class="id-card-container p-4 shadow-lg rounded-4 d-flex flex-row align-items-center w-100 mt-4" style="background: linear-gradient(135deg, #e0e7ff 60%, #f5f5f5 100%); border: 2px solid #1b2a6d; min-width: 420px;">
-    <div class="id-photo text-center me-4">
-      <div class="rounded-3 overflow-hidden border border-3 border-primary mx-auto" style="width: 200px; height: 300px; background:#fff; margin-bottom: 10px;">
-        @if($user->foto)
-          <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
-        @else
-          <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover">
-        @endif
+    </a>        
+  </aside>
+  <main class="content">
+    <h2 class="page-title">Biodata Mahasiswa</h2>
+    <div class="id-card-container p-4 shadow-lg rounded-4 d-flex flex-row align-items-center w-100 mt-4" style="background: linear-gradient(135deg, #e0e7ff 60%, #f5f5f5 100%); border: 2px solid #1b2a6d; min-width: 420px;">
+      <div class="id-photo text-center me-4">
+        <div class="rounded-3 overflow-hidden border border-3 border-primary mx-auto" style="width: 200px; height: 300px; background:#fff; margin-bottom: 10px;">
+          @if($user->foto)
+            <img id="preview-image" src="{{ asset('profile/' . $user->foto) }}" alt="" class="w-100 h-100 object-fit-cover">
+          @else
+            <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover">
+          @endif
+        </div>
+        <a href="{{ route('profilemhs.edit') }}" class="btn btn-primary w-100"><i class="bi bi-pencil-square"></i> Edit Profile</a>
       </div>
-      <a href="{{ route('profilemhs.edit') }}" class="btn btn-primary w-100"><i class="bi bi-pencil-square"></i> Edit Profile</a>
-    </div>
-    <div class="id-data flex-grow-1">
-      <div class="mb-2">
-        <label class="form-label fw-bold mb-0">Nama</label>
-        <input type="text" class="form-control form-control-sm" value="{{ $user->nama ?? '-' }}" readonly style="background-color:#f5f5f5;">
+      <div class="id-data flex-grow-1">
+        <div class="mb-2">
+          <label class="form-label fw-bold mb-0">Nama</label>
+          <input type="text" class="form-control form-control-sm" value="{{ $user->nama ?? '-' }}" readonly style="background-color:#f5f5f5;">
+        </div>
+        <div class="mb-2">
+          <label class="form-label fw-bold mb-0">NIM</label>
+          <input type="text" class="form-control form-control-sm" value="{{ $user->nim ?? '-' }}" readonly style="background-color:#f5f5f5;">
+        </div>
+        <div class="mb-2">
+          <label class="form-label fw-bold mb-0">No Handphone</label>
+          <input type="text" class="form-control form-control-sm" value="{{ $user->no_hp ?? '-' }}" readonly style="background-color:#f5f5f5;">
+        </div>
+        <div class="mb-2">
+          <label class="form-label fw-bold mb-0">Email</label>
+          <input type="text" class="form-control form-control-sm" value="{{ $user->email ?? '-' }}" readonly style="background-color:#f5f5f5;">
+        </div>
+        <div class="mb-2">
+          <label class="form-label fw-bold mb-0">Jenis Kelamin</label><br>
+          <input type="text" class="form-control form-control-sm" value="{{ $user->jenis_kelamin ?? '-' }}" readonly style="background-color:#f5f5f5;">
+        </div>
+        <div class="signature-box w-50" 
+            style="min-height:80px; max-height:100px; display:flex; align-items:center; justify-content:center; background:#fff; border:1.5px solid #1b2a6d; border-radius:6px;">                                         
+          @if($user->tanda_tangan)
+            <img src="{{ asset('signature/' . $user->tanda_tangan) }}" 
+                alt="Tanda Tangan" 
+                style="max-width: 100%; max-height: 100%; object-fit: contain; height: auto; width: auto;">
+          @else
+            <span style="color:#aaa;">Belum ada tanda tangan</span>
+          @endif
+        </div>
       </div>
-      <div class="mb-2">
-        <label class="form-label fw-bold mb-0">NIM</label>
-        <input type="text" class="form-control form-control-sm" value="{{ $user->nim ?? '-' }}" readonly style="background-color:#f5f5f5;">
-      </div>
-      <div class="mb-2">
-        <label class="form-label fw-bold mb-0">Email</label>
-        <input type="text" class="form-control form-control-sm" value="{{ $user->email ?? '-' }}" readonly style="background-color:#f5f5f5;">
-      </div>
-      <div class="mb-2">
-        <label class="form-label fw-bold mb-0">Jenis Kelamin</label><br>
-        <input type="text" class="form-control form-control-sm" value="{{ $user->jenis_kelamin ?? '-' }}" readonly style="background-color:#f5f5f5;">
-      </div>
-      <div class="signature-box w-50" 
-          style="min-height:80px; max-height:100px; display:flex; align-items:center; justify-content:center; background:#fff; border:1.5px solid #1b2a6d; border-radius:6px;">                                         
-        @if($user->tanda_tangan)
-          <img src="{{ asset('signature/' . $user->tanda_tangan) }}" 
-              alt="Tanda Tangan" 
-              style="max-width: 100%; max-height: 100%; object-fit: contain; height: auto; width: auto;">
-        @else
-          <span style="color:#aaa;">Belum ada tanda tangan</span>
-        @endif
-      </div>
-    </div>
-  </div>
+    </div>    
+  </main>
+</div>
+@push('style')
   <style>
     .id-card-container {
       box-shadow: 0 4px 24px 0 rgba(30, 41, 59, 0.10);
@@ -190,8 +174,29 @@
       border: 1.5px dashed #1b2a6d;
     }
   </style>
-</main>
+@endpush
+@push('script')
+  <script>
+    document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
 
+        const target = this.getAttribute('data-dropdown');
+        const menu = document.querySelector(`[data-menu="${target}"]`);
+        const arrow = document.querySelector(`[data-arrow="${target}"]`);
+        const isOpen = menu.style.display === 'flex';
+
+        // Tutup semua dulu
+        document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+        document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+
+        // Kalau belum terbuka, buka
+        if (!isOpen) {
+          menu.style.display = 'flex';
+          arrow.innerHTML = '&#9660;';
+        }
+      });
+    });
+  </script>
+@endpush
 @endsection
-
-</body>

@@ -100,6 +100,12 @@ class KontenDeptController extends Controller
             'tujuan' => 'nullable|string',
             'kebijakanmutu' => 'nullable|string',
         ]);
+
+        $kontenDept->fill($data);
+        if (!$kontenDept->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
+
         $update = $kontenDept->update($data);
         if ($update)
             return redirect()->route('konten-dept.show', $kontenDept->id)->with('success', 'Data berhasil diperbarui!');

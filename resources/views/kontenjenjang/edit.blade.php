@@ -205,7 +205,7 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
                     <div class="col-sm-10">
-                      <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-foto')" required>
+                      <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-foto')">
                       @if($kontenJenjang->foto)
                         <img id="preview-foto" src="{{ asset($kontenJenjang->foto) }}" alt="Foto" class="img-thumbnail mt-2" width="150">
                       @endif
@@ -267,7 +267,7 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
                     <div class="col-sm-10">
-                      <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-akreditasi')" required>
+                      <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-akreditasi')">
                       @if($kontenJenjang->sertifikatakreditasi)
                       <img id="preview-akreditasi" src="{{ asset($kontenJenjang->sertifikatakreditasi) }}" alt="Akreditasi" class="img-thumbnail mt-2" width="150">                                                
                       @endif
@@ -278,7 +278,7 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Deskripsi Akreditasi</label>
                     <div class="col-sm-10">
-                      <input type="text" name="deskripsiakreditasi" class="form-control" value="{{ old('deskripsiakreditasi', $kontenJenjang->deskripsiakreditasi) }}" required>
+                      <input type="text" name="deskripsiakreditasi" class="form-control" value="{{ old('deskripsiakreditasi', $kontenJenjang->deskripsiakreditasi) }}" placeholder="Deskripsi Akreditasi..." required>
                     </div>
                   </div>
 

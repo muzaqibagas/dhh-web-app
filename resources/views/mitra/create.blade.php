@@ -190,7 +190,7 @@
                   <label for="mitra" class="col-form-label">Mitra</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" name="nama" class="form-control" id="mitra" placeholder="Masukkan nama mitra" required>
+                  <input type="text" name="nama" class="form-control" id="mitra" placeholder="Mitra..." required>
                 </div>
               </div>
               <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">

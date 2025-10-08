@@ -97,6 +97,14 @@ class KategoriStaffController extends Controller
             'nama' => $request->nama,
         ]);
 
+        $kategoriStaff->fill([
+            'nama' => $request->nama,
+        ]);
+
+        if (!$kategoriStaff->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
+
         if ($update) {
             return redirect()->route('kategoristaff.index')->with('success', 'Kategori Staff berhasil diperbarui.');
         } else {

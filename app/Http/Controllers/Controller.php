@@ -36,12 +36,7 @@ class Controller extends BaseController
     public function pendidikans3()
     {
         return view('guest.pendidikans3');    
-    }
-
-    // public function sejarah()
-    // {
-    //     return view('guest.sejarah');    
-    // }
+    }  
 
     public function galleryguest()
     {

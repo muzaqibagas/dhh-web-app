@@ -14,6 +14,13 @@ class GaleriController extends Controller
     public function index()
     {
         $galeris = Galeri::all();
+
+        $query = Galeri::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('judul', 'like', "%$search%");
+        }
+        $galeris = $query->get();
         return view('galeri.index', compact('galeris'));
     }
 

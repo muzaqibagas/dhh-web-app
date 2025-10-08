@@ -27,7 +27,7 @@
         Request::is('kategoristaff') || Request::is('kategoristaff/create') || Request::is('kategoristaff/*/edit') |
         Request::is('staff-dept') || Request::is('staff-dept/create') || Request::is('staff-dept/*/edit') |
         Request::is('ketuadhh') || Request::is('ketuadhh/create') || Request::is('ketuadhh/*/edit');
-      @endphp
+    @endphp
 
     <!-- BTN TINGKAT AKHIR===================== -->
     <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
@@ -169,91 +169,71 @@
     </script>
   </aside>
     
-<!-- Halaman - RECAP DATA ADMIN -->
-<main class="content overflow-x-auto">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Artikel</h2>
-          <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-download"></i>Download File Excel
-          </a>
-    </div>
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table w-auto table-bordered align-middle">
-                    <thead class="table-light ">
-                        <tr>
-                            <th>No.</th>
-                            <th>Edit/Hapus</th>
-                            <th>Nama</th>
-                            <th>NIM</th>
-                            <th>Pembimbing 1</th>
-                            <th>Pembimbing 2</th>
-                            <th>Sem Genap</th>
-                            <th>Kolokium</th>
-                            <th>Seminar</th>
-                            <th>Ujian</th>
-                            <th>Ket. Sem. Ganjil 2024/2025</th>
-                            <th>Genap 2024/2025</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data (dummy) -->
-                        <tr>
-                            <td>1</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Hasna Nabiilah Widiani</td>
-                            <td>J0403221043</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Bagas Saputra</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Nanaa Caine</td>
-                            <td>8</td>
-                            <td>22/09/2023</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">22/09/2023</td>
-                            <td>22/09/2023</td>
-                            <td>SKL sudah</td>
-                            <td>Lulus</td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>
-                            <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-trash" style="font-size: 18px;"></i>
-                            </button>
-                            </td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Jaki Bagasim</td>
-                            <td>J0403221099</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Bagas Saputra</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">Prof. Nanaa Caine</td>
-                            <td>8</td>
-                            <td>22/09/2023</td>
-                            <td class="text-start text-truncate" style="max-width: 200px;">22/09/2023</td>
-                            <td>22/09/2023</td>
-                            <td>SKL sudah</td>
-                            <td>Lulus</td>
-                        </tr>
-                        <!-- Tambahkan baris lain sesuai kebutuhan -->
-                    </tbody>
-                </table>
+  <!-- Halaman - RECAP DATA ADMIN -->
+  <main class="content overflow-x-auto">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+            <h2 class="adm-title">Daftar Artikel</h2>
+              <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
+                <i class="bi bi-download"></i>Download File Excel
+              </a>
+        </div>
+        @if(session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          </div>
+        @endif
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table w-auto table-bordered align-middle">
+                        <thead class="table-light ">
+                            <tr>
+                                <th>No.</th>
+                                <th>Edit/Hapus</th>
+                                <th>Nama</th>
+                                <th>NIM</th>
+                                <th>Pembimbing 1</th>
+                                <th>Pembimbing 2</th>
+                                <th>Sem Genap</th>
+                                <th>Kolokium</th>
+                                <th>Seminar</th>
+                                <th>Ujian</th>
+                                <th>Ket. Sem. Ganjil 2024/2025</th>
+                                <th>Genap 2024/2025</th>
+                            </tr>
+                        </thead>
+                        <tbody>                                                             
+                            @foreach($recap as $i => $row)
+                            <tr>                              
+                              <td>{{ $i+1 }}</td>
+                              <td>
+                                  <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                  </button>
+                                  <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                  </button>
+                              </td>
+                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['nama'] }}</td>
+                              <td>{{ $row['nim'] }}</td>
+                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing1'] }}</td>
+                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing2'] }}</td>
+                              <td>{{ $row['semester_genap'] }}</td>
+                              <td>{{ $row['tanggal_kolokium'] }}</td>
+                              <td>{{ $row['tanggal_seminar'] }}</td>
+                              <td>{{ $row['tanggal_ujian'] }}</td>
+                              <td>{{ $row['ket_sem_ganjil'] }}</td>
+                              <td>{{ $row['genap_2024_2025'] }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+  </main>
 </div>
 @endsection

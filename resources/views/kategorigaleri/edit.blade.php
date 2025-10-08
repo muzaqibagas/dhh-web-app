@@ -169,36 +169,42 @@
     </script>
   </aside>
 
-<!-- DAFTAR KATEGORI GALERI -->
+  <!-- DAFTAR KATEGORI GALERI -->
   <main class="content">
     <div class="container-fluid mt-4">
-        <div class="adm-header">
-            <h2 class="adm-title">Edit Kategori Galeri</h2>
-        </div> 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="table-responsive">
-
-                <form action="{{route('kategorigaleri.update', $kategoriGaleri->id)}}" method="POST">
-                  @csrf
-                  @method('PUT')
-                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                    <div class="col-sm-2">
-                      <label for="kategori" class="col-form-label">Kategori Galeri</label>
-                    </div>
-                    <div class="col-sm-10">
-                      <input type="text" name="nama" value="{{$kategoriGaleri->nama}}" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
-                    </div>
-                  </div>
-                  <!-- Tombol -->
-                  <div class="row mt-4">
-                      <div class="mb-3 d-flex justify-content-between align-items-center">
-                          <a href="{{route('kategorigaleri.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
-                          <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                      </div>
-                  </div>
-              </form>
+      <div class="adm-header">
+          <h2 class="adm-title">Edit Kategori Galeri</h2>
+      </div> 
+      @if(session('info'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ session('info') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      @endif
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="table-responsive">
+            <form action="{{route('kategorigaleri.update', $kategoriGaleri->id)}}" method="POST">
+              @csrf
+              @method('PUT')
+              <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                <div class="col-sm-2">
+                  <label for="kategori" class="col-form-label">Kategori Galeri</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="text" name="nama" value="{{$kategoriGaleri->nama}}" class="form-control" id="kategori" placeholder="Kategori Galeri..." required>
+                </div>
+              </div>
+              <!-- Tombol -->
+              <div class="row mt-4">
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                  <a href="{{route('kategorigaleri.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                  <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                </div>
+              </div>
+            </form>
           </div>
+        </div>
       </div>
     </div>
   </main>

@@ -175,10 +175,10 @@
         <h2 class="adm-title">Edit Data Galeri</h2>
       </div>
       @if(session('info'))
-          <div class="alert alert-info alert-dismissible fade show" role="alert">
-              {{ session('info') }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ session('info') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
       @endif
       <div class="row">
         <div class="col-md-12">
@@ -190,8 +190,7 @@
               <div class="row mb-3">
                 <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
                 <div class="col-sm-10">
-                  <input type="text" name="judul" id="judul" class="form-control"
-                         value="{{ old('judul', $galeri->judul) }}" required>
+                  <input type="text" name="judul" id="judul" class="form-control" value="{{ old('judul', $galeri->judul) }}" placeholder="Judul..." required>
                 </div>
               </div>
 
@@ -224,8 +223,7 @@
               <div class="row mb-3">
                 <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
                 <div class="col-sm-10">
-                  <input type="date" name="tanggal" id="tanggal" class="form-control"
-                         value="{{ old('tanggal', $galeri->tanggal) }}" required>
+                  <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal', $galeri->tanggal) }}" required>
                 </div>
               </div>
 
@@ -326,7 +324,7 @@
       videoWrapper.style.display = 'none';
       urlWrapper.style.display = 'none';
 
-      gambarInput.required = true;
+      gambarInput.required = false;
       videoFileInput.required = false;
       videoUrlInput.required = false;
 

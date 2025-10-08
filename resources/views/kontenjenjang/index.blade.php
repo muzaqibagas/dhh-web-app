@@ -169,69 +169,99 @@
     </script>
   </aside>
 
-<!-- KONTEN JENJANG -->
+  <!-- KONTEN JENJANG -->
   <main class="content">
     <div class="container-fluid mt-4">
       <div class="adm-header">
-          <h2 class="adm-title">Konten Jenjang</h2>
-          <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i>Tambah Data
-          </a>          
+          <h2 class="adm-title">Konten Jenjang</h2>                      
+          <div class="d-flex justify-content-end align-items-center gap-2">
+            <form action="{{ route('kontenjenjang.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
+              <input type="text" name="search" class="form-control" placeholder="Cari artikel..." value="{{ request('search') }}">
+              <button type="submit" class="btn btn-primary px-3">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+            <a href="{{route('kontenjenjang.create')}}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-plus"></i>Tambah Data
+            </a>
+          </div>               
       </div>
-      {{-- Alert Success --}}
-      @if (session('success'))
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ session('success') }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+       {{-- Alert Success --}}
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif
+        {{-- Alert Error --}}
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif     
+        {{-- Alert Info --}}
+        @if(session('info'))
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            {{ session('info') }}
           </div>
-      @endif
-
-      {{-- Alert Error --}}
-      @if (session('error'))
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              {{ session('error') }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
-      @endif
-
+        @endif     
       <div class="card shadow-sm">
-          <div class="card-body">
-              <table class="table table-bordered text-center align-middle">
-                  <thead>
-                      <tr>
-                          <th style="width: 5%">No</th>
-                          <th style="width: 20%">Jenjang</th>
-                          <th style="width: 20%">Aksi</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @forelse($kontenJenjangs as $key => $konten)
-                        <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td class="text-start">{{ $konten->jenjang->nama }}</td>
-                            <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">                                                                           
-                                    <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                    </a>
-                                    <form action="{{ route('kontenjenjang.destroy', $konten->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
-                                      @csrf
-                                      @method('DELETE')
-                                      <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                          <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                      </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center">Belum ada data</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-              </table>
-          </div>
+        <div class="card-body">
+          <table class="table table-bordered text-center align-middle">
+            <thead>
+              <tr>
+                <th style="width: 5%">No</th>
+                <th style="width: 20%">Jenjang</th>
+                <th style="width: 20%">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse($kontenJenjangs as $key => $konten)
+                <tr>
+                  <td>{{ $key+1 }}</td>
+                  <td class="text-start">{{ $konten->jenjang->nama }}</td>
+                  <td class="text-center">
+                    <div style="display: flex; justify-content: center; gap: 6px;">                                                                           
+                      <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                      </a>
+                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $konten->id }}">
+                        <i class="bi bi-trash" style="font-size: 18px;"></i>
+                      </button>
+                      <div class="modal fade" id="hapusModal{{ $konten->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="hapusModalLabel"></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                              <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                              <div>Apakah Anda yakin ingin menghapus Konten Jenjang ini?</div>                                          
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                              <form action="{{ route('kontenjenjang.destroy', $konten->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')                                            
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                                        
+                    </div>
+                  </td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="3" class="text-center">Belum ada data</td>
+                </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </main>

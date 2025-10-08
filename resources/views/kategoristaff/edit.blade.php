@@ -175,6 +175,12 @@
         <div class="adm-header">
             <h2 class="adm-title">Edit Kategori Staff</h2>
         </div> 
+        @if(session('info'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        @endif
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
@@ -187,7 +193,7 @@
                                 <label for="nama" class="col-form-label">Kategori Staff</label>
                             </div>
                             <div class="col-sm-10">
-                                <input type="text" name="nama" id="nama" class="form-control shadow-sm" value="{{ $kategoriStaff->nama }}" placeholder="Masukkan nama kategori" required>
+                                <input type="text" name="nama" id="nama" class="form-control shadow-sm" value="{{ $kategoriStaff->nama }}" placeholder="Kategori Artikel..." required>
                             </div>
                         </div>
                         <!-- Tombol -->
@@ -195,16 +201,7 @@
                             <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-success">Simpan Perubahan</button>
                             </div>
-                        </div>
-
-                        <!-- <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-pencil-square"></i> Simpan perubahan
-                            </button>
-                            <a href="{{ route('kategoristaff.index') }}" class="btn btn-secondary">
-                                <i class="bi bi-x-circle"></i> Batal
-                            </a>
-                        </div> -->
+                        </div>                        
                     </form>
                 </div>
             </div>

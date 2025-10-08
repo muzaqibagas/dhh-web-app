@@ -12,8 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $users = \App\Models\User::all();
-        // return view('user.index', compact('users'));
+        //
     }
 
     /**
@@ -21,30 +20,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request->validate([
-        //     'id_jenjang' => 'nullable|exists:jenjangs,id',
-        //     'nim' => 'required|string|unique:users,nim',
-        //     'nama' => 'required|string|max:255',
-        //     'no_hp' => 'nullable|string|max:255',
-        //     'alamat' => 'nullable|string',
-        //     'tanggal_lahir' => 'nullable|date',
-        //     'angkatan' => 'nullable|string|max:255',
-        //     'status' => 'nullable|string|max:255',
-        //     'username' => 'required|string|unique:users,username',
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|string|min:6',
-        //     'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-        //     'role' => 'required|in:Admin,Mahasiswa',
-        //     'foto' => 'nullable|string|max:255',
-        // ]);
-        // $data['password'] = bcrypt($data['password']);
-        // $data['role'] = 'Mahasiswa'; 
-            
-        // $insert = \App\Models\User::create($data);
-        // if ($insert)
-        //     return redirect()->route('user.index')->with('success', 'Data berhasil disimpan!');
-        // else
-        //     return back()->with('error', 'Gagal menyimpan data!');
+        // 
     }
 
     /**
@@ -52,8 +28,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        // $user = \App\Models\User::findOrFail($id);
-        // return view('user.show', compact('user'));
+        // 
     }
 
     public function edit(User $user)
@@ -79,18 +54,18 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = \App\Models\User::findOrFail($id);
+        $user = User::findOrFail($id);
 
         $data = $request->validate([            
             'nim' => 'nullable|string|unique:users,nim,' . $id,
             'nama' => 'required|string|max:255',            
-            'alamat' => 'nullable|string',                                                
+            'alamat' => 'nullable|string',   
+            'no_hp' => 'nullable|string|max:15',                                           
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:6',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'role' => 'nullable|in:Admin,Mahasiswa',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-            'tanda_tangan_img' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',                                  
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp',        
             'tanda_tangan' => 'nullable|string',
         ]);
 
@@ -133,28 +108,29 @@ class UserController extends Controller
             }
 
             // Simpan dari canvas (base64)
-            $image = $request->input('tanda_tangan');
-            if (preg_match('/^data:image\/(\w+);base64,/', $image)) {
+             $image = $request->input('tanda_tangan'); // <-- ambil dari request dulu
+            if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
                 $image = substr($image, strpos($image, ',') + 1);
                 $image = str_replace(' ', '+', $image);
-                $imageName = time() . '_canvas.png';
+                $ext = strtolower($type[1]) === 'jpeg' ? 'jpg' : $type[1];
+                $imageName = time() . '_canvas.' . $ext;
                 \File::put(public_path('signature/' . $imageName), base64_decode($image));
                 $data['tanda_tangan'] = $imageName;
             }
-        }       
+        }  else {            
+            unset($data['tanda_tangan']);
+        } 
 
-        $update = $user->update($data);
+        $user->update($data);
 
-        if ($update)
-            if ($user->role === 'Admin') {
-                return redirect()->route('admprofile.index')->with('success', 'Profil Admin berhasil diperbarui!');
-            } elseif ($user->role === 'Mahasiswa') {
-                return redirect()->route('profilemhs.index')->with('success', 'Profil Mahasiswa berhasil diperbarui!');                
-            } else {
-                abort(404, 'Role tidak dikenali.');
-            }
-        else
-            return back()->with('error', 'Gagal memperbarui data!');
+    
+        if ($user->role === 'Admin') {
+            return redirect()->route('admprofile.index')->with('success', 'Profil Admin berhasil diperbarui!');
+        } elseif ($user->role === 'Mahasiswa') {
+            return redirect()->route('profilemhs.index')->with('success', 'Profil Mahasiswa berhasil diperbarui!');                
+        } else {
+            abort(404, 'Role tidak dikenali.');
+        }        
     }
 
     /**
@@ -162,7 +138,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = \App\Models\User::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('user.index');
     }

@@ -101,16 +101,16 @@
       @endif
 
       <form action="{{route('kolokiummhs.store')}}" method="POST">
-        @csrf            
+        @csrf
         <div class="form-group">
           <label>Nama</label>
-          <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{Auth::user()->nama ?? 'Guest'}}" required readonly>        
+          <input type="text" name="nama" placeholder="Masukkan Nama Lengkap..." value="{{Auth::user()->nama ?? 'Guest'}}" required readonly>        
           <input type="hidden" name="id_mahasiswa" value="{{ Auth::id() }}">                      
         </div>
 
         <div class="form-group">
           <label>NIM</label>
-          <input type="text" name="nim" placeholder="Masukkan NIM" value="{{Auth::user()->nim}}" required readonly>
+          <input type="text" name="nim" placeholder="Masukkan NIM..." value="{{Auth::user()->nim}}" required readonly>
         </div>
 
         <div class="form-group">
@@ -125,12 +125,12 @@
 
         <div class="form-group">
           <label>Alamat di Bogor</label>
-          <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="" required>
+          <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap...." value="" required>
         </div>      
 
         <div class="form-group">
           <label>Judul Makalah kolokium</label>
-          <textarea name ="judul_kolokium" placeholder="Masukkan Judul Makalah" value="" required></textarea>
+          <textarea name ="judul_kolokium" placeholder="Masukkan Judul Makalah Kolokium..." value="" required></textarea>
         </div>
 
         <div class="form-group">

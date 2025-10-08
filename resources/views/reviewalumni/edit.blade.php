@@ -175,6 +175,12 @@
         <div class="adm-header">
             <h2 class="adm-title">Edit Data Review Alumni</h2>
         </div>
+        @if(session('info'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        @endif
         <div class="container mt-4">
           <div class="card shadow-sm">
             <div class="card-body">
@@ -191,7 +197,7 @@
                         <label for="nama" class="col-form-label">Nama</label>
                       </div>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $reviewAlumni->nama)}}" placeholder="Tulis nama alumni.." required>
+                        <input type="text" class="form-control" name="nama" id="nama" value="{{ old('nama', $reviewAlumni->nama)}}" placeholder="Alumni..." required>
                       </div>
                     </div>
 
@@ -201,7 +207,7 @@
                         <label for="angkatan" class="col-form-label">Angkatan</label>
                       </div>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{old('angkatan', $reviewAlumni->angkatan)}}" placeholder="Tulis angkatan.." required>
+                        <input type="text" class="form-control" id="angkatan" name="angkatan" value="{{old('angkatan', $reviewAlumni->angkatan)}}" placeholder="Angkatan..." required>
                       </div>
                     </div>
 
@@ -211,17 +217,17 @@
                         <label for="profesi" class="col-form-label">Profesi</label>
                       </div>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="profesi" name="profesi" value="{{old('profesi', $reviewAlumni->profesi)}}" placeholder="Tulis angkatan.." required>
+                        <input type="text" class="form-control" id="profesi" name="profesi" value="{{old('profesi', $reviewAlumni->profesi)}}" placeholder="Profesi..." required>
                       </div>
                     </div>
 
                     <!-- review -->
                     <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
                       <div class="col-sm-2">
-                        <label for="review" class="col-form-label">review</label>
+                        <label for="review" class="col-form-label">Review</label>
                       </div>
                       <div class="col-sm-10">
-                        <textarea class="form-control" name="review" id="review" rows="5" placeholder="review" required>{{old('review', $reviewAlumni->review)}}</textarea>
+                        <textarea class="form-control" name="review" id="review" rows="5" placeholder="Review..." required>{{old('review', $reviewAlumni->review)}}</textarea>
                       </div>
                     </div>
 

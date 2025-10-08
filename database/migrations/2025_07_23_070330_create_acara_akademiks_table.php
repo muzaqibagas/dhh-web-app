@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_staffdept')->constrained('staff_depts')->onDelete('cascade');
             $table->foreignId('id_kolokiummhs')->constrained('kolokiummhs')->onDelete('cascade');                        
-            $table->foreignId('id_seminar')->constrained('seminars')->onDelete('cascade');
-            $table->foreignId('id_sidang')->constrained('sidangs')->onDelete('cascade');
+            $table->foreignId('id_seminarmhs')->constrained('seminarmhs')->onDelete('cascade');
+            $table->foreignId('id_komprehensifmhs')->constrained('komprehensifmhs')->onDelete('cascade');
             $table->timestamps();
         });
     }

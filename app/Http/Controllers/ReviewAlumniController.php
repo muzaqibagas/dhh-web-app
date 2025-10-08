@@ -13,6 +13,14 @@ class ReviewAlumniController extends Controller
     public function index()
     {
         $reviews = ReviewAlumni::all();
+        
+        $query = ReviewAlumni::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        $reviews = $query->get();
         return view('reviewalumni.index', compact('reviews'));
     }
 
@@ -96,6 +104,12 @@ class ReviewAlumniController extends Controller
             $data['foto'] = 'foto_alumni/' . $filename;
         }
 
+        $reviewAlumni->fill($data);
+
+        if (!$reviewAlumni->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
+
         $update = $reviewAlumni->update($data);
         if ($update)
             return redirect()->route('review-alumni.index')->with('success', 'Data berhasil diperbarui!');
@@ -108,6 +122,10 @@ class ReviewAlumniController extends Controller
      */
     public function destroy(ReviewAlumni $reviewAlumni)
     {
+        if ($reviewAlumni->foto && file_exists(public_path($reviewAlumni->foto))) {
+            unlink(public_path($reviewAlumni->foto));
+        }
+
         $reviewAlumni->delete();
         return redirect()->route('review-alumni.index');
     }

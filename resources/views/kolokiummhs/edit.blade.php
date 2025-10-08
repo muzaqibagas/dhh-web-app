@@ -84,29 +84,19 @@
     <main class="content">
         <div class="kolokium-card">
         <h2 class="page-title">Edit Kolokium</h2>    
-        {{-- Alert Success --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        @if(session('info'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
         @endif
-
-        {{-- Alert Error --}}
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         <form action="{{ route('kolokiummhs.update', $kolokiummhs->id) }}" method="POST">    
             @csrf
             @method('PUT')   
 
             <div class="form-group">
             <label>Nama</label>
-                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ old('nama', $kolokiummhs->nama) }}" required>
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap..." value="{{ old('nama', $kolokiummhs->nama) }}" required readonly>
                 @error('nama')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -115,7 +105,7 @@
 
             <div class="form-group">
                 <label>NIM</label>
-                <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ old('nim', $kolokiummhs->nim) }}" required>
+                <input type="text" name="nim" placeholder="Masukkan NIM..." value="{{ old('nim', $kolokiummhs->nim) }}" required readonly>
                 @error('nim')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -139,7 +129,7 @@
 
             <div class="form-group">
                 <label>Alamat</label>
-                <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" 
+                <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap..." 
                     value="{{ old('alamat', $kolokiummhs->alamat) }}" required>
                 @error('alamat')
                 <div class="text-danger">{{ $message }}</div>
@@ -148,7 +138,7 @@
 
             <div class="form-group">
             <label>Judul Makalah kolokium</label>
-            <textarea name="judul_kolokium" placeholder="Masukkan Judul Makalah" required>{{ old('judul_kolokium', $kolokiummhs->judul_kolokium) }}</textarea>
+            <textarea name="judul_kolokium" placeholder="Masukkan Judul Makalah Kolokium..." required>{{ old('judul_kolokium', $kolokiummhs->judul_kolokium) }}</textarea>
             @error('judul_kolokium')
                 <div class="text-danger">{{ $message }}</div>
             @enderror

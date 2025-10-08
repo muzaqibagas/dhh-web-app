@@ -198,7 +198,7 @@
                   <div class="row mb-3 align-items-center">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Sejarah</label>
                       <div class="col-sm-10">                        
-                          <textarea name="sejarah" rows="4" class="form-control" required>{{ old('sejarah') }}</textarea>
+                          <textarea name="sejarah" rows="4" class="form-control" placeholder="Sejarah..." required>{{ old('sejarah') }}</textarea>
                       </div>
                   </div>
                   
@@ -206,7 +206,7 @@
                   <div class="row mb-3 align-items-center">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Visi</label>
                       <div class="col-sm-10">                        
-                          <textarea name="visi" rows="3" class="form-control" required>{{ old('visi') }}</textarea>
+                          <textarea name="visi" rows="3" class="form-control" placeholder="Visi..." required>{{ old('visi') }}</textarea>
                       </div>
                   </div>
 
@@ -214,7 +214,7 @@
                   <div class="row mb-3 align-items-center">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Misi</label>
                       <div class="col-sm-10">                        
-                          <textarea name="misi" rows="3" class="form-control" required>{{ old('misi') }}</textarea>
+                          <textarea name="misi" rows="3" class="form-control" placeholder="Misi..." required>{{ old('misi') }}</textarea>
                       </div>
                   </div>
 
@@ -222,7 +222,7 @@
                   <div class="row mb-3 align-items-center">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Tujuan</label>
                       <div class="col-sm-10">                        
-                          <textarea name="tujuan" rows="6" class="form-control" required>{{ old('tujuan') }}</textarea>
+                          <textarea name="tujuan" rows="6" class="form-control" placeholder="Tujuan..." required>{{ old('tujuan') }}</textarea>
                       </div>
                   </div>
 
@@ -230,7 +230,7 @@
                   <div class="row mb-3 align-items-center">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Kebijakan Mutu</label>
                       <div class="col-sm-10">                        
-                          <textarea name="kebijakanmutu" rows="5" class="form-control" required>{{ old('kebijakanmutu') }}</textarea>
+                          <textarea name="kebijakanmutu" rows="5" class="form-control" placeholder="Kebijakan Mutu..." required>{{ old('kebijakanmutu') }}</textarea>
                       </div>
                   </div>
 

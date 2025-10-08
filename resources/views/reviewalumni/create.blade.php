@@ -190,7 +190,7 @@
                       <label for="nama" class="col-form-label">Nama</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control" id="nama" placeholder="Tulis nama alumni.." required>
+                      <input type="text" name="nama" class="form-control" id="nama" placeholder="Alumni..." required>
                     </div>
                   </div>
 
@@ -200,7 +200,7 @@
                       <label for="angkatan" class="col-form-label">Angkatan</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="angkatan" class="form-control" id="angkatan" placeholder="Tulis angkatan.." required>
+                      <input type="text" name="angkatan" class="form-control" id="angkatan" placeholder="Angkatan..." required>
                     </div>
                   </div>
 
@@ -210,17 +210,17 @@
                       <label for="profesi" class="col-form-label">Profesi</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="profesi" class="form-control" id="profesi" placeholder="deskripsikan profesi.." required>
+                      <input type="text" name="profesi" class="form-control" id="profesi" placeholder="Profesi..." required>
                     </div>
                   </div>
 
                   <!-- Deskripsi -->
                   <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
                     <div class="col-sm-2">
-                      <label for="deskripsi" class="col-form-label">Deskripsi</label>
+                      <label for="deskripsi" class="col-form-label">Review</label>
                     </div>
                     <div class="col-sm-10">
-                      <textarea class="form-control" name="review" id="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+                      <textarea class="form-control" name="review" id="deskripsi" rows="5" placeholder="Review..." required></textarea>
                     </div>
                   </div>
 
@@ -235,7 +235,7 @@
                       <img id="preview-image" src="" class="img-fluid rounded d-none" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
                   </div>
                   <!-- Input File -->
-                      <input type="file" name="foto" class="form-control" id="foto" accept="image/*">
+                      <input type="file" name="foto" class="form-control" id="foto" accept="image/*" required>
                   </div>
                   </div>
 

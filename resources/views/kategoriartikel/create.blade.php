@@ -178,7 +178,6 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-
                 <form action="{{route('kategoriartikel.store')}}" method="POST">
                   @csrf
                   <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
@@ -186,7 +185,7 @@
                       <label for="kategori" class="col-form-label">Kategori Artikel</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Kategori Artikel..." required>
                     </div>
                   </div>
                   <!-- Tombol -->

@@ -7,6 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
+use App\Models\KetuaDhh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -117,6 +118,7 @@ class KomprehensifmhsController extends Controller
     public function generatePdf($id)
     {
         $komprehensifmhs = Komprehensifmhs::findOrFail($id);        
+        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();        
         $template = public_path('pdf/templatekomprehensif.pdf');
         $outputPath = public_path("pdf/ditandatanganikomprehensif");
         if (!file_exists($outputPath)) {
@@ -132,7 +134,7 @@ class KomprehensifmhsController extends Controller
         $labelWidth = 40;
         $valueWidth = 100;
         $lineHeight = 6.5;
-        //nama
+        // Nama Mahasiswa
         $pdf->SetXY(32, 60);        
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $komprehensifmhs->nama, 0, 'L');
@@ -195,14 +197,18 @@ class KomprehensifmhsController extends Controller
         $xEnd2 = 215;
         $width2 = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
-        $pdf->Cell($width2, $lineHeight, "(" . ($komprehensifmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
-        $pdf->Output('F', $output);
-        return response()->download($output);
+        $pdf->Cell($width2, $lineHeight, "(" . ($komprehensifmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');       
+        //ketua dhh
+        $yKetua = 263; 
+        $xStart3 = 55;  
+        $xEnd3   = 160; 
+        $width3  = $xEnd3 - $xStart3;
+        $pdf->SetXY($xStart3, $yKetua);
+        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
 
         // Simpan PDF
         $pdf->Output('F', $output);
-
-        // Download
+        
         return response()->download($output);
     }
 

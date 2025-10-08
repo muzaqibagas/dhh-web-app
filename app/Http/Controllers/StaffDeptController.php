@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\StaffDept;
 use App\Models\KategoriStaff;
 use App\Models\Divisi;
-use App\Models\Jabatan;
 use Illuminate\Http\Request;
 
 class StaffDeptController extends Controller
@@ -16,6 +15,14 @@ class StaffDeptController extends Controller
     public function index()
     {
         $staffdepts = StaffDept::all();
+
+        $query = StaffDept::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        $staffdepts = $query->get();
         return view('staffdept.index', compact('staffdepts'));
     }
 
@@ -25,9 +32,8 @@ class StaffDeptController extends Controller
     public function create()
     {
         $kategoriStaffs = KategoriStaff::all();
-        $divisis = Divisi::all();
-        $jabatans = Jabatan::all(); 
-        return view('staffdept.create', compact('kategoriStaffs', 'divisis', 'jabatans'));
+        $divisis = Divisi::all();        
+        return view('staffdept.create', compact('kategoriStaffs', 'divisis'));
     }
 
     /**
@@ -38,7 +44,7 @@ class StaffDeptController extends Controller
         $staffdepts = $request->validate([            
             'id_kategoristaff' => 'required|exists:kategori_staffs,id',
             'id_divisi' => 'nullable|exists:divisis,id',
-            'id_jabatan' => 'nullable|exists:jabatans,id',
+            'jabatan' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'nama' => 'required|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
@@ -86,10 +92,9 @@ class StaffDeptController extends Controller
     public function edit(StaffDept $staffDept)
     {
         $kategoriStaffs = KategoriStaff::all();
-        $divisis = Divisi::all();
-        $jabatans = Jabatan::all();
+        $divisis = Divisi::all();        
 
-        return view('staffdept.edit', compact('staffDept', 'kategoriStaffs', 'divisis', 'jabatans'));
+        return view('staffdept.edit', compact('staffDept', 'kategoriStaffs', 'divisis'));
     }
 
     /**
@@ -130,6 +135,11 @@ class StaffDeptController extends Controller
     } else {
         // kalau tidak upload, tetap pakai foto lama
         $data['foto'] = $staffDept->foto;
+    }
+
+    $staffDept->fill($data);
+    if (!$staffDept->isDirty()) {
+        return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
     }
 
     $staffDept->update($data);

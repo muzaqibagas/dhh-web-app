@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kolokium;
-use App\Models\SyaratKolokiummhs;
+use App\Models\UndanganKomprehensif;
 use Illuminate\Http\Request;
 
-class KolokiumController extends Controller
+class UndanganKomprehensifController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {        
-        //
+    {
+        return view('undangankomprehensif.index');
     }
 
     /**
@@ -35,7 +34,7 @@ class KolokiumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kolokium $kolokium)
+    public function show(UndanganSidang $undanganSidang)
     {
         //
     }
@@ -43,7 +42,7 @@ class KolokiumController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kolokium $kolokium)
+    public function edit(UndanganSidang $undanganSidang)
     {
         //
     }
@@ -51,7 +50,7 @@ class KolokiumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kolokium $kolokium)
+    public function update(Request $request, UndanganSidang $undanganSidang)
     {
         //
     }
@@ -59,7 +58,7 @@ class KolokiumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kolokium $kolokium)
+    public function destroy(UndanganSidang $undanganSidang)
     {
         //
     }

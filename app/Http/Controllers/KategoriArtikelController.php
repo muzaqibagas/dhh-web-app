@@ -13,6 +13,14 @@ class KategoriArtikelController extends Controller
     public function index()
     {
         $kategoriArtikel = KategoriArtikel::all();
+
+        $query = KategoriArtikel::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        $kategoriArtikel = $query->get();
         return view('kategoriartikel.index', compact('kategoriArtikel'));
     }
 
@@ -70,8 +78,15 @@ class KategoriArtikelController extends Controller
 
         $update = $kategoriArtikel->update([
             'nama' => $request->nama,
-        ]);        
+        ]);      
 
+        $kategoriArtikel->fill([
+            'nama' => $request->nama,
+        ]);
+        
+        if (!$kategoriArtikel->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
 
         if ($update)
             return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Diupdate.');

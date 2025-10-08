@@ -169,88 +169,121 @@
     </script>
   </aside>
     <!-- Daftar Staff Departemen - Admin Dashboard -->
-<main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Daftar Staff Departemen</h2>
-        <a href="{{route('staffdept.create')}}" class="adm-btn-add text-decoration-none">
-            <i class="bi bi-plus"></i> Tambah Data
-        </a>
-    </div> 
-
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-    @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-    </div>
-    @endif
-
-    <div class="card shadow-sm">
-        <div class="card-body">
+  <main class="content">
+    <div class="container-fluid mt-4">
+        <div class="adm-header">
+          <h2 class="adm-title">Daftar Staff Departemen</h2>
+          <div class="d-flex justify-content-end align-items-center gap-2">
+            <form action="{{ route('staffdept.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
+              <input type="text" name="search" class="form-control" placeholder="Cari Staff Departemen..." value="{{ request('search') }}">
+              <button type="submit" class="btn btn-primary px-3">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+            <a href="{{route('staffdept.create')}}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-plus"></i>Tambah Data
+            </a>
+          </div>          
+        </div> 
+        {{-- Alert Success --}}
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif
+        {{-- Alert Error --}}
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif     
+        {{-- Alert Info --}}
+        @if(session('info'))
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          {{ session('info') }}
+          </div>
+        @endif  
+        <div class="card shadow-sm">
+          <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>No.</th>
-                            <th>Foto</th>
-                            <th>Kategori</th>
-                            <th>Divisi</th>
-                            <th>Nama</th>
-                            <th>Jabatan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($staffdepts as $index => $staff)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                                @if($staff->foto)
-                                    <img src="{{ asset($staff->foto) }}"
-                                        alt="foto staff"
-                                        class="img-thumbnail"
-                                        style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                                @else
-                                    <span class="text-muted">-</span>
-                                @endif
-                            </td>
-                            <td>{{ $staff->kategoristaff->nama ?? '-' }}</td>
-                            <td>{{ $staff->divisi->nama ?? '-' }}</td>
-                            <td>{{ $staff->nama ?? '-' }}</td>
-                            <td>{{ $staff->jabatan->nama ?? '-' }}</td>
-                            <td class="text-center">
-                                <div style="display:flex; justify-content:center; gap:6px;">
-                                    <a href="{{ route('staffdept.edit', $staff->id) }}" 
-                                       class="btn btn-success btn-sm" 
-                                       style="width:30px; height:30px; padding:0;">
-                                        <i class="bi bi-pencil" style="font-size:18px;"></i>
-                                    </a>
-                                    <form action="{{ route('staffdept.destroy', $staff->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" style="width:30px; height:30px; padding:0;"
-                                            onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                            <i class="bi bi-trash" style="font-size:18px;"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="7" class="text-center">Belum ada data staff</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+              <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>No.</th>
+                    <th>Foto</th>
+                    <th>Kategori</th>
+                    <th>Divisi</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @forelse($staffdepts as $index => $staff)
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>
+                      @if($staff->foto)
+                        <img src="{{ asset($staff->foto) }}"
+                          alt="foto staff"
+                          class="img-thumbnail"
+                          style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                      @else
+                        <span class="text-muted">-</span>
+                      @endif
+                    </td>
+                    <td>{{ $staff->kategoristaff->nama ?? '-' }}</td>
+                    <td>{{ $staff->divisi->nama ?? '-' }}</td>
+                    <td>{{ $staff->nama ?? '-' }}</td>
+                    <td>{{ $staff->jabatan   ?? '-' }}</td>
+                    <td class="text-center">
+                      <div style="display:flex; justify-content:center; gap:6px;">
+                        <a href="{{ route('staffdept.edit', $staff->id) }}" 
+                          class="btn btn-success btn-sm" 
+                          style="width:30px; height:30px; padding:0;">
+                          <i class="bi bi-pencil" style="font-size:18px;"></i>
+                        </a>
+                        <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $staff->id }}">
+                          <i class="bi bi-trash" style="font-size: 18px;"></i>
+                        </button>
+                        <div class="modal fade" id="hapusModal{{ $staff->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                <div>Apakah Anda yakin ingin menghapus Staff Departemen ini?</div>                                          
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                <form action="{{route('staffdept.destroy', $staff->id)}}" method="POST">
+                                  @csrf
+                                  @method('DELETE')                                            
+                                  <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>                              
+                      </div>
+                    </td>
+                  </tr>
+                  @empty
+                  <tr>
+                    <td colspan="7" class="text-center">Belum ada data staff</td>
+                  </tr>
+                  @endforelse
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
     </div>
+  </main>
 </div>
 @endsection

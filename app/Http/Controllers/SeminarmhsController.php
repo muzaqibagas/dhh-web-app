@@ -7,6 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
+use App\Models\KetuaDhh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -118,6 +119,7 @@ class SeminarmhsController extends Controller
     {
         $seminarmhs = Seminarmhs::findOrFail($id);
         $template = public_path('pdf/templateseminar.pdf');
+        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();
         $outputPath = public_path('pdf/ditandatangani_seminar');
         if (!file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
@@ -196,8 +198,16 @@ class SeminarmhsController extends Controller
         $width2 = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($seminarmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
+        //ketua dhh
+        $yKetua = 263; // atur sesuai posisi bawah template
+        $xStart3 = 55;  // geser agar center dengan tanda tangan
+        $xEnd3   = 160; // sesuaikan dengan tanda tangan
+        $width3  = $xEnd3 - $xStart3;
+        $pdf->SetXY($xStart3, $yKetua);
+        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
+
         $pdf->Output('F', $output);
-        return response()->download($output);
+        return response()->download($output);                
     }
 
     /**

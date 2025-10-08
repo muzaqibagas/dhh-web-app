@@ -16,8 +16,7 @@ class KategoriStaffSeeder extends Seeder
         $kategoristaffs = [
             'Tenaga Pendidik/Dosen',
             'Tenaga Kependidikan',
-            'Struktur Organisasi',
-            'Divisi',
+            'Struktur Organisasi',            
         ];
 
         foreach ($kategoristaffs as $kategori) {

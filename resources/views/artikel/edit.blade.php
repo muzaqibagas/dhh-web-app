@@ -172,9 +172,15 @@
 <!-- KONTEN -->
   <main class="content">
     <div class="container-fluid">
-        <div class="adm-header">
-            <h2 class="adm-title">Edit Data Artikel</h2>
+      <div class="adm-header">
+        <h2 class="adm-title">Edit Data Artikel</h2>
+      </div>
+      @if(session('info'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ session('info') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+      @endif
     </div>
     <div class="container mt-4">
       <div class="card shadow-sm">
@@ -192,7 +198,7 @@
                     <label for="judul" class="col-form-label">Judul</label>
                   </div>
                   <div class="col-sm-10">                    
-                    <input type="text" class="form-control" name="judul" id="judul" value="{{ old('judul', $artikel->judul) }}" required>
+                    <input type="text" class="form-control" name="judul" id="judul" value="{{ old('judul', $artikel->judul) }}" placeholder="Judul.." required>
                   </div>
                 </div>
 
@@ -229,7 +235,7 @@
                     <label for="deskripsi" class="col-form-label">Deskripsi</label>
                   </div>
                   <div class="col-sm-10">                    
-                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" placeholder="Deskripsi" required>{{ old('deskripsi', $artikel->deskripsi) }}</textarea>
+                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="5" placeholder="Deskripsi..." required>{{ old('deskripsi', $artikel->deskripsi) }}</textarea>
                   </div>
                 </div>
 

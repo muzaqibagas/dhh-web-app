@@ -12,7 +12,14 @@ class KategoriGaleriController extends Controller
      */
     public function index()
     {
-        $kategoriGaleri = KategoriGaleri::all();                          
+        $kategoriGaleri = KategoriGaleri::all();      
+        
+        $query = KategoriGaleri::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+        $kategoriGaleri = $query->get();
         return view('kategorigaleri.index', compact('kategoriGaleri'));
     }
 
@@ -76,7 +83,15 @@ class KategoriGaleriController extends Controller
 
         $update = $kategoriGaleri->update([
             'nama' => $request->nama,
-        ]);        
+        ]);    
+        
+        $kategoriGaleri->fill([
+            'nama' => $request->nama,
+        ]);
+
+        if (!$kategoriGaleri->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
 
         if ($update)
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Diupdate.');

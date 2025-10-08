@@ -169,7 +169,7 @@
     </script>
   </aside>
   
-<!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">
@@ -222,13 +222,13 @@
                                 @endif
                               </td>
                               <td>     
-                                 @if ($pendaftars->status == 'pending')                           
+                                @if ($pendaftars->status == 'pending')                           
                                   <form action="{{ route('syaratkolokiummhs.setujui', $pendaftars->id) }}" method="POST" class="d-inline">
                                       @csrf
                                       <button type="submit" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                         <i class="bi bi-check-lg" style="font-size: 18px;"></i>
                                       </button>
-                                  </form>                                       
+                                  </form>
                                   
                                   <form action="{{ route('syaratkolokiummhs.tolak', $pendaftars->id) }}" method="POST" class="d-inline">
                                       @csrf

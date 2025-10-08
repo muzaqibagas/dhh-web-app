@@ -190,7 +190,7 @@
                       <label for="judul" class="col-form-label">Judul</label>
                     </div>
                     <div class="col-sm-10">                
-                      <input type="text" class="form-control" id="judul" name="judul" placeholder="Tulis judul.." required>
+                      <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul.." required>
                     </div>
                   </div>
 
@@ -225,7 +225,7 @@
                       <label for="deskripsi" class="col-form-label">Deskripsi</label>
                     </div>
                     <div class="col-sm-10">
-                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" placeholder="Deskripsi" required></textarea>
+                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" placeholder="Deskripsi..." required></textarea>
                     </div>
                   </div>
                 </div>

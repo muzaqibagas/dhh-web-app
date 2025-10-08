@@ -172,61 +172,104 @@
 <!-- KONTEN KONTEN ARTIKEL -->
   <main class="content">
     <div class="container-fluid mt-4">
-        <div class="adm-header">
-            <h2 class="adm-title">Kategori Artikel</h2>
+      <div class="adm-header">
+          <h2 class="adm-title">Kategori Artikel</h2>            
+          <div class="d-flex justify-content-end align-items-center gap-2">
+            <form action="{{ route('kategoriartikel.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
+              <input type="text" name="search" class="form-control" placeholder="Cari Kategori Artikel..." value="{{ request('search') }}">
+              <button type="submit" class="btn btn-primary px-3">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
             <a href="{{route('kategoriartikel.create')}}" class="adm-btn-add text-decoration-none">
-                <i class="bi bi-plus"></i> Tambah Data
+              <i class="bi bi-plus"></i>Tambah Data
             </a>
+          </div> 
+      </div>
+      {{-- Alert Success --}}
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+      </div>
+      @endif
+      {{-- Alert Error --}}
+      @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+      </div>
+      @endif     
+      {{-- Alert Info --}}
+      @if(session('info'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          {{ session('info') }}
         </div>
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-        </div>
-        @endif
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light ">
-                            <tr>
-                                <th style="width: 10%;">No.</th>
-                                <th style="width: 65%;">Kategori Artikel</th>
-                                <th style="width: 25%;">Aksi</th>
-                            </tr>
-                        </thead>
-                        @php
-                          $no = 1;
-                        @endphp
-                        @foreach($kategoriArtikel as $kategoriArtikels)
-                        <tbody>
-                            <!-- Data Artikel (dummy) -->
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td class="text-start">{{ $kategoriArtikels->nama }}</td>
+      @endif                    
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <div class="table-responsive">                  
+                  <table class="table table-bordered align-middle">
+                      <thead class="table-light ">
+                          <tr>
+                              <th style="width: 10%;">No.</th>
+                              <th style="width: 65%;">Kategori Artikel</th>
+                              <th style="width: 25%;">Aksi</th>
+                          </tr>
+                      </thead>
+                      @php
+                        $no = 1;
+                      @endphp                        
+                      <tbody>
+                        @forelse($kategoriArtikel as $kategoriArtikels)
+                          <tr>
+                              <td>{{ $no++ }}</td>
+                              <td class="text-start">{{ $kategoriArtikels->nama }}</td>
 
-                                <td>
+                              <td>
                                 <div class="d-flex justify-content-center gap-2">
                                   <a href="{{route('kategoriartikel.edit', $kategoriArtikels->id)}}" 
                                     class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
                                     <i class="bi bi-pencil" style="font-size: 18px;"></i>
                                   </a>
-                                  <form action="{{route('kategoriartikel.destroy', $kategoriArtikels->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" type="submit" style="width: 30px; height: 30px; padding: 0;" onclick="return confirm('Yakin ingin menghapus?')">
-                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                    </button>
-                                  </form>
+                                  <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $kategoriArtikels->id }}">
+                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                  </button>
+                                  <div class="modal fade" id="hapusModal{{ $kategoriArtikels->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                          <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                          <div>Apakah Anda yakin ingin menghapus Kategori Artikel ini?</div>                                          
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                          <form action="{{route('kategoriartikel.destroy', $kategoriArtikels->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')                                            
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>                                    
                                 </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
-        </div>
+                              </td>
+                          </tr>
+                        @empty
+                          <tr>
+                            <td colspan="3" class="text-center text-muted py-4">Belum ada kategori artikel.</td>
+                          </tr>
+                        @endforelse  
+                      </tbody>                        
+                  </table>
+              </div>
+          </div>
+      </div>
     </div>
   </main>
 </div>

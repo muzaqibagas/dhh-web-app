@@ -169,7 +169,7 @@
     </script>
   </aside>
 
-<!-- MAIN CREATE KATEGORI GALERI -->
+  <!-- MAIN CREATE KATEGORI GALERI -->
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">
@@ -186,7 +186,7 @@
                       <label for="kategori" class="col-form-label">Kategori Galeri</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                      <input type="text" name="nama" class="form-control" id="kategori" placeholder="Kategori Galeri..." required>
                     </div>
                   </div>
                   <!-- Tombol -->

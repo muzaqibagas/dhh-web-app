@@ -198,7 +198,7 @@
                   <label for="mitra" class="col-form-label">Mitra</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" name="nama" class="form-control" id="mitra" value="{{ old('nama', $mitra->nama) }}" placeholder="Masukkan nama mitra" required>
+                  <input type="text" name="nama" class="form-control" id="mitra" value="{{ old('nama', $mitra->nama) }}" placeholder="Mitra..." required>
                 </div>
               </div>
                 <!-- pre-review logo mitra-->

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('undangan_sidangs', function (Blueprint $table) {
+        Schema::create('undangan_komprehensifs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('undangan_sidangs');
+        Schema::dropIfExists('undangan_komprehensifs');
     }
 };

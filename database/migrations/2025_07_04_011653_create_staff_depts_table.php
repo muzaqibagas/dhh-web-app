@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id');            
             $table->foreignId('id_kategoristaff')->constrained('kategori_staffs')->onDelete('cascade');
             $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
-            $table->foreignId('id_jabatan')->nullable()->constrained('jabatans')->onDelete('set null');
+            $table->string('jabatan')->nullable();
             $table->string('foto')->nullable();
             $table->string('nama')->nullable();
             $table->date('tanggal_lahir')->nullable();

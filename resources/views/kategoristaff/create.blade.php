@@ -186,7 +186,7 @@
                       <label for="kategori" class="col-form-label">Kategori Staff</label>
                     </div>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control shadow-sm" id="kategori" placeholder="Masukkan nama kategori" required>
+                      <input type="text" name="nama" class="form-control shadow-sm" id="kategori" placeholder="Kategori Artikel..." required>
                     </div>
                   </div>
                   <!-- Tombol -->

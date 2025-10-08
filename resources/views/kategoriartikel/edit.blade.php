@@ -175,6 +175,12 @@
         <div class="adm-header">
             <h2 class="adm-title">Edit Kategori Artikel</h2>
         </div> 
+        @if(session('info'))
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        @endif
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
@@ -187,7 +193,7 @@
                         <label for="kategori" class="col-form-label">Kategori Artikel</label>
                       </div>
                       <div class="col-sm-10">
-                        <input type="text" name="nama" value="{{$kategoriArtikel->nama}}" class="form-control" id="kategori" placeholder="Masukkan nama kategori" required>
+                        <input type="text" name="nama" value="{{$kategoriArtikel->nama}}" class="form-control" id="kategori" placeholder="Kategori Artikel..." required>
                       </div>
                     </div>
                     <!-- Tombol -->

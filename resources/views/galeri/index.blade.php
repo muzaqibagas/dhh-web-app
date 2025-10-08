@@ -169,21 +169,44 @@
     </script>
   </aside>
     
-<!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">
-            <h2 class="adm-title">Daftar Galeri</h2>
-            <a href="{{route('galeri.create')}}" class="adm-btn-add text-decoration-none">
-              <i class="bi bi-plus"></i>Tambah Data
-            </a>
+            <h2 class="adm-title">Daftar Galeri</h2>                     
+            <div class="d-flex justify-content-end align-items-center gap-2">
+              <form action="{{ route('galeri.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
+                <input type="text" name="search" class="form-control" placeholder="Cari Galeri..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary px-3">
+                  <i class="bi bi-search"></i>
+                </button>
+              </form>
+              <a href="{{route('galeri.create')}}" class="adm-btn-add text-decoration-none">
+                <i class="bi bi-plus"></i>Tambah Data
+              </a>
+            </div>             
         </div>
+        {{-- Alert Success --}}
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
         </div>
         @endif
+        {{-- Alert Error --}}
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif     
+        {{-- Alert Info --}}
+        @if(session('info'))
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            {{ session('info') }}
+          </div>
+        @endif    
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
@@ -200,63 +223,67 @@
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach($galeris as $i => $galeri)
-                          <tr>
-                              <td>{{ $i+1 }}</td>
-                              <td>
-                                  @if($galeri->tipe == 'gambar' && $galeri->gambar)
-                                      <img src="{{ asset($galeri->gambar) }}" alt="foto" class="img-thumbnail" style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                                  @elseif($galeri->tipe == 'video')
-                                      @if(Str::startsWith($galeri->video, ['http', 'https']))
-                                          @php
-                                              preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
-                                              $youtubeId = $matches[1] ?? null;
-                                          @endphp
-                                          @if($youtubeId)
-                                              <iframe width="80" height="45" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>
-                                          @else
-                                              <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
-                                          @endif
-                                      @else
-                                          <video src="{{ asset($galeri->video) }}" controls style="max-width: 80px; max-height: 80px;"></video>
-                                      @endif
-                                  @endif
-                              </td>
-                              <td>{{ $galeri->tanggal }}</td>
-                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $galeri->judul }}</td>
-                              <td>{{ ucfirst($galeri->tipe) }}</td>
-                              <td>{{ $galeri->kategoriGaleri->nama ?? '-' }}</td>
-                              <td class="text-center">
-                                  <a href="{{ route('galeri.edit', $galeri->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                      <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                  </a>                                  
-                                  <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $galeri->id }}">
-                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                  </button>
-                                  <div class="modal fade" id="hapusModal{{ $galeri->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="hapusModalLabel"></h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
-                                          <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
-                                          <div>Apakah Anda yakin ingin menghapus data ini?</div>                                          
-                                        </div>
-                                        <div class="modal-footer justify-content-center">
-                                          <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')                                            
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                          </form>
+                          @forelse($galeris as $i => $galeri)
+                            <tr>
+                                <td>{{ $i+1 }}</td>
+                                <td>
+                                    @if($galeri->tipe == 'gambar' && $galeri->gambar)
+                                        <img src="{{ asset($galeri->gambar) }}" alt="foto" class="img-thumbnail" style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                                    @elseif($galeri->tipe == 'video')
+                                        @if(Str::startsWith($galeri->video, ['http', 'https']))
+                                            @php
+                                                preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
+                                                $youtubeId = $matches[1] ?? null;
+                                            @endphp
+                                            @if($youtubeId)
+                                                <iframe width="80" height="45" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>
+                                            @else
+                                                <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
+                                            @endif
+                                        @else
+                                            <video src="{{ asset($galeri->video) }}" controls style="max-width: 80px; max-height: 80px;"></video>
+                                        @endif
+                                    @endif
+                                </td>
+                                <td>{{ $galeri->tanggal }}</td>
+                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $galeri->judul }}</td>
+                                <td>{{ ucfirst($galeri->tipe) }}</td>
+                                <td>{{ $galeri->kategoriGaleri->nama ?? '-' }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('galeri.edit', $galeri->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                    </a>                                  
+                                    <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $galeri->id }}">
+                                        <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                    </button>
+                                    <div class="modal fade" id="hapusModal{{ $galeri->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                            <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                            <div>Apakah Anda yakin ingin menghapus Galeri ini?</div>                                          
+                                          </div>
+                                          <div class="modal-footer justify-content-center">
+                                            <form action="{{ route('galeri.destroy', $galeri->id) }}" method="POST">
+                                              @csrf
+                                              @method('DELETE')                                            
+                                              <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div>                                  
-                              </td>
-                          </tr>
-                          @endforeach
+                                    </div>                                  
+                                </td>
+                            </tr>
+                          @empty
+                            <tr>
+                              <td colspan="7" class="text-center text-muted py-4">Belum ada galeri.</td>
+                            </tr>
+                          @endforelse
                         </tbody>
                     </table>
                 </div>

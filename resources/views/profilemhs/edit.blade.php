@@ -62,6 +62,27 @@
     </aside>
     <main class="content">
       <h2 class="page-title">Edit Biodata Mahasiswa</h2>
+      {{-- Alert Success --}}
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+      </div>
+      @endif
+      {{-- Alert Error --}}
+      @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+      </div>
+      @endif     
+      {{-- Alert Info --}}
+      @if(session('info'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          {{ session('info') }}
+        </div>
+      @endif  
       <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center w-100 mt-4">
         @csrf
         @method('PUT')
@@ -79,15 +100,19 @@
           <div class="id-data flex-grow-1">
             <div class="mb-2">
               <label class="form-label fw-bold mb-0">Nama</label>
-              <input type="text" class="form-control form-control-sm" name="nama" value="{{ old('nama', $user->nama) }}">
+              <input type="text" class="form-control form-control-sm" name="nama" value="{{ old('nama', $user->nama) }}" placeholder="Nama Lengkap..." required>
             </div>
             <div class="mb-2">
               <label class="form-label fw-bold mb-0">NIM</label>
-              <input type="text" class="form-control form-control-sm" name="nim" value="{{ old('nim', $user->nim) }}">
+              <input type="text" class="form-control form-control-sm" name="nim" value="{{ old('nim', $user->nim) }}" placeholder="NIM..." required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label fw-bold mb-0">No Handphone</label>
+              <input type="text" class="form-control form-control-sm" name="no_hp" value="{{ old('no_hp', $user->no_hp) }}" placeholder="Nomor Handphone..." required>
             </div>
             <div class="mb-2">
               <label class="form-label fw-bold mb-0">Email</label>
-              <input type="email" class="form-control form-control-sm" name="email" value="{{ old('email', $user->email) }}">
+              <input type="email" class="form-control form-control-sm" name="email" value="{{ old('email', $user->email) }}" placeholder="Email..." required>
             </div>
             <div class="mb-2">
               <label class="form-label fw-bold mb-0">Jenis Kelamin</label><br>
@@ -166,7 +191,6 @@
 @endpush
 
 @push('script')  
-
   <script>
     function previewImage(event) {
       const reader = new FileReader();
@@ -257,8 +281,10 @@
     canvas.addEventListener('touchend', endDraw);
     document.getElementById('clearSignature').addEventListener('click', () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      updateCanvasPreview();
-    });
+      document.getElementById('tanda_tangan').value = ''; // kosongin hidden input
+      const previewSignBox = document.getElementById('preview-sign-box');
+      previewSignBox.innerHTML = '<span style="color:#aaa;">Belum ada tanda tangan</span>';
+    });    
   </script>
 @endpush  
 @endsection

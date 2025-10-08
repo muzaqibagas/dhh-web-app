@@ -14,6 +14,14 @@ class ArtikelController extends Controller
     public function index()
     {          
         $artikels = Artikel::all();
+
+        $query = Artikel::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('judul', 'like', "%$search%");
+        }
+
+        $artikels = $query->get();
         return view('artikel.index', compact('artikels'));
     }
 
@@ -120,11 +128,21 @@ class ArtikelController extends Controller
         }
 
         if ($request->hasFile('foto')) {
+            if ($artikel->foto && file_exists(public_path($artikel->foto))) {
+                unlink(public_path($artikel->foto));
+            }   
+
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('foto_artikel'), $filename);
             $data['foto'] = 'foto_artikel/' . $filename;
         }        
+        
+        $artikel->fill($data);
+        
+        if (!$artikel->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
 
         $update = $artikel->update($data);
         if ($update)
@@ -138,6 +156,10 @@ class ArtikelController extends Controller
      */
     public function destroy(Artikel $artikel)
     {
+        if ($artikel->foto && file_exists(public_path($artikel->foto))) {
+            unlink(public_path($artikel->foto));
+        }
+        
         $artikel->delete();
         return redirect()->route('artikel.index');
     }

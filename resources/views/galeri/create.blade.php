@@ -172,9 +172,9 @@
 <!-- MAIN CONTENT -->
 <main class="content">
 <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Tambah Data Galeri</h2>
-    </div> 
+  <div class="adm-header">
+    <h2 class="adm-title">Tambah Data Galeri</h2>
+  </div> 
   <div class="row">
     <div class="col-md-12">
       <div class="card shadow-sm p-4">
@@ -184,7 +184,7 @@
           <div class="row mb-3">
             <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
             <div class="col-sm-10">
-              <input type="text" name="judul" id="judul" class="form-control" placeholder="Tulis judul.." required>
+            <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul..." required>
             </div>
           </div>
 

@@ -13,8 +13,17 @@ class KontenJenjangController extends Controller
     private $jenjangList = ['S1', 'S2', 'S3'];
 
     public function index()
-    {
-        $kontenJenjangs = KontenJenjang::with('jenjang')->get();
+    {                
+        $query = KontenJenjang::with('jenjang');   
+
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->whereHas('jenjang', function($q) use ($search) {
+                $q->where('nama', 'like', "%$search%");
+            });
+        }
+
+        $kontenJenjangs = $query->get();
         return view('kontenjenjang.index', compact('kontenJenjangs'));
     }
 
@@ -121,9 +130,16 @@ class KontenJenjangController extends Controller
             }
         }
 
-        $kontenJenjang->update($validated);
+        $kontenJenjang->fill($validated);
+        if (!$kontenJenjang->isDirty()) {
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
+        }
 
-        return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil diperbarui.');
+        $update = $kontenJenjang->update($validated);
+        if ($update)
+            return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil diperbarui.');
+        else
+            return back()->with('error', 'Konten jenjang gagal diperbarui.');
     }   
     
     public function destroy(KontenJenjang $kontenJenjang)

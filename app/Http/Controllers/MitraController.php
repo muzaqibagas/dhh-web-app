@@ -14,6 +14,13 @@ class MitraController extends Controller
     {
         $mitras = Mitra::all();
 
+        $query = Mitra::query();
+        if (request()->has('search')) {
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        $mitras = $query->get();
         return view('mitra.index', compact('mitras'));
     }
 
@@ -81,6 +88,10 @@ class MitraController extends Controller
 
         //handle gambar
         if ($request->hasFile('foto')) {
+            if ($mitra->foto && file_exists(public_path($mitra->foto))) {
+                unlink(public_path($mitra->foto));
+            }
+
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('foto_mitra'), $filename);
@@ -90,7 +101,7 @@ class MitraController extends Controller
         $mitra->fill($data);
 
         if (!$mitra->isDirty()) {
-            return back()->with('info', 'tidak ada perubahan data');
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $mitra->update($data);
