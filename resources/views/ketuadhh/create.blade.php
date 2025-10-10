@@ -195,11 +195,17 @@
                     <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
                   </div>
                   <div class="col-sm-10 d-flex align-items-center">
-                    <input type="number" name="tahun_mulai" id="tahun_mulai"
-                      class="form-control me-2" placeholder="Tahun mulai" min="1900" max="3000" required>
+                    <select name="tahun_mulai" id="tahun_mulai" class="form-select" required>
+                      @for ($year = date('Y'); $year >= 1900; $year--)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                      @endfor
+                    </select>                    
                     <span class="mx-2">s/d</span>
-                    <input type="number" name="tahun_selesai" id="tahun_selesai"
-                      class="form-control ms-2" placeholder="Tahun selesai" min="1900" max="3000" required>
+                    <select name="tahun_selesai" id="tahun_selesai" class="form-select" required>
+                      @for ($year = date('Y'); $year >= 1900; $year--)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                      @endfor
+                    </select>                    
                   </div>
                 </div>
                 

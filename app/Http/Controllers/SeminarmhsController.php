@@ -147,6 +147,9 @@ class SeminarmhsController extends Controller
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->semester->semester ?? '-', 0, 'L');
         //no hp
+        $pdf->SetXY(32, 82);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->mahasiswa->no_hp ?? '-', 0, 'L');
         //alamat
         $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);

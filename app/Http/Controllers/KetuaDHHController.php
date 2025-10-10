@@ -14,6 +14,13 @@ class KetuaDHHController extends Controller
     {
         $ketua_dhhs = KetuaDHH::all();
 
+        $query = KetuaDHH::query();        
+        if (request()->has('search')){
+            $search = request()->search;
+            $query->where('nama', 'like', "%$search%");
+        }
+
+        $ketua_dhhs = $query->get();
         return view('ketuadhh.index', compact('ketua_dhhs'));
     }
 
@@ -85,6 +92,10 @@ class KetuaDHHController extends Controller
 
         // handle gambar
         if ($request->hasFile('foto')) {
+            if ($ketuaDHH->foto && file_exists(public_path($ketuaDHH->foto))) {
+                unlink(public_path($ketuaDHH->foto));
+            }
+
             $file = $request->file('foto');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('foto_ketuadhh'), $filename);
@@ -94,7 +105,7 @@ class KetuaDHHController extends Controller
         $ketuaDHH->fill($data);
 
         if (!$ketuaDHH->isDirty()) {
-            return back()->with('info', 'Tidak ada data yang diubah');
+            return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $ketuaDHH->update($data);

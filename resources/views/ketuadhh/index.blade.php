@@ -174,22 +174,39 @@
 <div class="container-fluid mt-4">
     <div class="adm-header">
         <h2 class="adm-title">Pimpinan DHH dari Masa ke Masa</h2>
+        <div class="d-flex justify-content-end align-items-center gap-2">
+          <form action="{{ route('ketuadhh.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
+            <input type="text" name="search" class="form-control" placeholder="Cari Ketua DHh..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary px-3">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
           <a href="{{route('ketuadhh.create')}}" class="adm-btn-add text-decoration-none">
-              <i class="bi bi-plus"></i>Tambah Data
+            <i class="bi bi-plus"></i>Tambah Data
           </a>
+        </div>           
     </div> 
+    {{-- Alert Success --}}
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
     @endif
+    {{-- Alert Error --}}
     @if(session('error'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ session('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
     </div>
-    @endif
+    @endif     
+    {{-- Alert Info --}}
+    @if(session('info'))
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        {{ session('info') }}
+      </div>
+    @endif          
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">

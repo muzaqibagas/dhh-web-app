@@ -151,6 +151,27 @@
     <div class="container-fluid mt-4">
       <div class="adm-header">
         <h2 class="adm-title">Create Staff Departemen</h2>
+        {{-- Alert Success --}}
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif
+        {{-- Alert Error --}}
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+        @endif     
+        {{-- Alert Info --}}
+        @if(session('info'))
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          {{ session('info') }}
+          </div>
+        @endif  
       </div>
       <div class="card shadow-sm">
         <div class="card-body">
@@ -161,15 +182,18 @@
             <div class="row mb-3">
               <label for="nama" class="col-sm-2 col-form-label text-start">Nama</label>
               <div class="col-sm-10">
-                <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Staff" required>
+                <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Staff" required>
               </div>
             </div>
 
             <!-- {{-- NIP --}} -->
             <div class="row mb-3">
               <label for="nip" class="col-sm-2 col-form-label text-start">NIP</label>
-              <div class="col-sm-10">
-                <input type="text" name="nip" class="form-control" id="nip" placeholder="Masukkan NIP" required>
+              <div class="col-sm-10">                
+                <input type="text" name="nip" id="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" placeholder="Masukkan NIP" required>
+                @error('nip')
+                  <div class="invalid-feedback text-start">{{ $message }}</div>
+                @enderror              
               </div>
             </div>
 
@@ -177,7 +201,7 @@
             <div class="row mb-3">
               <label for="foto" class="col-sm-2 col-form-label text-start">Foto</label>
               <div class="col-sm-10">
-                <input type="file" name="foto" class="form-control" id="foto" accept="image/*" required>
+                <input type="file" name="foto" class="form-control" id="foto" accept="image/*" {{ old('foto') ? 'value=' . old('foto') : '' }} required>
                 <img id="preview-foto" class="img-thumbnail mt-2 d-none" width="150" alt="Foto">
               </div>
             </div>           
@@ -189,7 +213,7 @@
                 <select name="id_kategoristaff" id="kategori" class="form-select" required>
                   <option value="">Pilih kategori</option>
                   @foreach ($kategoriStaffs as $kategori)
-                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                    <option value="{{ $kategori->id }}" {{ old('id_kategoristaff') == $kategori->id ? 'selected' : '' }}>{{ $kategori->nama }}</option>
                   @endforeach
                 </select>
               </div>
@@ -202,7 +226,7 @@
                 <select name="id_divisi" id="divisi" class="form-select" required>
                   <option value="">Pilih divisi</option>
                   @foreach ($divisis as $divisi)
-                    <option value="{{ $divisi->id }}">{{ $divisi->nama }}</option>
+                    <option value="{{ $divisi->id }}"  {{ old('id_divisi') == $divisi->id ? 'selected' : '' }}>{{ $divisi->nama }}</option>
                   @endforeach
                 </select>
               </div>
@@ -212,7 +236,7 @@
             <div class="row mb-3">
               <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan</label>
               <div class="col-sm-10">
-                <input name="jabatan" class="form-control" id="jabatan" placeholder="Masukkan Jabatan" required>
+                <input name="jabatan" class="form-control" id="jabatan" placeholder="Masukkan Jabatan" value="{{ old('jabatan') }}" required>
               </div>
             </div>
 
@@ -224,7 +248,7 @@
                       name="tanggal_lahir" 
                       id="tanggal_lahir" 
                       class="form-control" 
-                      value="{{ old('tanggal_lahir', $staffDept->tanggal_lahir ?? '') }}"
+                      value="{{ old('tanggal_lahir', $staffDept->tanggal_lahir ?? '') }}"                      
                       required>
               </div>
             </div>  
@@ -232,8 +256,11 @@
             <!-- {{-- EMAIL --}} -->
             <div class="row mb-3">
               <label for="email" class="col-sm-2 col-form-label text-start">Email</label>
-              <div class="col-sm-10">
-                <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Email" required>
+              <div class="col-sm-10">                
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Masukkan Email" required>
+                @error('email')
+                  <div class="invalid-feedback text-start">{{ $message }}</div>
+                @enderror
               </div>
             </div>
 
@@ -241,7 +268,7 @@
             <div class="row mb-3">
               <label for="scopus" class="col-sm-2 col-form-label text-start">Scopus</label>
               <div class="col-sm-10">
-                <input type="text" name="scopus" class="form-control" id="scopus" placeholder="Masukkan link Scopus">
+                <input type="text" name="scopus" class="form-control" id="scopus" value="{{ old('scopus') }}" placeholder="Masukkan link Scopus">
               </div>
             </div>
 
@@ -249,15 +276,14 @@
             <div class="row mb-3">
               <label for="sinta" class="col-sm-2 col-form-label text-start">Sinta</label>
               <div class="col-sm-10">
-                <input type="text" name="sinta" class="form-control" id="sinta" placeholder="Masukkan link Sinta">
+                <input type="text" name="sinta" class="form-control" id="sinta" value="{{ old('sinta') }}" placeholder="Masukkan link Sinta">
               </div>
             </div>
-
             <!-- {{-- GOOGLE SCHOLAR --}} -->
             <div class="row mb-3">
               <label for="google_scholar" class="col-sm-2 col-form-label text-start">Google Scholar</label>
               <div class="col-sm-10">
-                <input type="text" name="google_scholar" class="form-control" id="google_scholar" placeholder="Masukkan link Google Scholar">
+                <input type="text" name="google_scholar" class="form-control" id="google_scholar" value="{{ old('google_scholar') }}" placeholder="Masukkan link Google Scholar">
               </div>
             </div>
 
@@ -265,7 +291,7 @@
             <div class="row mb-3">
               <label for="website" class="col-sm-2 col-form-label text-start">Website</label>
               <div class="col-sm-10">
-                <input type="text" name="website" class="form-control" id="website" placeholder="Masukkan link website pribadi">
+                <input type="text" name="website" class="form-control" id="website" value="{{ old('website') }}" placeholder="Masukkan link website pribadi">
               </div>
             </div>
 
@@ -273,7 +299,7 @@
             <div class="row mb-3">
               <label for="researchgate" class="col-sm-2 col-form-label text-start">ResearchGate</label>
               <div class="col-sm-10">
-                <input type="text" name="researchgate" class="form-control" id="researchgate" placeholder="Masukkan link ResearchGate">
+                <input type="text" name="researchgate" class="form-control" id="researchgate" value="{{ old('researchgate') }}" placeholder="Masukkan link ResearchGate">
               </div>
             </div>
 
@@ -281,7 +307,7 @@
             <div class="row mb-3">
               <label for="keahlian" class="col-sm-2 col-form-label text-start">Keahlian</label>
               <div class="col-sm-10">
-                <textarea name="keahlian" class="form-control" id="keahlian" rows="3" placeholder="Masukkan bidang keahlian"></textarea>
+                <textarea name="keahlian" class="form-control" id="keahlian" rows="3" placeholder="Masukkan bidang keahlian">{{ old('keahlian') }}</textarea>
               </div>
             </div>
 
@@ -289,7 +315,7 @@
             <div class="row mb-3">
               <label for="publikasi" class="col-sm-2 col-form-label text-start">Link Publikasi</label>
               <div class="col-sm-10">
-                <textarea name="publikasi" class="form-control" id="publikasi" rows="3" placeholder="Masukkan link publikasi"></textarea>
+                <textarea name="publikasi" class="form-control" id="publikasi" rows="3" placeholder="Masukkan link publikasi">{{ old('publikasi') }}</textarea>
               </div>
             </div>
 
@@ -297,7 +323,7 @@
             <div class="row mb-3">
               <label for="riwayat_pendidikan" class="col-sm-2 col-form-label text-start">Riwayat Pendidikan</label>
               <div class="col-sm-10">
-                <textarea name="riwayat_pendidikan" class="form-control" id="riwayat_pendidikan" rows="3" placeholder="Masukkan riwayat pendidikan"></textarea>
+                <textarea name="riwayat_pendidikan" class="form-control" id="riwayat_pendidikan" rows="3" placeholder="Masukkan riwayat pendidikan">{{ old('riwayat_pendidikan') }}</textarea>
               </div>
             </div>
 

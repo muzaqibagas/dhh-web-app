@@ -130,7 +130,7 @@ class KolokiummhsController extends Controller
     public function generatePdf($id)
     {
         $kolokiummhs = Kolokiummhs::findOrFail($id);
-        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();        
+        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();                
         $template = public_path('pdf/templatekolokium.pdf');
         $outputPath = public_path("pdf/ditandatanganikolokium");
         if (!file_exists($outputPath)) {
@@ -159,6 +159,9 @@ class KolokiummhsController extends Controller
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->semester->semester ?? '-', 0, 'L');
         //no hp
+        $pdf->SetXY(32, 82);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->mahasiswa->no_hp ?? '-', 0, 'L');
         // Alamat
         $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);

@@ -203,11 +203,25 @@
                     <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
                   </div>
                   <div class="col-sm-10 d-flex align-items-center">
-                    <input type="number" name="tahun_mulai" id="tahun_mulai"
-                      class="form-control me-2" placeholder="Tahun mulai" min="1900" max="3000" value="{{ old('tahun_mulai', $ketuaDHH->tahun_mulai) }}" required>
+                    <select name="tahun_mulai" id="tahun_mulai" class="form-select me-2" required>
+                      <option value="">Tahun mulai</option>
+                      @for ($year = date('Y'); $year >= 1900; $year--)
+                        <option value="{{ $year }}" 
+                          {{ old('tahun_mulai', $ketuaDHH->tahun_mulai ?? '') == $year ? 'selected' : '' }}>
+                          {{ $year }}
+                        </option>
+                      @endfor
+                    </select>
                     <span class="mx-2">s/d</span>
-                    <input type="number" name="tahun_selesai" id="tahun_selesai"
-                      class="form-control ms-2" placeholder="Tahun selesai" min="1900" max="3000" value="{{ old('tahun_selesai', $ketuaDHH->tahun_selesai) }}" required>
+                    <select name="tahun_selesai" id="tahun_selesai" class="form-select ms-2" required>
+                      <option value="">Tahun selesai</option>
+                      @for ($year = date('Y'); $year >= 1900; $year--)
+                        <option value="{{ $year }}" 
+                          {{ old('tahun_selesai', $ketuaDHH->tahun_selesai ?? '') == $year ? 'selected' : '' }}>
+                          {{ $year }}
+                        </option>
+                      @endfor
+                    </select>
                   </div>
                 </div>
                 <!-- pre-review foto pimpinan-->

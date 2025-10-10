@@ -40,7 +40,8 @@ class StaffDeptController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
+
         $staffdepts = $request->validate([            
             'id_kategoristaff' => 'required|exists:kategori_staffs,id',
             'id_divisi' => 'nullable|exists:divisis,id',
@@ -49,8 +50,8 @@ class StaffDeptController extends Controller
             'nama' => 'required|string|max:255',
             'tanggal_lahir' => 'nullable|string|max:255',
             'nip' => 'required|string|unique:staff_depts,nip',            
-            'jabatan' => 'nullable|string|max:255',            
-            'email' => 'required|string|email|unique:staff_depts,email,',
+            'jabatan' => 'nullable|string|max:255',                        
+            'email' => 'required|string|email|unique:staff_depts,email',
             'sinta' => 'nullable|string|max:255',
             'google_scholar' => 'nullable|string|max:255',
             'scopus' => 'nullable|string|max:255',
@@ -59,6 +60,9 @@ class StaffDeptController extends Controller
             'keahlian' => 'nullable|string',
             'publikasi' => 'nullable|string',
             'riwayat_pendidikan' => 'nullable|string',
+        ], [
+            'nip.unique' => 'NIP ini sudah terdaftar. Silakan gunakan NIP lain.',
+            'email.unique' => 'Email ini sudah digunakan. Silakan gunakan email lain.',
         ]);
 
         $staffdepts['id_user'] = auth()->id();
@@ -75,7 +79,7 @@ class StaffDeptController extends Controller
         if ($insert)
             return redirect()->route('staffdept.index')->with('success', 'Data berhasil disimpan!');
         else
-            return back()->with('error', 'Gagal menyimpan data!');
+            return back()->withInput()->with('error', 'Data tidak valid, silakan periksa kembali.');
     }
 
     /**
@@ -83,7 +87,7 @@ class StaffDeptController extends Controller
      */
     public function show(StaffDept $staffDept)
     {
-        return view('staffdept.show', compact('staffDept'));
+        //
     }
 
     /**

@@ -147,6 +147,9 @@ class KomprehensifmhsController extends Controller
         $pdf->Cell($labelWidth, $lineHeight);        
         $pdf->MultiCell($valueWidth, $lineHeight, $komprehensifmhs->semester->semester ?? '-', 0, 'L');
         //no hp
+        $pdf->SetXY(32, 82);
+        $pdf->Cell($labelWidth, $lineHeight);
+        $pdf->MultiCell($valueWidth, $lineHeight, $komprehensifmhs->mahasiswa->no_hp ?? '-', 0, 'L');
         //alamat
         $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);        
