@@ -45,9 +45,4 @@ class StaffDept extends Model
     {
         return $this->belongsTo(Divisi::class, 'id_divisi');
     }
-
-    public function jabatan()
-    {
-        return $this->belongsTo(Jabatan::class, 'id_jabatan');
-    }
 }
