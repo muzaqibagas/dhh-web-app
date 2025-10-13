@@ -186,54 +186,93 @@
         @endif
         <div class="card shadow-sm">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table w-auto table-bordered align-middle">
-                        <thead class="table-light ">
-                            <tr>
-                                <th>No.</th>
-                                <th>Edit/Hapus</th>
-                                <th>Nama</th>
-                                <th>NIM</th>
-                                <th>Pembimbing 1</th>
-                                <th>Pembimbing 2</th>
-                                <th>Sem Genap</th>
-                                <th>Kolokium</th>
-                                <th>Seminar</th>
-                                <th>Ujian</th>
-                                <th>Ket. Sem. Ganjil 2024/2025</th>
-                                <th>Genap 2024/2025</th>
-                            </tr>
+                <div class="table-responsive">                    
+                    <table class="table w-auto table-bordered align-middle table-recap">
+                        <thead class="table-light">
+                          <tr>
+                            <th style="width: 50px; white-space: nowrap;">No.</th>
+                            <th style="width: 200px; white-space: nowrap;">Nama</th>
+                            <th style="width: 120px; white-space: nowrap;">NIM</th>
+                            <th style="width: 200px; white-space: nowrap;">Pembimbing 1</th>
+                            <th style="width: 200px; white-space: nowrap;">Pembimbing 2</th>
+                            <th style="width: 150px; white-space: nowrap;">Semester</th>
+                            <th style="width: 180px; white-space: nowrap;">Kolokium</th>
+                            <th style="width: 180px; white-space: nowrap;">Seminar</th>
+                            <th style="width: 180px; white-space: nowrap;">Ujian</th>
+                            <th style="width: 180px; white-space: nowrap;">Ket. Sem. Ganjil 2024/2025</th>
+                            <th style="width: 180px; white-space: nowrap;">Genap 2024/2025</th>
+                          </tr>
                         </thead>
                         <tbody>                                                             
                             @foreach($recap as $i => $row)
-                            <tr>                              
-                              <td>{{ $i+1 }}</td>
-                              <td>
-                                  <button class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                      <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                  </button>
-                                  <button class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                      <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                  </button>
-                              </td>
-                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['nama'] }}</td>
-                              <td>{{ $row['nim'] }}</td>
-                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing1'] }}</td>
-                              <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing2'] }}</td>
-                              <td>{{ $row['semester_genap'] }}</td>
-                              <td>{{ $row['tanggal_kolokium'] }}</td>
-                              <td>{{ $row['tanggal_seminar'] }}</td>
-                              <td>{{ $row['tanggal_ujian'] }}</td>
-                              <td>{{ $row['ket_sem_ganjil'] }}</td>
-                              <td>{{ $row['genap_2024_2025'] }}</td>
-                            </tr>
+                              <tr>                              
+                                <td>{{ $i+1 }}</td>                              
+                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['nama'] }}</td>
+                                <td>{{ $row['nim'] }}</td>
+                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing1'] }}</td>
+                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing2'] }}</td>
+                                <td>{{ $row['semester_genap'] }}</td>
+                                <td>{{ $row['tanggal_kolokium'] }}</td>
+                                <td>{{ $row['tanggal_seminar'] }}</td>
+                                <td>{{ $row['tanggal_ujian'] }}</td>
+                                <td>
+                                  @if($row['skl'])
+                                    <span class="badge bg-success">{{ $row['skl'] }}</span>
+                                  @else
+                                    <button type="button" class="btn btn-success btn-sm" 
+                                            style="width: 30px; height: 30px; padding: 0;"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#confirmModal" 
+                                            data-nim="{{ $row['nim'] }}">
+                                        <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                                    </button>
+                                  @endif
+                                </td>                       
+                                <td class="status-genap">{{ $row['status'] }}</td>
+                              </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Modal Konfirmasi SKL -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">                            
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                          </div>
+                          <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                            <i class="bi bi-question-lg text-warning" style="font-size: 4rem;"></i>
+                            <div>Apakah Anda yakin ingin menandai SKL sebagai "Sudah"? Tindakan ini tidak bisa dibatalkan.</div>
+                          </div>
+                          <div class="modal-footer justify-content-center">                            
+                            <form id="confirmForm" method="POST">
+                              @csrf
+                              <button type="submit" class="btn btn-success">Ya, Konfirmasi</button>
+                            </form>                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
   </main>
 </div>
+
+@push('style')
+@endpush
+
+@push('script')
+<script>
+    var confirmModal = document.getElementById('confirmModal');
+    confirmModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var nim = button.getAttribute('data-nim');
+
+        var form = confirmModal.querySelector('#confirmForm');
+        form.action = '/admrecapdata/skl/' + nim;
+    });
+</script>
+@endpush
 @endsection

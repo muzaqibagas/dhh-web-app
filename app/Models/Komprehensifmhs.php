@@ -23,6 +23,8 @@ class Komprehensifmhs extends Model
         'waktu_mulai',
         'waktu_selesai',
         'judul_tugasakhir',
+        'skl',
+        'status',
         'tipe_pelaksanaan',
         'id_ruangan',
         'link_meeting',

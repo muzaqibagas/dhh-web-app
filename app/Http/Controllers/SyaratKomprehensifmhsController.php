@@ -123,8 +123,12 @@ class SyaratKomprehensifmhsController extends Controller
             $data['bukti_kehadiran'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiKehadiranName;
         }
 
-        SyaratKomprehensifmhs::create($data);
-        return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
+        $insert = SyaratKomprehensifmhs::create($data);
+        if ($insert) {
+            return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
+        } else {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengajukan berkas pendaftaran seminar.');
+        }
     }
 
     /**

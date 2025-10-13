@@ -175,6 +175,7 @@
         <div class="adm-header">
             <h2 class="adm-title">Data Pendaftar Komprehensif</h2>
         </div>
+        
         <div class="card shadow-sm">
             <div class="card-body">
               <div class="table-responsive">

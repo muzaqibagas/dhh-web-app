@@ -180,7 +180,7 @@
         {{session('info')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
-    @endif
+    @endif    
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">

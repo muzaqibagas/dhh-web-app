@@ -22,46 +22,60 @@ class AdmRecapDataController extends Controller
         $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
 
         $recap = [];
-        foreach ($nims as $nim) {
-            $identitas = $kolokium[$nim] ?? $seminar[$nim] ?? $kompre[$nim] ?? null;
+            foreach ($nims as $nim) {
+                // Ambil data jika ada
+                $kolokiumData = $kolokium[$nim] ?? null;
+                $seminarData = $seminar[$nim] ?? null;
+                $kompreData = $kompre[$nim] ?? null;
 
-            // Cek dan ambil nama pembimbing jika field JSON
-            $pembimbing1 = '-';
-            if ($identitas && !empty($identitas->pembimbing1)) {
-                $pembimbing1 = $identitas->pembimbing1;
-                if ($this->isJson($pembimbing1)) {
-                    $json = json_decode($pembimbing1, true);
-                    $pembimbing1 = $json['nama'] ?? '-';
-                }
-            }            
+                // Ambil identitas prioritas: kolokium > seminar > kompre
+                $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
 
-            $pembimbing2 = '-';
-            if ($identitas && !empty($identitas->pembimbing2)) {
-                $pembimbing2 = $identitas->pembimbing2;
-                if ($this->isJson($pembimbing2)) {
-                    $json = json_decode($pembimbing2, true);
-                    $pembimbing2 = $json['nama'] ?? '-';
+                // Ambil pembimbing 1
+                $pembimbing1 = '-';
+                if ($identitas && !empty($identitas->pembimbing1)) {
+                    $pembimbing1 = $identitas->pembimbing1;
+                    if ($this->isJson($pembimbing1)) {
+                        $json = json_decode($pembimbing1, true);
+                        $pembimbing1 = $json['nama'] ?? '-';
+                    }
                 }
+
+                // Ambil pembimbing 2
+                $pembimbing2 = '-';
+                if ($identitas && !empty($identitas->pembimbing2)) {
+                    $pembimbing2 = $identitas->pembimbing2;
+                    if ($this->isJson($pembimbing2)) {
+                        $json = json_decode($pembimbing2, true);
+                        $pembimbing2 = $json['nama'] ?? '-';
+                    }
+                }
+
+                // Ambil tanggal dan semester dengan pengecekan null
+                $semester = $kolokiumData->semester->semester ?? '-';
+                $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
+                $tanggal_seminar = $seminarData->tanggal ?? '-';
+                $tanggal_komprehensif = $kompreData->tanggal ?? '-';
+
+                // Ambil SKL dan status genap jika ada di kompre
+                $ket_sem_ganjil = $kompreData ? ($kompreData->skl ? 'SKL sudah' : '-') : '-';
+                $genap_2024_2025 = $kompreData->status ?? '-';
+
+                $recap[] = [
+                    'nama' => $identitas->nama ?? '-',
+                    'nim' => $nim,
+                    'pembimbing1' => $pembimbing1,
+                    'pembimbing2' => $pembimbing2,
+                    'semester_genap' => $semester,
+                    'tanggal_kolokium' => $tanggal_kolokium,
+                    'tanggal_seminar' => $tanggal_seminar,
+                    'tanggal_ujian' => $tanggal_komprehensif,
+                    'ket_sem_ganjil' => $ket_sem_ganjil,
+                    'genap_2024_2025' => $genap_2024_2025,
+                    'skl' => $kompreData->skl ?? null,  
+                    'status' => $kompreData->status ?? null,
+                ];
             }
-
-            $semester = $kolokium[$nim]->semester->semester ?? '-';
-            $tanggal_kolokium = $kolokium[$nim]->tanggal ?? '-';
-            $tanggal_seminar = $seminar[$nim]->tanggal ?? '-';
-            $tanggal_komprehensif = $kompre[$nim]->tanggal ?? '-';
-
-            $recap[] = [
-                'nama' => $identitas->nama ?? '-',
-                'nim' => $nim,
-                'pembimbing1' => $pembimbing1,
-                'pembimbing2' => $pembimbing2,
-                'semester_genap' => $semester,
-                'tanggal_kolokium' => $tanggal_kolokium,
-                'tanggal_seminar' => $tanggal_seminar,
-                'tanggal_ujian' => $tanggal_komprehensif,
-                'ket_sem_ganjil' => $kompre[$nim]->ket_sem_ganjil ?? '-',
-                'genap_2024_2025' => $kompre[$nim]->genap_2024_2025 ?? '-',
-            ];
-        }
 
         return view('recapdata.index', compact('recap'));
     }
@@ -69,6 +83,13 @@ class AdmRecapDataController extends Controller
     private function isJson($string) {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
+    }
+
+    public function updateSKL($nim){
+        $kompre = KomprehensifMhs::where('nim', $nim)->first();
+        $kompre->update(['skl' => 'SKL Sudah', 'status' => 'Lulus']);
+
+        return redirect()->back()->with('success', 'Status SKL diperbarui.');
     }
 
     /**

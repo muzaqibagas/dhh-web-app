@@ -338,7 +338,7 @@ Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->na
 
 // Recap Data Admin
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
-Route::post('recapdata/skl-toggle/{nim}', [AdmRecapDataController::class, 'toggleSkl'])->name('recapdata.skl.toggle');
+Route::post('/admrecapdata/skl/{nim}', [AdmRecapDataController::class, 'updateSKL']);
 
 // User
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
