@@ -80,130 +80,126 @@
       </script>
 
     </aside>
-
     <main class="content">
-    
-    <!-- FORM KOLOKIUM -->
-
-    <div class="kolokium-card">
-        <h2 class="page-title">Daftar Sidang Akhir</h2>
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        <form action="{{ route('komprehensifmhs.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label>Nama</label>
-            <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ Auth::user()->nama ?? 'Guest' }}" required>
-            <input type="hidden" name="id_mahasiswa" value="{{ Auth::user()->id }}">
-        </div>
-
-        <div class="form-group">
-            <label>NIM</label>
-            <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ Auth::user()->nim ?? '' }}" required>
-        </div>
-
-        <div class="form-group">
-            <label>Semester</label>
-            <select name="id_semester" required>
-                <option selected disabled value="">Pilih Semester</option>
-                @foreach ($semesters as $semester)
-                    <option value="{{ $semester->id }}">{{ $semester->semester }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Alamat di Bogor</label>
-            <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{ Auth::user()->alamat ?? '' }}" required>
-        </div>
-
-        <div class="form-group">
-            <label>Judul Tugas Akhir</label>
-            <textarea name="judul_tugasakhir" placeholder="Masukkan Judul Tugas Akhir" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Dosen Pembimbing 1</label>
-            <select name="id_pembimbing1" required id="pembimbing1">
-                <option selected disabled value="">Pilih Dosen</option>
-                @foreach ($listDosen as $dosen)
-                    <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Dosen Pembimbing 2</label>
-            <select name="id_pembimbing2" id="pembimbing2">
-                <option selected disabled value="">Pilih Dosen</option>
-                @foreach ($listDosen as $dosen)
-                    <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Hari/Tanggal Sidang</label>
-            <div>
-              <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
-              <small id="tanggal-error" style="color:red;display:none;">Tanggal Sabtu/Minggu tidak bisa dipilih.</small>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Waktu Sidang</label>
-            <div>
-                <div class="d-flex align-items-center gap-3">
-                    <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai') }}" required>
-                    <p class="m-0">S/D</p>
-                    <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai') }}" required>
+        <div class="kolokium-card">
+            <h2 class="page-title">Daftar Sidang Akhir</h2>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                <small id="waktu-error" style="color:red;display:none;">Waktu Seminar tidak boleh pada jam istirahat (12:00 - 13:00).</small>
-            </div>
-        </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <form action="{{ route('komprehensifmhs.store') }}" method="POST">
+                @csrf   
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ Auth::user()->nama ?? 'Guest' }}" required>
+                    <input type="hidden" name="id_mahasiswa" value="{{ Auth::user()->id }}">
+                </div>
 
-        <div class="form-group">
-            <label for="tipe">Tipe Pelaksanaan</label>
-            <select id="tipe" name="tipe_pelaksanaan" required>
-              <option value="offline">Offline</option>
-              <option value="online">Online (Zoom/Meet)</option>
-            </select>            
-          </div>
+                <div class="form-group">
+                    <label>NIM</label>
+                    <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ Auth::user()->nim ?? '' }}" required>
+                </div>
 
-        <div class="form-group" id="ruangan-field">
-            <label for="id_ruangan">Ruangan</label>
-            <select name="id_ruangan" id="id_ruangan">
-              <option value="">Pilih Ruangan</option>
-              @foreach($ruangans as $ruangan)
-                <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
-              @endforeach
-            </select>            
-        </div>
+                <div class="form-group">
+                    <label>Semester</label>
+                    <select name="id_semester" required>
+                        <option selected disabled value="">Pilih Semester</option>
+                        @foreach ($semesters as $semester)
+                            <option value="{{ $semester->id }}">{{ $semester->semester }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-        <div class="form-group d-none" id="link-field">
-            <label for="link_meeting">Link Meeting</label>
-            <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting') }}">            
-        </div>
-        
-        <div class="form-group">
-            <label>Ketua Sidang</label>
-            <div class="form-static">[Diisi oleh akademik]</div>
-        </div>
-        <div class="form-actions">
-            <button type="submit" class="btn-submit">Submit</button>
-        </div>
-        </form>
-    </div>
+                <div class="form-group">
+                    <label>Alamat di Bogor</label>
+                    <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{ Auth::user()->alamat ?? '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Judul Tugas Akhir</label>
+                    <textarea name="judul_tugasakhir" placeholder="Masukkan Judul Tugas Akhir" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Dosen Pembimbing 1</label>
+                    <select name="id_pembimbing1" required id="pembimbing1">
+                        <option selected disabled value="">Pilih Dosen</option>
+                        @foreach ($listDosen as $dosen)
+                            <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Dosen Pembimbing 2</label>
+                    <select name="id_pembimbing2" id="pembimbing2">
+                        <option selected disabled value="">Pilih Dosen</option>
+                        @foreach ($listDosen as $dosen)
+                            <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Hari/Tanggal Sidang</label>
+                    <div>
+                        <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
+                        <small id="tanggal-error" style="color:red;display:none;">Tanggal Sabtu/Minggu tidak bisa dipilih.</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Waktu Sidang</label>
+                    <div>
+                        <div class="d-flex align-items-center gap-3">
+                            <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai') }}" required>
+                            <p class="m-0">S/D</p>
+                            <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai') }}" required>
+                        </div>
+                        <small id="waktu-error" style="color:red;display:none;">Waktu Seminar tidak boleh pada jam istirahat (12:00 - 13:00).</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipe">Tipe Pelaksanaan</label>
+                    <select id="tipe" name="tipe_pelaksanaan" required>
+                        <option value="offline">Offline</option>
+                        <option value="online">Online (Zoom/Meet)</option>
+                    </select>            
+                </div>
+
+                <div class="form-group" id="ruangan-field">
+                    <label for="id_ruangan">Ruangan</label>
+                    <select name="id_ruangan" id="id_ruangan">
+                    <option value="">Pilih Ruangan</option>
+                    @foreach($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
+                    @endforeach
+                    </select>            
+                </div>
+
+                <div class="form-group d-none" id="link-field">
+                    <label for="link_meeting">Link Meeting</label>
+                    <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting') }}">            
+                </div>
+            
+                <div class="form-group">
+                    <label>Ketua Sidang</label>
+                    <div class="form-static">[Diisi oleh akademik]</div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Submit</button>
+                </div>
+            </form>
+        </div>  
     </main>
 </div>
 @push('styles')
@@ -269,25 +265,34 @@
         }
 
         waktuMulaiInput.addEventListener("change", function() {
-        if (!validasiJam(this)) return;
-        
-        if (this.value >= "12:00" && this.value < "13:00") {
-            this.value = "";
-            waktuError.style.display = "inline";
-            waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
-            waktuSelesaiInput.value = "";
-            return;
-        }
-        
-        let [jam, menit] = this.value.split(":").map(Number);
-        jam++;
-        if (jam === 12) jam = 13; // skip istirahat
-        if (jam > 17) jam = 17;   // batas maksimal
+            if (!validasiJam(this)) return;
+            
+            if (this.value >= "12:00" && this.value < "13:00") {
+                this.value = "";
+                waktuError.style.display = "inline";
+                waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
+                waktuSelesaiInput.value = "";
+                return;
+            }
+            
+            let [jam, menit] = this.value.split(":").map(Number);
+            let totalMenit = jam * 60 + menit + 120; // tambah 2 jam (120 menit)
 
-        let jamStr = jam.toString().padStart(2, "0");
-        let menitStr = menit.toString().padStart(2, "0");
-        waktuSelesaiInput.value = `${jamStr}:${menitStr}`;
-        waktuError.style.display = "none";
+            // kalau lewat jam 12:00, tambahkan 1 jam (skip istirahat)
+            if (totalMenit > 12 * 60 && jam < 12) {
+                totalMenit += 60;
+            }
+
+            // batasi sampai jam 17:00 (1020 menit)
+            if (totalMenit > 17 * 60) totalMenit = 17 * 60;
+
+            // ubah kembali ke jam:menit
+            let jamSelesai = Math.floor(totalMenit / 60);
+            let menitSelesai = totalMenit % 60;            
+            let jamStr = jamSelesai.toString().padStart(2, "0");
+            let menitStr = menitSelesai.toString().padStart(2, "0");
+            waktuSelesaiInput.value = `${jamStr}:${menitStr}`;
+            waktuError.style.display = "none";        
         });
 
         waktuSelesaiInput.addEventListener("change", function() {

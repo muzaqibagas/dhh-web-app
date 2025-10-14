@@ -172,9 +172,9 @@
 <!-- Main konten -->
 <main class="content">
 <div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Undangan Sidang</h2>
-    </div>
+  <div class="adm-header">
+    <h2 class="adm-title">Undangan Sidang</h2>
+  </div>
     <div class="card shadow-sm mt-4">
         <div class="card-body">
             <form action="#" method="POST">
@@ -183,29 +183,29 @@
                 @php
                     $formFields = [
                         'Nama' => '
-                            <select class="text-start form-select">
-                                <option disabled selected>Pilih nama</option>
-                                <option>Muzaqi Bagas</option>
-                                <option>Hasna Nabiilah</option>
-                            </select>',
+                          <select class="text-start form-select">
+                            <option disabled selected>Pilih nama</option>
+                            <option>Muzaqi Bagas</option>
+                            <option>Hasna Nabiilah</option>
+                          </select>',
                         'NIM' => '<input type="text" class="text-start form-control form-control-sm" placeholder="NIM" readonly>',
                         'Judul Praktek Khusus' => '
-                            <div class="input-group">
-                                <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
-                            </div>',
+                          <div class="input-group">
+                            <textarea class="text-start form-control form-control-sm" rows="3" placeholder="Masukkan judul Praktek Khusus..."></textarea>
+                          </div>',
                         'Hari/Tanggal Sidang' => '
-                            <div class="input-group">
-                                <input type="date" class="text-start form-control form-control-sm">
-                            </div>',
+                          <div class="input-group">
+                            <input type="date" class="text-start form-control form-control-sm">
+                          </div>',
                         'Waktu Sidang' => '
-                            <div class="input-group">
-                                <input type="time" class="text-start form-control form-control-sm">
-                            </div>',
+                          <div class="input-group">
+                            <input type="time" class="text-start form-control form-control-sm">
+                          </div>',
                         'Tempat Sidang' => '<input type="text" class="text-start form-control form-control-sm" placeholder="Masukkan tempat sidang">',
                         'Pembimbing Utama' => '
                             <select class="text-start form-select">
-                                <option disabled selected>Pilih Pembimbing Utama</option>
-                                <option>Nana nyanya M.Ts.</option>
+                              <option disabled selected>Pilih Pembimbing Utama</option>
+                              <option>Nana nyanya M.Ts.</option>
                             </select>',
                         'Pembimbing Anggota' => '
                             <select class="text-start form-select">

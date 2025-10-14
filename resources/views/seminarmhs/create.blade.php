@@ -284,14 +284,19 @@
       }
       
       let [jam, menit] = this.value.split(":").map(Number);
-      jam++;
-      if (jam === 12) jam = 13; // skip istirahat
-      if (jam > 17) jam = 17;   // batas maksimal
+      let totalMenit = jam * 60 + menit + 60;
 
-      let jamStr = jam.toString().padStart(2, "0");
-      let menitStr = menit.toString().padStart(2, "0");
+      if (totalMenit > 12 * 60 && jam < 12) {
+          totalMenit += 60;
+      }
+      if (totalMenit > 17 * 60) totalMenit = 17 * 60;    
+
+      let jamSelesai = Math.floor(totalMenit / 60);
+      let menitSelesai = totalMenit % 60;    
+      let jamStr = jamSelesai.toString().padStart(2, "0");
+      let menitStr = menitSelesai.toString().padStart(2, "0");
       waktuSelesaiInput.value = `${jamStr}:${menitStr}`;
-      waktuError.style.display = "none";
+      waktuError.style.display = "none";        
     });
 
     waktuSelesaiInput.addEventListener("change", function() {
@@ -383,28 +388,6 @@
     // jalankan saat ada perubahan select
     tipe.addEventListener('change', toggleTipe);
   </script>
-
-  <!-- <script>
-  document.getElementById('waktu_mulai').addEventListener('change', function() {
-      let mulai = this.value;
-      let selesaiSelect = document.getElementById('waktu_selesai');
-
-      // Ambil semua opsi selesai
-      let semuaOpsi = selesaiSelect.querySelectorAll('option');
-
-      semuaOpsi.forEach(opt => {
-          if (!opt.value) return; // skip placeholder
-          let diff = (parseInt(opt.value.split(':')[0]) * 60 + parseInt(opt.value.split(':')[1])) -
-                    (parseInt(mulai.split(':')[0]) * 60 + parseInt(mulai.split(':')[1]));
-          
-          // Kalau selisihnya < 120 menit (2 jam), sembunyikan
-          opt.style.display = diff >= 60 ? '' : 'none';
-      });
-
-      // Reset pilihan selesai
-      selesaiSelect.value = '';
-  });
-  </script> -->
 
 @endpush
 

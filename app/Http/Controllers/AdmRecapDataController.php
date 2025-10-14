@@ -7,6 +7,9 @@ use App\Models\KolokiumMhs;
 use App\Models\KomprehensifMhs;
 use App\Models\SeminarMhs;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AdmRecapDataExport;
+use App\Exports\AdmRecapMultiSheetExport;
 
 class AdmRecapDataController extends Controller
 {
@@ -90,6 +93,12 @@ class AdmRecapDataController extends Controller
         $kompre->update(['skl' => 'SKL Sudah', 'status' => 'Lulus']);
 
         return redirect()->back()->with('success', 'Status SKL diperbarui.');
+    }
+
+    public function export()
+    {
+        $filename = 'rekap_data_' . date('Y_m_d_His') . '.xlsx';
+        return Excel::download(new AdmRecapMultiSheetExport, 'rekap-tahunan.xlsx');
     }
 
     /**

@@ -339,6 +339,7 @@ Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->na
 // Recap Data Admin
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
 Route::post('/admrecapdata/skl/{nim}', [AdmRecapDataController::class, 'updateSKL']);
+Route::get('/admrecapdata/export', [AdmRecapDataController::class, 'export'])->name('admrecapdata.export');
 
 // User
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');

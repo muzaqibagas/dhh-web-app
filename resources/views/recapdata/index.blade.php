@@ -173,8 +173,8 @@
   <main class="content overflow-x-auto">
     <div class="container-fluid mt-4">
         <div class="adm-header">
-            <h2 class="adm-title">Daftar Artikel</h2>
-              <a href="{{route('artikel.create')}}" class="adm-btn-add text-decoration-none">
+            <h2 class="adm-title">Daftar Daftar Rekap Data</h2>
+              <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
                 <i class="bi bi-download"></i>Download File Excel
               </a>
         </div>
