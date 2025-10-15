@@ -4,91 +4,174 @@
 
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
-  <a href="#">Home</a> / <span>Departemen</span>
+  <a href="#">Home</a> / <span>Pendidikan S1</span>
 </div>
 
-<div class="container my-5">
-
-  <!-- SEJARAH -->
-    <section class="sej-section">
-        <h2 class="guest-pend-section-title">Sejarah</h2>
-        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
+    <!-- === Sejarah === -->
+    <section class="pend-section" data-aos="fade-up">
+    <div class="pend-text">
+        <h3>Sejarah</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+    </div>
         <p style="text-align: justify;">
-            {{ $kontenDept->sejarah ?? '-' }}
+        {{ $kontenDept->sejarah ?? '-' }}
         </p>
-    </section>
-    <!-- KETUA DARI MASA KE MASA -->
-    <section class="guest-ketua-section my-5">
-    <h2 class="guest-pend-section-title text-center">Ketua Departemen dari Masa ke Masa</h2>
-    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider d-block mx-auto" alt="divider">
-
-    <div class="guest-ketua-timeline d-flex flex-wrap justify-content-center gap-4 mt-4">
-        <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 1">
-        <h5>Dr. Nama Ketua</h5>
-        <p>1969 – 1975</p>
-        </div>
-        <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 2">
-        <h5>Prof. Nama Ketua</h5>
-        <p>1975 – 1985</p>
-        </div>
-        <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 3">
-        <h5>Ir. Nama Ketua</h5>
-        <p>1985 – 1995</p>
-        </div>
-            <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 1">
-        <h5>Dr. Nama Ketua</h5>
-        <p>1969 – 1975</p>
-        </div>
-        <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 2">
-        <h5>Prof. Nama Ketua</h5>
-        <p>1975 – 1985</p>
-        </div>
-        <div class="guest-ketua-card text-center">
-        <img src="{{ asset('img/pairsan.jpg') }}" alt="Ketua 3">
-        <h5>Ir. Nama Ketua</h5>
-        <p>1985 – 1995</p>
-        </div>
     </div>
     </section>
 
-    <!-- VISI & MISI -->
-    <div class="row my-4">
-        <div class="col-lg-6 col-md-12 mb-4">
-        <h3 class="guest-pend-section-title">Visi</h3>
-        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
-        <p style="text-align: justify;">
-            {{ $kontenDept->visi ?? '-'}}
-        </p>
+    <!-- ====== SECTION PIMPINAN DARI DULU HINGGA SEKARANG ====== -->
+    <section class="ketdept-section py-5">
+    <div class="container position-relative">
+
+        <!-- Panah kiri -->
+        <button class="ketdept-prev">
+        <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <!-- Panah kanan -->
+        <button class="ketdept-next">
+        <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <!-- Wrapper Slide -->
+        <div class="ketdept-wrapper">
+        <div class="ketdept-slide">
+            <div class="ketdept-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 1">
+            <h5>Dr. Andi Saputra</h5>
+            <p>Ketua DHH (2000–2005)</p>
+            </div>
+            <div class="ketdept-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 2">
+            <h5>Dr. Budi Santoso</h5>
+            <p>Ketua DHH (2006–2010)</p>
+            </div>
+            <div class="ketdept-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 3">
+            <h5>Prof. Dewi Rahayu</h5>
+            <p>Ketua DHH (2011–2016)</p>
+            </div>
+            <div class="ketdept-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 4">
+            <h5>Ir. Cahyono</h5>
+            <p>Ketua DHH (2017–2021)</p>
+            </div>
+            <div class="ketdept-card">
+            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 5">
+            <h5>Dr. Istie S. Rahayu</h5>
+            <p>Ketua DHH (2022–Sekarang)</p>
+            </div>
         </div>
-        <div class="col-lg-6 col-md-12 mb-4">
-        <h3 class="guest-pend-section-title">Misi</h3>
-        <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
-        <p style="text-align: justify;">
-            {{ $kontenDept->misi ?? '-' }}
-        </p>
         </div>
     </div>
+    </section>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const slide = document.querySelector(".ketdept-slide");
+    const cards = document.querySelectorAll(".ketdept-card");
+    const nextBtn = document.querySelector(".ketdept-next");
+    const prevBtn = document.querySelector(".ketdept-prev");
 
-    <!-- TUJUAN -->
-    <h3 class="guest-pend-section-title">Tujuan</h3>
-    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
-    <p style="text-align: justify;">
+    let index = 0;
+    slide.innerHTML += slide.innerHTML; // efek loop
+    const totalCards = slide.querySelectorAll(".ketdept-card");
+    const cardCount = cards.length;
+
+    function updateSlide() {
+        const cardWidth = totalCards[0].offsetWidth + 32; // +gap
+        slide.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+
+    nextBtn.addEventListener("click", () => {
+        index++;
+        updateSlide();
+        if (index >= cardCount) {
+        setTimeout(() => {
+            slide.style.transition = "none";
+            index = 0;
+            updateSlide();
+            void slide.offsetWidth;
+            slide.style.transition = "transform 0.4s ease-in-out";
+        }, 400);
+        }
+    });
+
+    prevBtn.addEventListener("click", () => {
+        index--;
+        if (index < 0) {
+        slide.style.transition = "none";
+        index = cardCount - 1;
+        updateSlide();
+        void slide.offsetWidth;
+        slide.style.transition = "transform 0.4s ease-in-out";
+        }
+        updateSlide();
+    });
+
+    window.addEventListener("resize", updateSlide);
+    });
+    </script>
+
+    <!-- === Visi & Misi === -->
+    <section class="pend-section" data-aos="fade-up">
+    <div class="pend-text">
+        <h3>Visi</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+    </div>
+        <p style="text-align: justify;">
+        {{ $kontenDept->visi ?? '-'}}
+        </p>
+    </div>
+    </section>
+
+    <section class="pend-section" data-aos="fade-up">
+    <div class="pend-text">
+        <h3>Misi</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+    </div>
+        <p style="text-align: justify;">
+        {{ $kontenDept->misi ?? '-' }}
+        </p>
+    </div>
+    </section>
+
+    <script>
+    AOS.init({
+    duration: 1000,
+    once: true
+    });
+    </script>
+
+    <!-- === TUJUAN === -->
+    <section class="pend-section" data-aos="fade-up">
+    <div class="pend-text">
+        <h3>Tujuan</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+    </div>
+        <p style="text-align: justify;">
         {!! nl2br(e($kontenDept->tujuan ?? '-')) !!}
-    </p>
+        </p>
+    </div>
+    </section>
 
-    <!-- KEBIJAKAN MUTU -->
-    <h3 class="guest-pend-section-title">Kebijakan Mutu</h3>
-    <img src="{{ asset('img/batasgold.png') }}" class="guest-pend-divider" alt="divider">
-    <p style="text-align: justify;">
+    <!-- === KEBIJAKAN MUTU === -->
+    <section class="pend-section" data-aos="fade-up">
+    <div class="pend-text">
+        <h3>Kebijakan Mutu</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+    </div>
+        <p style="text-align: justify;">
         {!! nl2br(e($kontenDept->kebijakanmutu ?? '-')) !!}
-    </p>    
+        </p>
+    </div>
+    </section>
 
-    <h2 style="text-align: center;">Staff Departemen Hasil Hutan</h2>
+
+    <div class="judul-tengah">
+        <h3 class="judul-tengah-title">Pimpinan Departemen</h3>
+        <img src="{{ asset('img/batasgold.png') }}" alt="divider" class="judul-tengah-divider">
+    </div>
+
 
     <!-- Tabs -->
     <div class="sej-tabs">
@@ -243,6 +326,7 @@
         </div>
         </div>
     </section>
+</div>
 
     <script>
         const buttons = document.querySelectorAll('.sej-tab-button');
@@ -258,5 +342,4 @@
         });
         });
     </script>  
-</div>
 @endsection

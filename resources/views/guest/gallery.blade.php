@@ -94,8 +94,48 @@
     <div class="guest-galery-item" data-category="akademik">
         <img src="img/bglogin.jpg" alt="Akademik">
     </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
     </div>
+    <div class="guest-galery-item" data-category="sdgs">
+        <img src="img/bglogin.jpg" alt="SDGS">
+    </div>
+    <div class="guest-galery-item" data-category="prestasi">
+        <img src="img/buistie.jpg" alt="Prestasi">
+    </div>
+    <div class="guest-galery-item" data-category="fasilitas">
+        <img src="img/bglogin.jpg" alt="Fasilitas">
+    </div>
+    <div class="guest-galery-item" data-category="kegiatan">
+        <img src="img/bglogin.jpg" alt="Kegiatan">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+        <div class="guest-galery-item" data-category="kegiatan">
+        <img src="img/bglogin.jpg" alt="Kegiatan">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    <div class="guest-galery-item" data-category="akademik">
+        <img src="img/bglogin.jpg" alt="Akademik">
+    </div>
+    </div>
+<!-- Pagination -->
+<div class="guest-galery-pagination">
+  <button class="guest-galery-prev">&lt;</button>
+  <div class="guest-galery-pages"></div>
+  <button class="guest-galery-next">&gt;</button>
+</div>
+
+
+
 </section>
+
 <script>
   const filters = document.querySelectorAll(".guest-galery-filter");
   const items = document.querySelectorAll(".guest-galery-item");
@@ -129,5 +169,76 @@
   });
 
 </script>
+<script>
+  const itemsPerPageAll = 10;  // total 10 item per halaman untuk "Semua"
+  const itemsPerPageOther = 6; // total 3 item per halaman untuk kategori lain
+  let currentPage = 1;
+
+  const updateGallery = () => {
+    const activeFilter = document.querySelector(".guest-galery-filter.active").dataset.filter;
+    const visibleItems = Array.from(items).filter(
+      item => activeFilter === "all" || item.dataset.category === activeFilter
+    );
+
+    const perPage = activeFilter === "all" ? itemsPerPageAll : itemsPerPageOther;
+    const totalPages = Math.ceil(visibleItems.length / perPage);
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+
+    items.forEach(item => item.classList.add("hidden"));
+    visibleItems.slice(start, end).forEach(item => item.classList.remove("hidden"));
+
+    // Update pagination display
+    renderPagination(totalPages);
+  };
+
+  const renderPagination = (totalPages) => {
+    const pagesContainer = document.querySelector(".guest-galery-pages");
+    pagesContainer.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement("div");
+      pageBtn.className = "guest-galery-page" + (i === currentPage ? " active" : "");
+      pageBtn.textContent = i;
+      pageBtn.addEventListener("click", () => {
+        currentPage = i;
+        updateGallery();
+      });
+      pagesContainer.appendChild(pageBtn);
+    }
+  };
+
+  document.querySelector(".guest-galery-prev").addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updateGallery();
+    }
+  });
+
+  document.querySelector(".guest-galery-next").addEventListener("click", () => {
+    const activeFilter = document.querySelector(".guest-galery-filter.active").dataset.filter;
+    const perPage = activeFilter === "all" ? itemsPerPageAll : itemsPerPageOther;
+    const visibleItems = Array.from(items).filter(
+      item => activeFilter === "all" || item.dataset.category === activeFilter
+    );
+    const totalPages = Math.ceil(visibleItems.length / perPage);
+
+    if (currentPage < totalPages) {
+      currentPage++;
+      updateGallery();
+    }
+  });
+
+  filters.forEach(filter => {
+    filter.addEventListener("click", () => {
+      currentPage = 1; // reset halaman tiap ganti kategori
+      updateGallery();
+    });
+  });
+
+  // Panggil pertama kali
+  updateGallery();
+</script>
+
 
 @endsection

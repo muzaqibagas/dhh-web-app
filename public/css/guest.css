@@ -61,8 +61,159 @@
 .guest-carousel-prev { left: 20px; }
 .guest-carousel-next { right: 20px; }
 
+/* === SECTION MENU KOTAK (SETELAH CAROUSEL) === */
+.guest-menu-section {
+}
+
+.guest-menu-card {
+  background-color: #0B2A7D; /* biru tua */
+  border: 3px solid #FFD700; /* garis emas */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  padding: 30px 10px;
+  transition: 0.3s;
+}
+
+.guest-menu-card img {
+  width: 60px;
+  margin-bottom: 10px;
+  filter: brightness(0) invert(1); /* putih */
+}
+
+.guest-menu-card p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.guest-menu-card:hover {
+  transform: translateY(-5px);
+  background-color: #1239A6; /* lebih terang saat hover */
+}
+
+/* RESPONSIVE UNTUK CAROUSEL */
+@media (max-width: 768px) {
+  .guest-carousel-caption {
+    left: 50%;                  /* pindah ke tengah horizontal */
+    top: 50%;                   /* tetap di tengah vertikal */
+    transform: translate(-50%, -50%); /* bener-bener center */
+    text-align: center;          /* teks rata tengah */
+    max-width: 90%;              /* biar gak kepotong */
+  }
+
+  .guest-carousel-caption h2 {
+    font-size: 1.4rem;           /* biar gak terlalu besar */
+  }
+
+  .guest-carousel-caption p {
+    font-size: 0.9rem;           /* lebih pas buat layar kecil */
+  }
+}
+
+/* === SECTION MENU KOTAK RESPONSIF === */
+.guest-menu-section {
+  overflow: hidden;
+}
+
+.guest-menu-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  padding-top: 10px;
+}
+
+.guest-menu-slide {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  gap: 3rem;
+}
+.guest-menu-slide {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  gap: 1rem;
+  will-change: transform;
+}
+
+.guest-menu-card {
+  background-color: #0B2A7D;
+  border: 3px solid #FFD700;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  flex: 0 0 calc(33.33% - 1rem); /* default: 3 kotak */
+  text-decoration: none;
+  padding: 30px 10px;
+  transition: 0.3s;
+}
+
+.guest-menu-card img {
+  width: 60px;
+  margin-bottom: 10px;
+  filter: brightness(0) invert(1);
+}
+
+.guest-menu-card p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.guest-menu-card:hover {
+  transform: translateY(-5px);
+  background-color: #1239A6;
+}
+
+/* Panah kiri/kanan */
+.guest-menu-prev,
+.guest-menu-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: none;
+  border: none;
+  color: #0B2A7D;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.3s;
+}
+
+.guest-menu-prev:hover,
+.guest-menu-next:hover {
+  background-color: #fff;
+}
+
+.guest-menu-prev {
+  left: -10px;
+}
+
+.guest-menu-next {
+  right: -10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .guest-menu-card {
+    flex: 0 0 calc(50% - 1rem); /* tampil 2 kotak */
+  }
+
+  .guest-menu-prev,
+  .guest-menu-next {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+}
+
+
 /* 🔴 Overlay merah */
-.guest-carousel-overlay {
+/* .guest-carousel-overlay {
   position: relative;
   width: 60%;
   margin: -90px 0 0 0;
@@ -124,7 +275,7 @@
     text-align: center;
   }
   .guest-overlay-icons { justify-content: center; }
-}
+} */
 
 /* ℹ️ About Section */
 .guest-about-section {
@@ -137,10 +288,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-.guest-about-text { flex: 1; }
+.guest-about-text { 
+  flex: 1; 
+  min-width: 300px;
+}
 .guest-about-text h3 {
   font-size: 1.8rem;
   font-weight: 700;
@@ -163,29 +318,49 @@
 }
 
 .guest-btn-about {
-  margin-top: 15px;
-  background: #0b2a7c;
+  background-color: #0B2A7D;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 8px;
   border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
+  transition: 0.3s;
 }
-.guest-btn-about:hover { background: #081d56; }
-
+.guest-btn-about:hover {
+  background-color: #FFD700;
+  color: #0B2A7D;
+}
 .guest-about-image {
   flex: 1;
-  text-align: right;
+  display: flex;
+  justify-content: center;
 }
 .guest-about-image img {
-  max-width: 90%;
+  width: 100%;
+  max-width: 400px;
   height: auto;
 }
 
 @media (max-width: 992px) {
   .guest-about-container { flex-direction: column; text-align: center; }
   .guest-about-image { text-align: center; }
+}
+/* Responsive — ubah posisi */
+@media (max-width: 768px) {
+  .guest-about-container {
+    flex-direction: column-reverse; /* ini awalnya column, diganti column-reverse biar gambar di atas */
+    text-align: center;
+  }
+
+  .guest-about-image img {
+    max-width: 300px;
+    margin-bottom: 1rem;
+  }
+
+  .guest-about-text {
+    text-align: justify;
+  }
 }
 
 /* 📰 Blog */
@@ -448,11 +623,272 @@
     line-height: 1.4;
     padding: 0 10px; /* biar gak mepet pinggir */
   }
+  
+  #guestAlumniCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+    margin-bottom: -15px;
+  }
+
 }
+
+/* Tombol “Lihat Selengkapnya” */
+.btn-see-more {
+  display: inline-block;
+  background: #0B2A7D;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-see-more:hover {
+  background: #FFD700;
+  color: #0B2A7D;
+}
+
+/* ============================= */
+/*  HALAMAN PENDIDIKAN    */
+/* ============================= */
+/* === Halaman Pendidikan (S1/S2/S3) === */
+.pend-section {
+  padding: 40px 8%; /* Dulu 60px, sekarang lebih rapat */
+  background: #fff;
+  margin-bottom: 20px; /* Tambah sedikit agar antar section ada jarak kecil */
+}
+
+.pend-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* biar teks dan gambar lebih dekat */
+  flex-wrap: nowrap; /* biar mereka tetep sejajar */
+  gap: 0; /* Hapus jarak antar elemen */
+}
+
+.pend-text {
+  flex: 0 0 60%; /* teks ambil 60% lebar */
+  min-width: 300px;
+}
+
+.pend-text h3 {
+  color: #8b0000;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.pend-divider {
+  width: 110px;
+  height: 10px;
+  background: linear-gradient(90deg, #ffd100, #c77b00);
+  border-radius: 2px;
+  margin-bottom: 0.8rem;
+}
+
+.pend-text p,
+.pend-text ul,
+.pend-text ol {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+  margin-bottom: 0.6rem;
+}
+
+.pend-text ul {
+  padding-left: 1.2rem;
+}
+
+.pend-image {
+  flex: 1;
+  text-align: right;
+}
+
+.pend-image img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 10px;
+  margin-right: 50px;
+}
+
+/* === Capaian Pembelajaran === */
+.pend-list {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* === Flayer (Leaflet) === */
+.pend-flayer img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.pend-flayer img:hover {
+  transform: scale(1.03);
+}
+/* ========================================== */
+/* 🏷️ Judul Tengah Serbaguna (Reusable Title) */
+/* ========================================== */
+
+.judul-tengah {
+  text-align: center;
+  margin-bottom: 2rem; /* jarak bawah antar elemen berikutnya */
+}
+
+.judul-tengah-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #8B0000; /* merah khas DHH */
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.5px;
+}
+
+.judul-tengah-divider {
+  width: 254px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* versi kecil (opsional) kalau butuh untuk subjudul */
+.judul-tengah.small .judul-tengah-title {
+  font-size: 1.3rem;
+}
+
+.judul-tengah.small .judul-tengah-divider {
+  width: 90px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .judul-tengah-title {
+    font-size: 1.5rem;
+  }
+
+  .judul-tengah-divider {
+    width: 240px;
+  }
+}
+
+
+/* === Link dan paragraf umum === */
+.pend-section a {
+  color: #0b2a7d;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.pend-section a:hover {
+  text-decoration: underline;
+}
+
+/* === Responsiveness === */
+@media (max-width: 992px) {
+  .pend-container {
+  display: flex;
+  align-items: center; /* Biar vertikalnya sejajar tengah */
+  justify-content: flex-start; /* Dulu space-between, bikin kejauhan */
+  flex-wrap: wrap;
+  gap: 2rem; /* Bisa diganti jadi 1rem kalau mau lebih rapat lagi */
+  }
+
+  .pend-image {
+  flex: 0 0 350px; /* Ukuran tetap biar gak terlalu lebar */
+  text-align: right;
+  }
+
+  .pend-image img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .pend-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .pend-image {
+    display: flex;
+    justify-content: center; /* ngetengahin horizontal */
+    align-items: center; /* ngetengahin vertikal */
+    width: 100%;
+  }
+
+  .pend-image img {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto 1rem auto; /* tengah + jarak bawah */
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .pend-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pend-image img {
+    max-width: 240px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
 
 /* ============================= */
 /* 📚 Program Studi Accordion    */
 /* ============================= */
+/* === SECTION PROGRAM STUDI === */
+.guest-prodi-section {
+  background-color: #001a57; /* biru tua */
+  width: 100vw; /* full satu layar */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw; /* "trik" untuk hilangkan padding bawaan container */
+  margin-right: -50vw;
+  padding: 60px 0; /* ruang atas bawah */
+}
+
+/* Biar isi tetap rapi di tengah */
+.guest-prodi-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .guest-prodi-section {
+    text-align: center;
+  }
+
+  .guest-prodi-container .row {
+    flex-direction: column;
+  }
+
+  .guest-prodi-container .col-md-8 {
+    margin-top: 20px;
+    padding-right: 0;
+    padding-left: 20px;
+  }
+}
+
 .guest-container {
   background: #001848;
   padding: 70px 30px;
@@ -690,6 +1126,103 @@
       max-width: 250px;
     }
 
+    /* ============================= */
+/* 👔 Section Pimpinan Departemen */
+/* ============================= */
+.ketdept-section {
+  background: #fff;
+  padding: 40px 8%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ketdept-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.ketdept-slide {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  gap: 2rem;
+  will-change: transform;
+}
+
+.ketdept-card {
+  flex: 0 0 calc(25% - 2rem); /* tampil 4 foto sekaligus */
+  text-align: center;
+}
+
+.ketdept-card img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover; /* biar otomatis crop */
+  border: 3px solid #FFD700;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ketdept-card img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.ketdept-card h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #8b0000;
+  margin-bottom: 5px;
+}
+
+.ketdept-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Tombol navigasi */
+.ketdept-prev, .ketdept-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #8b0000;
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s;
+  bottom: auto;
+}
+
+.ketdept-prev:hover, .ketdept-next:hover {
+  color: #FFD700;
+}
+
+.ketdept-prev { left: 10px; }
+.ketdept-next { right: 10px; }
+
+/* Responsif */
+@media (max-width: 992px) {
+  .ketdept-card {
+    flex: 0 0 calc(33.33% - 1rem); /* tampil 3 foto */
+  }
+}
+
+@media (max-width: 768px) {
+  .ketdept-card {
+    flex: 0 0 calc(50% - 1rem); /* tampil 2 foto */
+  }
+}
+
+@media (max-width: 480px) {
+  .ketdept-card {
+    flex: 0 0 100%; /* tampil 1 foto */
+  }
+}
+
 /* === Tabs === */
 .sej-tabs {
   display: flex;
@@ -729,6 +1262,8 @@
   padding: 30px 20px;
   border-radius: 15px 15px 15px 15px; /* sudut bawah melengkung */
   text-align: center;
+  margin: 0% auto 40px auto; /* tengah dan beri jarak bawah */
+  max-width: 1200px; /* biar nggak terlalu melebar */
 }
 
 .sej-tab-content.active {
@@ -738,15 +1273,33 @@
 /* === Staff Cards === */
 .sej-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-  gap: 30px; /* jarak antar card */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsif */
+  gap: 40px; /* jarak antar card */
   justify-content: center; /* biar baris terakhir selalu di tengah */
   justify-items: center; /* isi tiap card rata tengah */
   max-width: 1100px; /* biar nggak terlalu melebar */
-  margin: 0 auto;
-  padding: 20px 10px;
+  margin: 10px auto 10px auto; /* tengahin grid */ 
+  padding: 10px 10px;
 }
 
+/* Tambahkan batasan khusus untuk layar kecil */
+@media (max-width: 768px) {
+  .sej-card-grid {
+    grid-template-columns: repeat(2, 1fr); /* maksimal 2 kolom */
+    gap: 20px; /* jarak antar card lebih rapat */
+  margin: 10px auto 10px auto; /* tengahin grid */ 
+  padding: 10px 10px;
+  }
+}
+
+/* Untuk layar sangat kecil (HP kecil) jadi 1 kolom */
+@media (max-width: 480px) {
+  .sej-card-grid {
+    grid-template-columns: 1fr;
+  margin: 10px auto 10px auto; /* tengahin grid */ 
+  padding: 10px 10px;
+  }
+}
 .sej-staff-card {
   text-align: center;
   width: 200px; /* biar proporsional, semua seragam */
@@ -791,28 +1344,43 @@
   display: inline-block; /* biar panjang sesuai teks */
   margin-bottom: 20px;
 }
-
-/* === Responsive Breakpoints === */
+/* === Responsive Fix untuk Halaman Sejarah === */
 @media (max-width: 992px) {
-  .sej-card-grid {
-    grid-template-columns: repeat(3, 1fr); /* tablet: 3 kolom */
-    max-width: 900px;
+  .sej-division {
+    display: flex;
+    flex-direction: column; /* biar tiap blok isi turun ke bawah */
+    align-items: center; /* biar tengah */
+    text-align: center;
+  }
+
+  .sej-division .guest-ketua-card {
+    margin-bottom: 1.5rem; /* beri jarak antar card */
+  }
+
+  .sej-division-title {
+    text-align: center; /* judul tengah */
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
-  .sej-card-grid {
-    grid-template-columns: repeat(2, 1fr); /* hp besar: 2 kolom */
-    max-width: 600px;
+  .sej-division {
+    padding: 0 15px; /* biar gak nempel tepi layar */
+  }
+
+  .sej-division .sej-division-title {
+    font-size: 1rem;
+  }
+
+  .sej-staff-card img {
+    max-width: 120px; /* biar gambar kecil rapi */
+  }
+
+  .sej-staff-card h4 {
+    font-size: 0.95rem;
   }
 }
 
-@media (max-width: 480px) {
-  .sej-card-grid {
-    grid-template-columns: 1fr; /* hp kecil: 1 kolom */
-    max-width: 300px;
-  }
-}
 
 /* CSS Ketua */
 .guest-ketua-card img {
@@ -926,6 +1494,58 @@
   justify-content: center; /* biar baris selalu mulai dari tengah */
 }
 
+/* === GALLERY PAGINATION (TRANSPARAN) === */
+.guest-galery-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 30px;
+  padding: 10px 0;
+  background: transparent; /* 💡 transparan */
+}
+
+.guest-galery-pagination button {
+  background-color: #FFD700;
+  color: #0B2A7D;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.guest-galery-pagination button:hover {
+  background-color: #0B2A7D;
+  color: #FFD700;
+}
+
+.guest-galery-pages {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.guest-galery-page {
+  background: transparent;
+  border: 2px solid #0B2A7D;
+  color: #0B2A7D;
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.guest-galery-page.active {
+  background-color: #FFD700;
+  color: #0B2A7D;
+  border-color: #FFD700;
+}
 
 /* Mode 5 kolom */
 .guest-galery-grid-5 .guest-galery-item {
@@ -959,12 +1579,27 @@
   }
 }
 
+.guest-galery-item {
+  overflow: hidden; 
+  border-radius: 10px;
+  display: block; 
+}
+
 .guest-galery-item img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
+  object-fit: cover; 
+  object-position: center; 
+  border-radius: 10px;
   transition: transform 0.3s ease;
+}
+/* --- Tinggi gambar untuk mode SEMUA (5 kolom) --- */
+.guest-galery-grid-5 .guest-galery-item img {
+  height: 150px; /* tinggi gambar utk mode semua */
+}
+
+/* --- Tinggi gambar untuk mode PER KATEGORI (3 kolom) --- */
+.guest-galery-grid-3 .guest-galery-item img {
+  height: 220px; /* tinggi gambar utk per kategori */
 }
 
 .guest-galery-item img:hover {
@@ -1371,7 +2006,7 @@
 
 .guest-artikel-detail-image img {
   width: 100%;
-  height: 500px;        /* tinggi seragam, ubah sesuai kebutuhan */
+  height: 400px;        /* tinggi seragam, ubah sesuai kebutuhan */
   object-fit: cover;    /* crop gambar agar proporsional */
   border-radius: 8px;
 }
@@ -1450,6 +2085,17 @@
   }
   .guest-artikel-detail-sidebar {
     margin-top: 20px;
+  }
+  
+  .guest-artikel-detail-image {
+    position: relative;
+  }
+
+  .guest-artikel-detail-image img {
+    width: 100%;
+    height: 250px;        /* tinggi seragam, ubah sesuai kebutuhan */
+    object-fit: cover;    /* crop gambar agar proporsional */
+    border-radius: 8px;
   }
 }
 

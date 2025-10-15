@@ -28,28 +28,7 @@
         <button class="guest-carousel-next">&#10095;</button>
     </div>
 
-    <!-- SHAPE MERAH MENUMPUK -->
-    <div class="guest-carousel-overlay">
-        <div class="guest-overlay-text">
-            <h3>Innovation for Efficiency<br>and Sustainability</h3>
-        </div>
-        <div class="guest-overlay-icons">
-            <div class="guest-icon-item">
-                <img src="img/icon1.png" alt="Pendaftaran">
-                <p>Pendaftaran</p>
-            </div>
-            <div class="guest-icon-item">
-                <img src="img/icon2.png" alt="Program Studi">
-                <p>Program Studi</p>
-            </div>
-            <div class="guest-icon-item">
-                <img src="img/icon3.png" alt="Divisi">
-                <p>Divisi</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
+        <script>
         const slides = document.querySelectorAll('.guest-carousel-slide');
         const prevBtn = document.querySelector('.guest-carousel-prev');
         const nextBtn = document.querySelector('.guest-carousel-next');
@@ -75,6 +54,120 @@
             showSlide(currentSlide);
         }, 5000);
     </script>
+
+    <!-- SHAPE MERAH MENUMPUK -->
+    <!-- <div class="guest-carousel-overlay">
+        <div class="guest-overlay-text">
+            <h3>Innovation for Efficiency<br>and Sustainability</h3>
+        </div>
+        <div class="guest-overlay-icons">
+            <div class="guest-icon-item">
+                <img src="img/icon1.png" alt="Pendaftaran">
+                <p>Pendaftaran</p>
+            </div>
+            <div class="guest-icon-item">
+                <img src="img/icon2.png" alt="Program Studi">
+                <p>Program Studi</p>
+            </div>
+            <div class="guest-icon-item">
+                <img src="img/icon3.png" alt="Divisi">
+                <p>Divisi</p>
+            </div>
+        </div>
+    </div> -->
+    <!-- ====== SECTION MENU KOTAK (RESPONSIF & BISA SLIDE) ====== -->
+    <section class="guest-menu-section py-5">
+      <div class="container position-relative">
+
+        <!-- Panah kiri -->
+        <button class="guest-menu-prev">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <!-- Panah kanan -->
+        <button class="guest-menu-next">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <!-- Wrapper scroll -->
+        <div class="guest-menu-wrapper">
+          <div class="guest-menu-slide">
+            <!-- Pendaftaran -->
+            <a href="/pendaftaran" class="guest-menu-card">
+              <img src="img/icon1.png" alt="Pendaftaran">
+              <p>Pendaftaran</p>
+            </a>
+            <!-- Program Studi -->
+            <a href="/program-studi" class="guest-menu-card">
+              <img src="img/icon2.png" alt="Program Studi">
+              <p>Program Studi</p>
+            </a>
+            <!-- Divisi -->
+            <a href="/divisi" class="guest-menu-card">
+              <img src="img/icon3.png" alt="Divisi">
+              <p>Divisi</p>
+            </a>
+            <!-- Pendaftaran -->
+            <a href="/layananakademik" class="guest-menu-card">
+              <img src="img/icon4.png" alt="sistadhh">
+              <p>SISTA DHH</p>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const slide = document.querySelector(".guest-menu-slide");
+      const cards = document.querySelectorAll(".guest-menu-card");
+      const nextBtn = document.querySelector(".guest-menu-next");
+      const prevBtn = document.querySelector(".guest-menu-prev");
+
+      let index = 0;
+
+      // Gandakan isi slide (buat efek loop tanpa jeda)
+      slide.innerHTML += slide.innerHTML;
+      const totalCards = slide.querySelectorAll(".guest-menu-card");
+      const cardCount = cards.length;
+
+      function updateSlide() {
+        const cardWidth = totalCards[0].offsetWidth + 16; // lebar + gap
+        slide.style.transform = `translateX(-${index * cardWidth}px)`;
+      }
+
+      nextBtn.addEventListener("click", () => {
+        index++;
+        updateSlide();
+
+        // reset posisi biar mulus (loop tanpa kedip)
+        if (index >= cardCount) {
+          setTimeout(() => {
+            slide.style.transition = "none";
+            index = 0;
+            updateSlide();
+            void slide.offsetWidth; // reflow
+            slide.style.transition = "transform 0.4s ease-in-out";
+          }, 400);
+        }
+      });
+
+      prevBtn.addEventListener("click", () => {
+        index--;
+        if (index < 0) {
+          slide.style.transition = "none";
+          index = cardCount - 1;
+          updateSlide();
+          void slide.offsetWidth; // reflow
+          slide.style.transition = "transform 0.4s ease-in-out";
+        }
+        updateSlide();
+      });
+
+      window.addEventListener("resize", updateSlide);
+    });
+  </script>
 
 <!-- <section class="guest-about-section"> -->
 <section class="guest-galery-section">
@@ -113,8 +206,12 @@
         });
     </script>
 
-    <!-- <section class="guest-blog-section"> -->
+<!-- Artikel -->
+
 <section class="guest-galery-section">
+  
+<h3 class="guest-pend-section-title">Artikel</h3>
+<img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
   <div class="guest-blog-grid">
     <!-- Featured (besar) -->
     <div class="guest-blog-card guest-featured">
@@ -180,100 +277,58 @@
   </div>
 </section>
 
+<!-- Gallery -->
 <section class="guest-galery-section">
-
-
-  <!-- Gallery -->
-  <h2 class="guest-galery-title">Gallery</h2>
-  <p class="guest-galery-desc">
-    Sebagaimana hutan menyimpan jejak kehidupan, galeri ini menyimpan jejak langkah kami dalam berkegiatan, belajar, dan tumbuh bersama.
-  </p>
-
-    <!-- Filter -->
-    <ul class="guest-galery-filters">
-      <li class="guest-galery-filter active" data-filter="all">Semua</li>
-      <li class="guest-galery-filter" data-filter="akademik">Akademik</li>
-      <li class="guest-galery-filter" data-filter="sdgs">SDGS</li>
-      <li class="guest-galery-filter" data-filter="prestasi">Prestasi</li>
-      <li class="guest-galery-filter" data-filter="fasilitas">Fasilitas</li>
-      <li class="guest-galery-filter" data-filter="kegiatan">Kegiatan</li>
-    </ul>
+  <h3 class="guest-pend-section-title">Gallery</h3>
+  <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
 
     <!-- Grid Foto -->
     <div class="guest-galery-grid guest-galery-grid-5">
-
-    <div class="guest-galery-item" data-category="akademik">
-        <img src="img/bglogin.jpg" alt="Akademik">
-    </div>
-    <div class="guest-galery-item" data-category="sdgs">
-        <img src="img/bglogin.jpg" alt="SDGS">
-    </div>
-    <div class="guest-galery-item" data-category="prestasi">
-        <img src="img/bglogin.jpg" alt="Prestasi">
-    </div>
-    <div class="guest-galery-item" data-category="fasilitas">
-        <img src="img/bglogin.jpg" alt="Fasilitas">
-    </div>
-    <div class="guest-galery-item" data-category="kegiatan">
-        <img src="img/bglogin.jpg" alt="Kegiatan">
-    </div>
-    <div class="guest-galery-item" data-category="akademik">
-        <img src="img/bglogin.jpg" alt="Akademik">
-    </div>
-        <div class="guest-galery-item" data-category="kegiatan">
-        <img src="img/bglogin.jpg" alt="Kegiatan">
-    </div>
-    <div class="guest-galery-item" data-category="akademik">
-        <img src="img/bglogin.jpg" alt="Akademik">
-    </div>
-    <div class="guest-galery-item" data-category="akademik">
-        <img src="img/bglogin.jpg" alt="Akademik">
-    </div>
-    <div class="guest-galery-item" data-category="akademik">
-        <img src="img/bglogin.jpg" alt="Akademik">
-    </div>
+      <div class="guest-galery-item" data-category="akademik">
+          <img src="img/bglogin.jpg" alt="Akademik">
+      </div>
+      <div class="guest-galery-item" data-category="sdgs">
+          <img src="img/bglogin.jpg" alt="SDGS">
+      </div>
+      <div class="guest-galery-item" data-category="prestasi">
+          <img src="img/bglogin.jpg" alt="Prestasi">
+      </div>
+      <div class="guest-galery-item" data-category="fasilitas">
+          <img src="img/bglogin.jpg" alt="Fasilitas">
+      </div>
+      <div class="guest-galery-item" data-category="kegiatan">
+          <img src="img/bglogin.jpg" alt="Kegiatan">
+      </div>
+      <div class="guest-galery-item" data-category="akademik">
+          <img src="img/bglogin.jpg" alt="Akademik">
+      </div>
+          <div class="guest-galery-item" data-category="kegiatan">
+          <img src="img/bglogin.jpg" alt="Kegiatan">
+      </div>
+          <div class="guest-galery-item" data-category="kegiatan">
+          <img src="img/bglogin.jpg" alt="Kegiatan">
+      </div>
+      <div class="guest-galery-item" data-category="akademik">
+          <img src="img/bglogin.jpg" alt="Akademik">
+      </div>
+          <div class="guest-galery-item" data-category="kegiatan">
+          <img src="img/bglogin.jpg" alt="Kegiatan">
+      </div>
+      
+      <!-- Tombol Lihat Selengkapnya -->
+      <div class="d-flex justify-content-end mt-3">
+        <a href="/gallery" class="btn-see-more">Lihat Selengkapnya →</a>
+      </div>
     </div>
 </section>
-<script>
-  const filters = document.querySelectorAll(".guest-galery-filter");
-  const items = document.querySelectorAll(".guest-galery-item");
-  const grid = document.querySelector(".guest-galery-grid");
 
-  filters.forEach(filter => {
-    filter.addEventListener("click", () => {
-      filters.forEach(f => f.classList.remove("active"));
-      filter.classList.add("active");
-
-      const category = filter.dataset.filter;
-
-      // ubah layout grid
-      if (category === "all") {
-        grid.classList.remove("guest-galery-grid-3");
-        grid.classList.add("guest-galery-grid-5");
-      } else {
-        grid.classList.remove("guest-galery-grid-5");
-        grid.classList.add("guest-galery-grid-3");
-      }
-
-      // filter item
-      items.forEach(item => {
-        if (category === "all" || item.dataset.category === category) {
-          item.classList.remove("hidden");
-        } else {
-          item.classList.add("hidden");
-        }
-      });
-    });
-  });
-
-</script>
 
 <!-- Alumni Testimonial Section -->
 
 <section class="guest-galery-section">
-      <h3 class="guest-pend-section-title">Gallery
+      <h3 class="guest-pend-section-title">Apa Kata Alumni?</h3>
       <img src="img/batasgold.png" class="guest-pend-divider" alt="divider">
-      </h3>
+      
     <div id="guestAlumniCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
 
       <!-- Carousel Indicators -->
@@ -365,7 +420,7 @@
 
         <!-- Testimonial 3 -->
         <div class="carousel-item">
-          <div class="p-4 guest-rounded-8 text-white bg-opacity-75"
+          <div class="p-4 guest-rounded-8 text-white bg-opacity-55"
             style="background: url('img/bgalumni.jpg') center center / cover no-repeat;">
             <div class="row align-items-center">
               <div class="col-md-3 text-center mb-3 mb-md-0">
@@ -408,11 +463,12 @@
 </section>
 
 <!-- Program Studi Accordion -->
-<section class="guest-galery-section">
-  <div class="container guest-container">
-    <div class="row">
-      <div class="col-md-4 mb-4 guest-title">
-        <h5 class="fw-bold">Program Studi</h5>
+<section class="guest-prodi-section">
+  <div class="guest-prodi-container container">
+    <div class="row align-items-center">
+      <!-- Kiri -->
+      <div class="col-md-4 text-white">
+        <h6 class="text-warning fw-bold">Program Studi</h6>
         <h2 class="fw-bold">Departemen<br>Hasil Hutan</h2>
       </div>
       <div class="col-md-8">
