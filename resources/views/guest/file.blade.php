@@ -7,14 +7,15 @@
       <a href="#">Home</a> / <span>Layanan Akademik</span>
     </div>
 <body>
+  
+  <h3 class="guest-pend-section-title"></h3>
   <!-- Header -->
-  <div class="container my-5 text-center">
-    <h2 class="fw-bold guest-dc-title">
-      Formulir Layanan Akademik
-    </h2>
-    <hr class="guest-dc-underline mx-auto">
-  </div>
+    <div class="judul-tengah">
+      <h3 class="judul-tengah-title">Layanan Akademik</h3>
+      <img src="{{ asset('img/batasgold.png') }}" alt="divider" class="judul-tengah-divider">
+    </div>
 
+    
   <!-- Card Section -->
   <div class="container guest-dc-footer-space">
     <div class="row g-4">
@@ -88,7 +89,9 @@
           </div>
         </div>
       </div>
-
+</div>
+  </div>
+  
 
 @endsection
 
