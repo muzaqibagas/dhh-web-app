@@ -259,9 +259,11 @@ Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::clas
 Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
 Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
 Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
+Route::get('/undangankolokium/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
 
 // Undangan Kolokium
 Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
+
 
 // Seminar Mahasiswa form
 Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');

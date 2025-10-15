@@ -190,10 +190,10 @@
             <h5>Surat Undangan Seminar</h5>
           </div>
         </a>
-        <a href="{{route('undangansidang.index')}}" class="text-decoration-none">
+        <a href="{{route('undangankomprehensif.index')}}" class="text-decoration-none">
           <div class="card danger">
             <i class="bi bi-bookmark"></i>
-            <h5>Surat Undangan Sidang</h5>
+            <h5>Surat Undangan Komprehensif</h5>
           </div>
         </a>
       </div>
