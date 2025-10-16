@@ -238,16 +238,13 @@
                                       <i class="bi bi-x-lg" style="font-size: 18px;"></i>
                                   </button>
                                 @elseif ($pendaftars->status == 'disetujui')
-                                  <span class="text-success fw-bold">Disetujui</span>
-                                @elseif ($pendaftars->status == 'ditolak')
-                                  <span class="text-danger fw-bold">Ditolak</span>
+                                  <span class="text-success fw-bold">Disetujui</span>                                
                                 @endif                                                                
                               </td>
                               <td>                                                                         
                                     <a href="{{ route('undangan.kolokium.pdf', $pendaftars->id) }}" class="btn btn-primary">Download PDF</a>                                                                
                               </td>
-                          </tr>
-                          <!-- Modal Setujui -->
+                          </tr>                          
                           <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -268,8 +265,7 @@
                               </div>
                             </div>
                           </div>
-
-                          <!-- Modal Tolak -->
+                          
                           <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
