@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class SyaratKolokiummhsController extends Controller
 {
@@ -54,10 +55,7 @@ class SyaratKolokiummhsController extends Controller
 
     public function downloadPdf($id)
     {
-        // 1️⃣ Ambil data syarat kolokium berdasarkan id
-        $syarat = SyaratKolokiummhs::with('mahasiswa')->findOrFail($id);
-
-        // 2️⃣ Ambil data kolokium yang sesuai dengan mahasiswa ini
+        $syarat = SyaratKolokiummhs::with(['mahasiswa', 'moderator'])->findOrFail($id);
         $kolokium = Kolokiummhs::with([
             'mahasiswa',
             'ruangan',
@@ -67,66 +65,67 @@ class SyaratKolokiummhsController extends Controller
         ])->where('id_mahasiswa', $syarat->id_mahasiswa)->first();
 
         if (!$kolokium) {
-            return back()->with('error', 'Data kolokium mahasiswa ini belum diinput.');
+            return back()->with('error', 'Mahasiswa ini belum melakukan pendaftaran Kolokium.');
         }
 
-        // 3️⃣ Siapkan template dan output path
         $template = public_path('undangan/templateundangankolokium.pdf');
         $outputPath = public_path('undangan/undangankolokium');
-        if (!file_exists($outputPath)) {
+        if (!file_exists($outputPath)) 
             mkdir($outputPath, 0777, true);
-        }
-
         $output = $outputPath . "/{$kolokium->nim}_undangankolokium.pdf";
 
-        // 4️⃣ Buat PDF dengan FPDI
         $pdf = new Fpdi();
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
         $pdf->useTemplate($tpl);
-
         $pdf->SetFont('Times', '', 12);
-
-        // --- Isi PDF berdasarkan layout template kamu ---
-        $pdf->SetXY(15, 105);
-        $pdf->Cell(10, 6, '1', 0, 0, 'C'); // Nomor urut
-
-        $pdf->SetXY(23, 105);                
-        $pdf->MultiCell(32, 6, $kolokium->mahasiswa->nama . "\n" . $kolokium->nim, 0, 'L');
         
+        Carbon::setLocale('id');
+        $tanggalCarbon = Carbon::parse($kolokium->tanggal);
+        $hari = ucfirst($tanggalCarbon->translatedFormat('l'));
+        $tanggal = $tanggalCarbon->translatedFormat('d F Y');         
+        $mulai = Carbon::parse($kolokium->waktu_mulai)->format('H.i');
+        $selesai = Carbon::parse($kolokium->waktu_selesai)->format('H.i');
+        
+        $tempat = ($kolokium->tipe_pelaksanaan === 'offline')
+            ? ($kolokium->ruangan->nama ?? '-')
+            : ($kolokium->link_meeting ?? '-');
+    
+        $moderator = $syarat->moderator->nama ?? '-';              
+
+        $pdf->SetXY(23, 105);
+        $pdf->MultiCell(32, 6, "{$kolokium->mahasiswa->nama} / {$kolokium->nim}", 0, 'L');
+    
         $pdf->SetXY(59, 105);
-        $pdf->MultiCell(32, 6, \Carbon\Carbon::parse($kolokium->tanggal)->translatedFormat('l, d F Y') . "\n");
-                                    
-        $pdf->SetXY(95, 105);
-        $namaRuangan = $kolokium->ruangan->nama ?? '-';
-        $waktu = $kolokium->waktu_mulai . ' - ' . $kolokium->waktu_selesai;        
-        $pdf->MultiCell(32, 6, $waktu . "\n" . $namaRuangan, 0, 'L');
-         
-        $pdf->SetXY(131, 105);
-        $pdf->MultiCell(65, 6,
-            $kolokium->judul_kolokium . "\n");
-         
-        $pdf->SetXY(131, 130);
-        $pdf->MultiCell(65, 6,
-            $kolokium->pembimbing1->nama . "\n");
+        $pdf->MultiCell(32, 6, "{$hari} /\n{$tanggal}", 0, 'L');
         
-        $pdf->SetXY(131, 150);
-        $pdf->MultiCell(65, 6,
-            $kolokium->pembimbing2->nama . "\n");
-
-        // --- Tanda tangan Sekretaris ---
+        $pdf->SetXY(95, 105);
+        $pdf->MultiCell(32, 6, "{$mulai} - {$selesai} WIB /\n{$tempat}", 0, 'L');
+        
+        $pdf->SetXY(131, 105);
+        $pdf->MultiCell(65, 6, $kolokium->judul_kolokium, 0, 'L');
+        
+        $pdf->SetXY(131, 130);
+        $pdf->MultiCell(65, 6, $kolokium->pembimbing1->nama ?? '-', 0, 'L');
+        
+        $pdf->SetXY(131, 148.8);
+        $pdf->MultiCell(65, 6, $kolokium->pembimbing2->nama ?? '-', 0, 'L');
+        
+        $pdf->SetXY(131, 168.3);
+        $pdf->MultiCell(65, 6, $moderator, 0, 'L');
+        
         $pdf->SetXY(125, 201.5);
-        $pdf->Cell(0, 6, now()->format('d F Y'), 0, 1, 'L');                
-        $pdf->SetXY(113, 229.5);
-        $pdf->Cell(0, 6, 'Nama Sekretaris', 0, 1, 'L');
-        $pdf->SetXY(120, 234.5);
-        $pdf->Cell(0, 6, '1234567890', 0, 1, 'L');
+        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');
+        // $pdf->SetXY(113, 229.5);
+        // $pdf->Cell(0, 6, 'Nama Sekretaris', 0, 1, 'L');
+        // $pdf->SetXY(120, 234.5);
+        // $pdf->Cell(0, 6, '1234567890', 0, 1, 'L');
 
         $pdf->Output($output, 'F');
-
         return response()->download($output);
     }
+
 
     /**
      * Show the form for creating a new resource.

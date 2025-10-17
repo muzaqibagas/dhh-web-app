@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\SyaratSeminarmhs;
+use App\Models\Seminarmhs;
 use App\Models\StaffDept;
 use App\Models\User;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class SyaratSeminarmhsController extends Controller
 {
@@ -49,6 +52,75 @@ class SyaratSeminarmhsController extends Controller
         $syarat->update(['status' => 'ditolak']);
 
         return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
+    }
+
+    public function downloadPdf($id)
+    {
+        $syarat = SyaratSeminarmhs::with(['mahasiswa', 'moderator'])->findOrFail($id);
+        $seminar = seminarmhs:: with([
+            'mahasiswa', 
+            'ruangan',
+            'semester',
+            'Pembimbing1', 
+            'Pembimbing2',
+        ])->where('id_mahasiswa', $syarat->id_mahasiswa)->first();
+
+        if (!$seminar) {
+            return redirect()->back()->with('error', 'Mahasiswa ini belum melakukan pendaftaran Seminar.');
+        }
+
+        $template = public_path('undangan/templateundanganseminar.pdf');
+        $outputPath = public_path('undangan/undanganseminar');
+        if (!file_exists($outputPath)) 
+            mkdir($outputPath, 0777, true);
+        $ouput = $outputPath . "/{$seminar->nim}_undanganseminar.pdf";  
+
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->setSourceFile($template);
+        $tpl = $pdf->importPage(1);
+        $pdf->useTemplate($tpl);
+        $pdf->SetFont('Times', '', 12);
+
+        Carbon::setLocale('id');
+        $tanggalCarbon = Carbon::parse($seminar->tanggal);
+        $hari = ucfirst($tanggalCarbon->translatedFormat('l')); 
+        $tanggal = $tanggalCarbon->translatedFormat('d F Y');
+        $mulai = Carbon::parse($seminar->waktu_mulai)->format('H.i');
+        $selesai = Carbon::parse($seminar->waktu_selesai)->format('H.i');
+
+        $tempat = ($seminar->tipe_pelaksanaan === 'offline')
+            ? ($seminar->ruangan?->nama_ruangan ?? '-')
+            : ($seminar->link_meeting ?? '-');
+
+        $moderator = $syarat->moderator?->nama ?? '-';
+
+        $pdf->SetXY(23, 105);
+        $pdf->MultiCell(32, 6, "{$seminar->mahasiswa->nama} / {$seminar->nim}", 0, 'L');
+
+        $pdf->SetXY(59, 105);
+        $pdf->MultiCell(32, 6, "{$hari} /\n{$tanggal}", 0, 'L');
+
+        $pdf->SetXY(95, 105);
+        $pdf->MultiCell(32, 6, "{$mulai} - {$selesai} WIB /\n{$tempat}", 0, 'L');
+
+        $pdf->SetXY(131, 105);
+        $pdf->MultiCell(65, 6, $seminar->judul_seminar, 0, 'L');
+
+        $pdf->SetXY(131, 130);
+        $pdf->MultiCell(65, 6, $seminar->pembimbing1?->nama ?? '-', 0, 'L');  
+
+        $pdf->SetXY(131, 148.8);
+        $pdf->MultiCell(65, 6, $seminar->pembimbing2?->nama ?? '-', 0, 'L');
+
+        $pdf->SetXY(131, 168.3);
+        $pdf->MultiCell(65, 6, $moderator, 0, 'L');        
+
+        $pdf->SetXY(125, 205);
+        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');        
+        
+        $pdf->Output($ouput, 'F');
+        return response()->download($ouput);
     }
 
     /**

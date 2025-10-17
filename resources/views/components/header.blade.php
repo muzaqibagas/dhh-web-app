@@ -19,6 +19,34 @@
         <img src="{{ asset('img/dhhputih.png') }}" alt="DHH Logo">
     </div>
 
+    <!-- BURGER MENU (muncul cuma di layar kecil) -->
+    <div class="burger-menu d-md-none">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- SIDEBAR NAV (versi mobile) -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+      <div class="sidebar-header">
+        <span class="close-btn">&times;</span>
+        <img src="{{ asset('img/dhhputih.png') }}" alt="DHH Logo" class="sidebar-logo">
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="/home">Beranda</a></li>
+        <li><a href="/sejarah">Departemen</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Pendidikan</a>
+          <ul class="dropdown-menu">
+            <li><a href="/pendidikans1">Sarjana/S1</a></li>
+            <li><a href="/pendidikans2">Magister/S2</a></li>
+            <li><a href="/pendidikans3">Doktor/S3</a></li>
+          </ul>
+        </li>
+        <li><a href="/alumni">Alumni</a></li>
+        <li><a href="/artikelguest">Artikel</a></li>
+        <li><a href="/gallery">Gallery</a></li>
+      </ul>
+    </div>
+
     <!-- RIGHT MENU -->
     <nav class="navbar">
       <ul class="nav-menu d-flex">
@@ -42,4 +70,26 @@
     </nav>
 
   </div>
+  <script>
+  const burger = document.querySelector('.burger-menu');
+  const sidebar = document.getElementById('mobileSidebar');
+  const closeBtn = document.querySelector('.close-btn');
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+  burger.addEventListener('click', () => {
+    sidebar.classList.add('active');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+  });
+
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', e => {
+      e.preventDefault();
+      toggle.parentElement.classList.toggle('active');
+    });
+  });
+</script>
+
 </header>

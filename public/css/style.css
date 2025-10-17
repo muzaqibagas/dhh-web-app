@@ -359,3 +359,91 @@ textarea, input, select {
   }
 }
 
+/* ===== BURGER BUTTON ===== */
+.burger-menu {
+  display: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== SIDEBAR MENU (untuk mobile) ===== */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  right: -270px; /* posisi tertutup */
+  width: 250px;
+  height: 100%;
+  background-color: #002b60;
+  color: #fff;
+  transition: right 0.3s ease;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.mobile-sidebar.active {
+  right: 0; /* muncul */
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.sidebar-logo {
+  width: 140px;
+}
+
+.close-btn {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Menu item */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin: 15px 0;
+}
+
+.sidebar-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  transition: color 0.2s;
+}
+
+.sidebar-menu a:hover {
+  color: #ffd100;
+}
+
+/* Dropdown di sidebar */
+.sidebar-menu .dropdown-menu {
+  display: none;
+  list-style: none;
+  padding-left: 15px;
+}
+
+.sidebar-menu .dropdown.active .dropdown-menu {
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .burger-menu {
+    display: block;
+  }
+
+  /* Sembunyikan menu utama */
+  .navbar {
+    display: none !important;
+  }
+}

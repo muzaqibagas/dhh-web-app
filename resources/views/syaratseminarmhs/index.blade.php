@@ -186,7 +186,8 @@
                               <th class="text-center align-middle" style="width: 13%;">Bukti 110 SKS</th>
                               <th class="text-center align-middle" style="width: 13%;">Bukti SPP</th>
                               <th class="text-center align-middle" style="width: 13%;">Kartu Kehadiran</th>
-                              <th class="text-center align-middle" style="width: 13%;">Verifikasi</th>
+                              <th class="text-center align-middle" style="width: 13%;">Verifikasi</th>                              
+                              <th class="text-center align-middle" style="width: 13%;">Undangan</th>                              
                           </tr>
                       </thead>
                       <tbody>
@@ -222,25 +223,69 @@
                                 @endif
                               </td>
                               <td>     
-                                 @if ($pendaftars->status == 'pending')                           
-                                  <form action="{{ route('syaratseminarmhs.setujui', $pendaftars->id) }}" method="POST" class="d-inline">
-                                      @csrf
-                                      <button type="submit" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                        <i class="bi bi-check-lg" style="font-size: 18px;"></i>
-                                      </button>
-                                  </form>                                       
-                                  
-                                  <form action="{{ route('syaratseminarmhs.tolak', $pendaftars->id) }}" method="POST" class="d-inline">
-                                      @csrf
-                                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                          <i class="bi bi-x-lg" style="font-size: 18px;"></i>
-                                      </button>
-                                  </form>
+                                @if ($pendaftars->status == 'pending')                           
+                                  <button type="button" class="btn btn-success btn-sm"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#modalSetujui{{ $pendaftars->id }}"
+                                          style="width: 30px; height: 30px; padding: 0;">
+                                      <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalTolak{{ $pendaftars->id }}"
+                                        style="width: 30px; height: 30px; padding: 0;">
+                                    <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                                </button>
                                 @elseif ($pendaftars->status == 'disetujui')
                                   <span class="text-success fw-bold">Disetujui</span>
                                 @endif
                               </td>
+                              <td>
+                                <a href="{{ route('undangan.seminar.pdf', $pendaftars->id) }}" class="btn btn-primary">Download PDF</a>                              
+                              </td>
                           </tr>
+                          <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header bg-success text-white">
+                                  <h5 class="modal-title" id="modalSetujuiLabel{{ $pendaftars->id }}">Konfirmasi Persetujuan</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                </div>
+                                <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                                  <i class="bi bi-emoji-smile-fill text-success" style="font-size: 4rem;"></i>
+                                  <div>Apakah Anda yakin ingin <strong>menyetujui</strong> pendaftaran seminar atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
+                                </div>                
+                                <div class="modal-footer justify-content-center">                
+                                  <form action="{{ route('syaratseminarmhs.setujui', $pendaftars->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Ya, Setujui</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                  <h5 class="modal-title" id="modalTolakLabel{{ $pendaftars->id }}">Konfirmasi Penolakan</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                </div>
+                                <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                                  <i class="bi bi-emoji-frown-fill text-danger" style="font-size: 4rem;"></i>                                  
+                                  <div>Apakah Anda yakin ingin <strong>menolak</strong> pendaftaran seminar atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
+                                </div>
+                                <div class="modal-footer justify-content-center">                                  
+                                  <form action="{{ route('syaratseminarmhs.tolak', $pendaftars->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Ya, Tolak</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           @endforeach
                       </tbody>
                   </table>
