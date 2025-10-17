@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SyaratKomprehensifmhs;
+use App\Models\Komprehensifmhs;
 use App\Models\StaffDept;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,6 +51,11 @@ class SyaratKomprehensifmhsController extends Controller
 
         return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
     }    
+
+    public function downloadPdf($id)
+    {
+
+    }
 
     /**
      * Show the form for creating a new resource.
