@@ -57,4 +57,9 @@ class Controller extends BaseController
     {
         return view('guest.alumnikami');    
     }
+
+    public function staffdetail()
+    {
+        return view('guest.staffdetail');    
+    }
 }

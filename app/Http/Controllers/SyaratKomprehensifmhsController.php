@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class SyaratKomprehensifmhsController extends Controller
 {
@@ -54,8 +55,88 @@ class SyaratKomprehensifmhsController extends Controller
 
     public function downloadPdf($id)
     {
+        $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji'])->findOrFail($id);
+        $komprehensif = Komprehensifmhs::with([
+            'mahasiswa',
+            'ruangan',
+            'semester',
+            'pembimbing1',
+            'pembimbing2',
+        ])->where('id_mahasiswa', $syarat->id_mahasiswa)->first();
 
+        if (!$komprehensif) {
+            return back()->with('error', 'Mahasiswa ini belum melakukan pendaftaran Komprehensif.');
+        }
+
+        $template = public_path('undangan/templateundangankomprehensif.pdf');
+        $outputPath = public_path('undangan/undangankomprehensif');
+        if (!file_exists($outputPath))
+            mkdir($outputPath, 0777, true);
+        $output = $outputPath . "/{$komprehensif->nim}_undangankomprehensif.pdf";
+
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->setSourceFile($template);
+        $tpl = $pdf->importPage(1);
+        $pdf->useTemplate($tpl);
+        $pdf->SetFont('Times', '', 12);
+
+        Carbon::setLocale('id');
+        $tanggalCarbon = Carbon::parse($komprehensif->tanggal);
+        $hari = ucfirst($tanggalCarbon->translatedFormat('l'));
+        $tanggal = $tanggalCarbon->translatedFormat('d F Y');
+        $mulai = Carbon::parse($komprehensif->waktu_mulai)->format('H.i');
+        $selesai = Carbon::parse($komprehensif->waktu_selesai)->format('H.i');
+
+        $tempat = ($komprehensif->tipe_pelaksanaan === 'offline')
+            ? ($komprehensif->ruangan->nama ?? '-')
+            : ($komprehensif->link_meeting ?? '-');
+
+        $moderator = $syarat->moderator->nama ?? '-';
+        $penguji = $syarat->penguji->nama ?? '-';
+
+        $pdf->SetXY(99,71.5);
+        $pdf->MultiCell(86, 5, $komprehensif->pembimbing1->nama ?? '-', 0, 'L');
+
+        
+        $pdf->SetXY(99,76.5);
+        $pdf->MultiCell(86, 5, $komprehensif->pembimbing2->nama ?? '-', 0, 'L');
+
+        $pdf->SetXY(99,91);
+        $pdf->MultiCell(86, 5.5, $penguji, 0, 'L');
+
+        $pdf->SetXY(99,96);
+        $pdf->MultiCell(86, 5.5, $moderator, 0, 'L');
+
+        $pdf->SetXY(79,129.3);
+        $pdf->MultiCell(106, 5.5, $komprehensif->mahasiswa->nama ?? '-', 0, 'L');
+
+        $pdf->SetXY(79,137);
+        $pdf->MultiCell(106, 5.5, $komprehensif->nim ?? '-', 0, 'L');
+
+        $pdf->SetXY(79,142);
+        $pdf->MultiCell(106, 5.5, $komprehensif->judul_tugasakhir, 0, 'L');
+        
+        $pdf->SetXY(79,160.3);
+        $pdf->MultiCell(106, 5.5, "{$hari} / {$tanggal}", 0, 'L');
+        
+        $pdf->SetXY(79,168);
+        $pdf->MultiCell(106, 5.5, "{$mulai} - {$selesai} WIB", 0, 'L');
+        
+        $pdf->SetXY(79,176);
+        $pdf->MultiCell(106, 5.5, $tempat, 0, 'L');
+
+        $pdf->SetXY(126, 206.5);
+        $pdf->MultiCell(58, 5.5, now()->translatedFormat('d F Y'), 0, 'L');
+
+        $pdf->Output($output, 'F');
+        return response()->download($output);
     }
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -144,58 +225,35 @@ class SyaratKomprehensifmhsController extends Controller
     {
         $nim = $syaratKomprehensifmhs->mahasiswa->nim;
         $listModerator = StaffDept::all();
+        $penguji = StaffDept::all();
 
         $formulirPath = $syaratKomprehensifmhs->formulir;
         $ext = pathinfo($formulirPath, PATHINFO_EXTENSION);
 
-        return view('syaratkomprehensifmhs.moderator', compact('syaratKomprehensifmhs', 'listModerator', 'nim', 'formulirPath', 'ext'));
+        return view('syaratkomprehensifmhs.moderator', compact('syaratKomprehensifmhs', 'listModerator', 'penguji', 'nim', 'formulirPath', 'ext'));
     }
 
     public function tambahModerator(Request $request, SyaratKomprehensifmhs $syaratKomprehensifmhs)
     {
         $request->validate([
-            'moderator' => 'required|string|max:255'
+            'moderator' => 'required|string|max:255',
+            'penguji' => 'required|string|max:255'
         ]);
 
         $nim = $syaratKomprehensifmhs->mahasiswa->nim;        
+        $nama = $syaratKomprehensifmhs->mahasiswa->nama;        
         $moderatorId = $request->moderator;
+        $pengujiId = $request->penguji;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
+        $penguji = StaffDept::findOrFail($pengujiId)->nama;
 
         $syaratKomprehensifmhs->update([
-            'id_moderator' => $moderatorId
-        ]);
-
-        $source = public_path($syaratKomprehensifmhs->formulir);
-        $outputDir = public_path('Syarat_Komprehensif/edited');
-
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0777, true);
-        }
-
-        $outputFile = "formulir_komprehensif_{$nim}_final.pdf";
-        $outputPath = $outputDir . '/' . $outputFile;
-
-        $pdf = new Fpdi();
-        $pageCount = $pdf->setSourceFile($source);
-
-        for ($i = 1; $i <= $pageCount; $i++) {
-            $pdf->AddPage();
-            $tpl = $pdf->importPage($i);
-            $pdf->useTemplate($tpl);
-
-            // Tambahkan nama moderator di halaman terakhir
-            if ($i === $pageCount) {
-                $pdf->SetFont('Times', '', 12);                
-
-                $pdf->SetXY(80,131); // posisi teks, sesuaikan jika perlu
-                $pdf->Write(5, $moderator);
-            }
-        }
-
-        $pdf->Output('F', $outputPath);        
+            'id_moderator' => $moderatorId,
+            'id_penguji' => $pengujiId
+        ]); 
         
-        return response()->download($outputPath);
+        return redirect()->back()->with('success', "Moderator {$moderator} dan Penguji {$penguji} berhasil ditambahkan untuk mahasiswa {$nama} ({$nim}).");
     }
 
     /**

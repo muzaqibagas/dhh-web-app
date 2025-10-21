@@ -11,6 +11,7 @@ class SyaratKomprehensifmhs extends Model
     protected $fillable = [
         'id_mahasiswa',
         'id_moderator',
+        'id_penguji',
         'formulir',
         'bukti_sks',
         'bukti_spp',
@@ -26,5 +27,10 @@ class SyaratKomprehensifmhs extends Model
     public function moderator()
     {
         return $this->belongsTo(StaffDept::class, 'id_moderator');
+    }
+    
+    public function penguji()
+    {
+        return $this->belongsTo(StaffDept::class, 'id_penguji');
     }
 }
