@@ -206,7 +206,7 @@
                             <!-- Button di bawah kanan -->
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-success">
-                                    Tambahkan & Download PDF Final
+                                    Simpan
                                 </button>
                             </div>
                         </div>

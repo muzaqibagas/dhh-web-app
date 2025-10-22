@@ -186,7 +186,7 @@
                         @endif
                     </div>
 
-                    <form action="{{ route('syaratkolokiummhs.tambahModerator' , $syara tKolokiummhs->id) }}" method="POST" class="row g-3">                    
+                    <form action="{{ route('syaratkolokiummhs.tambahModerator' , $syaratKolokiummhs->id) }}" method="POST" class="row g-3">                    
                         @csrf
                         <input type="hidden" name="nim" value="{{ $nim }}">                           
                         <div class="d-flex flex-column gap-3">    
