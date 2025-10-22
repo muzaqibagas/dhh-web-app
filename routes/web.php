@@ -71,6 +71,7 @@ Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery'
 Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
 Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
+Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
 
 Route::get('email/verify', function () {
     return view('auth.verify-email');
@@ -305,6 +306,8 @@ Route::post('syaratkomprehensifmhs/{id}/setujui', [SyaratKomprehensifmhsControll
 Route::post('syaratkomprehensifmhs/{id}/tolak', [SyaratKomprehensifmhsController::class, 'tolak'])->name('syaratkomprehensifmhs.tolak'); //syarat seminar admin
 Route::get('syaratkomprehensifmhs/{syaratKomprehensifmhs}', [SyaratKomprehensifmhsController::class, 'show'])->name('syaratkomprehensifmhs.show'); //syarat seminar admin
 Route::post('syaratkomprehensifmhs/{syaratKomprehensifmhs}/tambah-moderator', [SyaratKomprehensifmhsController::class, 'tambahModerator'])->name('syaratkomprehensifmhs.tambahModerator'); //syarat seminar admin
+Route::get('/undangankomprehensif/{id}/pdf', [SyaratkomprehensifmhsController::class, 'downloadPdf'])->name('undangan.komprehensif.pdf');
+
 
 // Undangan Komprehensif
 Route::get('undangankomprehensif', [UndanganKomprehensifController::class, 'index'])->name('undangankomprehensif.index');

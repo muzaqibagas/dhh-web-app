@@ -174,6 +174,27 @@
             <div class="adm-header">
                 <h2 class="adm-title">Preview PDF Komprehensif Ditandatangani</h2>
             </div>
+            {{-- Alert Success --}}
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+            @endif
+            {{-- Alert Error --}}
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+            @endif     
+            {{-- Alert Info --}}
+            @if(session('info'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                {{ session('info') }}
+            </div>
+            @endif    
             <div class="card shadow-sm">                   
                 <div class="card-body bg-light">
                     <strong class=" d-block mb-3 ">Formulir Tambah Dosen Moderator</strong>                     
@@ -191,12 +212,24 @@
                         <input type="hidden" name="nim" value="{{ $nim }}">                           
                         <div class="d-flex flex-column gap-3">    
                             <div class="col-12 col-md-8 d-flex align-items-center">
-                                <label for="moderator" class="form-label mb-0 w-50">Nama Dosen Moderator</label>:
+                                <label for="moderator" class="form-label mb-0 w-50 text-start">Nama Dosen Moderator</label><span style="margin-right: 8px;">: </span>
                                 <select name="moderator" id="moderator" class="form-control" required>
                                     <option value="">-- Pilih Moderator --</option>
                                     @foreach($listModerator as $dosen)
                                         <option value="{{ $dosen->id }}" 
                                             {{ $syaratKomprehensifmhs->id_moderator == $dosen->id ? 'selected' : '' }}>
+                                            {{ $dosen->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-8 d-flex align-items-center">
+                                <label for="penguji" class="form-label mb-0 w-50 text-start">Nama Dosen Penguji</label><span style="margin-right: 8px;">: </span>
+                                <select name="penguji" id="penguji" class="form-control" required>
+                                    <option value="">-- Pilih Penguji --</option>
+                                    @foreach($penguji as $dosen)
+                                        <option value="{{ $dosen->id }}" 
+                                            {{ $syaratKomprehensifmhs->id_penguji == $dosen->id ? 'selected' : '' }}>
                                             {{ $dosen->nama }}
                                         </option>
                                     @endforeach
@@ -227,6 +260,12 @@
     $('#moderator').select2({
       width: '100%',
       placeholder: "Pilih Moderator",
+      minimumInputLength: 4 
+    });
+    
+    $('#penguji').select2({
+      width: '100%',
+      placeholder: "Pilih Penguji",
       minimumInputLength: 4 
     });
   });
