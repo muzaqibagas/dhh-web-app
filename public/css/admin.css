@@ -140,33 +140,74 @@ body {
   margin-left: -35px;       /* geser 10px ke kiri */
   margin-bottom: 15px;
 }
+/* === SIDEBAR SIMPLE (tanpa rounded dan stroke warna) === */
+.sidebar {
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-height: calc(100vh - 50px);
+  padding: 10px 0;
+  margin-top: 2%;
+}
 
 .sidebar .menu {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 15px;
-  text-decoration: none;
+  justify-content: space-between;
+  padding: 10px 20px;
   color: #333;
-  border-radius: 20px;
-  margin-bottom: 12px;       /* ✅ tambah jarak antar button */
-  border: 2px solid #292E94; /* ✅ stroke untuk default */
-  background: #fff;          /* ✅ tetap putih default */
+  text-decoration: none;
+  font-size: 12px;
   font-weight: 500;
-  transition: 0.3s;
-}
-
-/* Aktif tetap full gradient */
-.sidebar .menu.active {
-  background: linear-gradient(to right, #721B29, #292E94);
-  color: #fff;
-  border: none; /* ✅ hilangkan stroke kalau aktif */
+  border-radius: 0;             /* ❌ no rounded */
+  border: none;                 /* ❌ no stroke */
+  background: transparent;      /* putih polos */
+  transition: background 0.2s ease, color 0.2s ease;
+  margin-top: 5%;
 }
 
 .sidebar .menu:hover {
-  background: linear-gradient(to right, #721B29, #292E94);
+  background: #f2f2f2;          /* abu muda hover */
+  color: #000;
+}
+
+.sidebar .menu.active {
+  background: #013880;          /* biru tua aktif */
   color: #fff;
 }
+
+.sidebar .menu i {
+  font-size: 16px;
+  color: #666;
+}
+
+.sidebar .menu.active i {
+  color: #fff;
+}
+
+/* === SUBMENU === */
+.submenu-link {
+  display: block;
+  padding: 8px 40px;            /* lebih masuk ke dalam */
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  transition: background 0.2s ease;
+}
+
+.submenu-link:hover {
+  background: #f2f2f2;
+  color: #013880;
+}
+
+.active-submenu {
+  background: #e6e6e6;
+  font-weight: 600;
+}
+
 
 .sidebar .menu.active i {
   color: #fff; /* ✅ kalau aktif jadi putih */
