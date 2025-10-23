@@ -16,10 +16,15 @@ return new class extends Migration
             $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_moderator')->nullable()->constrained('staff_depts')->onDelete('cascade');
             $table->string('formulir'); // file formulir kolokium
+            $table->text('alasan_formulir')->nullable();
             $table->string('bukti_sks'); // file bukti SKS
+            $table->text('alasan_bukti_sks')->nullable();
             $table->string('bukti_spp'); // file SPP
+            $table->text('alasan_bukti_spp')->nullable();
             $table->string('bukti_kehadiran'); // file kehadiran kolokium
-            $table->enum('status', ['belum_mendaftar', 'pending', 'disetujui', 'ditolak'])->default('belum_mendaftar');                 
+            $table->text('alasan_bukti_kehadiran')->nullable();
+            $table->enum('status', ['belum_mendaftar', 'pending', 'disetujui', 'ditolak'])->default('belum_mendaftar');
+            $table->enum('bap', ['belum_melaksanakan', 'diterima', 'ditolak'])->default('belum_melaksanakan');
             $table->timestamps();
         });
     }

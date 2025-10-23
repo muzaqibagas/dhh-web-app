@@ -292,7 +292,7 @@ class KolokiummhsController extends Controller
 
         $kolokiummhs->fill($data);
 
-        if (!$kolokummhs->isDirty()) {
+        if (!$kolokiummhs->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
         

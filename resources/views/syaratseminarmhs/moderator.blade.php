@@ -174,6 +174,27 @@
             <div class="adm-header">
                 <h2 class="adm-title">Preview PDF Seminar Ditandatangani</h2>
             </div>
+            {{-- Alert Success --}}
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">                
+                {!! session('success') !!}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+            @endif
+            {{-- Alert Error --}}
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+            @endif     
+            {{-- Alert Info --}}
+            @if(session('info'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                {{ session('info') }}
+            </div>
+            @endif    
             <div class="card shadow-sm">                   
                 <div class="card-body bg-light">
                     <strong class=" d-block mb-3 ">Formulir Tambah Dosen Moderator</strong>                     
