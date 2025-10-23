@@ -132,12 +132,7 @@ class SyaratKomprehensifmhsController extends Controller
         $pdf->Output($output, 'F');
         return response()->download($output);
     }
-
-
-
-
-
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -252,8 +247,9 @@ class SyaratKomprehensifmhsController extends Controller
             'id_moderator' => $moderatorId,
             'id_penguji' => $pengujiId
         ]); 
+                
+        return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> dan Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
         
-        return redirect()->back()->with('success', "Moderator {$moderator} dan Penguji {$penguji} berhasil ditambahkan untuk mahasiswa {$nama} ({$nim}).");
     }
 
     /**

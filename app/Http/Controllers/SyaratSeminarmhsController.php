@@ -220,47 +220,16 @@ class SyaratSeminarmhsController extends Controller
         ]);
 
         $nim = $syaratSeminarmhs->mahasiswa->nim;
+        $nama = $syaratSeminarmhs->mahasiswa->nama;
         $moderatorId = $request->moderator;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
         
         $syaratSeminarmhs->update([
             'id_moderator' => $moderatorId
-        ]);
-
-        $source = public_path($syaratSeminarmhs->formulir);
-        $outputDir = public_path("syarat_seminar/edited");
-
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0777, true);
-        }
-
-        $outputFile = "formulir_seminar_{$nim}_final.pdf";
-        $outputPath = $outputDir . '/' . $outputFile;
-
-        // Proses PDF
-        $pdf = new Fpdi();
-        $pageCount = $pdf->setSourceFile($source);
-
-        for ($i = 1; $i <= $pageCount; $i++) {
-            $pdf->AddPage();
-            $tpl = $pdf->importPage($i);
-            $pdf->useTemplate($tpl);
-
-            // Tambahkan nama moderator di halaman terakhir
-            if ($i === $pageCount) {
-                $pdf->SetFont('Times', '', 12);                
-
-                $pdf->SetXY(80,131); // posisi teks, sesuaikan jika perlu
-                $pdf->Write(5, $moderator);
-            }
-        }
-
-        // Simpan file hasil edit
-        $pdf->Output('F', $outputPath);        
-
-        // Download file final ke user
-        return response()->download($outputPath);    
+        ]);          
+                
+        return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
     }
 
     /**

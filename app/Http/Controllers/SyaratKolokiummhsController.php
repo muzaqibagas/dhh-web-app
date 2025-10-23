@@ -22,35 +22,53 @@ class SyaratKolokiummhsController extends Controller
         $listModerator = StaffDept::all();
         $pendaftar = SyaratKolokiummhs::with('mahasiswa')
             ->where('status', '!=', 'ditolak') 
+            ->where('bap', '!=', 'ditolak')
             ->get();
         return view('syaratkolokiummhs.index', compact('pendaftar', 'listModerator'));
     }
 
-    public function setujui($id)
+    public function setujui(Request $request, $id)
     {
         $syarat = SyaratKolokiummhs::findOrFail($id);
-        $syarat->update(['status' => 'disetujui']);
 
-        return redirect()->back()->with('success', 'Pendaftaran disetujui.');
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
+
+        $syarat->update([
+            'status' => 'disetujui',
+            'alasan_formulir' => null,
+            'alasan_bukti_sks' => null,
+            'alasan_bukti_spp' => null,
+            'alasan_bukti_kehadiran' => null,
+        ]);
+
+         return redirect()->back()->with('success', 'Syarat kolokium telah disetujui.');
     }
 
-    public function tolak($id)
+    public function tolak(Request $request, $id)
     {
-        $syarat = SyaratKolokiummhs::findOrFail($id);
+        $syarat = SyaratKolokiummhs::findOrFail($id);        
+        
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
 
-        $user = $syarat->mahasiswa; // pastikan relasi mahasiswa() ada
-        $folderName = $user->nama . '_' . $user->nim;
-        $folderPath = public_path('syarat_kolokium/' . $folderName);
-
-        // hapus folder beserta isinya
-        if (\File::exists($folderPath)) {
-            \File::deleteDirectory($folderPath);
-        }
-
-        // update status jadi ditolak
-        $syarat->update(['status' => 'ditolak']);
-
-        return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
+        $syarat->update([
+            'status' => 'ditolak',
+            'alasan_formulir' => $request->alasan_formulir,
+            'alasan_bukti_sks' => $request->alasan_bukti_sks,
+            'alasan_bukti_spp' => $request->alasan_bukti_spp,
+            'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
+        ]);
+        
+        return redirect()->back()->with('error', 'Syarat kolokium ditolak. Alasan penolakan telah disimpan.');
     }
 
     public function downloadPdf($id)
@@ -150,26 +168,28 @@ class SyaratKolokiummhsController extends Controller
             return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
         }
 
+        if ($existing && $existing->bap === 'ditolak' && !$request->hasFile('formulir')) {
+            return redirect()->back()->with('error', 'Silakan unggah ulang formulir anda belum melaksanakan kolokium.');
+        }
+
         $data = $request->validate([            
-            'formulir' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_sks' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_spp' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_kehadiran' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048',
+            'formulir' => 'required|mimes:pdf|max:2048',
+            'bukti_sks' => 'required|mimes:pdf|max:2048',
+            'bukti_spp' => 'required|mimes:pdf|max:2048',
+            'bukti_kehadiran' => 'required|mimes:pdf|max:2048',
         ]);
         
         $data = [
             'id_mahasiswa' => $mahasiswaId,
             'status' => 'pending',
+            'bap' => 'belum_melaksanakan',
         ];
 
-        // Ambil data user yang login
         $user = auth()->user(); 
-        $folderName = $user->nama . '_' . $user->nim; // contoh: Bagas_12345678
-
-        // Lokasi simpan di public/syarat_kolokium/Nama_NIM/
+        $folderName = $user->nama . '_' . $user->nim; 
+        
         $destinationPath = public_path('syarat_kolokium/' . $folderName);
-
-        // Bikin folder kalau belum ada
+        
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
@@ -209,6 +229,97 @@ class SyaratKolokiummhsController extends Controller
         return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
+    public function reupload(Request $request, $id)
+    {
+        $syarat = SyaratKolokiummhs::findOrFail($id);
+        $user = auth()->user();
+        $nim = $user->nim;
+        $folderName = $user->nama . '_' . $nim;
+        $destinationPath = public_path('syarat_kolokium/' . $folderName);
+
+        // Bikin folder kalau belum ada
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        // Cek file mana yang di-upload ulang
+        if ($request->hasFile('formulir')) {
+            $file = $request->file('formulir');
+            $fileName = 'formulir_kolokium_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->formulir = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+            $syarat->alasan_formulir = null;
+        }
+
+        if ($request->hasFile('bukti_sks')) {
+            $file = $request->file('bukti_sks');
+            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_sks = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_sks = null;
+        }
+
+        if ($request->hasFile('bukti_spp')) {
+            $file = $request->file('bukti_spp');
+            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_spp = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_spp = null;
+        }
+
+        if ($request->hasFile('bukti_kehadiran')) {
+            $file = $request->file('bukti_kehadiran');
+            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_kehadiran = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_kehadiran = null;
+        }
+        
+        if (
+            !$syarat->alasan_formulir &&
+            !$syarat->alasan_bukti_sks &&
+            !$syarat->alasan_bukti_spp &&
+            !$syarat->alasan_bukti_kehadiran
+        ) {
+            $syarat->status = 'pending';
+            $syarat->bap = 'belum_melaksanakan';
+        }
+
+        $syarat->save();
+
+        return redirect()->back()->with('success', 'File yang ditolak berhasil diupload ulang.');
+    }
+
+    public function bapDiterima(Request $request, $id)
+    {
+        $syarat = SyaratKolokiummhs::findOrFail($id);
+
+        $syarat->update([
+            'status' => 'disetujui',
+            'bap' => 'diterima',
+        ]);
+
+         return redirect()->back()->with('success', 'BAP telah diterima.');
+    }
+
+    public function bapDitolak(Request $request, $id)
+    {
+        $syarat = SyaratKolokiummhs::findOrFail($id);
+
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+        ]);
+
+        $syarat->update([
+            'status' => 'ditolak',
+            'bap' => 'ditolak',
+            'alasan_formulir' => 'anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+        ]);
+
+         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang formulir dengan jadwal baru.');
+    }
+
+
     /**
      * Display the specified resource.
      */
@@ -230,7 +341,8 @@ class SyaratKolokiummhsController extends Controller
             'moderator' => 'required|string|max:255'
         ]);
 
-        $nim = $syaratKolokiummhs->mahasiswa->nim;        
+        $nim = $syaratKolokiummhs->mahasiswa->nim; 
+        $nama = $syaratKolokiummhs->mahasiswa->nama;       
         $moderatorId = $request->moderator;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
@@ -238,43 +350,10 @@ class SyaratKolokiummhsController extends Controller
         // Simpan ke database
         $syaratKolokiummhs->update([
             'id_moderator' => $moderatorId
-        ]);
+        ]);        
+        
+        return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
 
-        // Path file source dan folder output
-        $source = public_path($syaratKolokiummhs->formulir);
-        $outputDir = public_path("syarat_kolokium/edited");
-
-        // Buat folder jika belum ada
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0777, true);
-        }
-
-        $outputFile = "formulir_kolokium_{$nim}_final.pdf";
-        $outputPath = $outputDir . '/' . $outputFile;
-
-        // Proses PDF
-        $pdf = new Fpdi();
-        $pageCount = $pdf->setSourceFile($source);
-
-        for ($i = 1; $i <= $pageCount; $i++) {
-            $pdf->AddPage();
-            $tpl = $pdf->importPage($i);
-            $pdf->useTemplate($tpl);
-
-            // Tambahkan nama moderator di halaman terakhir
-            if ($i === $pageCount) {
-                $pdf->SetFont('Times', '', 12);                
-
-                $pdf->SetXY(80,131); // posisi teks, sesuaikan jika perlu
-                $pdf->Write(5, $moderator);
-            }
-        }
-
-        // Simpan file hasil edit
-        $pdf->Output('F', $outputPath);        
-
-        // Download file final ke user
-        return response()->download($outputPath);
     }
 
     /**

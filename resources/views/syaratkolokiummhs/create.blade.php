@@ -84,22 +84,7 @@
     <!-- MAIN CONTENT -->
     <main class="content">
       <div class="syarat-card">
-          <h2 class="page-title">Persyaratan Kolokium</h2>
-          {{-- Alert Success --}}
-          @if (session('success'))
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  {{ session('success') }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-          @endif
-
-          {{-- Alert Error --}}
-          @if (session('error'))
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  {{ session('error') }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-          @endif                        
+          <h2 class="page-title">Persyaratan Kolokium</h2>                             
             <ol class="syarat-list">
                 <li><b>Batas Waktu Pengurusan Administrasi</b><br>
                     Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
@@ -121,44 +106,106 @@
                 </li>
             </ol>
 
+          <!-- {{-- Kondisi jika sudah disetujui --}} -->
           @if($syarat && $syarat->status === 'disetujui')
             <div class="alert alert-success">
-                Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi.
+              Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi, silahkan melaksanakan Kolokium.
             </div>
+
+          <!-- {{-- Kondisi jika ditolak --}} -->
+          @elseif($syarat && $syarat->status === 'ditolak')
+            <div class="alert alert-warning">
+              Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
+              <ul>
+                @if($syarat->alasan_formulir)<li><b>Formulir Kolokium:</b> {{ $syarat->alasan_formulir }}</li>@endif
+                @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
+                @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
+              </ul>
+            </div>
+
+            <!-- {{-- Form reupload --}} -->
+            <div class="upload-section">
+              <h4><i class="bi bi-upload"></i> Upload Ulang Dokumen Ditolak</h4>
+              <form action="{{ route('syaratkolokiummhs.reupload', $syarat->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @if($syarat->alasan_formulir)
+                  <div class="form-group">
+                    <label>Upload Ulang Formulir Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <input type="file" name="formulir" accept=".pdf" required>
+                  </div>
+                @endif
+                @if($syarat->alasan_bukti_sks)
+                  <div class="form-group">
+                    <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <input type="file" name="bukti_sks" accept=".pdf" required>
+                  </div>
+                @endif
+                @if($syarat->alasan_bukti_spp)
+                  <div class="form-group">
+                    <label>Upload Ulang Bukti SPP <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <input type="file" name="bukti_spp" accept=".pdf" required>
+                  </div>
+                @endif
+                @if($syarat->alasan_bukti_kehadiran)
+                  <div class="form-group">
+                    <label>Upload Ulang Bukti Kehadiran Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <input type="file" name="bukti_kehadiran" accept=".pdf" required>
+                  </div>
+                @endif
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-warning">Upload Ulang</button>
+                </div>
+              </form>
+            </div>          
+          <!-- {{-- Kondisi jika pending --}} -->
+          @elseif($syarat && $syarat->status === 'pending')
+            <div class="alert alert-info">
+              Dokumen Anda sedang <b>menunggu konfirmasi admin</b>. Anda tidak dapat mengupload dokumen baru sampai dikonfirmasi.
+            </div>
+          <!-- {{-- kondisi kalau BAP diterima --}} -->
+          @elseif ($syarat && $syarat->bap === 'diterima')
+              <div class="alert alert-success">
+                  <strong>BAP Anda telah diterima.</strong> Semua persyaratan kolokium sudah lengkap dan disetujui.
+              </div>  
+              <!-- {{-- kondisi kalau BAP ditolak --}} -->
+          @elseif ($syarat && $syarat->bap === 'ditolak' && !$syarat->formulir)
+            <div class="alert alert-warning">
+              <strong>BAP Anda ditolak.</strong> Silakan unggah ulang<strong>Formulir Kolokium</strong> dengan jadwal baru untuk penjadwalan ulang.
+              <ul>
+                @if($syarat->alasan_formulir)<li><b>Formulir Kolokium:</b> {{ $syarat->alasan_formulir }}</li>@endif                
+              </ul>
+            </div>                    
+          <!-- {{-- Kondisi default (belum pernah upload) --}} -->
           @else
             <div class="upload-section">
-                <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
-                <form action="{{ route('syaratkolokiummhs.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label>Upload Formulir Pendaftaran Kolokium</label>
-                        <input type="file" name="formulir" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
+              <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
+              <form action="{{ route('syaratkolokiummhs.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                  <label>Upload Formulir Pendaftaran Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <input type="file" name="formulir" accept=".pdf" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Upload Bukti Menyelesaikan 110 SKS</label>
-                        <input type="file" name="bukti_sks" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
+                <div class="form-group">
+                  <label>Upload Bukti Menyelesaikan 110 SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <input type="file" name="bukti_sks" accept=".pdf" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Upload Bukti TF / SPP Lunas</label>
-                        <input type="file" name="bukti_spp" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>                      
+                <div class="form-group">
+                  <label>Upload Bukti TF / SPP Lunas <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <input type="file" name="bukti_spp" accept=".pdf" required>
+                </div>
 
-                    <div class="form-group">
-                      <label>Upload Bukti Kehadiran Kolokium</label>
-                      <input type="file" name="bukti_kehadiran" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-submit">Simpan</button>
-                    </div>
-                </form>
+                <div class="form-group">
+                  <label>Upload Bukti Kehadiran Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <input type="file" name="bukti_kehadiran" accept=".pdf" required>
+                </div>
+                <div class="form-actions"><button type="submit" class="btn-submit">Simpan</button></div>
+              </form>
             </div>
           @endif
       </div>
     </main>
 </div>
-
-
 @endsection

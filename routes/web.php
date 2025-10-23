@@ -256,11 +256,14 @@ Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destr
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index'); //syarat kolokium admin
 Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create'); //syarat kolokium mahasiswa form
 Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store'); //syarat kolokium mahasiswa form
+Route::post('syaratkolokium/{id}/reupload', [SyaratKolokiummhsController::class, 'reupload'])->name('syaratkolokiummhs.reupload');
 Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui'); //syarat kolokium admin
 Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
 Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
 Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
 Route::get('/undangankolokium/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
+Route::post('/syaratkolokiummhs/{id}/bap-diterima', [SyaratKolokiummhsController::class, 'bapDiterima'])->name('syaratkolokiummhs.bap.diterima');
+Route::post('/syaratkolokiummhs/{id}/bap-ditolak', [SyaratKolokiummhsController::class, 'bapDitolak'])->name('syaratkolokiummhs.bap.ditolak');
 
 // Undangan Kolokium
 Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
