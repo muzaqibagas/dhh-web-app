@@ -181,112 +181,184 @@
                   <table class="table table-bordered align-middle mb-0">
                       <thead class="table-light">
                           <tr>
-                              <th class="text-center align-middle" style="width: 22%;">Nama</th>
-                              <th class="text-center align-middle" style="width: 13%;">Form Seminar</th>                              
-                              <th class="text-center align-middle" style="width: 13%;">Bukti 110 SKS</th>
-                              <th class="text-center align-middle" style="width: 13%;">Bukti SPP</th>
-                              <th class="text-center align-middle" style="width: 13%;">Kartu Kehadiran</th>
-                              <th class="text-center align-middle" style="width: 13%;">Verifikasi</th>                              
-                              <th class="text-center align-middle" style="width: 13%;">Undangan</th>                              
+                              <th class="text-center align-middle" style="width: 10%;">Nama</th>
+                              <th class="text-center align-middle" style="width: 10%;">Form Seminar</th>                              
+                              <th class="text-center align-middle" style="width: 10%;">Bukti 110 SKS</th>
+                              <th class="text-center align-middle" style="width: 10%;">Bukti SPP</th>
+                              <th class="text-center align-middle" style="width: 10%;">Kartu Kehadiran</th>
+                              <th class="text-center align-middle" style="width: 10%;">Verifikasi</th>                              
+                              <th class="text-center align-middle" style="width: 10%;">Undangan</th>
+                              <th class="text-center align-middle" style="width: 10%;">BAP</th>
                           </tr>
                       </thead>
                       <tbody>
-                          @foreach ($pendaftar as $pendaftars)
-                          <tr>
-                              <td class="align-middle text-center">{{ $pendaftars->mahasiswa->nama }}</td>
-                              <td class="align-middle text-center">
-                                @if($pendaftars->formulir)
-                                  <a href="{{ route('syaratseminarmhs.show', $pendaftars->id) }}" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                                                                                                                          
-                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
-                                  </a>
-                                @endif
-                              </td>                              
-                              <td class="align-middle text-center">
-                                @if($pendaftars->bukti_sks)
-                                  <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
-                                      <p class="bi bi-eye" style="font-size: 18px"> Lihat</p> 
-                                  </a>
-                                @endif
-                              </td>
-                              <td class="align-middle text-center">
-                                @if($pendaftars->bukti_spp)
-                                  <a href="{{asset($pendaftars->bukti_spp)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
-                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
-                                  </a>
-                                @endif
-                              </td>
-                              <td class="align-middle text-center">
-                                @if($pendaftars->bukti_kehadiran)
-                                  <a href="{{asset($pendaftars->bukti_kehadiran)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">
-                                      <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p> 
-                                  </a>
-                                @endif
-                              </td>
-                              <td>     
-                                @if ($pendaftars->status == 'pending')                           
-                                  <button type="button" class="btn btn-success btn-sm"
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modalSetujui{{ $pendaftars->id }}"
-                                          style="width: 30px; height: 30px; padding: 0;">
-                                      <i class="bi bi-check-lg" style="font-size: 18px;"></i>
-                                </button>
+                        @foreach ($pendaftar as $pendaftars)
+                        <tr>
+                          <td class="align-middle text-center">{{ $pendaftars->mahasiswa->nama }}</td>
+                          <td class="align-middle text-center">
+                            @if($pendaftars->formulir)
+                              <a href="{{ route('syaratseminarmhs.show', $pendaftars->id) }}" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                                                                                                                          
+                                <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                              </a>
+                            @endif
+                          </td>                              
+                          <td class="align-middle text-center">
+                            @if($pendaftars->bukti_sks)
+                              <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                <p class="bi bi-eye" style="font-size: 18px"> Lihat</p> 
+                              </a>
+                            @endif
+                          </td>
+                          <td class="align-middle text-center">
+                            @if($pendaftars->bukti_spp)
+                              <a href="{{asset($pendaftars->bukti_spp)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                              </a>
+                            @endif
+                          </td>
+                          <td class="align-middle text-center">
+                            @if($pendaftars->bukti_kehadiran)
+                              <a href="{{asset($pendaftars->bukti_kehadiran)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">
+                                <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p> 
+                              </a>
+                            @endif
+                          </td>
+                          <td>     
+                            @if ($pendaftars->status == 'pending')                           
+                              <button type="button" class="btn btn-success btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalSetujui{{ $pendaftars->id }}"
+                                    style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                              </button> 
 
-                                <button type="button" class="btn btn-danger btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalTolak{{ $pendaftars->id }}"
-                                        style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-x-lg" style="font-size: 18px;"></i>
-                                </button>
-                                @elseif ($pendaftars->status == 'disetujui')
-                                  <span class="text-success fw-bold">Disetujui</span>
-                                @endif
-                              </td>
-                              <td>
-                                <a href="{{ route('undangan.seminar.pdf', $pendaftars->id) }}" class="btn btn-primary">Download PDF</a>                              
-                              </td>
-                          </tr>
-                          <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">
-                                <div class="modal-header bg-success text-white">
-                                  <h5 class="modal-title" id="modalSetujuiLabel{{ $pendaftars->id }}">Konfirmasi Persetujuan</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                                </div>
-                                <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-                                  <i class="bi bi-emoji-smile-fill text-success" style="font-size: 4rem;"></i>
-                                  <div>Apakah Anda yakin ingin <strong>menyetujui</strong> pendaftaran seminar atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
-                                </div>                
-                                <div class="modal-footer justify-content-center">                
-                                  <form action="{{ route('syaratseminarmhs.setujui', $pendaftars->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success">Ya, Setujui</button>
-                                  </form>
-                                </div>
+                              <button type="button" class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalTolak{{ $pendaftars->id }}"
+                                    style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                              </button>
+                            @elseif ($pendaftars->status == 'disetujui')
+                              <span class="text-success fw-bold">Disetujui</span>
+                            @endif
+                          </td>
+                          <td>
+                            <a href="{{ route('undangan.seminar.pdf', $pendaftars->id) }}" class="btn btn-primary">Download</a>                              
+                          </td>
+                          <td class="text-center">
+                            @if ($pendaftars->bap == 'belum_melaksanakan')
+                              <button type="button" class="btn btn-success btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalBapDiterima{{ $pendaftars->id }}"
+                                    style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalBapDitolak{{ $pendaftars->id }}"
+                                    style="width: 30px; height: 30px; padding: 0;">
+                                <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                              </button>
+                            @elseif ($pendaftars->bap == 'diterima')
+                              <span class="text-success fw-bold">Diterima</span>
+                            @endif
+                          </td>
+                        </tr>
+
+                        <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="modalSetujuiLabel{{ $pendaftars->id }}">Konfirmasi Persetujuan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                              </div>
+                              <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                                <i class="bi bi-emoji-smile-fill text-success" style="font-size: 4rem;"></i>
+                                <div>Apakah Anda yakin ingin <strong>menyetujui</strong> pendaftaran seminar atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
+                              </div>                
+                              <div class="modal-footer justify-content-center">                
+                                <form action="{{ route('syaratseminarmhs.setujui', $pendaftars->id) }}" method="POST">
+                                  @csrf
+                                  <button type="submit" class="btn btn-success">Ya, Setujui</button>
+                                </form>
                               </div>
                             </div>
                           </div>
-                          
-                          <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">
-                                <div class="modal-header bg-danger text-white">
-                                  <h5 class="modal-title" id="modalTolakLabel{{ $pendaftars->id }}">Konfirmasi Penolakan</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                                </div>
-                                <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-                                  <i class="bi bi-emoji-frown-fill text-danger" style="font-size: 4rem;"></i>                                  
-                                  <div>Apakah Anda yakin ingin <strong>menolak</strong> pendaftaran seminar atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
-                                </div>
-                                <div class="modal-footer justify-content-center">                                  
-                                  <form action="{{ route('syaratseminarmhs.tolak', $pendaftars->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger">Ya, Tolak</button>
-                                  </form>
-                                </div>
+                        </div>
+                        
+                        <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="modalTolakLabel{{ $pendaftars->id }}">Konfirmasi Penolakan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                              </div>
+                              <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                                <!-- <i class="bi bi-emoji-frown-fill text-danger" style="font-size: 4rem;"></i> -->
+                                <div>Apakah Anda yakin ingin <strong>menolak</strong> pendaftaran kolokium atas nama <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</div>
+                              </div>
+                              <div class="modal-footer justify-content-center">                                  
+                                <form action="{{ route('syaratseminarmhs.tolak', $pendaftars->id) }}" method="POST">
+                                  @csrf                                                                                                                                               
+                                    <div class="mb-3 mx-3 d-flex gap-2">
+                                      <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
+                                      <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti SKS..."></textarea>
+                                    </div>
+                                    <div class="mb-3 mx-3 d-flex gap-2">
+                                      <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
+                                      <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak bukti kehadiran..."></textarea>
+                                    </div>                                                                            
+                                    <button type="submit" class="btn btn-danger">Tolak</button>                                      
+                                </form>
                               </div>
                             </div>
                           </div>
-                          @endforeach
+                        </div>      
+
+                        <!-- Modal BAP Diterima -->
+                        <div class="modal fade" id="modalBapDiterima{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalBapDiterimaLabel{{ $pendaftars->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="modalBapDiterimaLabel{{ $pendaftars->id }}">Konfirmasi BAP Diterima</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                              </div>
+                              <div class="modal-body text-center">
+                                 <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                                <p>Apakah Anda yakin sudah <strong>menerima</strong> BAP Seminar Hasil Mahasiswa <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                <form action="{{ route('syaratseminarmhs.bap.diterima', $pendaftars->id) }}" method="POST">
+                                  @csrf
+                                  <button type="submit" class="btn btn-success">Ya, Terima</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Modal BAP Ditolak -->
+                        <div class="modal fade" id="modalBapDitolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalBapDitolakLabel{{ $pendaftars->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="modalBapDitolakLabel{{ $pendaftars->id }}">Konfirmasi BAP Ditolak</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                              </div>
+                              <div class="modal-body text-center">
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
+                                <p>Apakah Anda yakin ingin <strong>menolak</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan seminar kembali?</p>
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                <form action="{{ route('syaratseminarmhs.bap.ditolak', $pendaftars->id) }}" method="POST">                                                        
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger">Ya, Tolak</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        @endforeach
                       </tbody>
                   </table>
               </div>              

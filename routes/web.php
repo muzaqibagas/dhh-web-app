@@ -49,9 +49,6 @@ use App\Http\Controllers\SyaratSeminarmhsController;
 use App\Http\Controllers\KomprehensifmhsController;
 use App\Http\Controllers\SyaratKomprehensifmhsController;
 
-// ROUTE GUEST DHH
-use App\Http\Controllers\GuestHomeController;
-
 
 
 // ROUTE ADMIN
@@ -256,12 +253,12 @@ Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destr
 Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index'); //syarat kolokium admin
 Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create'); //syarat kolokium mahasiswa form
 Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store'); //syarat kolokium mahasiswa form
-Route::post('syaratkolokium/{id}/reupload', [SyaratKolokiummhsController::class, 'reupload'])->name('syaratkolokiummhs.reupload');
+Route::post('syaratkolokiummhs/{id}/reupload', [SyaratKolokiummhsController::class, 'reupload'])->name('syaratkolokiummhs.reupload');
 Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui'); //syarat kolokium admin
 Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
 Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
 Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
-Route::get('/undangankolokium/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
+Route::get('/undangankolokiummhs/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
 Route::post('/syaratkolokiummhs/{id}/bap-diterima', [SyaratKolokiummhsController::class, 'bapDiterima'])->name('syaratkolokiummhs.bap.diterima');
 Route::post('/syaratkolokiummhs/{id}/bap-ditolak', [SyaratKolokiummhsController::class, 'bapDitolak'])->name('syaratkolokiummhs.bap.ditolak');
 
@@ -282,11 +279,14 @@ Route::delete('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'destroy'
 Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index'); //syarat seminar admin
 Route::get('syaratseminarmhs/create', [SyaratSeminarmhsController::class, 'create'])->name('syaratseminarmhs.create'); //syarat seminar mahasiswa form
 Route::post('syaratseminarmhs', [SyaratSeminarmhsController::class, 'store'])->name('syaratseminarmhs.store'); //syarat seminar mahasiswa form
+Route::post('syaratseminarmhs/{id}/reupload', [SyaratSeminarmhsController::class, 'reupload'])->name('syaratseminarmhs.reupload');
 Route::post('syaratseminarmhs/{id}/setujui', [SyaratSeminarmhsController::class, 'setujui'])->name('syaratseminarmhs.setujui'); //syarat seminar admin
 Route::post('syaratseminarmhs/{id}/tolak', [SyaratSeminarmhsController::class, 'tolak'])->name('syaratseminarmhs.tolak'); //syarat seminar admin
 Route::get('syaratseminarmhs/{syaratSeminarmhs}', [SyaratSeminarmhsController::class, 'show'])->name('syaratseminarmhs.show'); //syarat seminar admin
 Route::post('syaratseminarmhs/{syaratSeminarmhs}/tambah-moderator', [SyaratSeminarmhsController::class, 'tambahModerator'])->name('syaratseminarmhs.tambahModerator'); //syarat seminar admin
-Route::get('/undanganseminar/{id}/pdf', [SyaratSeminarmhsController::class, 'downloadPdf'])->name('undangan.seminar.pdf');
+Route::get('/undanganseminarmhs/{id}/pdf', [SyaratSeminarmhsController::class, 'downloadPdf'])->name('undangan.seminar.pdf');
+Route::post('/syaratseminarmhs/{id}/bap-diterima', [SyaratSeminarmhsController::class, 'bapDiterima'])->name('syaratseminarmhs.bap.diterima');
+Route::post('/syaratseminarmhs/{id}/bap-ditolak', [SyaratSeminarmhsController::class, 'bapDitolak'])->name('syaratseminarmhs.bap.ditolak');
 
 // Undangan Seminar
 Route::get('undanganseminar', [UndanganSeminarController::class, 'index'])->name('undanganseminar.index');
@@ -354,5 +354,5 @@ Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit
 Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
-// ROUTE GUEST DHH
-Route::get('guesthome', [GuestHomeController::class, 'index'])->name('guesthome.index');
+
+

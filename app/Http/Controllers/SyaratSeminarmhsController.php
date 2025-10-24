@@ -12,7 +12,6 @@ use setasign\Fpdf\Fpdf;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
-
 class SyaratSeminarmhsController extends Controller
 {
     /**
@@ -22,36 +21,54 @@ class SyaratSeminarmhsController extends Controller
     {
         $listModerator = StaffDept::all();
         $pendaftar = SyaratSeminarmhs::with('mahasiswa')
-            ->where('status', '!=', 'ditolak') // ⬅️ filter supaya yg ditolak tidak tampil
+            ->where('status', '!=', 'ditolak') 
+            ->where('bap', '!=', 'ditolak')
             ->get();
         return view('syaratseminarmhs.index', compact('pendaftar', 'listModerator'));
     }
 
-    public function setujui($id)
+    public function setujui(Request $request, $id)
     {
         $syarat = SyaratSeminarmhs::findOrFail($id);
-        $syarat->update(['status' => 'disetujui']);
 
-        return redirect()->back()->with('success', 'Pendaftaran disetujui.');
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
+
+        $syarat->update([
+            'status' => 'disetujui',
+            'alasan_formulir' => null,
+            'alasan_bukti_sks' => null,
+            'alasan_bukti_spp' => null,
+            'alasan_bukti_kehadiran' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Syarat pendaftaran Seminar Hasil telah disetujui.');
     }
 
-    public function tolak($id)
+    public function tolak(Request $request, $id)
     {
         $syarat = SyaratSeminarmhs::findOrFail($id);
 
-        $user = $syarat->mahasiswa; // pastikan relasi mahasiswa() ada
-        $folderName = $user->nama . '_' . $user->nim;
-        $folderPath = public_path('syarat_seminar/' . $folderName);
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
+        
+        $syarat->update([
+            'status' => 'ditolak',
+            'alasan_formulir' => $request->alasan_formulir,
+            'alasan_bukti_sks' => $request->alasan_bukti_sks,
+            'alasan_bukti_spp' => $request->alasan_bukti_spp,
+            'alasan_bukti_kehadiran' => $request->alasan_bukti_ke
+        ]);
 
-        // hapus folder beserta isinya
-        if (\File::exists($folderPath)) {
-            \File::deleteDirectory($folderPath);
-        }
-
-        // update status jadi ditolak
-        $syarat->update(['status' => 'ditolak']);
-
-        return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
+        return back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
     }
 
     public function downloadPdf($id)
@@ -129,6 +146,12 @@ class SyaratSeminarmhsController extends Controller
     public function create()
     {
         $mahasiswaId = auth()->id();
+
+        $seminar = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
+        if (!$seminar) {
+            return redirect()->back()->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
+        }
+
         $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();        
 
         return view('syaratseminarmhs.create', compact('syarat'));
@@ -146,21 +169,28 @@ class SyaratSeminarmhsController extends Controller
             return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
         }
 
+        if ($existing && $existing->bap === 'ditolak' && !$request->hasFile('formulir')) {
+            return redirect()->back()->with('error', 'Silakan unggah ulang formulir, anda belum melaksanakan kolokium.');
+        }
+
         $data = $request->validate([            
-            'formulir' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_sks' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_spp' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
-            'bukti_kehadiran' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048',
+            'formulir' => 'required|mimes:pdf|max:2048',
+            'bukti_sks' => 'required|mimes:pdf|max:2048',
+            'bukti_spp' => 'required|mimes:pdf|max:2048',
+            'bukti_kehadiran' => 'nullable|mimes:pdf|max:2048',
         ]);
 
         $data = [
             'id_mahasiswa' => $mahasiswaId,
             'status' => 'pending',
+            'bap' => 'belum_melaksanakan',
         ];
 
         $user = auth()->user();
         $folderName = $user->nama . '_' . $user->nim;
+
         $destinationPath = public_path('syarat_seminar/' . $folderName);
+
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
@@ -197,6 +227,100 @@ class SyaratSeminarmhsController extends Controller
         SyaratSeminarmhs::create($data);
 
         return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
+    }
+
+    public function reupload(Request $request, $id)
+    {
+        $syarat = SyaratSeminarmhs::findOrFail($id);
+        $user = auth()->user();
+        $nim = $user->nim;
+        $folderName = $user->nama . '_' . $user->nim;
+        $destinationPath = public_path('syarat_seminar/' . $folderName);
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        if ($request->hasFile('formulir')) {
+            $file = $request->file('formulir');
+            $fileName = 'formulir_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->formulir = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->alasan_formulir = null;
+        }
+
+        if ($request->hasFile('bukti_sks')) {
+            $file = $request->file('bukti_sks');
+            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_sks = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_sks = null;
+        }
+
+        if ($request->hasFile('bukti_spp')) {
+            $file = $request->file('bukti_spp');
+            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_spp = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_spp = null;
+        }
+
+        if ($request->hasFile('bukti_kehadiran')) {
+            $file = $request->file('bukti_kehadiran');
+            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->bukti_kehadiran = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->alasan_bukti_kehadiran = null;
+        }
+
+        if (
+            !$syarat->alasan_formulir &&
+            !$syarat->alasan_bukti_sks &&
+            !$syarat->alasan_bukti_spp &&
+            !$syarat->alasan_bukti_kehadiran
+        ) {
+            $syarat->status = 'pending';
+            $syarat->bap = 'belum_melaksanakan';
+        }
+
+        $syarat->save();
+
+        return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diunggah ulang dan sedang menunggu persetujuan.');
+    }
+
+    public function bapDiterima(Request $request, $id)
+    {
+        $syarat = SyaratSeminarmhs::findOrFail($id);
+
+        $syarat->update([
+            'status' => 'disetujui',
+            'bap' => 'diterima',
+        ]);
+
+        return redirect()->back()->with('success', 'BAP Seminar Hasil telah diterima.');
+    }
+
+    public function bapDitolak(Request $request, $id)
+    {
+        $syarat = SyaratSeminarmhs::findOrFail($id);
+
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
+
+        $syarat->update([
+            'status' => 'ditolak',
+            'bap' => 'ditolak',
+            'alasan_formulir' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang formulir dengan jadwal baru',
+            'alasan_bukti_sks' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti sks',
+            'alasan_bukti_spp' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti spp',
+            'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti kehadiran',
+        ]);
+
+        return redirect()->back()->with('success', 'BAP belum diterima. Mahasiswa Harus mengunggah ulang persyaratan seminar hasil');
     }
 
     /**

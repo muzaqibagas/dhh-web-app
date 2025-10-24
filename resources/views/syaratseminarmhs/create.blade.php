@@ -84,51 +84,107 @@
     <!-- MAIN CONTENT -->
     <main class="content">
         <div class="syarat-card">
-            <h2 class="page-title">Persyaratan Seminar</h2>
-            {{-- Alert Success --}}
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <h2 class="page-title">Persyaratan Seminar</h2>            
+              <ol class="syarat-list">
+                <li><b>Batas Waktu</b><br>
+                  Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan seminar (H-4). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
+                </li>
+                <li><b>Formulir Pendaftaran Seminar</b><br>
+                  Mahasiswa wajib mengisi formulir pendaftaran seminar di halaman Seminar. Setelah diisi, formulir tersebut harus ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
+                </li>
+                <li><b>Jumlah Kehadiran Seminar</b><br>
+                  Mahasiswa hanya dapat mendaftar seminar setelah memenuhi jumlah minimal kehadiran, yaitu 10 kali seminar di Departemen Hasil Hutan dan 5 kali seminar di luar Departemen Hasil Hutan. Bukti kehadiran dapat diminta dari bagian administrasi.
+                </li>
+                <li><b>Telah Menyelesaikan Seluruh Mata Kuliah</b><br>
+                  Mahasiswa harus membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk Kolokium, dengan jumlah minimal 137 SKS dan memiliki IPK keseluruhan minimal 2,00 tanpa nilai E.   
+                </li>
+                <li><b>Bukti Pelunasan SPP</b><br>
+                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
+                </li>
+                <li><b>Dokumen yang Diserahkan ke TU</b><br>
+                  Selain dokumen yang diunggah secara daring, mahasiswa juga harus menyerahkan secara langsung ke bagian TU beberapa dokumen berikut:<br>
+                  - Bukti penyerahan proposal penelitian<br>
+                  - Makalah seminar (1 eksemplar) yang telah diparaf oleh dosen pembimbing<br>
+                  - 4 buah map folio<br>
+                  - 10 buah amplop putih
+                </li>
+              </ol>
 
-            {{-- Alert Error --}}
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-                <ol class="syarat-list">
-                    <li><b>Batas Waktu</b><br>
-                        Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan seminar (H-4). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
-                    </li>
-                    <li><b>Formulir Pendaftaran Seminar</b><br>
-                        Mahasiswa wajib mengisi formulir pendaftaran seminar di halaman Seminar. Setelah diisi, formulir tersebut harus ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
-                    </li>
-                    <li><b>Jumlah Kehadiran Seminar</b><br>
-                        Mahasiswa hanya dapat mendaftar seminar setelah memenuhi jumlah minimal kehadiran, yaitu 10 kali seminar di Departemen Hasil Hutan dan 5 kali seminar di luar Departemen Hasil Hutan. Bukti kehadiran dapat diminta dari bagian administrasi.
-                    </li>
-                    <li><b>Telah Menyelesaikan Seluruh Mata Kuliah</b><br>
-                        Mahasiswa harus membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk Kolokium, dengan jumlah minimal 137 SKS dan memiliki IPK keseluruhan minimal 2,00 tanpa nilai E.   
-                    </li>
-                    <li><b>Bukti Pelunasan SPP</b><br>
-                        Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
-                    </li>
-                    <li><b>Dokumen yang Diserahkan ke TU</b><br>
-                        Selain dokumen yang diunggah secara daring, mahasiswa juga harus menyerahkan secara langsung ke bagian TU beberapa dokumen berikut:<br>
-                        - Bukti penyerahan proposal penelitian<br>
-                        - Makalah seminar (1 eksemplar) yang telah diparaf oleh dosen pembimbing<br>
-                        - 4 buah map folio<br>
-                        - 10 buah amplop putih
-                    </li>
-                </ol>
-
+            <!-- {{-- Kondisi jika sudah disetujui --}} -->
             @if($syarat && $syarat->status === 'disetujui')
+              <div class="alert alert-success">
+                Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi, silahkan melaksanakan Seminar Hasil.
+              </div>
+            
+            <!-- {{-- Kondisi jika ditolak --}} -->
+            @elseif($syarat && $syarat->status === 'ditolak')
+              <div class="alert alert-warning">
+                Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
+                <ul>
+                  @if($syarat->alasan_formulir)<li><b>Formulir Seminar Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif
+                  @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                  @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
+                  @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
+                </ul>
+              </div>
+
+              <!-- {{-- Form reupload --}} -->
+              <div class="upload-section">
+                <h4><i class="bi bi-upload"></i> Upload Ulang Dokumen Ditolak</h4>
+                <form action="{{ route('syaratseminarmhs.reupload', $syarat->id) }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @if($syarat->alasan_formulir)
+                    <div class="form-group">
+                      <label>Upload Ulang Formulir Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="formulir" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_sks)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_sks" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_spp)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti SPP <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_spp" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_kehadiran)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti Kehadiran Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_kehadiran" accept=".pdf" required>
+                    </div>
+                  @endif
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-warning">Upload Ulang</button>
+                  </div>
+                </form>
+              </div>  
+
+            <!-- {{-- Kondisi jika pending --}} -->
+            @elseif($syarat && $syarat->status === 'pending')
+              <div class="alert alert-info">
+                Dokumen Anda sedang <b>menunggu konfirmasi admin</b>. Anda tidak dapat mengupload dokumen baru sampai dikonfirmasi.
+              </div>
+
+             <!-- {{-- kondisi kalau BAP diterima --}} -->
+            @elseif ($syarat && $syarat->bap === 'diterima')
                 <div class="alert alert-success">
-                    Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi.
+                    <strong>BAP Anda telah diterima.</strong> Semua persyaratan seminar hasil sudah lengkap dan disetujui.
                 </div>
+
+            <!-- {{-- kondisi kalau BAP ditolak --}} -->
+            @elseif ($syarat && $syarat->bap === 'ditolak' && !$syarat->formulir)
+              <div class="alert alert-warning">
+                <strong>BAP Anda ditolak.</strong> Silakan unggah ulang<strong>Formulir Seminar Hasil</strong> dengan jadwal baru untuk penjadwalan ulang.
+                <ul>
+                  @if($syarat->alasan_formulir)<li><b>Formulir Seminar Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif                
+                </ul>
+              </div>       
+            
+            <!-- {{-- Kondisi default (belum pernah upload) --}} -->
             @else
                 <div class="upload-section">
                     <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>
@@ -136,22 +192,22 @@
                         @csrf
                         <div class="form-group">
                             <label>Upload Formulir Pendaftaran Seminar</label>
-                            <input type="file" name="formulir" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="formulir" accept=".pdf" required>
                         </div>
 
                         <div class="form-group">
                             <label>Upload Bukti Menyelesaikan 110 SKS</label>
-                            <input type="file" name="bukti_sks" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="bukti_sks" accept=".pdf" required>
                         </div>
 
                         <div class="form-group">
                             <label>Upload Bukti TF / SPP Lunas</label>
-                            <input type="file" name="bukti_spp" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="bukti_spp" accept=".pdf" required>
                         </div>                      
 
                         <div class="form-group">
                         <label>Upload Bukti Kehadiran Seminar</label>
-                        <input type="file" name="bukti_kehadiran" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <input type="file" name="bukti_kehadiran" accept=".pdf" required>
                         </div>
 
                         <div class="form-actions">

@@ -77,6 +77,7 @@ class KontenDeptController extends Controller
     public function sejarah(KontenDept $kontenDept)
     {
         $konten = KontenDept::first();
+        
         return view('konten-dept.sejarah', compact('konten', 'kontenDept'));
     }
 

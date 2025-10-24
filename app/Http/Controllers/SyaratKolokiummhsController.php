@@ -46,7 +46,7 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => null,
         ]);
 
-         return redirect()->back()->with('success', 'Syarat kolokium telah disetujui.');
+         return redirect()->back()->with('success', 'Syarat pendaftaran Kolokium telah disetujui.');
     }
 
     public function tolak(Request $request, $id)
@@ -68,7 +68,7 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
         
-        return redirect()->back()->with('error', 'Syarat kolokium ditolak. Alasan penolakan telah disimpan.');
+        return redirect()->back()->with('error', 'Syarat Kolokium ditolak. Alasan penolakan telah disimpan.');
     }
 
     public function downloadPdf($id)
@@ -134,11 +134,7 @@ class SyaratKolokiummhsController extends Controller
         $pdf->MultiCell(65, 6, $moderator, 0, 'L');
         
         $pdf->SetXY(125, 201.5);
-        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');
-        // $pdf->SetXY(113, 229.5);
-        // $pdf->Cell(0, 6, 'Nama Sekretaris', 0, 1, 'L');
-        // $pdf->SetXY(120, 234.5);
-        // $pdf->Cell(0, 6, '1234567890', 0, 1, 'L');
+        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');        
 
         $pdf->Output($output, 'F');
         return response()->download($output);
@@ -151,6 +147,15 @@ class SyaratKolokiummhsController extends Controller
     public function create()
     {
         $mahasiswaId = auth()->id();
+
+        $kolokium = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+        if (!$kolokium) {
+            // Jika belum mendaftar kolokium, arahkan kembali
+            return redirect()
+                ->route('kolokiummhs.create')
+                ->with('error', 'Anda belum mendaftar kolokium. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
+        }
+
         $syarat = SyaratKolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();        
 
         return view('syaratkolokiummhs.create', compact('syarat'));
@@ -169,7 +174,7 @@ class SyaratKolokiummhsController extends Controller
         }
 
         if ($existing && $existing->bap === 'ditolak' && !$request->hasFile('formulir')) {
-            return redirect()->back()->with('error', 'Silakan unggah ulang formulir anda belum melaksanakan kolokium.');
+            return redirect()->back()->with('error', 'Silakan unggah ulang formulir, anda belum melaksanakan kolokium.');
         }
 
         $data = $request->validate([            
@@ -236,13 +241,11 @@ class SyaratKolokiummhsController extends Controller
         $nim = $user->nim;
         $folderName = $user->nama . '_' . $nim;
         $destinationPath = public_path('syarat_kolokium/' . $folderName);
-
-        // Bikin folder kalau belum ada
+        
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
-
-        // Cek file mana yang di-upload ulang
+        
         if ($request->hasFile('formulir')) {
             $file = $request->file('formulir');
             $fileName = 'formulir_kolokium_' . $nim . '.' . $file->getClientOriginalExtension();
@@ -287,7 +290,7 @@ class SyaratKolokiummhsController extends Controller
 
         $syarat->save();
 
-        return redirect()->back()->with('success', 'File yang ditolak berhasil diupload ulang.');
+        return redirect()->back()->with('success', 'Berkas pendaftaran kolokium berhasil diunggah ulang dan sedang menunggu persetujuan.');
     }
 
     public function bapDiterima(Request $request, $id)
@@ -299,7 +302,7 @@ class SyaratKolokiummhsController extends Controller
             'bap' => 'diterima',
         ]);
 
-         return redirect()->back()->with('success', 'BAP telah diterima.');
+         return redirect()->back()->with('success', 'BAP Kolokium telah diterima.');
     }
 
     public function bapDitolak(Request $request, $id)
@@ -308,15 +311,21 @@ class SyaratKolokiummhsController extends Controller
 
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
         ]);
 
         $syarat->update([
             'status' => 'ditolak',
             'bap' => 'ditolak',
-            'alasan_formulir' => 'anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+            'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+            'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti sks',
+            'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti spp',
+            'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
         ]);
 
-         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang formulir dengan jadwal baru.');
+         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang persyaratan kolokium dengan jadwal terbaru');
     }
 
 
