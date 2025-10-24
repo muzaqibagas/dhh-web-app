@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KontenDept;
+use App\Models\StaffDept;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -77,7 +78,22 @@ class KontenDeptController extends Controller
     public function sejarah(KontenDept $kontenDept)
     {
         $konten = KontenDept::first();
-        return view('konten-dept.sejarah', compact('konten', 'kontenDept'));
+
+        $struktur = StaffDept::whereHas('kategoristaff', function($q){
+            $q->where('nama', 'Struktur Organisasi');
+        })->get();
+
+        $dosen = StaffDept::whereHas('kategoristaff', function($q){
+            $q->where('nama', 'Tenaga Pendidik/Dosen');
+        })->get();
+
+        $kependidikan = StaffDept::whereHas('kategoristaff', function($q){
+            $q->where('nama', 'Tenaga Kependidikan');
+        })->get();
+
+        $divisiList = \App\Models\Divisi::with('staff')->get();
+
+        return view('konten-dept.sejarah', compact('konten', 'kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList'));
     }
 
     /**
