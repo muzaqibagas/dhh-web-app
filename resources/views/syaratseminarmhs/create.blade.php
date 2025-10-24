@@ -157,9 +157,9 @@
                       <input type="file" name="bukti_kehadiran" accept=".pdf" required>
                     </div>
                   @endif
-                  <div class="form-actions">
+                  <div class="form-actions d-flex justify-content-end">
                     <button type="submit" class="btn btn-warning">Upload Ulang</button>
-                  </div>
+                  </div>                 
                 </form>
               </div>  
 
@@ -191,22 +191,22 @@
                     <form action="{{ route('syaratseminarmhs.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>Upload Formulir Pendaftaran Seminar</label>
+                            <label>Upload Formulir Pendaftaran Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>                            
                             <input type="file" name="formulir" accept=".pdf" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Bukti Menyelesaikan 110 SKS</label>
+                            <label>Upload Bukti Menyelesaikan 110 SKS <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="bukti_sks" accept=".pdf" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Bukti TF / SPP Lunas</label>
+                            <label>Upload Bukti TF / SPP Lunas <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="bukti_spp" accept=".pdf" required>
                         </div>                      
 
                         <div class="form-group">
-                        <label>Upload Bukti Kehadiran Seminar</label>
+                        <label>Upload Bukti Kehadiran Seminar <small class="text-danger">(*format wajib .PDF)</small></label>
                         <input type="file" name="bukti_kehadiran" accept=".pdf" required>
                         </div>
 

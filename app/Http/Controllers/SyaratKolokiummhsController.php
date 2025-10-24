@@ -68,7 +68,7 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
         
-        return redirect()->back()->with('error', 'Syarat Kolokium ditolak. Alasan penolakan telah disimpan.');
+        return redirect()->back()->with('success', 'Syarat Kolokium ditolak. Alasan penolakan telah disimpan.');
     }
 
     public function downloadPdf($id)
@@ -149,8 +149,7 @@ class SyaratKolokiummhsController extends Controller
         $mahasiswaId = auth()->id();
 
         $kolokium = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
-        if (!$kolokium) {
-            // Jika belum mendaftar kolokium, arahkan kembali
+        if (!$kolokium) {            
             return redirect()
                 ->route('kolokiummhs.create')
                 ->with('error', 'Anda belum mendaftar kolokium. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');

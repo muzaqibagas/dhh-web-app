@@ -13,10 +13,15 @@ class SyaratKomprehensifmhs extends Model
         'id_moderator',
         'id_penguji',
         'formulir',
+        'alasan_formulir',
         'bukti_sks',
+        'alasan_bukti_sks',
         'bukti_spp',
+        'alasan_bukti_spp',  
         'bukti_kehadiran',
+        'alasan_bukti_kehadiran',
         'status',
+        'bap',
     ];
 
     public function mahasiswa()
