@@ -186,7 +186,7 @@
             <div class="sej-card-grid">
                 @forelse ($struktur as $staff)
                     <div class="sej-staff-card">
-                        <img src="{{ $staff->foto ? asset('storage/' . $staff->foto) : asset('img/default.png')}}" alt="{{ $staff->nama }}">
+                        <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                         <h4>{{ $staff->nama }}</h4>
                         <p>{{ $staff->jabatan }}</p>
                     </div>
@@ -196,7 +196,7 @@
             </div>
         </div>
         
-        <div>
+        <div id="sej-dosen" class="sej-tab-content">
             @foreach($divisiList as $div)
                 @if($div->staff->count() > 0)
                     <div class="sej-division">
@@ -204,7 +204,7 @@
                         <div class="sej-card-grid">
                             @foreach($div->staff as $staff)
                                 <div class="sej-staff-card">
-                                    <img src="{{ $staff->foto ? asset('storage/' . $staff->foto) : asset('img/default.png')}}" alt="{{ $staff->nama }}">
+                                    <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                                     <h4>{{ $staff->nama }}</h4>
                                     <p>{{ $staff->jabatan }}</p>
                                 </div>
@@ -219,7 +219,7 @@
             <div class="sej-card-grid">
                 @forelse($kependidikan as $staff)
                     <div class="sej-staff-card">
-                        <img src="{{ $staff->foto ? asset('storage/' . $staff->foto) : asset('img/default.png') }}" alt="{{ $staff->nama }}">
+                        <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                         <h4>{{ $staff->nama }}</h4>
                         <p>{{ $staff->jabatan }}</p>
                     </div>

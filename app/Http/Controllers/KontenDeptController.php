@@ -79,16 +79,16 @@ class KontenDeptController extends Controller
     {
         $konten = KontenDept::first();
 
-        $struktur = StaffDept::whereHas('kategoristaff', function($q){
-            $q->where('nama', 'Struktur Organisasi');
+        $struktur = StaffDept::whereHas('kategoristaff', function($strukturs){
+            $strukturs->where('nama', 'Struktur Organisasi');
         })->get();
 
-        $dosen = StaffDept::whereHas('kategoristaff', function($q){
-            $q->where('nama', 'Tenaga Pendidik/Dosen');
+        $dosen = StaffDept::whereHas('kategoristaff', function($dosens){
+            $dosens->where('nama', 'Tenaga Pendidik/Dosen');
         })->get();
 
-        $kependidikan = StaffDept::whereHas('kategoristaff', function($q){
-            $q->where('nama', 'Tenaga Kependidikan');
+        $kependidikan = StaffDept::whereHas('kategoristaff', function($kependidikans){
+            $kependidikans->where('nama', 'Tenaga Kependidikan');
         })->get();
 
         $divisiList = \App\Models\Divisi::with('staff')->get();

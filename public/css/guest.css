@@ -1300,17 +1300,26 @@
   padding: 10px 10px;
   }
 }
+.sej-card-grid {
+  display: flex;
+  flex-wrap: wrap;          /* supaya bisa turun baris */
+  justify-content: center;  /* biar di tengah */
+  gap: 20px;
+}
+
 .sej-staff-card {
+  flex: 1 1 calc(25% - 20px); /* maks 4 per baris */
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
   text-align: center;
-  width: 200px; /* biar proporsional, semua seragam */
 }
 
 .sej-staff-card img {
-  border-radius: 8px;
-  margin-bottom: 10px;
-  max-width: 150px;
-  height: auto;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* animasi halus */
+  width: 150px;          /* atur ukuran lebar seragam */
+  height: 220px;         /* atur tinggi seragam */
+  object-fit: cover;     /* biar gambar tidak ketarik tapi terpotong rapi */
+  border-radius: 10px;   /* opsional, biar sudutnya halus */
+  margin-bottom: 10px;   /* jarak antara foto dan nama */
 }
 
 .sej-staff-card img:hover {
