@@ -226,17 +226,17 @@
                             <td>    
                               @if ($pendaftars->status == 'pending')
                                 <button type="button" class="btn btn-success btn-sm" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#modalSetujui{{ $pendaftars->id }}" 
-                                        style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                                      data-bs-toggle="modal" 
+                                      data-bs-target="#modalSetujui{{ $pendaftars->id }}" 
+                                      style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-check-lg" style="font-size: 18px;"></i>
                                 </button>
 
                                 <button type="button" class="btn btn-danger btn-sm" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#modalTolak{{ $pendaftars->id }}" 
-                                        style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                                      data-bs-toggle="modal" 
+                                      data-bs-target="#modalTolak{{ $pendaftars->id }}" 
+                                      style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-x-lg" style="font-size: 18px;"></i>
                                 </button>
                               @elseif ($pendaftars->status == 'disetujui')
                                 <span class="text-success fw-bold">Disetujui</span>                                
@@ -246,8 +246,7 @@
                               <a href="{{ route('undangan.kolokium.pdf', $pendaftars->id) }}" class="btn btn-primary">Download</a>                                                                
                             </td>
                             <td class="text-center">
-                              @if ($pendaftars->bap == 'belum_melaksanakan')
-                                <!-- Tombol untuk verifikasi BAP -->
+                              @if ($pendaftars->bap == 'belum_melaksanakan')                                
                                 <button type="button" class="btn btn-success btn-sm"
                                       data-bs-toggle="modal"
                                       data-bs-target="#modalBapDiterima{{ $pendaftars->id }}"
@@ -326,7 +325,7 @@
                                 </div>
                                 <div class="modal-body text-center">
                                   <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
-                                  <p>Apakah Anda yakin ingin <strong>menerima</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
+                                  <p>Apakah Anda yakin sudah <strong>menerima</strong> BAP Kolokium mahasiswa <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                   <form action="{{ route('syaratkolokiummhs.bap.diterima', $pendaftars->id) }}" method="POST">
@@ -348,7 +347,7 @@
                                 </div>
                                 <div class="modal-body text-center">
                                   <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
-                                  <p>Apakah Anda yakin ingin <strong>menolak</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
+                                  <p>Apakah Anda yakin ingin <strong>menolak</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharus mahasiswa melakukan seminar kembali?</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                   <form action="{{ route('syaratkolokiummhs.bap.ditolak', $pendaftars->id) }}" method="POST">

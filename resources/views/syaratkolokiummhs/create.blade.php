@@ -84,7 +84,14 @@
     <!-- MAIN CONTENT -->
     <main class="content">
       <div class="syarat-card">
-          <h2 class="page-title">Persyaratan Kolokium</h2>                             
+          <h2 class="page-title">Persyaratan Kolokium</h2> 
+          {{-- Alert Error --}}
+          @if (session('error'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">              
+                  {!! session('error') !!}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          @endif                            
             <ol class="syarat-list">
                 <li><b>Batas Waktu Pengurusan Administrasi</b><br>
                     Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
@@ -157,25 +164,29 @@
                   <button type="submit" class="btn btn-warning">Upload Ulang</button>
                 </div>
               </form>
-            </div>          
+            </div>  
+
           <!-- {{-- Kondisi jika pending --}} -->
           @elseif($syarat && $syarat->status === 'pending')
             <div class="alert alert-info">
               Dokumen Anda sedang <b>menunggu konfirmasi admin</b>. Anda tidak dapat mengupload dokumen baru sampai dikonfirmasi.
             </div>
+
           <!-- {{-- kondisi kalau BAP diterima --}} -->
           @elseif ($syarat && $syarat->bap === 'diterima')
               <div class="alert alert-success">
                   <strong>BAP Anda telah diterima.</strong> Semua persyaratan kolokium sudah lengkap dan disetujui.
               </div>  
-              <!-- {{-- kondisi kalau BAP ditolak --}} -->
+
+          <!-- {{-- kondisi kalau BAP ditolak --}} -->
           @elseif ($syarat && $syarat->bap === 'ditolak' && !$syarat->formulir)
             <div class="alert alert-warning">
               <strong>BAP Anda ditolak.</strong> Silakan unggah ulang<strong>Formulir Kolokium</strong> dengan jadwal baru untuk penjadwalan ulang.
               <ul>
                 @if($syarat->alasan_formulir)<li><b>Formulir Kolokium:</b> {{ $syarat->alasan_formulir }}</li>@endif                
               </ul>
-            </div>                    
+            </div>        
+
           <!-- {{-- Kondisi default (belum pernah upload) --}} -->
           @else
             <div class="upload-section">

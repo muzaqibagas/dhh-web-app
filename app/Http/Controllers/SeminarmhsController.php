@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
 use App\Models\KetuaDhh;
+use App\Models\SyaratKolokiummhs;
+use App\Models\Kolokiummhs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -36,6 +38,44 @@ class SeminarmhsController extends Controller
     public function create()
     {
         $mahasiswaId = auth()->id();
+
+        $syaratKolokium = SyaratKolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+        $kolokium = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        if (!$kolokium) {            
+            return redirect()
+                ->route('kolokiummhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum mendaftar kolokium.<br>Silakan daftar kolokium terlebih dahulu sebelum mengisi persyaratan.');
+        }
+
+        if (!$syaratKolokium) {
+            return redirect()
+                ->route('syaratkolokiummhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum memenuhi syarat kolokium.<br>Silahkan lengkapi persyaratan kolokium terlebih dahulu dan melaksanakan kolokium');
+        }
+        
+        if ($syaratKolokium->bap === 'ditolak') {
+        
+            $syaratKolokium->update([
+                'status' => 'ditolak',
+                'bap' => 'ditolak',
+                'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+                'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti SKS',
+                'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti SPP',
+                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
+            ]);
+
+            return redirect()
+                ->route('syaratkolokiummhs.create')
+                ->with('error', 'BAP Kolokium Anda belum diterima. Silakan unggah ulang seluruh persyaratan kolokium dengan jadwal terbaru.');
+        }
+
+        if ($syaratKolokium->bap !== 'diterima') {
+            return redirect()
+                ->route('syaratkolokiummhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum melaksanakan kolokium.<br>Silahkan hubungi admin bahwa anda sudah melaksanakan kolokium');
+        }
+
         $existing = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
         if ($existing) {
             return redirect()
