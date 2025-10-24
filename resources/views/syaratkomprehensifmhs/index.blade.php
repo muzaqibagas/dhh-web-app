@@ -169,7 +169,7 @@
     </script>
   </aside>
   
-<!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">

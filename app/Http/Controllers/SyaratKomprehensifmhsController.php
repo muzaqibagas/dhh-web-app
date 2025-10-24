@@ -22,6 +22,7 @@ class SyaratKomprehensifmhsController extends Controller
         $listModerator = StaffDept::all();
         $pendaftar = SyaratKomprehensifmhs::with('mahasiswa')
             ->where('status', '!=', 'ditolak') 
+            ->where('bap', '!=', 'ditolak')
             ->get();
         return view('syaratkomprehensifmhs.index', compact('pendaftar', 'listModerator'));
     }
@@ -29,28 +30,45 @@ class SyaratKomprehensifmhsController extends Controller
     public function setujui($id)
     {
         $syarat = SyaratKomprehensifmhs::findOrFail($id);
-        $syarat->update(['status' => 'disetujui']);
 
-        return redirect()->back()->with('success', 'Pendaftaran disetujui.');
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
+
+        $syarat->update([
+            'status' => 'disetujui',
+            'alasan_formulir' => null,
+            'alasan_bukti_sks' => null,
+            'alasan_bukti_spp' => null,
+            'alasan_bukti_kehadiran' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Syarat pendaftaran Komprehensif telah disetujui.');
     }
 
     public function tolak($id)
     {
         $syarat = SyaratKomprehensifmhs::findOrFail($id);
 
-        $user = $syarat->mahasiswa; // pastikan relasi mahasiswa() ada
-        $folderName = $user->nama . '_' . $user->nim;
-        $folderPath = public_path('syarat_komprehensif/' . $folderName);
+        $request->validate([
+            'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_bukti_spp' => 'nullable|string|max:500',
+            'alasan_bukti_kehadiran' => 'nullable|string|max:500',
+        ]);
 
-        // hapus folder beserta isinya
-        if (\File::exists($folderPath)) {
-            \File::deleteDirectory($folderPath);
-        }
-
-        // update status jadi ditolak
-        $syarat->update(['status' => 'ditolak']);
-
-        return back()->with('success', 'Syarat ditolak dan semua file dihapus.');
+        $syarat->update([
+            'status' => 'ditolak',
+            'alasan_formulir' => $request->alasan_formulir,
+            'alasan_bukti_sks' => $request->alasan_bukti_sks,
+            'alasan_bukti_spp' => $request->alasan_bukti_spp,
+            'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
+        ]);
+        
+        return redirect()->back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
     }    
 
     public function downloadPdf($id)
@@ -139,6 +157,14 @@ class SyaratKomprehensifmhsController extends Controller
     public function create()
     {
         $mahasiswaId = auth()->id();
+
+        $komprehensif = Komprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();
+        if (!komprehensif){
+            return redirect()
+            ->route('komprehensifmhs.create')
+            ->with('error', 'Anda belum mendaftar Komprehensif. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
+        }
+
         $syarat = SyaratKomprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();        
         return view('syaratkomprehensifmhs.create', compact('syarat')); 
     }

@@ -64,11 +64,11 @@ class SyaratSeminarmhsController extends Controller
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
             'alasan_bukti_sks' => $request->alasan_bukti_sks,
-            'alasan_bukti_spp' => $request->alasan_bukti_spp,
-            'alasan_bukti_kehadiran' => $request->alasan_bukti_ke
+            'alasan_bukti_spp' => $request->alasan_bukti_spp,            
+            'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
-
-        return back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
+        
+        return redirect()->back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
     }
 
     public function downloadPdf($id)
@@ -149,7 +149,9 @@ class SyaratSeminarmhsController extends Controller
 
         $seminar = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
         if (!$seminar) {
-            return redirect()->back()->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
+            return redirect()
+            ->route('seminarmhs.create')
+            ->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');            
         }
 
         $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();        
