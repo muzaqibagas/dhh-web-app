@@ -305,11 +305,14 @@ Route::delete('komprehensifmhs/{komprehensifmhs}', [KomprehensifmhsController::c
 Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
 Route::get('syaratkomprehensifmhs/create', [SyaratKomprehensifmhsController::class, 'create'])->name('syaratkomprehensifmhs.create'); //syarat seminar mahasiswa form
 Route::post('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'store'])->name('syaratkomprehensifmhs.store'); //syarat seminar mahasiswa form
+Route::post('syaratkomprehensifmhs/{id}/reupload', [SyaratKomprehensifmhsController::class, 'reupload'])->name('syaratkomprehensifmhs.reupload');
 Route::post('syaratkomprehensifmhs/{id}/setujui', [SyaratKomprehensifmhsController::class, 'setujui'])->name('syaratkomprehensifmhs.setujui'); //syarat seminar admin
 Route::post('syaratkomprehensifmhs/{id}/tolak', [SyaratKomprehensifmhsController::class, 'tolak'])->name('syaratkomprehensifmhs.tolak'); //syarat seminar admin
 Route::get('syaratkomprehensifmhs/{syaratKomprehensifmhs}', [SyaratKomprehensifmhsController::class, 'show'])->name('syaratkomprehensifmhs.show'); //syarat seminar admin
 Route::post('syaratkomprehensifmhs/{syaratKomprehensifmhs}/tambah-moderator', [SyaratKomprehensifmhsController::class, 'tambahModerator'])->name('syaratkomprehensifmhs.tambahModerator'); //syarat seminar admin
 Route::get('/undangankomprehensif/{id}/pdf', [SyaratkomprehensifmhsController::class, 'downloadPdf'])->name('undangan.komprehensif.pdf');
+Route::post('/syaratkomprehensifmhs/{id}/bap-diterima', [SyaratkomprehensifmhsController::class, 'bapDiterima'])->name('syaratkomprehensifmhs.bap.diterima');
+Route::post('/syaratkomprehensifmhs/{id}/bap-ditolak', [SyaratkomprehensifmhsController::class, 'bapDitolak'])->name('syaratkomprehensifmhs.bap.ditolak');
 
 
 // Undangan Komprehensif

@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
 use App\Models\KetuaDhh;
+use App\Models\SyaratSeminarmhs;
+use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -36,6 +38,44 @@ class KomprehensifmhsController extends Controller
     public function create()
     {
         $mahasiswaId = auth()->id();
+
+        $syaratSeminar = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
+        $seminar = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        if (!$seminar){
+            return redirect()
+                ->route('seminarmhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar komprehensif karena belum mendaftar seminar hasil.<br>Silakan daftar seminar hasil terlebih dahulu terlebih dahulu sebelum mengisi persyaratan.');
+        }
+
+        if (!$syaratSeminar){
+            return redirect()
+                ->route('syaratseminarmhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar komprehensif karena belum memenuhi persyaratan seminar hasil.<br>Silakan lengkapi persyaratan seminar hasil terlebih dahulu dan melaksanakan seminar hasil.');
+        }
+
+        if ($syaratSeminar->bap === 'ditolak') {
+
+            $syaratSeminar->update([
+                'status' => 'ditolak',
+                'bap' => 'ditolak',
+                'alasan_formulir' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang formulir dengan jadwal baru',
+                'alasan_bukti_sks' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti SKS',
+                'alasan_bukti_spp' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti SPP',
+                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti kehadiran',
+            ]);
+            
+            return redirect()
+                ->route('syaratSeminarmhs.create')
+                ->with('error', 'BAP Seminar Hasil Anda belum diterima. Silakan unggah ulang seluruh persyaratan seminar hasil dengan jadwal terbaru.');
+        }
+
+        if ($syaratSeminar->bap !== 'diterima') {
+            return redirect()
+                ->route('syaratseminarmhs.create')
+                ->with('error', 'Anda tidak dapat mendaftar komprehensif karena belum melaksanakan seminar hasil.<br>Silakan menghubungi admin bahwa anda sudah melaksanakan seminar hasil');
+        }
+
         $existing = Komprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();
         if ($existing) {
             return redirect()

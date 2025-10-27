@@ -84,7 +84,14 @@
     <!-- MAIN CONTENT -->
     <main class="content">
         <div class="syarat-card">
-            <h2 class="page-title">Persyaratan Seminar</h2>            
+            <h2 class="page-title">Persyaratan Seminar</h2>   
+            {{-- Alert Error --}}
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">              
+                    {!! session('error') !!}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif       
               <ol class="syarat-list">
                 <li><b>Batas Waktu</b><br>
                   Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan seminar (H-4). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
@@ -127,8 +134,7 @@
                   @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
                 </ul>
               </div>
-
-              <!-- {{-- Form reupload --}} -->
+              
               <div class="upload-section">
                 <h4><i class="bi bi-upload"></i> Upload Ulang Dokumen Ditolak</h4>
                 <form action="{{ route('syaratseminarmhs.reupload', $syarat->id) }}" method="POST" enctype="multipart/form-data">
@@ -169,7 +175,7 @@
                 Dokumen Anda sedang <b>menunggu konfirmasi admin</b>. Anda tidak dapat mengupload dokumen baru sampai dikonfirmasi.
               </div>
 
-             <!-- {{-- kondisi kalau BAP diterima --}} -->
+            <!-- {{-- kondisi kalau BAP diterima --}} -->
             @elseif ($syarat && $syarat->bap === 'diterima')
                 <div class="alert alert-success">
                     <strong>BAP Anda telah diterima.</strong> Semua persyaratan seminar hasil sudah lengkap dan disetujui.

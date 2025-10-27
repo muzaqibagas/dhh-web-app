@@ -51,7 +51,7 @@ class SeminarmhsController extends Controller
         if (!$syaratKolokium) {
             return redirect()
                 ->route('syaratkolokiummhs.create')
-                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum memenuhi syarat kolokium.<br>Silahkan lengkapi persyaratan kolokium terlebih dahulu dan melaksanakan kolokium');
+                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum memenuhi persyarat kolokium.<br>Silahkan lengkapi persyaratan kolokium terlebih dahulu dan melaksanakan kolokium');
         }
         
         if ($syaratKolokium->bap === 'ditolak') {
@@ -73,7 +73,7 @@ class SeminarmhsController extends Controller
         if ($syaratKolokium->bap !== 'diterima') {
             return redirect()
                 ->route('syaratkolokiummhs.create')
-                ->with('error', 'Anda tidak dapat mendaftar seminar karena belum melaksanakan kolokium.<br>Silahkan hubungi admin bahwa anda sudah melaksanakan kolokium');
+                ->with('error', 'Anda tidak dapat mendaftar seminar hasil karena belum melaksanakan kolokium.<br>Silahkan menghubungi admin bahwa anda sudah melaksanakan kolokium');
         }
 
         $existing = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();

@@ -169,11 +169,19 @@
     </script>
   </aside>
   
-<!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
   <main class="content">
     <div class="container-fluid mt-4">
         <div class="adm-header">
             <h2 class="adm-title">Data Pendaftar Seminar</h2>
+            <div class="d-flex justify-content-end align-items-center gap-2">                    
+              <form action="{{ route('syaratseminarmhs.index') }}" method="GET" class="d-flex justify-content-end align-items-center gap-2 w-100">
+                <input type="text" name="search" class="form-control w-100" placeholder="Cari Mahasiswa..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary px-3">
+                  <i class="bi bi-search"></i>
+                </button>
+              </form>              
+            </div> 
         </div>
         <div class="card shadow-sm">
             <div class="card-body">
@@ -192,7 +200,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                        @foreach ($pendaftar as $pendaftars)
+                        @forelse ($pendaftar as $pendaftars)
                         <tr>
                           <td class="align-middle text-center">{{ $pendaftars->mahasiswa->nama }}</td>
                           <td class="align-middle text-center">
@@ -201,7 +209,7 @@
                                 <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
                               </a>
                             @endif
-                          </td>                              
+                          </td>
                           <td class="align-middle text-center">
                             @if($pendaftars->bukti_sks)
                               <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
@@ -230,8 +238,7 @@
                                     data-bs-target="#modalSetujui{{ $pendaftars->id }}"
                                     style="width: 30px; height: 30px; padding: 0;">
                                 <i class="bi bi-check-lg" style="font-size: 18px;"></i>
-                              </button> 
-
+                              </button>
                               <button type="button" class="btn btn-danger btn-sm"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modalTolak{{ $pendaftars->id }}"
@@ -246,21 +253,31 @@
                             <a href="{{ route('undangan.seminar.pdf', $pendaftars->id) }}" class="btn btn-primary">Download</a>                              
                           </td>
                           <td class="text-center">
-                            @if ($pendaftars->bap == 'belum_melaksanakan')
-                              <button type="button" class="btn btn-success btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalBapDiterima{{ $pendaftars->id }}"
-                                    style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                            @if ($pendaftars->status === 'disetujui')
+                              @if ($pendaftars->bap == 'belum_melaksanakan')                                
+                                <button type="button" class="btn btn-success btn-sm"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#modalBapDiterima{{ $pendaftars->id }}"
+                                      style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-check-lg" style="font-size: 18px;"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#modalBapDitolak{{ $pendaftars->id }}"
+                                      style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-x-lg" style="font-size: 18px;"></i>
+                                </button>
+                              @elseif ($pendaftars->bap == 'diterima')
+                                <span class="text-success fw-bold">Diterima</span>
+                              @elseif ($pendaftars->bap == 'ditolak')
+                                <span class="text-danger fw-bold">Ditolak</span>
+                              @endif
+                            @else
+                              <button type="button" class="btn btn-secondary btn-sm" disabled
+                                      title="Verifikasi belum disetujui"
+                                      style="width: 90px; height: 30px; padding: 0;">
+                                <i class="bi bi-lock" style="font-size: 16px;"></i> Terkunci
                               </button>
-                              <button type="button" class="btn btn-danger btn-sm"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalBapDitolak{{ $pendaftars->id }}"
-                                    style="width: 30px; height: 30px; padding: 0;">
-                                <i class="bi bi-x-lg" style="font-size: 18px;"></i>
-                              </button>
-                            @elseif ($pendaftars->bap == 'diterima')
-                              <span class="text-success fw-bold">Diterima</span>
                             @endif
                           </td>
                         </tr>
@@ -347,7 +364,7 @@
                               </div>
                               <div class="modal-body text-center">
                                 <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
-                                <p>Apakah Anda yakin ingin <strong>menolak</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan seminar kembali?</p>
+                                <p>Apakah Anda yakin <strong>belum menerima</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan seminar kembali?</p>
                               </div>
                               <div class="modal-footer justify-content-center">
                                 <form action="{{ route('syaratseminarmhs.bap.ditolak', $pendaftars->id) }}" method="POST">                                                        
@@ -358,7 +375,11 @@
                             </div>
                           </div>
                         </div>
-                        @endforeach
+                        @empty
+                          <tr>
+                            <td colspan="7" class="text-center text-muted py-4">Belum ada mahasiswa seminar hasil.</td>
+                          </tr>
+                        @endforelse
                       </tbody>
                   </table>
               </div>              
