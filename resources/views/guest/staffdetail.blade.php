@@ -1,71 +1,59 @@
 @extends('layouts.app')
 
+@section('content')
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
   <a href="#">Home</a> / <span>Departemen</span>
 </div>
+
 <!-- ======= Staff Detail Section ======= -->
-<section class="staff-det-section container">
+<section class="staff-det-section">
   <div class="staff-det-container">
 
-    <!-- Foto -->
+    <!-- Foto Staff -->
     <div class="staff-det-photo">
-      <img src="{{ asset('img/dodi.jpg') }}" alt="Foto Staff">
+      <img src="{{ asset('img/padodi.jpg') }}" alt="Foto Staff">
     </div>
 
-    <!-- Card Flip -->
-    <div class="staff-det-card" id="staffCard">
-      <div class="staff-det-card-inner">
+    <!-- Card Informasi Staff -->
+    <div class="staff-det-card">
+      <h4 class="staff-det-name">Prof. Dr. Ir. Dodi Nandika, MS</h4>
+      <p class="staff-det-role">Guru Besar | Divisi Teknologi Peningkatan Mutu Kayu</p>
 
-        <!-- Sisi Depan -->
-        <div class="staff-det-card-front">
-          <h5>Prof. Dr. Ir. Dodi Nandika, MS</h5>
-          <p><strong>Guru Besar</strong></p>
-          <p>Divisi Teknologi Peningkatan Mutu Kayu</p>
-          <ul>
-            <li><b>Tanggal Lahir:</b> 18 Juni 1980</li>
-            <li><b>Email:</b> dodi@gmail.com</li>
-            <li><b>Sinta:</b> www.sinta.com</li>
-            <li><b>Google Scholar:</b> www.scdodi.com</li>
-            <li><b>Scopus:</b> www.scopus.com</li>
-            <li><b>Website:</b> www.dodiweb.com</li>
-          </ul>
+      <div class="staff-det-info">
+        <div class="staff-det-row"><span>Tanggal Lahir</span><span>12 Mei 1980</span></div>
+        <div class="staff-det-row"><span>Email</span><span>dodi@apps.ipb.ac.id</span></div>
+        <div class="staff-det-row"><span>Sinta</span><span><a href="#">https://sinta.ristekbrin.go.id/authors/detail?id=5999596&view=overview</a></span></div>
+        <div class="staff-det-row"><span>Google Scholar</span><span><a href="#">https://scholar.google.com/citations?hl=en&user=t4Q0JREAAAAJ</a></span></div>
+        <div class="staff-det-row"><span>Scopus</span><span><a href="#">https://www.scopus.com/authid/detail.uri?authorId=47861323700</a></span></div>
+        <div class="staff-det-row"><span>Website</span><span><a href="#">https://dodidi.com</a></span></div>
+        <div class="staff-det-row"><span>ResearchGate</span><span><a href="#">https://www.researchgate.net/profile/Dodi-Nandika</a></span></div>
+        <div class="staff-det-row"><span>Keahlian</span><span>Entomology & Wood Reservation</span></div>
+      </div>
 
-          <!-- Tombol Panah -->
-          <button class="staff-det-flip-btn" onclick="flipCard()">
-            <i class="fas fa-rotate-forward"></i>
-          </button>
-        </div>
 
-        <!-- Sisi Belakang -->
-        <div class="staff-det-card-back">
-          <h5>Informasi Lanjutan</h5>
-          <ul>
-            <li><b>Research Gate:</b> www.rgdodi.com</li>
-            <li><b>Keahlian:</b> Entomology & Wood Reservation</li>
-            <li><b>Publikasi:</b> www.publikasi1.com, www.publikasi2.com</li>
-            <li><b>Riwayat Pendidikan:</b>
-              <ul>
-                <li>S1: Institut Pertanian Bogor</li>
-                <li>S2: University of Gottingen, Germany</li>
-                <li>S3: Institut Pertanian Bogor</li>
-              </ul>
-            </li>
-          </ul>
+      <!-- Riwayat Pendidikan -->
+      <div class="staff-det-section-sub">
+        <h5>Riwayat Pendidikan</h5>
+        <ul>
+          <li>S1 - Institut Pertanian Bogor (2002)</li>
+          <li>S2 - University of Goettingen, Germany (2007)</li>
+          <li>S3 - Institut Pertanian Bogor (2011)</li>
+        </ul>
+      </div>
 
-          <!-- Tombol Kembali -->
-          <button class="staff-det-flip-btn" onclick="flipCard()">
-            <i class="fas fa-rotate-back"></i>
-          </button>
-        </div>
+      <!-- Link Publikasi -->
+      <div class="staff-det-section-sub">
+        <h5>Publikasi</h5>
+        <ul>
+          <li><a href="#">Pengaruh Perlakuan Kimia terhadap Ketahanan Kayu Sengon</a></li>
+          <li><a href="#">Analisis Biokomposit dari Serat Alam Lokal</a></li>
+          <li><a href="#">Pemanfaatan Limbah Kayu dalam Industri Hijau</a></li>
+        </ul>
       </div>
     </div>
-    
-    <script>
-        function flipCard() {
-            document.querySelector(".staff-det-card").classList.toggle("flipped");
-        }
-    </script>
 
   </div>
 </section>
+
+@endsection

@@ -168,7 +168,7 @@
 
 
     <div class="judul-tengah">
-        <h3 class="judul-tengah-title">Pimpinan Departemen</h3>
+        <h3 class="judul-tengah-title">Staff Departemen</h3>
         <img src="{{ asset('img/batasgold.png') }}" alt="divider" class="judul-tengah-divider">
     </div>
 
@@ -183,147 +183,50 @@
         <!-- Tab Contents -->
     <section>
         <div id="sej-struktur" class="sej-tab-content active">
-        <div class="sej-card-grid"> <!-- baris satu -->
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
+            <div class="sej-card-grid">
+                @forelse ($struktur as $staff)
+                    <div class="sej-staff-card">
+                        <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
+                        <h4>{{ $staff->nama }}</h4>
+                        <p>{{ $staff->jabatan }}</p>
+                    </div>
+                @empty
+                    <p class="text-center">Belum ada data struktur organisasi.</p>
+                @endforelse
             </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-        </div>
-            <!-- baris dua -->
-        <div class="sej-card-grid"> 
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-
-            <div class="sej-staff-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Ketua">
-            <h4>Dr. Istie S. Rahayu</h4>
-            <p>Ketua DHH / Ketua PS S1</p>
-            </div>
-        </div>
         </div>
         
         <div id="sej-dosen" class="sej-tab-content">
-        <div class="sej-division">
-            <h3 class="sej-division-title">Divisi Biokomposit</h3>
-
-            <div class="sej-card-grid">
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-            </div>
-        </div>
-
-        <div class="sej-division">
-            <h3 class="sej-division-title">Divisi Biokomposit</h3>
-
-            <div class="sej-card-grid">
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-
-            <div class="sej-staff-card">
-                <img src="img/pairsan.jpg" alt="Dosen 1">
-                <h4>Dr. Mahdi Mubarok</h4>
-                <p>Komisi Kemahasiswaan</p>
-            </div>
-            </div>
-        </div>
+            @foreach($divisiList as $div)
+                @if($div->staff->count() > 0)
+                    <div class="sej-division">
+                        <h3 class="sej-division-title">Divisi {{ $div->nama }}</h3>
+                        <div class="sej-card-grid">
+                            @foreach($div->staff as $staff)
+                                <div class="sej-staff-card">
+                                    <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
+                                    <h4>{{ $staff->nama }}</h4>
+                                    <p>{{ $staff->jabatan }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
 
         <div id="sej-kependidikan" class="sej-tab-content">
-        <div class="sej-card-grid">
-            <div class="sej-staff-card">
-            <img src="img/pairsan.jpg" alt="Staf">
-            <h4>Prof. Dr. I. Wayan Darmawan</h4>
-            <p>Kepala PS S2/S3</p>
+            <div class="sej-card-grid">
+                @forelse($kependidikan as $staff)
+                    <div class="sej-staff-card">
+                        <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
+                        <h4>{{ $staff->nama }}</h4>
+                        <p>{{ $staff->jabatan }}</p>
+                    </div>
+                @empty
+                    <p class="text-center">Belum ada data tenaga kependidikan.</p>
+                @endforelse
             </div>
-            
-            <div class="sej-staff-card">
-            <img src="img/pairsan.jpg" alt="Staf">
-            <h4>Prof. Dr. I. Wayan Darmawan</h4>
-            <p>Kepala PS S2/S3</p>
-            </div>
-            
-            <div class="sej-staff-card">
-            <img src="img/pairsan.jpg" alt="Staf">
-            <h4>Prof. Dr. I. Wayan Darmawan</h4>
-            <p>Kepala PS S2/S3</p>
-            </div>
-            
-            <div class="sej-staff-card">
-            <img src="img/pairsan.jpg" alt="Staf">
-            <h4>Prof. Dr. I. Wayan Darmawan</h4>
-            <p>Kepala PS S2/S3</p>
-            </div>
-        </div>
         </div>
     </section>
 </div>

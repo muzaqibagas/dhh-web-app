@@ -37,12 +37,12 @@
     <h3>Kompetensi Lulusan</h3>
     <img src="{{ asset('img/batasgold.png') }}" alt="divider">
   </div>
-    <p>
+    <p style="text-align: justify;">
       Kompetensi Lulusan PS THH adalah mempunyai Dasar Ketrampilan, Kemampuan Analisis dan Sintesis yang andal, 
       serta Profesionalisme dan Kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan serta berjiwa kewirausahaan. 
       Kompetensi tersebut dijabarkan dalam 4 bagian, yaitu:
     </p>
-    <ul>
+    <ul style="text-align: justify;">
       <li>Kompetensi Bagian Peningkatan Kualitas Kayu (anatomi kayu, sifat-sifat kayu, kualitas kayu, pengendalian rayap, dan pengeringan kayu)</li>
       <li>Kompetensi Bagian Biokomposit (teknologi biokomposit, teknologi perekatan kayu, dan analisis kuantitatif dan ekonomi hutan)</li>
       <li>Kompetensi Bagian Rekayasa dan Desain Bangunan Kayu (keteknikan kayu, sifat fisik dan mekanisme kayu, uji destruktif kayu, dan proteksi bangunan kayu)</li>
@@ -58,7 +58,7 @@
     <img src="{{ asset('img/batasgold.png') }}" alt="divider">
   </div>
 
-  <ol class="pend-list">
+  <ol class="pend-list" style="text-align: justify;">
     <li>Menunjukkan sikap jujur, mandiri, humanis, berfikiran luas, beretika, dan bertanggung jawab atas pekerjaan di bidang keahliannya.</li>
     <li>Mampu menerapkan pemikiran logis, kritis, sistematis, kreatif, inovatif, dan berkomunikasi secara efektif dalam memecahkan masalah.</li>
     <li>Menguasai konsep teoritis umum ilmu kehutanan (pengelolaan hutan lestari) yang mencakup pendirian, pelestarian, pemanenan, pemrosesan, dan pemasaran.</li>
@@ -87,7 +87,7 @@
     <h3>Kurikulum dan Mata Kuliah</h3>
     <img src="{{ asset('img/batasgold.png') }}" alt="divider">
   </div>
-  <p>
+  <p style="text-align: justify;">
     Silakan kunjungi laman 
     <a href="https://panduan.ipb.ac.id" target="_blank">panduan.ipb.ac.id</a>
     untuk melihat informasi lengkap mengenai mata kuliah dan kurikulum.
@@ -103,7 +103,7 @@
   <div class="text-center">
     <img src="{{ asset('img/akreditasis1.jpg') }}" alt="Sertifikat Akreditasi" class="img-fluid rounded shadow-sm my-3" style="max-width: 400px;">
   </div>
-  <p class="text-center">
+  <p class="text-center" style="text-align: justify;">
     Program Studi Sarjana Teknologi Hasil Hutan Departemen Hasil Hutan Fakultas Kehutanan & Lingkungan IPB University telah terakreditasi A 
     berdasarkan Keputusan BAN-PT NOMOR: 13986/SK/BAN-PT/Ak-PPJ/S/XII/2021.
   </p>

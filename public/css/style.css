@@ -393,7 +393,8 @@ textarea, input, select {
 }
 
 .sidebar-logo {
-  width: 140px;
+  width: 160px;
+  align-items: center;
 }
 
 .close-btn {

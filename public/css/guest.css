@@ -1300,17 +1300,26 @@
   padding: 10px 10px;
   }
 }
+.sej-card-grid {
+  display: flex;
+  flex-wrap: wrap;          /* supaya bisa turun baris */
+  justify-content: center;  /* biar di tengah */
+  gap: 20px;
+}
+
 .sej-staff-card {
+  flex: 1 1 calc(25% - 20px); /* maks 4 per baris */
+  max-width: calc(25% - 20px);
+  box-sizing: border-box;
   text-align: center;
-  width: 200px; /* biar proporsional, semua seragam */
 }
 
 .sej-staff-card img {
-  border-radius: 8px;
-  margin-bottom: 10px;
-  max-width: 150px;
-  height: auto;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* animasi halus */
+  width: 150px;          /* atur ukuran lebar seragam */
+  height: 220px;         /* atur tinggi seragam */
+  object-fit: cover;     /* biar gambar tidak ketarik tapi terpotong rapi */
+  border-radius: 10px;   /* opsional, biar sudutnya halus */
+  margin-bottom: 10px;   /* jarak antara foto dan nama */
 }
 
 .sej-staff-card img:hover {
@@ -2215,95 +2224,194 @@
   }
 }
 
-/* ============================== */
-/*  DETAIL STAFF (FLIP CARD)     */
-/* ============================== */
+/* ============================= */
+/*   DETAIL STAFF (SINGLE CARD)  */
+/* ============================= */
 
 .staff-det-section {
-  padding: 40px 8%;
+  padding: 50px 8%;
+  background: #fff;
 }
 
 .staff-det-container {
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
-.staff-det-photo img {
+/* === FOTO STAFF === */
+.staff-det-photo {
   width: 230px;
+  height: 300px;
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
-/* === Card Flip Wrapper === */
-.staff-det-card {
-  perspective: 1000px;
-  flex: 1;
-}
-
-.staff-det-card-inner {
-  position: relative;
+.staff-det-photo img {
   width: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.staff-det-card.flipped .staff-det-card-inner {
-  transform: rotateX(180deg);
-}
-
-/* === Card Faces === */
-.staff-det-card-front,
-.staff-det-card-back {
+/* === CARD UTAMA === */
+.staff-det-card {
+  flex: 1;
+  min-width: 320px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  padding: 20px;
-  position: absolute;
-  width: 100%;
-  backface-visibility: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 25px 30px;
+  color: #333;
 }
 
-.staff-det-card-back {
-  transform: rotateX(180deg);
-}
-
-.staff-det-card h5 {
+/* === NAMA DAN PERAN === */
+.staff-det-name {
   font-weight: 700;
-  color: #1a1a1a;
+  color: #8b0000;
+  margin-bottom: 0.3rem;
 }
 
-.staff-det-card ul {
-  margin: 10px 0 0;
-  padding-left: 15px;
+.staff-det-role {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
 
-.staff-det-flip-btn {
-  background: #8b0000;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  padding: 8px 10px;
-  cursor: pointer;
-  float: right;
-  transition: 0.3s;
+/* === INFORMASI DASAR === */
+/* === INFORMASI RATA (Label : Value) === */
+.staff-det-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.staff-det-flip-btn:hover {
-  background: #a52a2a;
+.staff-det-row {
+  display: grid;
+  grid-template-columns: 160px 1fr; /* kolom kiri tetap, kanan fleksibel */
+  align-items: start;
 }
 
-/* === Responsive === */
+.staff-det-row span:first-child {
+  font-weight: 600;
+  color: #222;
+  position: relative;
+}
+
+.staff-det-row span:first-child::after {
+  content: ":";
+  position: absolute;
+  right: 5px;
+}
+
+.staff-det-row span:last-child {
+  color: #333;
+  word-break: break-word; /* biar link panjang ga overflow */
+}
+
+.staff-det-row a {
+  color: #0b2a7d;
+  text-decoration: none;
+}
+
+.staff-det-row a:hover {
+  text-decoration: underline;
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+  .staff-det-row {
+    grid-template-columns: 120px 1fr;
+  }
+}
+
+.staff-det-info p {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.staff-det-info a {
+  color: #0b2a7d;
+  text-decoration: none;
+}
+
+.staff-det-info a:hover {
+  text-decoration: underline;
+}
+
+/* === BAGIAN SUB (Pendidikan & Publikasi) === */
+.staff-det-section-sub {
+  margin-top: 1.5rem;
+}
+
+.staff-det-section-sub h5 {
+  color: #8b0000;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.staff-det-section-sub ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.staff-det-section-sub li {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  .staff-det-container {
+    gap: 1.5rem;
+  }
+
+  .staff-det-photo {
+    width: 200px;
+    height: 260px;
+  }
+}
+
 @media (max-width: 768px) {
   .staff-det-container {
     flex-direction: column;
     align-items: center;
+    text-align: left;
   }
+
+  .staff-det-photo {
+    width: 200px;
+    height: 260px;
+  }
+
   .staff-det-card {
     width: 100%;
+    padding: 20px;
   }
-  .staff-det-photo img {
-    margin-bottom: 15px;
+}
+
+@media (max-width: 480px) {
+  .staff-det-photo {
+    width: 180px;
+    height: 230px;
+  }
+
+  .staff-det-card {
+    padding: 18px;
+  }
+
+  .staff-det-name {
+    font-size: 1rem;
+  }
+
+  .staff-det-info p,
+  .staff-det-section-sub li {
+    font-size: 0.9rem;
   }
 }
