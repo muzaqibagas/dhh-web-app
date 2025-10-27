@@ -263,7 +263,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if ($request->hasfile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_komprehensif' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $syarat->formulir = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
             $syarat->alasan_formulir = null;            
@@ -271,7 +271,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if ($request->hasfile('bukti_sks')) {
             $file = $request->file('bukti_sks');
-            $fileName = 'bukti_sks_komprehensif' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $syarat->bukti_sks = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
             $syarat->alasan_bukti_sks = null;            
@@ -279,7 +279,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if ($request->hasfile('bukti_spp')) {
             $file = $request->file('bukti_spp');
-            $fileName = 'bukti_spp_komprehensif' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $syarat->bukti_spp = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
             $syarat->alasan_bukti_spp = null;            
@@ -287,7 +287,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if ($request->hasfile('bukti_kehadiran')) {
             $file = $request->file('bukti_kehadiran');
-            $fileName = 'bukti_kehadiran_komprehensif' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $syarat->bukti_kehadiran = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
             $syarat->alasan_bukti_kehadiran = null;            
