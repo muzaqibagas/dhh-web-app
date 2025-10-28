@@ -17,12 +17,20 @@ class SyaratKolokiummhsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $listModerator = StaffDept::all();
+        $search = $request->input('search');
+
         $pendaftar = SyaratKolokiummhs::with('mahasiswa')
             ->where('status', '!=', 'ditolak') 
             ->where('bap', '!=', 'ditolak')
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('mahasiswa', function ($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
+                });
+            })
             ->get();
         return view('syaratkolokiummhs.index', compact('pendaftar', 'listModerator'));
     }
@@ -324,7 +332,7 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
         ]);
 
-         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang persyaratan kolokium dengan jadwal terbaru');
+         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang persyaratan kolokium dengan jadwal terbaru');         
     }
 
 

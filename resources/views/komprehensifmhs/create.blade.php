@@ -120,7 +120,7 @@
 
                 <div class="form-group">
                     <label>Alamat di Bogor</label>
-                    <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="{{ Auth::user()->alamat ?? '' }}" required>
+                    <input type="text" name="alamat" placeholder="Masukkan Alamat Lengkap" value="" required>
                 </div>
 
                 <div class="form-group">

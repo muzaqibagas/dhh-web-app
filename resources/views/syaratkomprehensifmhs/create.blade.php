@@ -100,31 +100,101 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif      
-                <ol class="syarat-list">
-                    <li><b>Formulir Pendaftaran Ujian Akhir Sarjana</b><br>
-                        Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
-                    </li>
-                    <li><b>Telah Menyelesaikan Seluruh Mata Kuliah.</b><br>
-                        Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
-                    </li>
-                    <li><b>Bukti Pelunasan SPP</b><br>
-                        Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
-                    </li>
-                    <li><b>Buku Konsultasi</b><br>
-                        Mahasiswa diminta menyerahkan buku konsultasi yang telah diisi lengkap dan ditandatangani oleh dosen pembimbing.
-                    </li>
-                    <li><b>Draft Skripsi yang Siap Ujian</b><br>
-                        Mahasiswa diminta membawa draft skripsi yang telah ditandatangani oleh Komisi Pembimbing dan Ketua Departemen. (Sebanyak 3-4 eksemplar wajib diserahkan secara fisik ke bagian TU.)
-                    </li>
-                    <li><b>Proceeding dan Ringkasan (CD & Hardcopy)</b><br>
-                        Mahasiswa diminta membawa proceeding (berbahasa Inggris) dan ringkasan skripsi. Siapkan juga 1 CD dan 1 hardcopy masing-masing untuk diserahkan secara langsung ke TU.
-                    </li>
-                </ol>
+              <ol class="syarat-list">
+                <li><b>Formulir Pendaftaran Ujian Akhir Sarjana</b><br>
+                  Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
+                </li>
+                <li><b>Telah Menyelesaikan Seluruh Mata Kuliah.</b><br>
+                  Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
+                </li>
+                <li><b>Bukti Pelunasan SPP</b><br>
+                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
+                </li>
+                <li><b>Buku Konsultasi</b><br>
+                  Mahasiswa diminta menyerahkan buku konsultasi yang telah diisi lengkap dan ditandatangani oleh dosen pembimbing.
+                </li>
+                <li><b>Draft Skripsi yang Siap Ujian</b><br>
+                  Mahasiswa diminta membawa draft skripsi yang telah ditandatangani oleh Komisi Pembimbing dan Ketua Departemen. (Sebanyak 3-4 eksemplar wajib diserahkan secara fisik ke bagian TU.)
+                </li>
+                <li><b>Proceeding dan Ringkasan (CD & Hardcopy)</b><br>
+                  Mahasiswa diminta membawa proceeding (berbahasa Inggris) dan ringkasan skripsi. Siapkan juga 1 CD dan 1 hardcopy masing-masing untuk diserahkan secara langsung ke TU.
+                </li>
+              </ol>
 
+            <!-- {{-- Kondisi jika sudah disetujui --}} -->
             @if($syarat && $syarat->status === 'disetujui')
                 <div class="alert alert-success">
                     Dokumen Anda sudah <b>disetujui</b>. Anda tidak bisa upload lagi.
                 </div>
+
+            <!-- {{-- Kondisi jika ditolak --}} -->
+            @elseif($syarat && $syarat->status === 'ditolak')
+              <div class="alert alert-warning">
+                Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
+                <ul>
+                  @if($syarat->alasan_formulir)<li><b>Formulir Komprehensif Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif
+                  @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                  @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
+                  @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
+                </ul>
+              </div>
+              
+              <div class="upload-section">
+                <h4><i class="bi bi-upload"></i> Upload Ulang Dokumen Ditolak</h4>
+                <form action="{{ route('syaratkomprehensifmhs.reupload', $syarat->id) }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @if($syarat->alasan_formulir)
+                    <div class="form-group">
+                      <label>Upload Ulang Formulir Komprehensif Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="formulir" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_sks)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_sks" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_spp)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti SPP <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_spp" accept=".pdf" required>
+                    </div>
+                  @endif
+                  @if($syarat->alasan_bukti_kehadiran)
+                    <div class="form-group">
+                      <label>Upload Ulang Bukti Kehadiran Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="bukti_kehadiran" accept=".pdf" required>
+                    </div>
+                  @endif
+                  <div class="form-actions d-flex justify-content-end">
+                    <button type="submit" class="btn btn-warning">Upload Ulang</button>
+                  </div>                 
+                </form>
+              </div>  
+
+            <!-- {{-- Kondisi jika pending --}} -->
+            @elseif($syarat && $syarat->status === 'pending')
+              <div class="alert alert-info">
+                Dokumen Anda sedang <b>menunggu konfirmasi admin</b>. Anda tidak dapat mengupload dokumen baru sampai dikonfirmasi.
+              </div>
+
+            <!-- {{-- kondisi kalau BAP diterima --}} -->
+            @elseif ($syarat && $syarat->bap === 'diterima')
+                <div class="alert alert-success">
+                    <strong>BAP Anda telah diterima.</strong> Semua persyaratan seminar hasil sudah lengkap dan disetujui.
+                </div>
+
+            <!-- {{-- kondisi kalau BAP ditolak --}} -->
+            @elseif ($syarat && $syarat->bap === 'ditolak' && !$syarat->formulir)
+              <div class="alert alert-warning">
+                <strong>BAP Anda ditolak.</strong> Silakan unggah ulang<strong>Formulir Seminar Hasil</strong> dengan jadwal baru untuk penjadwalan ulang.
+                <ul>
+                  @if($syarat->alasan_formulir)<li><b>Formulir Seminar Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif                
+                </ul>
+              </div>       
+            
+            <!-- {{-- Kondisi default (belum pernah upload) --}} -->            
             @else
                 <div class="upload-section">
                     <h4><i class="bi bi-upload"></i> Form Upload Dokumen</h4>

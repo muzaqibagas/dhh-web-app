@@ -17,12 +17,20 @@ class SyaratSeminarmhsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $listModerator = StaffDept::all();
+        $search = $request->input('search');
+
         $pendaftar = SyaratSeminarmhs::with('mahasiswa')
             ->where('status', '!=', 'ditolak') 
             ->where('bap', '!=', 'ditolak')
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('mahasiswa', function ($q) use ($search) {
+                    $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
+                });
+            })
             ->get();
         return view('syaratseminarmhs.index', compact('pendaftar', 'listModerator'));
     }
@@ -151,11 +159,10 @@ class SyaratSeminarmhsController extends Controller
         if (!$seminar) {
             return redirect()
             ->route('seminarmhs.create')
-            ->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');            
+            ->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan seminar hasil.');            
         }
 
         $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();        
-
         return view('syaratseminarmhs.create', compact('syarat'));
     }
 
@@ -322,7 +329,7 @@ class SyaratSeminarmhsController extends Controller
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti kehadiran',
         ]);
 
-        return redirect()->back()->with('success', 'BAP belum diterima. Mahasiswa Harus mengunggah ulang persyaratan seminar hasil');
+        return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa Harus mengunggah ulang persyaratan seminar hasil');
     }
 
     /**

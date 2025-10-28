@@ -29,8 +29,7 @@ class KontenJenjangController extends Controller
     }
 
     public function create(Request $request)
-    {
-        // Ambil jenjang yang BELUM punya konten
+    {        
         $jenjangs = Jenjang::whereDoesntHave('konten')->get();
 
         return view('kontenjenjang.create', compact('jenjangs'));
