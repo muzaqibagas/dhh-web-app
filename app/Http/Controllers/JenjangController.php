@@ -61,6 +61,8 @@ class JenjangController extends Controller
         return view('jenjang.show', compact('data'));
     }
 
+
+    
     /**
      * Show the form for editing the specified resource.
      */
