@@ -146,8 +146,7 @@
         class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
         <i class="bi bi-box-arrow-right"></i> Log Out
       </a>
-    </div>
-      <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
+    </div>      
     
       <script>
         document.querySelectorAll('[data-dropdown]').forEach(toggle => {
@@ -171,7 +170,7 @@
           });
         });
       </script>
-    </aside>
+  </aside>
 
 <!-- MAIN KONTEN -->
 <main class="content">

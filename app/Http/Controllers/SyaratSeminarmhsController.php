@@ -207,7 +207,7 @@ class SyaratSeminarmhsController extends Controller
         $nim = $user->nim;
         if ($request->hasFile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $data['formulir'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
         }

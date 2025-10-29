@@ -142,10 +142,14 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-      </a>
+      <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
+        @csrf
+        <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
+          <div class="menu-left">
+            <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+          </div>
+        </button>
+      </form>   
     </div>
       <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
     
