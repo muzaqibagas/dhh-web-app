@@ -218,28 +218,28 @@ class SyaratKomprehensifmhsController extends Controller
         $nim = $user->nim;
         if ($request->hasFile('formulir')) {
             $formulir = $request->file('formulir');
-            $formulirName = 'formulir_' . $nim . '_' . Str::random(10) . '.' . $formulir->getClientOriginalExtension();
+            $formulirName = 'formulir_komprehensif_' . $nim . '.' . $formulir->getClientOriginalExtension();
             $formulir->move($destinationPath, $formulirName);
             $data['formulir'] = 'syarat_komprehensif/' . $folderName . '/' . $formulirName;
         }
 
         if ($request->hasFile('bukti_sks')) {
             $buktiSks = $request->file('bukti_sks');
-            $buktiSksName = 'bukti_sks_' . $nim . '_' . Str::random(10) . '.' . $buktiSks->getClientOriginalExtension();
+            $buktiSksName = 'bukti_sks_' . $nim . '.' . $buktiSks->getClientOriginalExtension();
             $buktiSks->move($destinationPath, $buktiSksName);
             $data['bukti_sks'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiSksName;
         }
 
         if ($request->hasFile('bukti_spp')) {
             $buktiSpp = $request->file('bukti_spp');
-            $buktiSppName = 'bukti_spp_' . $nim . '_' . Str::random(10) . '.' . $buktiSpp->getClientOriginalExtension();
+            $buktiSppName = 'bukti_spp_' . $nim . '.' . $buktiSpp->getClientOriginalExtension();
             $buktiSpp->move($destinationPath, $buktiSppName);
             $data['bukti_spp'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiSppName;
         }
 
         if ($request->hasFile('bukti_kehadiran')) {
             $buktiKehadiran = $request->file('bukti_kehadiran');
-            $buktiKehadiranName = 'bukti_kehadiran_' . $nim . '_' . Str::random(10) . '.' . $buktiKehadiran->getClientOriginalExtension();
+            $buktiKehadiranName = 'bukti_kehadiran_' . $nim . '.' . $buktiKehadiran->getClientOriginalExtension();
             $buktiKehadiran->move($destinationPath, $buktiKehadiranName);
             $data['bukti_kehadiran'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiKehadiranName;
         }
@@ -263,7 +263,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if ($request->hasfile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_komprehensif_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $syarat->formulir = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
             $syarat->alasan_formulir = null;            
