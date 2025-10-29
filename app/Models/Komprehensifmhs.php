@@ -24,6 +24,7 @@ class Komprehensifmhs extends Model
         'waktu_selesai',
         'judul_tugasakhir',
         'skl',
+        'tanggal_skl',
         'status',
         'tipe_pelaksanaan',
         'id_ruangan',

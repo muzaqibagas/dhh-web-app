@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EditPasswordMhs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EditPasswordMhsController extends Controller
 {
@@ -52,7 +54,28 @@ class EditPasswordMhsController extends Controller
      */
     public function update(Request $request, EditPasswordMhs $editPasswordMhs)
     {
-        //
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed', 
+        ]);
+
+        $user = Auth::user();
+
+        // Cek apakah password lama cocok
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+        }
+
+        if (Hash::check($request->new_password, $user->password)) {
+            return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama.']);
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return back()->with('success', 'Password berhasil diubah.');   
     }
 
     /**

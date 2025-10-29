@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EditPasswordAdm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EditPasswordAdmController extends Controller
 {
@@ -52,7 +54,26 @@ class EditPasswordAdmController extends Controller
      */
     public function update(Request $request, EditPasswordAdm $editPasswordAdm)
     {
-        //
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+        }
+
+        if (Hash::check($request->new_password, $user->password)) {
+            return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return back()->with('success', 'Password berhasil diubah.');
     }
 
     /**

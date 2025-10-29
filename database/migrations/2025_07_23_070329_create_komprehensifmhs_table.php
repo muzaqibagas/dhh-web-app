@@ -25,6 +25,7 @@ return new class extends Migration
             $table->time('waktu_selesai');
             $table->string('judul_tugasakhir');
             $table->string('skl')->nullable();
+            $table->date('tanggal_skl')->nullable();
             $table->string('status')->nullable();
             $table->string('tipe_pelaksanaan')->default('offline');
             $table->foreignId('id_ruangan')->nullable()->constrained('ruangans')->onDelete('cascade');

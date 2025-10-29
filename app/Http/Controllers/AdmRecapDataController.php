@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdmRecapDataExport;
 use App\Exports\AdmRecapMultiSheetExport;
+use Carbon\Carbon;
 
 class AdmRecapDataController extends Controller
 {
@@ -59,6 +60,21 @@ class AdmRecapDataController extends Controller
                 $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
                 $tanggal_seminar = $seminarData->tanggal ?? '-';
                 $tanggal_komprehensif = $kompreData->tanggal ?? '-';
+                
+                $tanggal_skl = $kompreData?->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-';                
+                
+                $status = $kompreData->status ?? '-';
+                if ($kompreData && $kompreData->tanggal_skl) {
+                    $bulan = Carbon::parse($kompreData->tanggal_skl)->month;
+                    $tahun = Carbon::parse($kompreData->tanggal_skl)->year;
+
+                    // Jika bulan 1–7 → Genap, 8–12 → Ganjil
+                    if ($bulan >= 1 && $bulan <= 7) {
+                        $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
+                    } else {
+                        $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
+                    }
+                }
 
                 // Ambil SKL dan status genap jika ada di kompre
                 $ket_sem_ganjil = $kompreData ? ($kompreData->skl ? 'SKL sudah' : '-') : '-';
@@ -73,10 +89,9 @@ class AdmRecapDataController extends Controller
                     'tanggal_kolokium' => $tanggal_kolokium,
                     'tanggal_seminar' => $tanggal_seminar,
                     'tanggal_ujian' => $tanggal_komprehensif,
-                    'ket_sem_ganjil' => $ket_sem_ganjil,
-                    'genap_2024_2025' => $genap_2024_2025,
-                    'skl' => $kompreData->skl ?? null,  
-                    'status' => $kompreData->status ?? null,
+                    'tanggal_skl' => $tanggal_skl,
+                    'skl' => $kompreData->skl ?? '-',
+                    'status' => $status,
                 ];
             }
 
@@ -88,12 +103,33 @@ class AdmRecapDataController extends Controller
         return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public function updateSKL($nim){
+    public function updateSKL($nim)
+    {
         $kompre = KomprehensifMhs::where('nim', $nim)->first();
-        $kompre->update(['skl' => 'SKL Sudah', 'status' => 'Lulus']);
 
-        return redirect()->back()->with('success', 'Status SKL diperbarui.');
+        if ($kompre) {
+            $tanggalSKL = Carbon::now();
+
+            // Tentukan semester otomatis
+            $bulan = $tanggalSKL->month;
+            $tahun = $tanggalSKL->year;
+            if ($bulan >= 1 && $bulan <= 7) {
+                $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
+            } else {
+                $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
+            }
+
+            // Update data kompre
+            $kompre->update([
+                'skl' => 'SKL Sudah',
+                'tanggal_skl' => $tanggalSKL,
+                'status' => $status,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'SKL berhasil dikonfirmasi dan status diperbarui.');
     }
+
 
     public function export()
     {
