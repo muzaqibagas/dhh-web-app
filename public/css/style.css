@@ -7,10 +7,10 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #002b60; /* Background color for the entire website, including individual sections */
+  --background-color: #2C367E; /* Background color for the entire website, including individual sections */
   --default-color: rgba(255, 255, 255, 0.8); /* Default color used for the majority of the text content across the entire website */
   --heading-color: #e0e9f2; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #721B29; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-color: #BC2026; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #1b262c; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -18,11 +18,11 @@
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: rgba(255, 255, 255, 0.8);  /* The default color of the main navmenu links */
-  --nav-hover-color: #e3a127; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #29343a; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #29343a; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-hover-color: #ffcd2b; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #2C367E; /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #2C367E; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: rgba(255, 255, 255, 0.8); /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #e3a127; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: #ffcd2b; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -48,8 +48,8 @@
 
 /* Warna dasar */
 :root {
-  --biru: #002b60;
-  --emas: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #FFD700);
+  --biru: #2C367E;
+  --emas: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #ffcd2b);
 }
 
 /* Header Top Gold */
@@ -90,7 +90,7 @@
 }
 
 .nav-menu a:hover {
-  color: #FFD700; /* Hover jadi emas */
+  color: #ffcd2b; /* Hover jadi emas */
 }
 
 .nav-menu.d-flex {
@@ -107,7 +107,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #002b60;
+  background: #2C367E;
   padding: 10px 0;
   list-style: none;
   display: none;
@@ -123,7 +123,7 @@
 }
 
 .dropdown-menu li a:hover {
-  color: #FFD700;
+  color: #ffcd2b;
 }
 
 .header-logo img {
@@ -131,7 +131,7 @@
 }
 
 .navbar .dropdown-menu {
-  background-color: #002b60 !important;
+  background-color: #2C367E !important;
 }
 
 .navbar .dropdown-menu a {
@@ -139,7 +139,7 @@
 }
 
 .navbar .dropdown-menu a:hover {
-  color: #FFD700 !important;
+  color: #ffcd2b !important;
 }
 
 /* Responsive */
@@ -320,7 +320,7 @@
 }
 
 .footer-bottom {
-  background: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #FFD700); /* gradasi emas */
+  background: linear-gradient(to right, #efab2c, #FFD700, #efab2c, #ffcd2b); /* gradasi emas */
   padding: 8px 20px;
   margin-top: 26px;
 }
@@ -374,7 +374,7 @@ textarea, input, select {
   right: -270px; /* posisi tertutup */
   width: 250px;
   height: 100%;
-  background-color: #002b60;
+  background-color: #2C367E;
   color: #fff;
   transition: right 0.3s ease;
   z-index: 9999;
@@ -423,7 +423,7 @@ textarea, input, select {
 }
 
 .sidebar-menu a:hover {
-  color: #ffd100;
+  color: #ffcd2b;
 }
 
 /* Dropdown di sidebar */

@@ -65,19 +65,6 @@
 .guest-menu-section {
 }
 
-.guest-menu-card {
-  background-color: #0B2A7D; /* biru tua */
-  border: 3px solid #FFD700; /* garis emas */
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: white;
-  padding: 30px 10px;
-  transition: 0.3s;
-}
 
 .guest-menu-card img {
   width: 60px;
@@ -139,7 +126,7 @@
 }
 
 .guest-menu-card {
-  background-color: #0B2A7D;
+  background-color: #2C367E;
   border: 3px solid #FFD700;
   border-radius: 12px;
   text-align: center;

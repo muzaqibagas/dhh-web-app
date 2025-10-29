@@ -68,6 +68,7 @@ Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery'
 Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
 Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
+Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
 Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
 
 Route::get('email/verify', function () {
