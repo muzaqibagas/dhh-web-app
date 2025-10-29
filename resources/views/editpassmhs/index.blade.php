@@ -83,29 +83,53 @@
 <!-- MAIN KONTEN -->
 <main class="content">
     <div class="container-fluid mt-4">
-            <h2 class="page-title">Edit Password Akun</h2>
-        </div> 
-        <div class="d-flex justify-content-center align-items-center w-100 mt-4">
-            <div class="card p-4 shadow-sm w-75 border-2" style="border:solid #1b2a6d">
-            <div class="text-start mb-4">
-                <label class="form-label fw-bold mb-0">Password Saat Ini</label>
-                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password saat ini">
-            </div>
-            <div class="text-start mb-4">
-                <label class="form-label fw-bold mb-0">Password Baru</label>
-                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password baru">
-            </div>
-            <div class="text-start mb-4">
-                <label class="form-label fw-bold mb-0">Konfirmasi Password Baru</label>
-                <input type="text" class="form-control" style="background-color:#f5f5f5" placeholder="Konfirmasi password baru">
-            </div>  
-            <div class="row mt-4">
-                <div class="mb-3 d-flex justify-content-between align-items-center">
-                    <a href="{{route('admprofile.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
-            </div>
-        </div>
+      <h2 class="page-title">Edit Password Akun</h2>
+    </div> 
+    <div class="d-flex justify-content-center align-items-center w-100 mt-4">
+      <div class="card p-4 shadow-sm w-75 border-2" style="border:solid #1b2a6d">
+        <form method="POST" action="{{ route('editpassmhs.update') }}">
+          @csrf
+
+          {{-- Alert Success --}}
+          @if(session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+          </div>
+          @endif
+
+          @if ($errors->any())
+              <div class="alert alert-danger alert-dismissible fade show text-start" role="alert">         
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach           
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>       
+              </div>
+          @endif
+
+          <div class="text-start mb-4">
+              <label class="form-label fw-bold mb-0">Password Saat Ini</label>
+              <input type="password" name="current_password" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password saat ini" required>
+          </div>
+
+          <div class="text-start mb-4">
+              <label class="form-label fw-bold mb-0">Password Baru</label>
+              <input type="password" name="new_password" class="form-control" style="background-color:#f5f5f5" placeholder="Masukkan password baru" required>
+          </div>
+
+          <div class="text-start mb-4">
+              <label class="form-label fw-bold mb-0">Konfirmasi Password Baru</label>
+              <input type="password" name="new_password_confirmation" class="form-control" style="background-color:#f5f5f5" placeholder="Konfirmasi password baru" required>
+          </div>  
+
+          <div class="row mt-4">
+              <div class="mb-3 d-flex justify-content-between align-items-center">
+                  <a href="{{ route('admprofile.index') }}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                  <button type="submit" class="btn btn-success">Simpan</button>
+              </div>
+          </div>
+        </form>
+      </div>
     </div>
 </main>
 @endsection

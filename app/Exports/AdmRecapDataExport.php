@@ -12,18 +12,10 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Carbon\Carbon;
 
 class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithStyles
-{
-    protected $semester;
-    protected $tahunAjaran;
-
-    public function __construct($semester, $tahunAjaran)
-    {
-        $this->semester = $semester;
-        $this->tahunAjaran = $tahunAjaran;
-    }
-
+{    
     public function collection()
     {
         $kolokium = KolokiumMhs::all()->keyBy('nim');
@@ -39,6 +31,7 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             $kompreData = $kompre[$nim] ?? null;
             $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
 
+            if (!$identitas) continue;
             $pembimbing1 = $this->decodePembimbing($identitas->pembimbing1 ?? '-');
             $pembimbing2 = $this->decodePembimbing($identitas->pembimbing2 ?? '-');
 
@@ -53,8 +46,8 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'Tanggal Kolokium' => $kolokiumData->tanggal ?? '-',
                 'Tanggal Seminar' => $seminarData->tanggal ?? '-',
                 'Tanggal Ujian' => $kompreData->tanggal ?? '-',
-                "Ket. Sem. {$this->semester} {$this->tahunAjaran}" => $kompreData->skl ?? '-',                
-                'Status' => $kompreData->status ?? '-',
+                'Tanggal SKL' => $kompreData->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-',
+                'Tahun Lulus' => $kompreData->status ?? '-',
             ]);
         }
 
@@ -87,8 +80,8 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Tanggal Kolokium',
             'Tanggal Seminar',
             'Tanggal Ujian',
-            "Ket. Sem. {$this->semester} {$this->tahunAjaran}",
-            'Status',
+            "Tanggal SKL",
+            'Tahun Lulus',
         ];
     }
 

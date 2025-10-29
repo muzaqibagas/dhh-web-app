@@ -99,12 +99,14 @@
     </div>
 
     <!-- BTN LOGOUT ===================== -->
-    <a href="/login" class="menu {{ $isLogoutmhsActive ? 'active' : '' }}">
-      <div class="menu-left">
-        <i class="bi bi-box-arrow-right"></i>
-        <span> Keluar Akun </span>
-      </div>
-    </a>        
+    <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
+      @csrf
+      <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
+        <div class="menu-left">
+          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+        </div>
+      </button>
+    </form>      
   </aside>
   <main class="content">
     <h2 class="page-title">Biodata Mahasiswa</h2>

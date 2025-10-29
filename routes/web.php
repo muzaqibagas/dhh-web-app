@@ -106,7 +106,11 @@ Route::get('register', [RegisterController::class, 'index'])->name('register.ind
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('editpassadm', [EditPasswordAdmController::class, 'index'])->name('editpassadm.index');
+Route::post('editpassadm/update', [EditPasswordAdmController::class, 'update'])->name('editpassadm.update');
+
 Route::get('editpassmhs', [EditPasswordMhsController::class, 'index'])->name('editpassmhs.index');
+Route::post('editpassmhs/update', [EditPasswordMhsController::class, 'update'])->name('editpassmhs.update');
+
 
 
 //ADMIN
@@ -351,6 +355,7 @@ Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->na
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
 Route::post('/admrecapdata/skl/{nim}', [AdmRecapDataController::class, 'updateSKL']);
 Route::get('/admrecapdata/export', [AdmRecapDataController::class, 'export'])->name('admrecapdata.export');
+Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
 
 // User
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');

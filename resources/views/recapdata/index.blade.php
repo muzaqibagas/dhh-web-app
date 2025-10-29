@@ -175,7 +175,7 @@
         <div class="adm-header">
             <h2 class="adm-title">Daftar Daftar Rekap Data</h2>
               <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
-                <i class="bi bi-download"></i>Download File Excel
+                <i class="bi bi-download"></i>Download Excel
               </a>
         </div>
         @if(session('success'))
@@ -192,15 +192,12 @@
                           <tr>
                             <th style="width: 50px; white-space: nowrap;">No.</th>
                             <th style="width: 200px; white-space: nowrap;">Nama</th>
-                            <th style="width: 120px; white-space: nowrap;">NIM</th>
-                            <th style="width: 200px; white-space: nowrap;">Pembimbing 1</th>
-                            <th style="width: 200px; white-space: nowrap;">Pembimbing 2</th>
-                            <th style="width: 150px; white-space: nowrap;">Semester</th>
+                            <th style="width: 120px; white-space: nowrap;">NIM</th>                                                        
                             <th style="width: 180px; white-space: nowrap;">Kolokium</th>
                             <th style="width: 180px; white-space: nowrap;">Seminar</th>
                             <th style="width: 180px; white-space: nowrap;">Ujian</th>
-                            <th style="width: 180px; white-space: nowrap;">Ket. Sem. Ganjil 2024/2025</th>
-                            <th style="width: 180px; white-space: nowrap;">Genap 2024/2025</th>
+                            <th style="width: 180px; white-space: nowrap;">Tanggal SKL</th>
+                            <th style="width: 180px; white-space: nowrap;">Tahun Lulus</th>
                           </tr>
                         </thead>
                         <tbody>                                                             
@@ -208,16 +205,15 @@
                               <tr>                              
                                 <td>{{ $i+1 }}</td>                              
                                 <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['nama'] }}</td>
-                                <td>{{ $row['nim'] }}</td>
-                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing1'] }}</td>
-                                <td class="text-start text-truncate" style="max-width: 200px;">{{ $row['pembimbing2'] }}</td>
-                                <td>{{ $row['semester_genap'] }}</td>
+                                <td>{{ $row['nim'] }}</td>                              
                                 <td>{{ $row['tanggal_kolokium'] }}</td>
                                 <td>{{ $row['tanggal_seminar'] }}</td>
                                 <td>{{ $row['tanggal_ujian'] }}</td>
                                 <td>
-                                  @if($row['skl'])
-                                    <span class="badge bg-success">{{ $row['skl'] }}</span>
+                                  @if($row['tanggal_skl'] !== '-' && !empty($row['tanggal_skl']))                                  
+                                    <span>
+                                      {{ $row['tanggal_skl'] }}
+                                    </span>
                                   @else
                                     <button type="button" class="btn btn-success btn-sm" 
                                             style="width: 30px; height: 30px; padding: 0;"
