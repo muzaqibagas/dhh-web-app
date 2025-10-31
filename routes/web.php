@@ -63,13 +63,14 @@ Route::get('/artikeledit', function () {
 
 Route::get('home', [Controller::class, 'home'])->name('guest.home');
 Route::get('file', [Controller::class, 'file'])->name('guest.file');
-Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
-Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
-Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
+Route::get('pendidikans11', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
+// Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
+// Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
 Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
 Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
 Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
+Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
 Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
 
 Route::get('email/verify', function () {
@@ -197,6 +198,7 @@ Route::get('jenjang/{jenjang}/edit', [JenjangController::class, 'edit'])->name('
 Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jenjang.update');
 Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
 
+
 // KontenJenjang
 Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');
 Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
@@ -205,6 +207,10 @@ Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'sh
 Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
 Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
 Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
+
+Route::get('/pendidikans1', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S1');
+Route::get('/pendidikans2', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S2');
+Route::get('/pendidikans3', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S3');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');

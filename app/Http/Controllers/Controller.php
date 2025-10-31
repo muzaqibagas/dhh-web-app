@@ -62,4 +62,9 @@ class Controller extends BaseController
     {
         return view('guest.staffdetail');    
     }
+
+    public function alumnidetail()
+    {
+        return view('guest.alumnidetail');    
+    }
 }

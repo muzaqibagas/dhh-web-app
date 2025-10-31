@@ -26,5 +26,11 @@ class KontenJenjang extends Model
     {
         return $this->belongsTo(Jenjang::class, 'id_jenjang');
     }
+    
+    public function leaflets()
+    {
+        return $this->hasMany(LeafletJenjang::class, 'id_kontenjenjang');
+    }
+
 }
 

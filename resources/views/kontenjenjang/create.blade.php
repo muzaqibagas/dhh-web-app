@@ -254,8 +254,8 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
                       <div class="col-sm-10">
-                          <input type="file" name="leaflet" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-leaflet')">
-                          <img id="preview-leaflet" class="img-thumbnail mt-2 d-none" width="150">
+                          <input type="file" name="leaflet[]" class="form-control" accept="image/*" multiple>
+                          <div id="leaflet-preview" class="d-flex flex-wrap gap-2 mt-2"></div>
                       </div>
                   </div>
 
@@ -301,5 +301,22 @@ function previewImage(event, previewId) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+document.querySelector('input[name="leaflet[]"]').addEventListener('change', function(event) {
+  const previewContainer = document.getElementById('leaflet-preview');
+  previewContainer.innerHTML = '';
+  for (let file of event.target.files) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.classList.add('img-thumbnail');
+      img.style.width = '100px';
+      previewContainer.appendChild(img);
+    }
+    reader.readAsDataURL(file);
+  }
+});
 </script>
+
 @endsection
