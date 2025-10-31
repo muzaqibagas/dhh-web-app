@@ -53,8 +53,8 @@ class Seminarmhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
     }
 
-    public function acaraAkademik()
+    public function syaratSeminar()
     {
-        return $this->hasMany(AcaraAkademik::class, 'id_kolokium');
-    }
+        return $this->hasOne(SyaratSeminarmhs::class, 'id_mahasiswa', 'id_mahasiswa');
+    }    
 }

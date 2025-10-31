@@ -142,7 +142,11 @@
 			</div>  
 			<div class="form-group">
 				<label>Ketua Sidang</label>
-				<div class="form-static">[Diisi oleh akademik]</div>
+				<input type="text" class="text-success fw-bold" value="{{ $komprehensifmhs->syaratKomprehensif->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>				
+			</div>
+			<div class="form-group">
+				<label>Dosen Penguji</label>
+				<input type="text" class="text-success fw-bold" value="{{ $komprehensifmhs->syaratKomprehensif->penguji->nama ?? '[Diisi oleh akademik]' }}" readonly>				
 			</div>
 			<div class="form-actions mt-3 d-flex justify-content-end">
 				<a href="{{ route('komprehensifmhs.edit', $komprehensifmhs->id) }}" class="btn btn-warning">Edit</a>

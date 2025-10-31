@@ -378,7 +378,7 @@ class SyaratKomprehensifmhsController extends Controller
             'id_penguji' => $pengujiId
         ]); 
                 
-        return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> dan Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
+        return redirect()->back()->with('success', "Ketua Sidang <strong>{$moderator}</strong> dan Dosen Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
         
     }
 

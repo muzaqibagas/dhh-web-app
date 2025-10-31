@@ -277,7 +277,7 @@
                                   <button type="button" class="btn btn-secondary btn-sm" disabled
                                           title="Verifikasi belum disetujui"
                                           style="width: 90px; height: 30px; padding: 0;">
-                                    <i class="bi bi-lock" style="font-size: 16px;"></i> Terkunci
+                                    <i class="bi bi-lock" style="font-size: 16px; margin-bottom:0px"></i>
                                   </button>
                               @endif
                             </td>
@@ -317,14 +317,17 @@
                                 </div>
                                 <div class="modal-footer justify-content-center">                                  
                                   <form action="{{ route('syaratkolokiummhs.tolak', $pendaftars->id) }}" method="POST">
-                                    @csrf                                                                                                                                               
-                                      <div class="mb-3 mx-3 d-flex gap-2">
-                                        <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
-                                        <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti SKS..."></textarea>
-                                      </div>
-                                      <div class="mb-3 mx-3 d-flex gap-2">
-                                        <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
-                                        <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak bukti kehadiran..."></textarea>
+                                    @csrf                                    
+                                      <small class="text-danger ms-2">Minimal isi satu alasan penolakan</small><br><br>                                                                                                           
+                                      <div>
+                                        <div class="mb-3 mx-3 d-flex gap-2">
+                                          <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
+                                          <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti SKS..."></textarea>
+                                        </div>
+                                        <div class="mb-3 mx-3 d-flex gap-2">
+                                          <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
+                                          <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak bukti kehadiran..."></textarea>
+                                        </div>
                                       </div>                                                                            
                                       <button type="submit" class="btn btn-danger">Tolak</button>                                      
                                   </form>
@@ -364,8 +367,8 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                  <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
-                                  <p>Apakah Anda yakin ingin <strong>menolak</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharus mahasiswa melakukan seminar kembali?</p>
+                                  <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>                                  
+                                  <p>Apakah Anda yakin <strong>belum menerima</strong> BAP dari <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan kolokium kembali?</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                   <form action="{{ route('syaratkolokiummhs.bap.ditolak', $pendaftars->id) }}" method="POST">
@@ -389,4 +392,8 @@
     </div>
   </main>
 </div>
+@push('styles')
+@endpush
+@push('scripts')
+@endpush
 @endsection

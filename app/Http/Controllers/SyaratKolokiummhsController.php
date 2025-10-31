@@ -6,6 +6,7 @@ use App\Models\SyaratKolokiummhs;
 use App\Models\Kolokiummhs;
 use App\Models\StaffDept;
 use App\Models\User;
+use App\Models\Notification as AppNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -54,6 +55,13 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => null,
         ]);
 
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Berkas Persayaratan Kolokium Disetujui',
+            'Berkas persyaratan kolokium anda telah disetujui. Selamat melaksanakan Kolokium!',
+            route('syaratkolokiummhs.create', $syarat->id)
+        );
+
          return redirect()->back()->with('success', 'Syarat pendaftaran Kolokium telah disetujui.');
     }
 
@@ -68,6 +76,15 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
         ]);
 
+        if (
+            empty($request->alasan_formulir) &&
+            empty($request->alasan_bukti_sks) &&
+            empty($request->alasan_bukti_spp) &&
+            empty($request->alasan_bukti_kehadiran)
+        ) {
+            return redirect()->back()->with('error', 'Minimal satu alasan penolakan harus diisi.');
+        }
+
         $syarat->update([
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
@@ -75,6 +92,31 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_spp' => $request->alasan_bukti_spp,
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
+
+        $reasons = [
+            'Formulir' => $request->alasan_formulir,
+            'Bukti SKS' => $request->alasan_bukti_sks,
+            'Bukti SPP' => $request->alasan_bukti_spp,
+            'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
+        ];
+
+        // Filter hanya yang diisi dan format bullet list
+        $reasonMessage = "⚠️ Berkas persyaratan kolokium anda perlu diperbaiki:<br><ul>";
+        foreach ($reasons as $field => $msg) {
+            if ($msg) {
+                $reasonMessage .= "<li><b>{$field}</b>: {$msg}</li>";
+            }
+        }
+        $reasonMessage .= "</ul>";
+
+
+        // ✅ Kirim notifikasi
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Perlu Revisi Berkas',
+            $reasonMessage,
+            route('syaratkolokiummhs.create', $syarat->id)
+        );
         
         return redirect()->back()->with('success', 'Syarat Kolokium ditolak. Alasan penolakan telah disimpan.');
     }
@@ -234,9 +276,15 @@ class SyaratKolokiummhsController extends Controller
             $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $data['bukti_kehadiran'] = 'syarat_kolokium/' . $folderName . '/' . $fileName;
-        }
+        }        
 
         SyaratKolokiummhs::create($data);
+
+        $this->sendNotification($mahasiswaId, 
+            '🔔 Berkas Kolokium Diajukan', 
+            'Berkas persyaratan kolokium berhasil diunggah. Menunggu pengecekan admin.',
+            route('syaratkolokiummhs.create')
+        );
 
         return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
     }
@@ -297,6 +345,13 @@ class SyaratKolokiummhsController extends Controller
 
         $syarat->save();
 
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Berkas Persyaratan Kolokium Diunggah Ulang', 
+            'Berkas perbaikan persyaratan kolokium berhasil diunggah. Menunggu verifikasi ulang.',
+            route('syaratkolokiummhs.create')
+        );
+
+
         return redirect()->back()->with('success', 'Berkas pendaftaran kolokium berhasil diunggah ulang dan sedang menunggu persetujuan.');
     }
 
@@ -308,6 +363,13 @@ class SyaratKolokiummhsController extends Controller
             'status' => 'disetujui',
             'bap' => 'diterima',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Kolokium Selesai',
+            'Selamat Anda sudah melaksanakan Kolokium, silakan lanjut ke Seminar Hasil!.',
+            route('seminarmhs.create', $syarat->id)
+        );
+
 
          return redirect()->back()->with('success', 'BAP Kolokium telah diterima.');
     }
@@ -331,6 +393,13 @@ class SyaratKolokiummhsController extends Controller
             'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti spp',
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Anda belum melaksanakan Kolokium',
+            'Silakan unggah ulang persyaratan kolokium dengan jadwal baru.',
+            route('syaratkolokiummhs.create')
+        );
+
 
          return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa harus mengunggah ulang persyaratan kolokium dengan jadwal terbaru');         
     }
@@ -366,10 +435,16 @@ class SyaratKolokiummhsController extends Controller
         // Simpan ke database
         $syaratKolokiummhs->update([
             'id_moderator' => $moderatorId
-        ]);        
+        ]);   
+        
+        $this->sendNotification($syaratKolokiummhs->id_mahasiswa,
+            '🔔 Moderator Ditentukan',            
+            "Moderator <strong>{$moderator}</strong> telah ditetapkan untuk kolokium Anda.",
+            route('kolokiummhs.show', $syaratKolokiummhs->kolokiummhs->id)          
+        );
+
         
         return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
-
     }
 
     /**
@@ -394,5 +469,15 @@ class SyaratKolokiummhsController extends Controller
     public function destroy(SyaratKolokiummhs $syaratKolokiummhs)
     {
         //
+    }
+
+    private function sendNotification($userId, $title, $message, $redirect = null)
+    {
+        AppNotification::create([
+            'user_id' => $userId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
     }
 }

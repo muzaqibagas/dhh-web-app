@@ -152,6 +152,10 @@ class KomprehensifmhsController extends Controller
      */
     public function show(Komprehensifmhs $komprehensifmhs)
     {
+        $komprehensifmhs->load([
+            'syaratKomprehensif.moderator',
+            'syaratKomprehensif.penguji'
+        ]);
         return view('komprehensifmhs.show', compact('komprehensifmhs'));
     }
 

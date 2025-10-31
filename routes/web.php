@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
+use App\Models\Notification as AppNotification;
 use App\Http\Controllers\AcaraAkademikController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DivisiController;
@@ -115,6 +117,13 @@ Route::post('editpassmhs/update', [EditPasswordMhsController::class, 'update'])-
 
 //ADMIN
 // ROUTE MAHASISWA
+Route::get('/notification/open/{id}', function($id){
+    $notif = AppNotification::findOrFail($id);  
+
+    $notif->update(['is_read' => true]); // tandai sudah dibaca    
+
+    return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan    
+})->name('notification.open');
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');

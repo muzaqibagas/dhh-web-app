@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dashboardmhs;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
-class DashboardmhsController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $notifications = Notification::where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->take(10)
-            ->get();
-            
-        return view('dashboardmhs.index', compact('notifications'));
+        //
     }
 
     /**
@@ -40,7 +34,7 @@ class DashboardmhsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dashboardmhs $dashboardmhs)
+    public function show(Notification $notification)
     {
         //
     }
@@ -48,7 +42,7 @@ class DashboardmhsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dashboardmhs $dashboardmhs)
+    public function edit(Notification $notification)
     {
         //
     }
@@ -56,7 +50,7 @@ class DashboardmhsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dashboardmhs $dashboardmhs)
+    public function update(Request $request, Notification $notification)
     {
         //
     }
@@ -64,7 +58,7 @@ class DashboardmhsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dashboardmhs $dashboardmhs)
+    public function destroy(Notification $notification)
     {
         //
     }
