@@ -6,6 +6,7 @@ use App\Models\SyaratSeminarmhs;
 use App\Models\Seminarmhs;
 use App\Models\StaffDept;
 use App\Models\User;
+use App\Models\Notification as AppNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -54,6 +55,13 @@ class SyaratSeminarmhsController extends Controller
             'alasan_bukti_kehadiran' => null,
         ]);
 
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Berkas Persayaratan Seminar Hasil Disetujui',
+            'Berkas persyaratan Seminar Hasil anda telah disetujui. Selamat melaksanakan Seminar Hasil!',
+            route('syaratseminarmhs.create', $syarat->id)
+        );
+
         return redirect()->back()->with('success', 'Syarat pendaftaran Seminar Hasil telah disetujui.');
     }
 
@@ -67,6 +75,15 @@ class SyaratSeminarmhsController extends Controller
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
         ]);
+
+        if (
+            empty($request->alasan_formulir) &&
+            empty($request->alasan_bukti_sks) &&
+            empty($request->alasan_bukti_spp) &&
+            empty($request->alasan_bukti_kehadiran)
+        ) {
+            return redirect()->back()->with('error', 'Minimal satu alasan penolakan harus diisi.');
+        }
         
         $syarat->update([
             'status' => 'ditolak',
@@ -75,7 +92,29 @@ class SyaratSeminarmhsController extends Controller
             'alasan_bukti_spp' => $request->alasan_bukti_spp,            
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
+
+        $reasons = [
+            'Formulir' => $request->alasan_formulir,
+            'Bukti SKS' => $request->alasan_bukti_sks,
+            'Bukti SPP' => $request->alasan_bukti_spp,
+            'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
+        ];
+
+        $reasonMessage = "⚠️ Berkas persyaratan seminar hasil anda perlu diperbaiki:<br><ul>";
+        foreach ($reasons as $field => $msg) {
+            if ($msg) {
+                $reasonMessage .= "<li><b>{$field}</b>: {$msg}</li>";
+            }
+        }
+        $reasonMessage .= "</ul>";
         
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Perlu Revisi Berkas',
+            $reasonMessage,
+            route('syaratseminarmhs.create', $syarat->id)
+        );
+
         return redirect()->back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
     }
 
@@ -235,6 +274,12 @@ class SyaratSeminarmhsController extends Controller
 
         SyaratSeminarmhs::create($data);
 
+        $this->sendNotification($mahasiswaId, 
+            '🔔 Berkas Seminar Hasil Diajukan', 
+            'Berkas persyaratan Seminar Hasil berhasil diunggah. Menunggu pengecekan admin.',
+            route('syaratseminarmhs.create')
+        );
+
         return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
@@ -294,6 +339,12 @@ class SyaratSeminarmhsController extends Controller
 
         $syarat->save();
 
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Berkas Persyaratan Seminar Hasil Diunggah Ulang', 
+            'Berkas perbaikan persyaratan Seminar Hasil berhasil diunggah. Menunggu verifikasi ulang.',
+            route('syaratseminarmhs.create')
+        );
+
         return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diunggah ulang dan sedang menunggu persetujuan.');
     }
 
@@ -305,6 +356,12 @@ class SyaratSeminarmhsController extends Controller
             'status' => 'disetujui',
             'bap' => 'diterima',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Seminar Hasil Selesai',
+            'Selamat Anda sudah melaksanakan Seminar Hasil, silakan lanjut ke Ujian Komprehensif.',
+            route('komprehensifmhs.create', $syarat->id)
+        );
 
         return redirect()->back()->with('success', 'BAP Seminar Hasil telah diterima.');
     }
@@ -328,6 +385,12 @@ class SyaratSeminarmhsController extends Controller
             'alasan_bukti_spp' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti spp',
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti kehadiran',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Anda belum melaksanakan Seminar Hasil',
+            'Silakan unggah ulang persyaratan seminar hasil dengan jadwal baru.',
+            route('syaratseminarmhs.create')
+        );
 
         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa Harus mengunggah ulang persyaratan seminar hasil');
     }
@@ -360,7 +423,13 @@ class SyaratSeminarmhsController extends Controller
         
         $syaratSeminarmhs->update([
             'id_moderator' => $moderatorId
-        ]);          
+        ]);      
+        
+        $this->sendNotification($syaratSeminarmhs->id_mahasiswa,
+            '🔔 Moderator Ditentukan',            
+            "Moderator <strong>{$moderator}</strong> telah ditetapkan untuk seminar hasil Anda.",
+            route('seminarmhs.show', $syaratSeminarmhs->seminarmhs->id)          
+        );
                 
         return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
     }
@@ -387,5 +456,15 @@ class SyaratSeminarmhsController extends Controller
     public function destroy(SyaratSeminarmhs $syaratSeminarmhs)
     {
         //
+    }
+
+    private function sendNotification($userId, $title, $message, $redirect = null)
+    {
+        AppNotification::create([
+            'user_id' => $userId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
     }
 }

@@ -53,8 +53,9 @@ class Kolokiummhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
     }
 
-    public function acaraAkademik()
+    public function syaratKolokium()
     {
-        return $this->hasMany(AcaraAkademik::class, 'id_kolokium');
+        return $this->hasOne(SyaratKolokiummhs::class, 'id_mahasiswa', 'id_mahasiswa');
     }
+
 }

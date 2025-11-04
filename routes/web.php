@@ -5,11 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\AcaraAkademikController;
+use App\Http\Controllers\NotificationController;
+use App\Models\Notification as AppNotification;
 use App\Http\Controllers\ArtikelController;
-use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\JenjangController;
 use App\Http\Controllers\KategoriStaffController; 
 use App\Http\Controllers\KategoriGaleriController;
 use App\Http\Controllers\KategoriArtikelController;
@@ -25,10 +24,6 @@ use App\Http\Controllers\SidangController;
 use App\Http\Controllers\StaffDeptController;
 use App\Http\Controllers\KetuaDHHController;
 use App\Http\Controllers\TemplateController;
-use App\Http\Controllers\UndanganController;
-use App\Http\Controllers\UndanganKolokiumController;
-use App\Http\Controllers\UndanganSeminarController;
-use App\Http\Controllers\undanganKomprehensifController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
@@ -116,6 +111,13 @@ Route::post('editpassmhs/update', [EditPasswordMhsController::class, 'update'])-
 
 //ADMIN
 // ROUTE MAHASISWA
+Route::get('/notification/open/{id}', function($id){
+    $notif = AppNotification::findOrFail($id);  
+
+    $notif->update(['is_read' => true]); // tandai sudah dibaca    
+
+    return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan    
+})->name('notification.open');
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
@@ -124,15 +126,6 @@ Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
-
-// Acara Akademik
-Route::get('acara-akademik', [AcaraAkademikController::class, 'index'])->name('acaraakademik.index');
-Route::get('acara-akademik/create', [AcaraAkademikController::class, 'create'])->name('acaraakademik.create');
-Route::post('acara-akademik', [AcaraAkademikController::class, 'store'])->name('acaraakademik.store');
-Route::get('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'show'])->name('acaraakademik.show');
-Route::get('acara-akademik/{acaraAkademik}/edit', [AcaraAkademikController::class, 'edit'])->name('acaraakademik.edit');
-Route::put('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'update'])->name('acaraakademik.update');
-Route::delete('acara-akademik/{acaraAkademik}', [AcaraAkademikController::class, 'destroy'])->name('acaraakademik.destroy');
 
 // KategoriArtikel
 Route::get('kategoriartikel', [KategoriArtikelController::class, 'index'])->name('kategoriartikel.index');
@@ -152,15 +145,6 @@ Route::get('artikel/{artikel}/edit', [ArtikelController::class, 'edit'])->name('
 Route::put('artikel/{artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
 
-// Divisi
-Route::get('divisi', [DivisiController::class, 'index'])->name('divisi.index');
-Route::get('divisi/create', [DivisiController::class, 'create'])->name('divisi.create');
-Route::post('divisi', [DivisiController::class, 'store'])->name('divisi.store');
-Route::get('divisi/{divisi}', [DivisiController::class, 'show'])->name('divisi.show');
-Route::get('divisi/{divisi}/edit', [DivisiController::class, 'edit'])->name('divisi.edit');
-Route::put('divisi/{divisi}', [DivisiController::class, 'update'])->name('divisi.update');
-Route::delete('divisi/{divisi}', [DivisiController::class, 'destroy'])->name('divisi.destroy');
-
 // KategoriGaleri
 Route::get('kategorigaleri', [KategoriGaleriController::class, 'index'])->name('kategorigaleri.index');
 Route::get('kategorigaleri/create', [KategoriGaleriController::class, 'create'])->name('kategorigaleri.create');
@@ -179,16 +163,6 @@ Route::get('galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.s
 Route::get('galeri/{galeri}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
 Route::put('galeri/{galeri}', [GaleriController::class, 'update'])->name('galeri.update');
 Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
-
-// Jenjang
-Route::get('jenjang', [JenjangController::class, 'index'])->name('jenjang.index');
-Route::get('jenjang/create', [JenjangController::class, 'create'])->name('jenjang.create');
-Route::post('jenjang', [JenjangController::class, 'store'])->name('jenjang.store');
-Route::get('jenjang/{jenjang}', [JenjangController::class, 'show'])->name('jenjang.show');
-Route::get('jenjang/{jenjang}/edit', [JenjangController::class, 'edit'])->name('jenjang.edit');
-Route::put('jenjang/{jenjang}', [JenjangController::class, 'update'])->name('jenjang.update');
-Route::delete('jenjang/{jenjang}', [JenjangController::class, 'destroy'])->name('jenjang.destroy');
-
 
 // KontenJenjang
 Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('kontenjenjang.index');

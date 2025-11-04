@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UndanganSeminar;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
-class UndanganSeminarController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('undanganseminar.index');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class UndanganSeminarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UndanganSeminar $undanganSeminar)
+    public function show(Notification $notification)
     {
         //
     }
@@ -42,7 +42,7 @@ class UndanganSeminarController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UndanganSeminar $undanganSeminar)
+    public function edit(Notification $notification)
     {
         //
     }
@@ -50,7 +50,7 @@ class UndanganSeminarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UndanganSeminar $undanganSeminar)
+    public function update(Request $request, Notification $notification)
     {
         //
     }
@@ -58,7 +58,7 @@ class UndanganSeminarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UndanganSeminar $undanganSeminar)
+    public function destroy(Notification $notification)
     {
         //
     }

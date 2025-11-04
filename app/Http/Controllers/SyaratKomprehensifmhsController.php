@@ -6,6 +6,7 @@ use App\Models\SyaratKomprehensifmhs;
 use App\Models\Komprehensifmhs;
 use App\Models\StaffDept;
 use App\Models\User;
+use App\Models\Notification as AppNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -54,6 +55,13 @@ class SyaratKomprehensifmhsController extends Controller
             'alasan_bukti_kehadiran' => null,
         ]);
 
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Berkas Persayaratan Komprehensif Disetujui',
+            'Berkas persyaratan komprehensif anda telah disetujui. Selamat melaksanakan Komprehensif!',
+            route('syaratkomprehensifmhs.create', $syarat->id)
+        );
+
         return redirect()->back()->with('success', 'Syarat pendaftaran Komprehensif telah disetujui.');
     }
 
@@ -68,6 +76,15 @@ class SyaratKomprehensifmhsController extends Controller
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
         ]);
 
+        if (
+            empty($request->alasan_formulir) &&
+            empty($request->alasan_bukti_sks) &&
+            empty($request->alasan_bukti_spp) &&
+            empty($request->alasan_bukti_kehadiran)
+        ) {
+            return redirect()->back()->with('error', 'Minimal satu alasan penolakan harus diisi.');
+        }
+
         $syarat->update([
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
@@ -75,8 +92,30 @@ class SyaratKomprehensifmhsController extends Controller
             'alasan_bukti_spp' => $request->alasan_bukti_spp,
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
+
+        $reasons = [
+            'Formulir' => $request->alasan_formulir,
+            'Bukti SKS' => $request->alasan_bukti_sks,
+            'Bukti SPP' => $request->alasan_bukti_spp,
+            'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
+        ];
+
+        $reasonMessage = "⚠️ Berkas persyaratan komprehensif anda perlu diperbaiki:<br><ul>";
+        foreach ($reasons as $field => $msg) {
+            if ($msg) {
+                $reasonMessage .= "<li><b>{$field}</b>: {$msg}</li>";
+            }
+        }
+        $reasonMessage .= "</ul>";
         
-        return redirect()->back()->with('success', 'Syarat Seminar Hasil ditolak. Alasan penolakan telah disimpan.');
+        $this->sendNotification(
+            $syarat->id_mahasiswa,
+            '🔔 Perlu Revisi Berkas',
+            $reasonMessage,
+            route('syaratkomprehensifmhs.create', $syarat->id)
+        );
+
+        return redirect()->back()->with('success', 'Syarat Komprehensif ditolak. Alasan penolakan telah disimpan.');
     }    
 
     public function downloadPdf($id)
@@ -246,6 +285,12 @@ class SyaratKomprehensifmhsController extends Controller
 
         SyaratKomprehensifmhs::create($data);        
 
+        $this->sendNotification($mahasiswaId, 
+            '🔔 Berkas Komprehensif Diajukan', 
+            'Berkas persyaratan komprehensif berhasil diunggah. Menunggu pengecekan admin.',
+            route('syaratkomprehensifmhs.create')
+        );
+
         return redirect()->back()->with('success', 'Berkas pendaftaran komprehensif berhasil diajukan dan sedang menunggu persetujuan.');        
     }
 
@@ -305,6 +350,12 @@ class SyaratKomprehensifmhsController extends Controller
 
         $syarat->save();
 
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Berkas Persyaratan Komprehensif Diunggah Ulang', 
+            'Berkas perbaikan persyaratan komprehensif berhasil diunggah. Menunggu verifikasi ulang.',
+            route('syaratkomprehensifmhs.create')
+        );
+
         return redirect()->back()->with('success', 'Berkas pendaftaran komprehensif berhasil diunggah ulang dan sedang menunggu persetujuan.');
     }
 
@@ -316,6 +367,12 @@ class SyaratKomprehensifmhsController extends Controller
             'status' => 'disetujui',
             'bap' => 'diterima',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Komprehensif Selesai',        
+            'Selamat Anda telah berhasil menyelesaikan ujian komprehensif. Silakan melanjutkan ke tahap pengajuan SKL (Surat Keterangan Lulus).',
+            route('dashboardmhs.index')
+        );
 
         return redirect()->back()->with('success', 'BAP Komprehensif telah diterima.');
     }
@@ -339,6 +396,12 @@ class SyaratKomprehensifmhsController extends Controller
             'alasan_bukti_spp' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti spp',
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti kehadiran',
         ]);
+
+        $this->sendNotification($syarat->id_mahasiswa,
+            '🔔 Anda belum melaksanakan Komprehensif',
+            'Silakan unggah ulang persyaratan komprehensif dengan jadwal baru.',
+            route('syaratkomprehensifmhs.create')
+        );
 
         return redirect()->back()->with('error', 'BAP belum diterima. Mahasiswa Harus mengunggah ulang persyaratan komprehenensif.');
     }
@@ -377,8 +440,14 @@ class SyaratKomprehensifmhsController extends Controller
             'id_moderator' => $moderatorId,
             'id_penguji' => $pengujiId
         ]); 
+
+        $this->sendNotification($syaratKomprehensifmhs->id_mahasiswa,
+            '🔔 Ketua Sidang dan Dosen Penguji Ditentukan',            
+            "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.",
+            route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)          
+        );
                 
-        return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> dan Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
+        return redirect()->back()->with('success', "Ketua Sidang <strong>{$moderator}</strong> dan Dosen Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
         
     }
 
@@ -404,5 +473,15 @@ class SyaratKomprehensifmhsController extends Controller
     public function destroy(SyaratKomprehensifmhs $syaratKomprehensifmhs)
     {
         //
+    }
+
+    private function sendNotification($userId, $title, $message, $redirect = null)
+    {
+        AppNotification::create([
+            'user_id' => $userId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
     }
 }

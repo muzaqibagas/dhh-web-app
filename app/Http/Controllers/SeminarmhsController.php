@@ -152,6 +152,7 @@ class SeminarmhsController extends Controller
      */
     public function show(Seminarmhs $seminarmhs)
     {
+        $seminarmhs->load(['syaratSeminar.moderator']);
         return view('seminarmhs.show', compact('seminarmhs'));
     }
 

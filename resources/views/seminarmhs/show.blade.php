@@ -166,8 +166,8 @@
         </div>  
 
         <div class="form-group">
-          <label>Dosen Moderator</label>
-          <div class="form-static">[Diisi oleh akademik]</div>
+          <label>Dosen Moderator</label>          
+          <input type="text" class="text-success fw-bold" value="{{ $seminarmhs->syaratSeminar->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
         </div>
 
         <div class="form-actions mt-3 d-flex justify-content-end">                

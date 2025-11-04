@@ -364,7 +364,7 @@
                               </div>
                               <div class="modal-body text-center">
                                 <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
-                                <p>Apakah Anda yakin <strong>belum menerima</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan seminar kembali?</p>
+                                <p>Apakah Anda yakin <strong>belum menerima</strong> BAP dari <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan seminar hasil kembali?</p>
                               </div>
                               <div class="modal-footer justify-content-center">
                                 <form action="{{ route('syaratseminarmhs.bap.ditolak', $pendaftars->id) }}" method="POST">                                                        

@@ -212,7 +212,7 @@
                         <input type="hidden" name="nim" value="{{ $nim }}">                           
                         <div class="d-flex flex-column gap-3">    
                             <div class="col-12 col-md-8 d-flex align-items-center">
-                                <label for="moderator" class="form-label mb-0 w-50 text-start">Nama Dosen Moderator</label><span style="margin-right: 8px;">: </span>
+                                <label for="moderator" class="form-label mb-0 w-50 text-start">Nama Ketua Sidang</label><span style="margin-right: 8px;">: </span>
                                 <select name="moderator" id="moderator" class="form-control" required>
                                     <option value="">-- Pilih Moderator --</option>
                                     @foreach($listModerator as $dosen)
@@ -259,7 +259,7 @@
   $(document).ready(function () {
     $('#moderator').select2({
       width: '100%',
-      placeholder: "Pilih Moderator",
+      placeholder: "Pilih Ketua Sidang",
       minimumInputLength: 4 
     });
     

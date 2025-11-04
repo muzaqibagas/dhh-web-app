@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AcaraAkademik;
 use App\Models\Artikel;
 use App\Models\Divisi;
 use App\Models\Galeri;

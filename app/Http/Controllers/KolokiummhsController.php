@@ -124,6 +124,7 @@ class KolokiummhsController extends Controller
      */
     public function show(Kolokiummhs $kolokiummhs)
     {
+        $kolokiummhs->load(['syaratKolokium.moderator']);
         return view('kolokiummhs.show', compact('kolokiummhs'));
     }
 

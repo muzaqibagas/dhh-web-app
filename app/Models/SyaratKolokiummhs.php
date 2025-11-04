@@ -35,4 +35,10 @@ class SyaratKolokiummhs extends Model
     {
         return $this->belongsTo(StaffDept::class, 'id_moderator');
     }
+
+    public function kolokiummhs()
+    {
+        return $this->hasOne(Kolokiummhs::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
+
 }

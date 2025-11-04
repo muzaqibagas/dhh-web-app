@@ -66,38 +66,76 @@
         </p>
       </div>
 
-      <!-- Pengumuman -->
-      <div class="pengumuman">
-        <h4><i class="bi bi-megaphone"></i> Pengumuman Terbaru</h4>
-        <ul>
-          <li>Deadline pendaftaran kolokium: <b>20 Juli 2025</b></li>
-          <li>Deadline pendaftaran seminar: <b>20 Juli 2025</b></li>
-          <li>Sidang Akhir dimulai <b>10 Agustus 2025</b></li>
-        </ul>
+      <div>
+        <div></div>
+        <div></div>
       </div>
       
       <!-- Status Cards -->
       <div class="status-cards">
-        <div class="card waiting">
-          <i class="bi bi-envelope"></i>
-          <h5>Surat Undangan</h5>
-          <p class="status">Menunggu Verifikasi</p>
+        <div class="pengumuman">
+          <h4><i class="bi bi-megaphone"></i> Notifikasi</h4>
+          <div class="overflow-auto" style="max-height: 300px;">
+            @forelse($notifications as $notif)
+              <a href="{{ route('notification.open', $notif->id) }}" class="text-decoration-none text-dark">              
+                <div class="card text-start mb-2 p-2" @if(!$notif->is_read) style="background-color: #013880; color: #fff;" @endif>
+                  <h6><b>{{ $notif->title }}</b><br></h6>
+                  <h6>{!! $notif->message !!}</h6>
+                  <div class="text-muted" @if(!$notif->is_read) style="color: #7e7e7eff !important; font-size: 12px" @endif>
+                    {{ $notif->created_at->diffForHumans() }}
+                  </div>
+                </div>
+              </a>
+            @empty
+              <div class="card text-start p-2">Tidak ada notifikasi</div>
+            @endforelse
+          </div>
         </div>
-        <div class="card success">
-          <i class="bi bi-journal-check"></i>
-          <h5>Kolokium</h5>
-          <p class="status">Sudah Mendaftar</p>
-        </div>
-        <div class="card danger">
-          <i class="bi bi-calendar-event"></i>
-          <h5>Seminar</h5>
-          <p class="status">Belum Mendaftar</p>
-        </div>
-        <div class="card neutral">
-          <i class="bi bi-file-earmark-text"></i>
-          <h5>Sidang Akhir</h5>
-          <p class="status">Belum Dijadwalkan</p>
-        </div>
+        <div class="status-cards-left">
+          @php
+              $status = $kolokium->status ?? 'belum_mendaftar';
+              $bap = $kolokium->bap ?? 'belum_melaksanakan';
+
+              if ($bap === 'diterima') {
+                  $label = "Telah Selesai";
+                  $badgeClass = "badge bg-success";
+              } elseif ($status === 'pending') {
+                  $label = "Menunggu Verifikasi";
+                  $badgeClass = "badge bg-warning text-dark";
+              } elseif ($status === 'disetujui') {
+                  $label = "Sudah Mendaftar";
+                  $badgeClass = "badge bg-success";
+              } elseif ($status === 'ditolak') {
+                  $label = "Persyaratan Ditolak";
+                  $badgeClass = "badge bg-danger";
+              } else {
+                  $label = "Belum Mendaftar";
+                  $badgeClass = "badge bg-secondary";
+              }
+          @endphp          
+          
+          <div class="card">
+              <i class="bi bi-journal-check"></i>
+              <h5>Kolokium</h5>
+              <p class="status">
+                  <span class="{{ $badgeClass }}">{{ $label }}</span>
+              </p>
+          </div>      
+          <div class="card">
+            <i class="bi bi-calendar-event"></i>
+            <h5>Seminar</h5>
+            <p class="status">
+              <span class="{{ $badgeClass }}">{{ $label }}</span>
+            </p>
+          </div>
+          <div class="card sidang-full">
+            <i class="bi bi-file-earmark-text"></i>
+            <h5>Sidang Akhir</h5>
+            <p class="status">
+              <span class="{{ $badgeClass }}">{{ $label }}</span>
+            </p>
+          </div>
+        </div>        
       </div>
     </main>
   </div>

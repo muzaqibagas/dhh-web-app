@@ -35,4 +35,9 @@ class SyaratSeminarmhs extends Model
     {
         return $this->belongsTo(StaffDept::class, 'id_moderator');
     }
+
+    public function seminarmhs()
+    {
+        return $this->hasOne(Seminarmhs::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
 }

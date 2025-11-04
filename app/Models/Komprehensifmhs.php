@@ -56,8 +56,8 @@ class Komprehensifmhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
     }
 
-    public function acaraAkademik()
+    public function syaratKomprehensif()
     {
-        return $this->hasMany(AcaraAkademik::class, 'id_kolokium');
-    }
+        return $this->hasOne(SyaratKomprehensifmhs::class, 'id_mahasiswa', 'id_mahasiswa');
+    }    
 }

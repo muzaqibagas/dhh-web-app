@@ -168,7 +168,7 @@
 
             <div class="form-group">
                 <label>Dosen Moderator</label>
-                <div class="form-static">[Diisi oleh akademik]</div>
+                <input type="text" class="text-success fw-bold" value="{{ $kolokiummhs->syaratKolokium->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
             </div>
 
             <div class="form-actions mt-3 d-flex justify-content-end">                
