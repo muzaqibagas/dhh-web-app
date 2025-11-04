@@ -371,7 +371,7 @@ class SyaratKomprehensifmhsController extends Controller
         $this->sendNotification($syarat->id_mahasiswa,
             '🔔 Komprehensif Selesai',        
             'Selamat Anda telah berhasil menyelesaikan ujian komprehensif. Silakan melanjutkan ke tahap pengajuan SKL (Surat Keterangan Lulus).',
-            route('seminarmhs.create', $syarat->id)
+            route('dashboardmhs.index')
         );
 
         return redirect()->back()->with('success', 'BAP Komprehensif telah diterima.');

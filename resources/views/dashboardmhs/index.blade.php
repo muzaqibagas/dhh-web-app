@@ -73,28 +73,6 @@
       
       <!-- Status Cards -->
       <div class="status-cards">
-        <div class="status-cards">
-          <div class="card waiting d-flex">
-            <i class="bi bi-envelope"></i>
-            <h5>Surat Undangan</h5>
-            <p class="status">Menunggu Verifikasi</p>
-          </div>
-          <div class="card success">
-            <i class="bi bi-journal-check"></i>
-            <h5>Kolokium</h5>
-            <p class="status">Sudah Mendaftar</p>
-          </div>
-          <div class="card danger">
-            <i class="bi bi-calendar-event"></i>
-            <h5>Seminar</h5>
-            <p class="status">Belum Mendaftar</p>
-          </div>
-          <div class="card neutral">
-            <i class="bi bi-file-earmark-text"></i>
-            <h5>Sidang Akhir</h5>
-            <p class="status">Belum Dijadwalkan</p>
-          </div>
-        </div>
         <div class="pengumuman">
           <h4><i class="bi bi-megaphone"></i> Notifikasi</h4>
           <div class="overflow-auto" style="max-height: 300px;">
@@ -113,6 +91,51 @@
             @endforelse
           </div>
         </div>
+        <div class="status-cards-left">
+          @php
+              $status = $kolokium->status ?? 'belum_mendaftar';
+              $bap = $kolokium->bap ?? 'belum_melaksanakan';
+
+              if ($bap === 'diterima') {
+                  $label = "Telah Selesai";
+                  $badgeClass = "badge bg-success";
+              } elseif ($status === 'pending') {
+                  $label = "Menunggu Verifikasi";
+                  $badgeClass = "badge bg-warning text-dark";
+              } elseif ($status === 'disetujui') {
+                  $label = "Sudah Mendaftar";
+                  $badgeClass = "badge bg-success";
+              } elseif ($status === 'ditolak') {
+                  $label = "Persyaratan Ditolak";
+                  $badgeClass = "badge bg-danger";
+              } else {
+                  $label = "Belum Mendaftar";
+                  $badgeClass = "badge bg-secondary";
+              }
+          @endphp          
+          
+          <div class="card">
+              <i class="bi bi-journal-check"></i>
+              <h5>Kolokium</h5>
+              <p class="status">
+                  <span class="{{ $badgeClass }}">{{ $label }}</span>
+              </p>
+          </div>      
+          <div class="card">
+            <i class="bi bi-calendar-event"></i>
+            <h5>Seminar</h5>
+            <p class="status">
+              <span class="{{ $badgeClass }}">{{ $label }}</span>
+            </p>
+          </div>
+          <div class="card sidang-full">
+            <i class="bi bi-file-earmark-text"></i>
+            <h5>Sidang Akhir</h5>
+            <p class="status">
+              <span class="{{ $badgeClass }}">{{ $label }}</span>
+            </p>
+          </div>
+        </div>        
       </div>
     </main>
   </div>

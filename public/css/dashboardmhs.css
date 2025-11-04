@@ -366,6 +366,30 @@ body {
   font-size: 14px;
 }
 
+.status-cards-left {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px; 
+  margin-top: 10px;
+  font-size: 14px !important;
+}
+
+.status-cards-left .card h5 {
+    font-size: 1rem !important;
+}
+
+.status-cards-left .card p {
+    font-size: 0.9rem !important;
+}
+
+.status-cards-left .card span {
+    font-size: 0.85rem !important;
+}
+
+.bg-success-dark {
+    background-color:#0b6623 !important;
+}
+
 .card {
   background: #fff;
   border: 1px solid #ddd;
@@ -373,6 +397,10 @@ body {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sidang-full {
+  grid-column: span 2;
 }
 
 .card i {
