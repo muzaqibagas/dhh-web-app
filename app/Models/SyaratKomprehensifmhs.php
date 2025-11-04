@@ -41,4 +41,9 @@ class SyaratKomprehensifmhs extends Model
     {
         return $this->belongsTo(StaffDept::class, 'id_penguji');
     }
+
+    public function komprehensifmhs()
+    {
+        return $this->hasone(Komprehensifmhs::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
 }

@@ -82,7 +82,7 @@
     </aside>
     <main class="content">
         <div class="kolokium-card">
-            <h2 class="page-title">Daftar Sidang Akhir</h2>
+            <h2 class="page-title">Daftar Komprehensif</h2>
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}

@@ -99,8 +99,7 @@ class SyaratKolokiummhsController extends Controller
             'Bukti SPP' => $request->alasan_bukti_spp,
             'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
         ];
-
-        // Filter hanya yang diisi dan format bullet list
+        
         $reasonMessage = "⚠️ Berkas persyaratan kolokium anda perlu diperbaiki:<br><ul>";
         foreach ($reasons as $field => $msg) {
             if ($msg) {
@@ -109,8 +108,6 @@ class SyaratKolokiummhsController extends Controller
         }
         $reasonMessage .= "</ul>";
 
-
-        // ✅ Kirim notifikasi
         $this->sendNotification(
             $syarat->id_mahasiswa,
             '🔔 Perlu Revisi Berkas',
@@ -286,7 +283,7 @@ class SyaratKolokiummhsController extends Controller
             route('syaratkolokiummhs.create')
         );
 
-        return redirect()->back()->with('success', 'Berkas pendaftaran seminar berhasil diajukan dan sedang menunggu persetujuan.');
+        return redirect()->back()->with('success', 'Berkas pendaftaran kolokium berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
     public function reupload(Request $request, $id)
@@ -351,7 +348,6 @@ class SyaratKolokiummhsController extends Controller
             route('syaratkolokiummhs.create')
         );
 
-
         return redirect()->back()->with('success', 'Berkas pendaftaran kolokium berhasil diunggah ulang dan sedang menunggu persetujuan.');
     }
 
@@ -369,7 +365,6 @@ class SyaratKolokiummhsController extends Controller
             'Selamat Anda sudah melaksanakan Kolokium, silakan lanjut ke Seminar Hasil!.',
             route('seminarmhs.create', $syarat->id)
         );
-
 
          return redirect()->back()->with('success', 'BAP Kolokium telah diterima.');
     }

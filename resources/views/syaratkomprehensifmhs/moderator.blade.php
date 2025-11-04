@@ -259,7 +259,7 @@
   $(document).ready(function () {
     $('#moderator').select2({
       width: '100%',
-      placeholder: "Pilih Moderator",
+      placeholder: "Pilih Ketua Sidang",
       minimumInputLength: 4 
     });
     
