@@ -123,14 +123,14 @@
           </div>      
           <div class="card">
             <i class="bi bi-calendar-event"></i>
-            <h5>Seminar</h5>
+            <h5>Seminar Hasil</h5>
             <p class="status">
               <span class="{{ $badgeClass }}">{{ $label }}</span>
             </p>
           </div>
           <div class="card sidang-full">
             <i class="bi bi-file-earmark-text"></i>
-            <h5>Sidang Akhir</h5>
+            <h5>Komprehensif</h5>
             <p class="status">
               <span class="{{ $badgeClass }}">{{ $label }}</span>
             </p>
