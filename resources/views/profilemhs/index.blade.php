@@ -22,15 +22,7 @@
         <i class="bi bi-house-door-fill"></i>
         <span> Beranda </span>
       </div>
-    </a>
-
-    <!-- BTN Layanan Akademik ===================== -->
-    <a href="/formulirlayananakademikmhs" class="menu {{ $isFormulirLayananActive ? 'active' : '' }}">
-      <div class="menu-left">
-        <i class="bi bi-file-earmark-text"></i>
-        <span> Formulir Layanan Akademik </span>
-      </div>
-    </a>
+    </a>   
 
     <!-- BTN TINGKAT AKHIR ===================== -->
     <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="staffdept">
