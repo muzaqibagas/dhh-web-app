@@ -94,22 +94,22 @@
           @endif                            
             <ol class="syarat-list">
                 <li><b>Batas Waktu Pengurusan Administrasi</b><br>
-                    Pengurusan administrasi kolokium tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan kolokium (H-4).
+                    Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan seminar (H-4). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
                 </li>
                 <li><b>Formulir Pendaftaran Kolokium</b><br>
-                    Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB).
+                    Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
                 </li>
                 <li><b>Bukti Telah Menyelesaikan Minimal 110 SKS</b><br>
                     Lampirkan bukti jumlah SKS yang telah ditempuh, dengan total minimal 110 SKS.
                 </li>
-                <li><b>Status Mahasiswa Aktif (Telah Melunasi SPP)</b><br>
-                    Unggah bukti pembayaran atau tangkapan layar status mahasiswa aktif (TF/SPP Lunas) dari sistem akademik.
+                <li><b>Bukti Pelunasan SPP</b><br>
+                    Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
                 </li>
                 <li><b>Makalah Kolokium</b><br>
-                    Unggah makalah kolokium dalam bentuk foto atau hasil scan yang jelas.
+                    Kumpulkan file hardfile makalah kolokium yang telah disetujui oleh dosen pembimbing ke bagian administrasi.
                 </li>
                 <li><b>Map Folio (4 Buah)</b><br>
-                    Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi jurusan setelah semua dokumen diunggah secara daring.
+                    Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi bersamaan dengan makalah kolokium setelah semua dokumen diunggah secara daring.
                 </li>
             </ol>
 

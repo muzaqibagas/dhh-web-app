@@ -96,19 +96,19 @@
                 <li><b>Batas Waktu</b><br>
                   Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 4 hari kerja sebelum pelaksanaan seminar (H-4). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
                 </li>
+                <li><b>Jumlah Kehadiran Seminar</b><br>
+                  Mahasiswa hanya dapat mendaftar seminar setelah memenuhi jumlah minimal kehadiran, yaitu 10 kali seminar di Departemen Hasil Hutan dan 5 kali seminar di luar Departemen Hasil Hutan.
+                </li>
+                <li><b>Telah Menyelesaikan Seluruh Mata Kuliah</b><br>
+                  Mahasiswa harus membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, pilihan minor/supporting course termasuk Kolokium, dengan jumlah minimal 137 SKS dan memiliki IPK keseluruhan minimal 2,00 tanpa nilai E.   
+                </li>
                 <li><b>Formulir Pendaftaran Seminar</b><br>
                   Mahasiswa wajib mengisi formulir pendaftaran seminar di halaman Seminar. Setelah diisi, formulir tersebut harus ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
                 </li>
-                <li><b>Jumlah Kehadiran Seminar</b><br>
-                  Mahasiswa hanya dapat mendaftar seminar setelah memenuhi jumlah minimal kehadiran, yaitu 10 kali seminar di Departemen Hasil Hutan dan 5 kali seminar di luar Departemen Hasil Hutan. Bukti kehadiran dapat diminta dari bagian administrasi.
-                </li>
-                <li><b>Telah Menyelesaikan Seluruh Mata Kuliah</b><br>
-                  Mahasiswa harus membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk Kolokium, dengan jumlah minimal 137 SKS dan memiliki IPK keseluruhan minimal 2,00 tanpa nilai E.   
-                </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
-                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
+                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
                 </li>
-                <li><b>Dokumen yang Diserahkan ke TU</b><br>
+                <li><b>Dokumen hardfile yang Diserahkan ke TU</b><br>
                   Selain dokumen yang diunggah secara daring, mahasiswa juga harus menyerahkan secara langsung ke bagian TU beberapa dokumen berikut:<br>
                   - Bukti penyerahan proposal penelitian<br>
                   - Makalah seminar (1 eksemplar) yang telah diparaf oleh dosen pembimbing<br>

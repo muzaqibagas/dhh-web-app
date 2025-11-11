@@ -7,7 +7,7 @@
 </div>
 
 <!-- === DETAIL ALUMNI === -->
-<section class="staff-det-section">
+<section class="staff-det-section mb-5s">
   <div class="staff-det-container">
     <!-- FOTO ALUMNI -->
     <div class="staff-det-photo">

@@ -516,6 +516,35 @@
   </div>
 </section>
 
+<!-- Mitra Section -->
+<section class="guest-partner-section py-5">
+  <div class="container text-center">
+    <h3 class="guest-pend-section-title mb-4">Mitra Kami</h3>
+    <img src="img/batasgold.png" class="guest-pend-divider mb-5" alt="divider">
+
+    <div class="guest-partner-slider">
+      <div class="guest-partner-track">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 1">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 2">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 3">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 4">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 5">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 6">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 7">
+
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 1">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 2">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 3">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 4">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 5">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 6">
+        <img src="{{ asset('img/solacelogo.jpg') }}" alt="Mitra 7">
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- Contact Section -->
 <section id="guestContact" class="guest-contact section">
   <div class="container guest-section-title" data-aos="fade-up">

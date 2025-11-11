@@ -144,7 +144,7 @@
           @endphp 
           <div class="card">
             <i class="bi bi-calendar-event"></i>
-            <h5>Seminar</h5>
+            <h5>Seminar Hasil</h5>
             <p class="status">
               <span class="{{ $badge_s }}">{{ $label_s }}</span>
             </p>
@@ -173,7 +173,7 @@
           @endphp 
           <div class="card sidang-full">
             <i class="bi bi-file-earmark-text"></i>
-            <h5>Sidang Akhir</h5>
+            <h5>Komprehensif</h5>
             <p class="status">
               <span class="{{ $badge_c }}">{{ $label_c }}</span>
             </p>

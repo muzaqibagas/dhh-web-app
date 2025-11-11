@@ -101,23 +101,27 @@
                 </div>
             @endif      
               <ol class="syarat-list">
+                <li><b>Batas Waktu</b><br>
+                  Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 6 hari kerja sebelum pelaksanaan seminar (H-6). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
+                </li>
                 <li><b>Formulir Pendaftaran Ujian Akhir Sarjana</b><br>
                   Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
                 </li>
                 <li><b>Telah Menyelesaikan Seluruh Mata Kuliah.</b><br>
-                  Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah wajib, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
+                  Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah yang telah ditetapkan, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
                 </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
-                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas.
+                  Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
+                </li>
                 </li>
                 <li><b>Buku Konsultasi</b><br>
-                  Mahasiswa diminta menyerahkan buku konsultasi yang telah diisi lengkap dan ditandatangani oleh dosen pembimbing.
+                  Mahasiswa diminta menyerahkan buku konsultasi yang telah diisi lengkap dan ditandatangani oleh dosen pembimbing (wajib diserahkan secara fisik ke bagian TU).
                 </li>
                 <li><b>Draft Skripsi yang Siap Ujian</b><br>
-                  Mahasiswa diminta membawa draft skripsi yang telah ditandatangani oleh Komisi Pembimbing dan Ketua Departemen. (Sebanyak 3-4 eksemplar wajib diserahkan secara fisik ke bagian TU.)
+                  Mahasiswa diminta membawa draft skripsi yang telah ditandatangani oleh Komisi Pembimbing dan Ketua Departemen. (Sebanyak 3-4 eksemplar wajib diserahkan secara fisik ke bagian TU).
                 </li>
                 <li><b>Proceeding dan Ringkasan (CD & Hardcopy)</b><br>
-                  Mahasiswa diminta membawa proceeding (berbahasa Inggris) dan ringkasan skripsi. Siapkan juga 1 CD dan 1 hardcopy masing-masing untuk diserahkan secara langsung ke TU.
+                  Mahasiswa diminta membawa proceeding (berbahasa Inggris) dan ringkasan skripsi dalam bentuk CD serta 1 lembar hardcopy masing-masing (wajib diserahkan secara fisik ke bagian TU).
                 </li>
               </ol>
 

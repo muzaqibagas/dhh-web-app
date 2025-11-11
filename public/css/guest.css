@@ -923,6 +923,58 @@
   text-align: justify;
 }
 
+/* ====== MITRA (PARTNER) SECTION ====== */
+.guest-partner-section {
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.guest-partner-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.guest-partner-track {
+  display: flex;
+  gap: 40px;
+  animation: slideMitra 20s linear infinite;
+}
+
+.guest-partner-track img {
+  height: 150px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.8;
+  transition: all 0.3s ease-in-out;
+}
+
+.guest-partner-track img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@keyframes slideMitra {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .guest-partner-track img {
+    height: 60px;
+  }
+  .guest-partner-track {
+    gap: 20px;
+    animation-duration: 15s;
+  }
+}
+
 /* ============================= */
 /* 📞 Contact Section            */
 /* ============================= */

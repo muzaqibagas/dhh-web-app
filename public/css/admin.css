@@ -613,6 +613,23 @@ body {
 }
 
 /* === ADMIN CARD WRAPPER === */
+/* 🔹 Card umum (dipakai di bagian bawah / grafik) */
+.card {
+  border-radius: 12px;
+  min-height: 280px;
+}
+
+/* 🔹 Card untuk Data Pendaftar (yang atas) */
+.data-card {
+  border-radius: 12px;
+  padding: 1.5rem 0;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .adm-card {
   background: #fff;
   border: 1px solid #ddd;
@@ -713,6 +730,9 @@ body {
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
+  .card, .data-card {
+  }
+
   .adm-header {
     flex-direction: column;
     align-items: flex-start;
