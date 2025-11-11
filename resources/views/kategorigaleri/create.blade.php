@@ -9,25 +9,39 @@
     </a>
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
+      $isDashboardActive = Request::is('dashboardadm');
+
+      $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
+
+      
       $isTingkatAkhirActive = 
-        Request::is('undangan') || Request::is('undangankolokium') || Request::is('undanganseminar') || Request::is('undangansidang') || 
-        Request::is('kolokium') || 
-        Request::is('seminar') || 
-        Request::is('sidang');
+        Request::is('syaratkolokiummhs') || Request::is('syaratkolokiummhs*') ||
+        Request::is('syaratseminarmhs') || Request::is('syaratseminarmhs*') ||
+        Request::is('syaratkomprehensifmhs') || Request::is('syaratkomprehensifmhs*');
+
       $isKontenActive = 
-        Request::is('kategorigaleri') || Request::is('kategorigaleri/create') || Request::is('kategorigaleri/*/edit') || 
-        Request::is('galeri') || Request::is('galeri/create') || Request::is('galeri/*/edit') || 
-        Request::is('kategoriartikel') || Request::is('kategoriartikel/create') || Request::is('kategoriartikel/*/edit') || 
-        Request::is('artikel') || Request::is('artikel/create') || Request::is('artikel/*/edit') || 
-        Request::is('review-alumni') || Request::is('review-alumni/create') || Request::is('review-alumni/*/edit') |
-        Request::is('konten-dept') || Request::is('konten-dept/show') || Request::is('konten-dept/*/edit') || 
-        Request::is('kontenjenjang') || Request::is('kontenjenjang/show') || Request::is('kontenjenjang/*/edit') || 
-        Request::is('mitra'); Request::is('mitra/create') || Request::is('mitra/*/edit') || 
+          Request::is('kategorigaleri*') ||
+          Request::is('galeri*') ||
+          Request::is('kategoriartikel*') ||
+          Request::is('artikel*') ||
+          Request::is('review-alumni*') ||
+          Request::is('konten-dept*') ||
+          Request::is('kontenjenjang*') ||
+          Request::is('mitra*');
+
       $isStaffDeptActive = 
-        Request::is('kategoristaff') || Request::is('kategoristaff/create') || Request::is('kategoristaff/*/edit') |
-        Request::is('staff-dept') || Request::is('staff-dept/create') || Request::is('staff-dept/*/edit') |
-        Request::is('ketuadhh') || Request::is('ketuadhh/create') || Request::is('ketuadhh/*/edit');
-      @endphp
+          Request::is('kategoristaff*') ||
+          Request::is('staff-dept*') ||
+          Request::is('ketuadhh*');
+    @endphp
+
+        <!-- BTN Dashboard ===================== -->
+    <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
+      <div class="menu-left">
+        <i class="bi bi-graph-up"></i> <span> Dashboard </span>
+      </div>
+      <span class="dropdownArrow"></span>
+    </a>
 
     <!-- BTN TINGKAT AKHIR===================== -->
     <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
@@ -41,20 +55,16 @@
     </a>
     <div data-menu="tingkatakhir"
       style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
-      <a href="/undangan"
-        class="submenu-link {{ Request::is('undangan', 'undangankolokium', 'undanganseminar', 'undangansidang') ? 'active-submenu' : '' }}">
-        <i class="bi bi-envelope-open"></i> Undangan
-      </a>
-      <a href="/kolokium"
-        class="submenu-link {{ Request::is('kolokium') ? 'active-submenu' : '' }}">
+      <a href="/syaratkolokiummhs"
+        class="submenu-link {{ Request::is('syaratkolokiummhs', 'syaratkolokiummhs/*') ? 'active-submenu' : '' }}">
         <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
       </a>
-      <a href="/seminar"
-        class="submenu-link {{ Request::is('seminar') ? 'active-submenu' : '' }}">
+      <a href="/syaratseminarmhs"
+        class="submenu-link {{ Request::is('syaratseminarmhs', 'syaratseminarmhs/*') ? 'active-submenu' : '' }}">
         <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
       </a>
-      <a href="/sidang"
-        class="submenu-link {{ Request::is('sidang') ? 'active-submenu' : '' }}">
+      <a href="/syaratkomprehensifmhs"
+        class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
         <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
       </a>
     </div>
@@ -92,11 +102,11 @@
         <i class="bi bi-star"></i>  Review Alumni
       </a>
       <a href="/konten-dept"
-        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit') ? 'active-submenu' : '' }}">
+        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
         <i class="bi bi-laptop"></i> Konten Departemen
       </a>
       <a href="/kontenjenjang"
-        class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit') ? 'active-submenu' : '' }}">
+        class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit', 'kontenjenjang/create') ? 'active-submenu' : '' }}">
         <i class="bi bi-house-door"></i> Konten Jenjang
       </a>
       <a href="/mitra"
@@ -137,11 +147,28 @@
     </a>
 
     <!-- BTN ADMIN ===================== -->
-    <a href="/admprofile" class="menu">
+    <a href="#" class="menu {{ $isAdminProfileActive ? 'active' : '' }}" data-dropdown="admprofile">
       <div class="menu-left">
-        <i class="bi bi-person-badge"></i> <span> Profil Admin </span>
+        <i class="bi bi-person-badge"></i>
+        <span> Profil Admin </span>
       </div>
-      <span class="dropdownArrow"></span>
+      <span class="dropdownArrow" data-arrow="admprofile">
+        {!! $isAdminProfileActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="admprofile"
+      style="margin-left:24px; flex-direction:column; {{ $isAdminProfileActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/admprofile"
+        class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-person-workspace"></i> Detail Profil Admin
+      </a>
+      <a href="/editpassadm"
+        class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
+        <i class="bi bi-gear-wide-connected"></i> Edit Password
+      </a>
+      <a href="/logoutadmprofile"
+        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+        <i class="bi bi-box-arrow-right"></i> Log Out
     </a>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
@@ -168,7 +195,6 @@
       });
     </script>
   </aside>
-
   <!-- MAIN CREATE KATEGORI GALERI -->
   <main class="content">
     <div class="container-fluid mt-4">
