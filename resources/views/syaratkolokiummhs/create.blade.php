@@ -99,8 +99,8 @@
                 <li><b>Formulir Pendaftaran Kolokium</b><br>
                     Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
                 </li>
-                <li><b>Bukti Telah Menyelesaikan Minimal 110 SKS</b><br>
-                    Lampirkan bukti jumlah SKS yang telah ditempuh, dengan total minimal 110 SKS.
+                <li><b>Bukti Transkrip Nilai</b><br>
+                    Lampirkan bukti jumlah transkrip nilai dengan total minimal 110 SKS.
                 </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
                     Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
