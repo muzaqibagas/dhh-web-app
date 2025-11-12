@@ -16,6 +16,8 @@ class SyaratKolokiummhs extends Model
         'id_moderator',
         'formulir',
         'alasan_formulir',
+        'makalah',
+        'alasan_makalah',
         'bukti_sks',
         'alasan_bukti_sks',
         'bukti_spp',

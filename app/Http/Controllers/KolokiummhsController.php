@@ -49,8 +49,11 @@ class KolokiummhsController extends Controller
         $kolokiummhs = Kolokiummhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
-        $ruangans = Ruangan::all();
-        return view('kolokiummhs.create', compact('kolokiummhs', 'listDosen', 'semesters', 'ruangans'));
+        $ruanganKolokium = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'kolokium');
+        })->get();
+
+        return view('kolokiummhs.create', compact('kolokiummhs', 'listDosen', 'semesters', 'ruanganKolokium'));
     }
 
     /**

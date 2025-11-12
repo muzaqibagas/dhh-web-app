@@ -4,23 +4,31 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Ruangan;
+use App\Models\JenisRuangan;
 use Illuminate\Support\Facades\DB;
 
 class RuanganSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $ruangans = ['ABT1', 'ABT2', 'SK214', 'SK224', 'SK227'];
+        $ruanganList = [
+            'ABT1' => ['kolokium', 'seminar'],
+            'ABT2' => ['kolokium', 'seminar'],
+            'SK214' => ['komprehensif'],
+            'SK224' => ['komprehensif'],
+            'SK227' => ['komprehensif'],
+        ];
 
-        foreach ($ruangans as $ruangan) {
-            DB::table('ruangans')->insert([                
-                'nama' => $ruangan,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }        
+        foreach ($ruanganList as $nama => $jenisList) {
+            $ruangan = Ruangan::create(['nama' => $nama]);
+
+            foreach ($jenisList as $jenis) {
+                JenisRuangan::create([
+                    'ruangan_id' => $ruangan->id,
+                    'jenis' => $jenis,
+                ]);
+            }
+        }
     }
 }

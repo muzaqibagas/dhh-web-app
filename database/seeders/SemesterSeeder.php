@@ -14,14 +14,14 @@ class SemesterSeeder extends Seeder
     public function run(): void
     {
         \DB::table('Semesters')->insert([
-            ['semester' => '1'],
-            ['semester' => '2'],
-            ['semester' => '3'],
-            ['semester' => '4'],
-            ['semester' => '5'],
-            ['semester' => '6'],
             ['semester' => '7'],
             ['semester' => '8'],
+            ['semester' => '9'],
+            ['semester' => '10'],
+            ['semester' => '11'],
+            ['semester' => '12'],
+            ['semester' => '13'],
+            ['semester' => '14'],
         ]);
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 <!-- SIDEBAR -->
 <div class="main-container">
-  <aside class="sidebar">
+    <aside class="sidebar">
       <a href="" class="menu-image-only">
         <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
       </a>
@@ -205,7 +205,7 @@
             <label for="id_ruangan">Ruangan</label>
             <select name="id_ruangan" id="id_ruangan">
               <option value="">Pilih Ruangan</option>
-              @foreach($ruangans as $ruangan)
+              @foreach($ruanganSeminar as $ruangan)
                 <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
               @endforeach
             </select>            

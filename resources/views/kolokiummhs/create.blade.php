@@ -205,7 +205,7 @@
           <label for="id_ruangan">Ruangan</label>
           <select name="id_ruangan" id="id_ruangan">
             <option selected disable>Pilih Ruangan</option>
-            @foreach($ruangans as $ruangan)
+            @foreach($ruanganKolokium as $ruangan)
               <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
             @endforeach
           </select>
@@ -217,8 +217,8 @@
         </div>
 
         <div class="form-group">
-          <label>Dosen Moderator</label>
-          <div class="form-static">[Diisi oleh akademik]</div>
+          <label>Dosen Moderator</label>          
+          <input type="text" class="text-success fw-bold" value="[Diisi oleh akademik]" readonly>
         </div>
 
         <div class="form-actions">
