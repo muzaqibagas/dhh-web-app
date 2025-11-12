@@ -214,15 +214,6 @@ Route::get('review-alumni/{reviewAlumni}/edit', [ReviewAlumniController::class, 
 Route::put('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'update'])->name('review-alumni.update');
 Route::delete('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'destroy'])->name('review-alumni.destroy');
 
-// Ruangan
-Route::get('ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
-Route::get('ruangan/create', [RuanganController::class, 'create'])->name('ruangan.create');
-Route::post('ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
-Route::get('ruangan/{ruangan}', [RuanganController::class, 'show'])->name('ruangan.show');
-Route::get('ruangan/{ruangan}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
-Route::put('ruangan/{ruangan}', [RuanganController::class, 'update'])->name('ruangan.update');
-Route::delete('ruangan/{ruangan}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
-
 // Kolokium
 Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
 Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');

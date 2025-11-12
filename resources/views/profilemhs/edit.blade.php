@@ -60,8 +60,18 @@
       </script>
 
     </aside>
-    <main class="content">
-      <h2 class="page-title">Edit Biodata Mahasiswa</h2>
+    <main class="content">     
+
+      <h2 class="page-title">Edit Biodata Mahasiswa</h2>      
+      {{-- Alert Validasi Error --}}
+      @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">          
+          @foreach ($errors->all() as $error)
+            {{ $error }}<br>
+          @endforeach
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+      @endif
       {{-- Alert Success --}}
       @if(session('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -83,9 +93,11 @@
           {{ session('info') }}
         </div>
       @endif  
+      
       <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center w-100 mt-4">
         @csrf
         @method('PUT')
+              
         <div class="id-card-container p-4 shadow-lg rounded-4 d-flex flex-row align-items-center w-100 mt-0" style="background: linear-gradient(135deg, #e0e7ff 60%, #f5f5f5 100%); border: 2px solid #1b2a6d; min-width: 420px;">    
           <div class="id-photo text-center me-4">
             <div class="rounded-3 overflow-hidden border border-3 border-primary mx-auto" style="width: 200px; height: 300px; background:#fff; margin-bottom: 10px;">        
