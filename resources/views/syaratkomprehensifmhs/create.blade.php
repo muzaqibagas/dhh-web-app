@@ -128,7 +128,7 @@
                   Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
                 </li>
                 <li><b>Telah Menyelesaikan Seluruh Mata Kuliah.</b><br>
-                  Mahasiswa diminta membawa dokumen bukti telah menyelesaikan seluruh mata kuliah yang telah ditetapkan, termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
+                  Mahasiswa diminta mengunggah file dokumen bukti telah menyelesaikan seluruh mata kuliah yang telah ditetapkan di halaman ini. termasuk seminar, dengan jumlah minimal 138 SKS dan IPK keseluruhan minimal 2,00 tanpa nilai E.
                 </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
                   Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
