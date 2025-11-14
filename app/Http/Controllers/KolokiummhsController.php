@@ -49,8 +49,11 @@ class KolokiummhsController extends Controller
         $kolokiummhs = Kolokiummhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
-        $ruangans = Ruangan::all();
-        return view('kolokiummhs.create', compact('kolokiummhs', 'listDosen', 'semesters', 'ruangans'));
+        $ruanganKolokium = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'kolokium');
+        })->get();
+
+        return view('kolokiummhs.create', compact('kolokiummhs', 'listDosen', 'semesters', 'ruanganKolokium'));
     }
 
     /**
@@ -70,8 +73,9 @@ class KolokiummhsController extends Controller
         $data = $request->validate([        
             'id_mahasiswa' => 'required|exists:users,id',
             'id_semester' => 'required|exists:semesters,id',
-            'id_pembimbing1' => 'required|exists:staff_depts,id',              
+            'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -145,7 +149,7 @@ class KolokiummhsController extends Controller
         $pdf->useTemplate($tpl);
         $pdf->SetFont('Times', '', 12);
         $labelWidth = 40;   
-        $valueWidth = 100;  
+        $valueWidth = 120;  
         $lineHeight = 6.5;
         // Nama Mahasiswa
         $pdf->SetXY(32, 60);
@@ -191,15 +195,15 @@ class KolokiummhsController extends Controller
         $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');        
         // Judul Kolokium
         $pdf->SetXY(32, 140);
-        $pdf->Cell($labelWidth, $lineHeight);
-        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');                
+        $pdf->Cell($labelWidth, $lineHeight);        
+        $pdf->MultiCell($valueWidth, $lineHeight, $kolokiummhs->judul_kolokium, 0, 'L');
         //tanda tangan mahasiswa
         $yMhs = 188;        
         $xStart = 210; 
         $xEnd   = 110; 
         $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yMhs);
-        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->nama ?? '-') . ")", 0, 0, 'C' // <-- ini bikin teks center
+        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->nama ?? '-') . ")", 0, 0, 'C' 
         );
         // Dosen Pembimbing 1 
         $yPemb1 = 223;
@@ -207,7 +211,7 @@ class KolokiummhsController extends Controller
         $xEnd   = 110; 
         $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yPemb1);
-        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")",             0, 0, 'C');
+        $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")", 0, 0, 'C');
         // Dosen Pembimbing 2 
         $yPemb2 = 223;
         $xStart2 = 103;  
@@ -217,11 +221,11 @@ class KolokiummhsController extends Controller
         $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
         //ketua dhh
         $yKetua = 263; 
-        $xStart3 = 55;  
+        $xStart3 = 52;  
         $xEnd3   = 160; 
         $width3  = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
-        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
+        $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->komisipendidikan->nama ?? '..................................') . ")", 0, 0, 'C');
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -250,6 +254,7 @@ class KolokiummhsController extends Controller
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',   
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -305,7 +310,6 @@ class KolokiummhsController extends Controller
             return back()->with('error', 'Gagal memperbarui data!');
         }
     }
-
 
     /**
      * Remove the specified resource from storage.

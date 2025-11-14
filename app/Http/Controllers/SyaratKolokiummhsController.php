@@ -42,6 +42,7 @@ class SyaratKolokiummhsController extends Controller
 
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
@@ -50,6 +51,7 @@ class SyaratKolokiummhsController extends Controller
         $syarat->update([
             'status' => 'disetujui',
             'alasan_formulir' => null,
+            'alasan_makalah' => null,
             'alasan_bukti_sks' => null,
             'alasan_bukti_spp' => null,
             'alasan_bukti_kehadiran' => null,
@@ -71,6 +73,7 @@ class SyaratKolokiummhsController extends Controller
         
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
@@ -78,6 +81,7 @@ class SyaratKolokiummhsController extends Controller
 
         if (
             empty($request->alasan_formulir) &&
+            empty($request->alasan_makalah) &&
             empty($request->alasan_bukti_sks) &&
             empty($request->alasan_bukti_spp) &&
             empty($request->alasan_bukti_kehadiran)
@@ -88,6 +92,7 @@ class SyaratKolokiummhsController extends Controller
         $syarat->update([
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
+            'alasan_makalah' => $request->alasan_makalah,
             'alasan_bukti_sks' => $request->alasan_bukti_sks,
             'alasan_bukti_spp' => $request->alasan_bukti_spp,
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
@@ -95,7 +100,8 @@ class SyaratKolokiummhsController extends Controller
 
         $reasons = [
             'Formulir' => $request->alasan_formulir,
-            'Bukti SKS' => $request->alasan_bukti_sks,
+            'Makalah' => $request->alasan_makalah,
+            'Bukti Transkrip Nilai' => $request->alasan_bukti_sks,
             'Bukti SPP' => $request->alasan_bukti_spp,
             'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
         ];
@@ -118,9 +124,10 @@ class SyaratKolokiummhsController extends Controller
         return redirect()->back()->with('success', 'Syarat Kolokium ditolak. Alasan penolakan telah disimpan.');
     }
 
+    //undangan kolokium pdf download
     public function downloadPdf($id)
     {
-        $syarat = SyaratKolokiummhs::with(['mahasiswa', 'moderator'])->findOrFail($id);
+        $syarat = SyaratKolokiummhs::with(['mahasiswa', 'moderator', 'penandatanganundangan'])->findOrFail($id);
         $kolokium = Kolokiummhs::with([
             'mahasiswa',
             'ruangan',
@@ -157,7 +164,10 @@ class SyaratKolokiummhsController extends Controller
             ? ($kolokium->ruangan->nama ?? '-')
             : ($kolokium->link_meeting ?? '-');
     
-        $moderator = $syarat->moderator->nama ?? '-';              
+        $moderator = $syarat->moderator->nama ?? '-';
+        $penandatanganundangan = $syarat->penandatanganundangan->nama ?? '-';
+        $jabatanPenandatangan = $syarat->penandatanganundangan->jabatan ?? '-';
+        $nipPenandatangan = $syarat->penandatanganundangan->nip ?? '-';
 
         $pdf->SetXY(23, 105);
         $pdf->MultiCell(32, 6, "{$kolokium->mahasiswa->nama} / {$kolokium->nim}", 0, 'L');
@@ -168,19 +178,28 @@ class SyaratKolokiummhsController extends Controller
         $pdf->SetXY(95, 105);
         $pdf->MultiCell(32, 6, "{$mulai} - {$selesai} WIB /\n{$tempat}", 0, 'L');
         
-        $pdf->SetXY(131, 105);
+        $pdf->SetXY(131, 105);        
         $pdf->MultiCell(65, 6, $kolokium->judul_kolokium, 0, 'L');
         
-        $pdf->SetXY(131, 130);
+        $pdf->SetXY(131, 145);
         $pdf->MultiCell(65, 6, $kolokium->pembimbing1->nama ?? '-', 0, 'L');
         
-        $pdf->SetXY(131, 148.8);
+        $pdf->SetXY(131, 163.8);
         $pdf->MultiCell(65, 6, $kolokium->pembimbing2->nama ?? '-', 0, 'L');
         
-        $pdf->SetXY(131, 168.3);
+        $pdf->SetXY(131, 183.3);
         $pdf->MultiCell(65, 6, $moderator, 0, 'L');
+
+        $pdf->SetXY(113, 219.5);        
+        $pdf->MultiCell(85, 6, $jabatanPenandatangan, 0, 'L');
+
+        $pdf->SetXY(113, 243);        
+        $pdf->MultiCell(85, 6, $penandatanganundangan, 0, 'L');
+
+        $pdf->SetXY(113, 248);        
+        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');        
         
-        $pdf->SetXY(125, 201.5);
+        $pdf->SetXY(125, 215);
         $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');        
 
         $pdf->Output($output, 'F');
@@ -225,6 +244,7 @@ class SyaratKolokiummhsController extends Controller
 
         $data = $request->validate([            
             'formulir' => 'required|mimes:pdf|max:2048',
+            'makalah' => 'required|mimes:pdf|max:2048',
             'bukti_sks' => 'required|mimes:pdf|max:2048',
             'bukti_spp' => 'required|mimes:pdf|max:2048',
             'bukti_kehadiran' => 'required|mimes:pdf|max:2048',
@@ -252,6 +272,12 @@ class SyaratKolokiummhsController extends Controller
             $fileName = 'formulir_kolokium_' . $nim . '.' . $file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
             $data['formulir'] = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+        }
+        if ($request->hasFile('makalah')) {
+            $file = $request->file('makalah');
+            $fileName = 'makalah_kolokium_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $data['makalah'] = 'syarat_kolokium/' . $folderName . '/' . $fileName;
         }
 
         if ($request->hasFile('bukti_sks')) {
@@ -306,6 +332,14 @@ class SyaratKolokiummhsController extends Controller
             $syarat->alasan_formulir = null;
         }
 
+        if ($request->hasFile('makalah')) {
+            $file = $request->file('makalah');
+            $fileName = 'makalah_kolokium_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->makalah = 'syarat_kolokium/' . $folderName . '/' . $fileName;
+            $syarat->alasan_makalah = null;
+        }
+
         if ($request->hasFile('bukti_sks')) {
             $file = $request->file('bukti_sks');
             $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
@@ -332,6 +366,7 @@ class SyaratKolokiummhsController extends Controller
         
         if (
             !$syarat->alasan_formulir &&
+            !$syarat->alasan_makalah &&
             !$syarat->alasan_bukti_sks &&
             !$syarat->alasan_bukti_spp &&
             !$syarat->alasan_bukti_kehadiran
@@ -375,6 +410,7 @@ class SyaratKolokiummhsController extends Controller
 
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
@@ -384,6 +420,7 @@ class SyaratKolokiummhsController extends Controller
             'status' => 'ditolak',
             'bap' => 'ditolak',
             'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+            'alasan_makalah' => 'Anda belum melaksanakan kolokium, silahkan upload ulang makalah',
             'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti sks',
             'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti spp',
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
@@ -407,6 +444,7 @@ class SyaratKolokiummhsController extends Controller
     {
         $nim = $syaratKolokiummhs->mahasiswa->nim;
         $listModerator = StaffDept::all();
+
         
         $formulirPath = $syaratKolokiummhs->formulir;
         $ext = pathinfo($formulirPath, PATHINFO_EXTENSION); 
@@ -418,18 +456,22 @@ class SyaratKolokiummhsController extends Controller
     {
         // Validasi input
         $request->validate([
-            'moderator' => 'required|string|max:255'
+            'moderator' => 'required|string|max:255',
+            'penandatanganundangan' => 'required|string|max:255'            
         ]);
 
         $nim = $syaratKolokiummhs->mahasiswa->nim; 
         $nama = $syaratKolokiummhs->mahasiswa->nama;       
         $moderatorId = $request->moderator;
+        $penandatanganundanganId = $request->penandatanganundangan;
 
-        $moderator = StaffDept::findOrFail($moderatorId)->nama;
+        $moderator = StaffDept::findOrFail($moderatorId)->nama;        
+        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;        
 
         // Simpan ke database
         $syaratKolokiummhs->update([
-            'id_moderator' => $moderatorId
+            'id_moderator' => $moderatorId,
+            'id_penandatanganundangan' => $penandatanganundanganId
         ]);   
         
         $this->sendNotification($syaratKolokiummhs->id_mahasiswa,

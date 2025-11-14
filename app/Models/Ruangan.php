@@ -27,4 +27,9 @@ class Ruangan extends Model
     {
         return $this->hasMany(Sidangs::class, 'id_ruangan');
     }
+    public function jenis()
+    {
+        return $this->hasMany(JenisRuangan::class);
+    }
+
 }

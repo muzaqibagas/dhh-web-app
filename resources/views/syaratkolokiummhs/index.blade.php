@@ -217,13 +217,14 @@
                       <thead class="table-light">
                           <tr>
                               <th class="text-center align-middle" style="width: 10%;">Nama</th>
-                              <th class="text-center align-middle" style="width: 10%;">Form Kolokium</th>                              
-                              <th class="text-center align-middle" style="width: 10%;">Bukti 110 SKS</th>
+                              <th class="text-center align-middle" style="width: 10%;">Form Kolokium</th>
+                              <th class="text-center align-middle" style="width: 10%;">Makalah</th>
+                              <th class="text-center align-middle" style="width: 10%;">Transkrip Nilai</th>
                               <th class="text-center align-middle" style="width: 10%;">Bukti SPP</th>
                               <th class="text-center align-middle" style="width: 10%;">Kartu Kehadiran</th>
                               <th class="text-center align-middle" style="width: 10%;">Verifikasi</th>
                               <th class="text-center align-middle" style="width: 10%;">Undangan</th>
-                              <th class="text-center align-middle" style="width: 10%;">BAP</th>
+                              <th class="text-center align-middle" style="width: 10%;">kelengkapan Berkas</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -233,28 +234,35 @@
                             <td class="align-middle text-center">
                               @if($pendaftars->formulir)
                                 <a href="{{ route('syaratkolokiummhs.show', $pendaftars->id) }}" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                                                                                                                          
-                                  <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                                  <p class="bi bi-eye" style="font-size: 18px;"></p>
                                 </a>
                               @endif
                             </td>                              
                             <td class="align-middle text-center">
+                              @if($pendaftars->makalah)
+                                <a href="{{asset($pendaftars->makalah)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                  <p class="bi bi-eye" style="font-size: 18px"></p> 
+                                </a>
+                              @endif
+                            </td>
+                            <td class="align-middle text-center">
                               @if($pendaftars->bukti_sks)
                                 <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
-                                  <p class="bi bi-eye" style="font-size: 18px"> Lihat</p> 
+                                  <p class="bi bi-eye" style="font-size: 18px"></p> 
                                 </a>
                               @endif
                             </td>
                             <td class="align-middle text-center">
                               @if($pendaftars->bukti_spp)
                                 <a href="{{asset($pendaftars->bukti_spp)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
-                                  <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p>
+                                  <p class="bi bi-eye" style="font-size: 18px;"></p>
                                 </a>
                               @endif
                             </td>
                             <td class="align-middle text-center">
                               @if($pendaftars->bukti_kehadiran)
                                 <a href="{{asset($pendaftars->bukti_kehadiran)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">
-                                  <p class="bi bi-eye" style="font-size: 18px;"> Lihat</p> 
+                                  <p class="bi bi-eye" style="font-size: 18px;"></p> 
                                 </a>
                               @endif
                             </td>
@@ -310,6 +318,7 @@
                             </td>
                           </tr>        
 
+                          <!-- Modal verifikasi disetujui -->
                           <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -331,6 +340,7 @@
                             </div>
                           </div>
                           
+                          <!-- Modal verifikasi ditolak -->
                           <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -349,11 +359,14 @@
                                       <div>
                                         <div class="mb-3 mx-3 d-flex gap-2">
                                           <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
-                                          <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti SKS..."></textarea>
+                                          <textarea name="alasan_makalah" class="form-control mb-2" placeholder="Alasan tolak makalah..."></textarea>                                          
                                         </div>
                                         <div class="mb-3 mx-3 d-flex gap-2">
-                                          <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
-                                          <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak bukti kehadiran..."></textarea>
+                                          <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti Transkrip Nilai..."></textarea>
+                                          <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>                                        
+                                        </div>
+                                        <div class="mb-3 mx-3 d-flex justify-content-center">
+                                          <textarea name="alasan_bukti_kehadiran" class="form-control mb-2 w-50" placeholder="Alasan tolak bukti kehadiran..."></textarea>
                                         </div>
                                       </div>                                                                            
                                       <button type="submit" class="btn btn-danger">Tolak</button>                                      
@@ -408,7 +421,7 @@
                           </div>
                         @empty
                           <tr>
-                            <td colspan="7" class="text-center text-muted py-4">Belum ada mahasiswa kolokium.</td>
+                            <td colspan="9" class="text-center text-muted py-4">Belum ada mahasiswa kolokium.</td>
                           </tr>
                         @endforelse
                       </tbody>

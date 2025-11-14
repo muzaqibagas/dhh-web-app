@@ -251,6 +251,19 @@
                                 </select>
                             </div>
 
+                            <div class="col-12 col-md-8 d-flex align-items-center">
+                                <label for="penandatanganundangan" class="form-label mb-0 w-50">Nama Penandatangan Undangan</label>:
+                                <select name="penandatanganundangan" id="penandatanganundangan" class="form-control" required>
+                                    <option value="">-- Pilih Penandatangan Undangan --</option>
+                                    @foreach($listModerator as $dosen)
+                                        <option value="{{ $dosen->id }}" 
+                                            {{ $syaratKolokiummhs->id_penandatanganundangan == $dosen->id ? 'selected' : '' }}>
+                                            {{ $dosen->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <!-- Button di bawah kanan -->
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-success">
@@ -274,9 +287,16 @@
   $(document).ready(function () {
     $('#moderator').select2({
       width: '100%',
-      placeholder: "Pilih Moderator",
-      minimumInputLength: 4 
+      placeholder: "Pilih Moderator",      
+      allowClear: true,
     });
+  });
+
+  // Select2 untuk pilihan Penandatangan Undangan
+  $('#penandatanganundangan').select2({
+    width: '100%',
+    placeholder: "Pilih Penandatangan Undangan",   
+    allowClear: true, 
   });
   </script>
 @endpush

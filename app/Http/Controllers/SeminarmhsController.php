@@ -85,8 +85,10 @@ class SeminarmhsController extends Controller
         $seminarmhs = Seminarmhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
-        $ruangans = Ruangan::all();
-        return view('seminarmhs.create', compact('seminarmhs', 'listDosen', 'semesters', 'ruangans'));
+        $ruanganSeminar = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'seminar');
+        })->get();
+        return view('seminarmhs.create', compact('seminarmhs', 'listDosen', 'semesters', 'ruanganSeminar'));
     }
 
     /**

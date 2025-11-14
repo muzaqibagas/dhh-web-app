@@ -17,6 +17,7 @@ class Kolokiummhs extends Model
         'id_semester',
         'id_pembimbing1',
         'id_pembimbing2',
+        'id_komisipendidikan',
         'nama',
         'nim',
         'alamat',
@@ -51,6 +52,10 @@ class Kolokiummhs extends Model
     public function pembimbing2()
     {
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
+    }
+    public function komisipendidikan()
+    {
+        return $this->belongsTo(StaffDept::class, 'id_komisipendidikan');
     }
 
     public function syaratKolokium()
