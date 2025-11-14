@@ -112,7 +112,7 @@
                     Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi bersamaan dengan makalah kolokium setelah semua dokumen diunggah secara daring.
                 </li>
             </ol>
-
+            
           <!-- {{-- Kondisi jika sudah disetujui --}} -->
           @if($syarat && $syarat->status === 'disetujui')
             <div class="alert alert-success">
