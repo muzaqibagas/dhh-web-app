@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('nama')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->string('nip')->unique();
-            $table->string('email')->unique();
+            $table->string('nip')->nullable()->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('sinta')->nullable();
             $table->string('google_scholar')->nullable();
             $table->string('scopus')->nullable();

@@ -14,6 +14,7 @@ class SyaratKolokiummhs extends Model
     protected $fillable = [
         'id_mahasiswa',
         'id_moderator',
+        'id_penandatanganundangan',
         'formulir',
         'alasan_formulir',
         'makalah',
@@ -36,6 +37,11 @@ class SyaratKolokiummhs extends Model
     public function moderator()
     {
         return $this->belongsTo(StaffDept::class, 'id_moderator');
+    }
+
+    public function penandatanganundangan()
+    {
+        return $this->belongsTo(StaffDept::class, 'id_penandatanganundangan');
     }
 
     public function kolokiummhs()

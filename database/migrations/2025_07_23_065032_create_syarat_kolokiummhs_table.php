@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('id_mahasiswa')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_moderator')->nullable()->constrained('staff_depts')->onDelete('cascade');
+            $table->foreignId('id_penandatanganundangan')->nullable()->constrained('staff_depts')->onDelete('cascade');
             $table->string('formulir'); 
             $table->text('alasan_formulir')->nullable();
             $table->string('makalah'); 

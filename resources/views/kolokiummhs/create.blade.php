@@ -171,6 +171,16 @@
               <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
             @endforeach                 
           </select>
+        </div>    
+
+        <div class="form-group">
+          <label>Komisi Pendidikan</label>
+          <select name="id_komisipendidikan" id="komisipendidikan" required>
+            <option selected disabled value="">Pilih Dosen</option>
+            @foreach ($listDosen as $dosen)
+              <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
+            @endforeach                 
+          </select>
         </div>      
 
         <div class="form-group">
@@ -354,6 +364,12 @@
         $('#pembimbing2').select2({
             width: '100%',
             placeholder: "Pilih Dosen Pembimbing 2",
+            allowClear: true,
+        });
+
+        $('#komisipendidikan').select2({
+            width: '100%',
+            placeholder: "Pilih Komisi Pendidikan",
             allowClear: true,
         });
 

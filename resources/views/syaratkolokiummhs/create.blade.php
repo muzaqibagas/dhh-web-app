@@ -119,15 +119,15 @@
                 <li><b>Formulir Pendaftaran Kolokium</b><br>
                     Mahasiswa diminta mengisi dan mengunggah foto formulir pendaftaran kolokium yang telah ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
                 </li>
+                <li><b>Makalah Kolokium</b><br>
+                    Mahasiswa wajib mengunggah makalah kolokium (format .pdf) yang telah disetujui dan ditandatangani oleh dosen pembimbing melalui halaman ini.   
+                </li>
                 <li><b>Bukti Transkrip Nilai</b><br>
                     Lampirkan bukti jumlah transkrip nilai dengan total minimal 110 SKS.
                 </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
                     Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
-                </li>
-                <li><b>Makalah Kolokium</b><br>
-                    Kumpulkan file hardfile makalah kolokium yang telah disetujui oleh dosen pembimbing ke bagian administrasi.
-                </li>
+                </li>                                
                 <li><b>Map Folio (4 Buah)</b><br>
                     Siapkan dan kumpulkan 4 buah map folio secara fisik ke bagian administrasi bersamaan dengan makalah kolokium setelah semua dokumen diunggah secara daring.
                 </li>
@@ -145,7 +145,8 @@
               Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
               <ul>
                 @if($syarat->alasan_formulir)<li><b>Formulir Kolokium:</b> {{ $syarat->alasan_formulir }}</li>@endif
-                @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                @if($syarat->alasan_makalah)<li><b>Makalah Kolokium:</b> {{ $syarat->alasan_makalah }}</li>@endif
+                @if($syarat->alasan_bukti_sks)<li><b>Bukti Transkrip Nilai:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
                 @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
                 @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
               </ul>
@@ -162,9 +163,15 @@
                     <input type="file" name="formulir" accept=".pdf" required>
                   </div>
                 @endif
+                @if($syarat->alasan_makalah)
+                  <div class="form-group">
+                    <label>Upload Ulang makalah Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <input type="file" name="makalah" accept=".pdf" required>
+                  </div>
+                @endif
                 @if($syarat->alasan_bukti_sks)
                   <div class="form-group">
-                    <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                    <label>Upload Ulang Bukti Transkrip Nilai<small class="text-danger">(*format wajib .PDF)</small></label>
                     <input type="file" name="bukti_sks" accept=".pdf" required>
                   </div>
                 @endif
@@ -216,6 +223,11 @@
                 <div class="form-group">
                   <label>Upload Formulir Pendaftaran Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
                   <input type="file" name="formulir" accept=".pdf" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Upload Makalah Kolokium <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <input type="file" name="makalah" accept=".pdf" required>
                 </div>
 
                 <div class="form-group">
