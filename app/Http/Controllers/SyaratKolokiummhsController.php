@@ -421,7 +421,7 @@ class SyaratKolokiummhsController extends Controller
             'bap' => 'ditolak',
             'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
             'alasan_makalah' => 'Anda belum melaksanakan kolokium, silahkan upload ulang makalah',
-            'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti sks',
+            'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang transkrip nilai',
             'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti spp',
             'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
         ]);

@@ -125,6 +125,9 @@
                 <li><b>Formulir Pendaftaran Seminar</b><br>
                   Mahasiswa wajib mengisi formulir pendaftaran seminar di halaman Seminar. Setelah diisi, formulir tersebut harus ditandatangani oleh dosen pembimbing (dapat menggunakan Digsign IPB) dan kemudian diunggah kembali melalui halaman ini. Setelah diterima, formulir akan disahkan oleh Ketua Departemen melalui bagian Tata Usaha (TU).
                 </li>
+                <li><b>Makalah Seminar</b><br>
+                  Mahasiswa wajib mengunggah makalah seminar (format .pdf) yang telah disetujui dan ditandatangani oleh dosen pembimbing melalui halaman ini. 
+                </li>
                 <li><b>Bukti Pelunasan SPP</b><br>
                   Bukti pembayaran SPP untuk semester berjalan harus diunggah melalui form yang tersedia pada halaman ini. Jika menggunakan tangkapan layar, pastikan informasi pembayaran terlihat dengan jelas dan sudah dalam format .pdf
                 </li>
@@ -149,7 +152,8 @@
                 Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
                 <ul>
                   @if($syarat->alasan_formulir)<li><b>Formulir Seminar Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif
-                  @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                  @if($syarat->alasan_makalah)<li><b>Makalah Seminar Hasil:</b> {{ $syarat->alasan_makalah }}</li>@endif
+                  @if($syarat->alasan_bukti_sks)<li><b>Bukti Transkrip Nilai:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
                   @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
                   @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
                 </ul>
@@ -165,9 +169,15 @@
                       <input type="file" name="formulir" accept=".pdf" required>
                     </div>
                   @endif
+                  @if($syarat->alasan_makalah)
+                    <div class="form-group">
+                      <label>Upload Ulang Makalah Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="makalah" accept=".pdf" required>
+                    </div>
+                  @endif
                   @if($syarat->alasan_bukti_sks)
                     <div class="form-group">
-                      <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <label>Upload Ulang Bukti Transkrip Nilai <small class="text-danger">(*format wajib .PDF)</small></label>
                       <input type="file" name="bukti_sks" accept=".pdf" required>
                     </div>
                   @endif
@@ -222,7 +232,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Bukti Menyelesaikan 110 SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                            <label>Upload Makalah Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>                            
+                            <input type="file" name="makalah" accept=".pdf" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Bukti Transkrip Nilai <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="bukti_sks" accept=".pdf" required>
                         </div>
 

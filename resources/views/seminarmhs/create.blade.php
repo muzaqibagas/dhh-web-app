@@ -174,6 +174,16 @@
           </div>
 
           <div class="form-group">
+            <label>Komisi Pendidikan</label>
+            <select name="id_komisipendidikan" id="komisipendidikan" required>
+              <option selected disabled value="">Pilih Dosen</option>
+              @foreach ($listDosen as $dosen)
+                <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
+              @endforeach                 
+            </select>
+          </div> 
+
+          <div class="form-group">
             <label>Hari/Tanggal Seminar</label>
             <div>
               <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
@@ -214,11 +224,11 @@
           <div class="form-group d-none" id="link-field">
             <label for="link_meeting">Link Meeting</label>
             <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting') }}">            
-          </div>
+          </div>          
 
           <div class="form-group">
-            <label>Dosen Moderator</label>
-            <div class="form-static">[Diisi oleh akademik]</div>
+            <label>Dosen Moderator</label>          
+            <input type="text" class="text-success fw-bold" value="[Diisi oleh akademik]" readonly>
           </div>
           
           <div class="form-actions">
@@ -354,6 +364,12 @@
         $('#pembimbing2').select2({
             width: '100%',
             placeholder: "Pilih Dosen Pembimbing 2",
+            allowClear: true,
+        });
+
+        $('#komisipendidikan').select2({
+            width: '100%',
+            placeholder: "Pilih Komisi Pendidikan",
             allowClear: true,
         });
 

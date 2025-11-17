@@ -255,7 +255,7 @@
                 <label for="id_ruangan">Ruangan</label>
                 <select name="id_ruangan" id="id_ruangan" {{ old('tipe_pelaksanaan', $kolokiummhs->tipe_pelaksanaan) == 'offline' ? 'required' : '' }}>
                     <option value="">Pilih Ruangan</option>
-                    @foreach($ruangans as $ruangan)
+                    @foreach($ruanganKolokium as $ruangan)
                         <option value="{{ $ruangan->id }}" 
                             {{ old('id_ruangan', $kolokiummhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
                             {{ $ruangan->nama }}

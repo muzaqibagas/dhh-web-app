@@ -155,6 +155,11 @@
         </div>
 
         <div class="form-group">
+            <label>Komisi Pendidikan</label>
+            <input type="text" value="{{ $seminarmhs->komisiPendidikan->nama ?? '-' }}" readonly>
+        </div>
+
+        <div class="form-group">
           <label>Hari/Tanggal Seminar</label>
           <input type="date" value="{{ \Carbon\Carbon::parse($seminarmhs->tanggal)->format('Y-m-d') }}" readonly>
         </div>

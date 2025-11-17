@@ -108,6 +108,7 @@ class SeminarmhsController extends Controller
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -175,14 +176,14 @@ class SeminarmhsController extends Controller
         $pdf->useTemplate($tpl);
         $pdf->SetFont('Times', '', 12);
         $labelWidth = 40;
-        $valueWidth = 100;
+        $valueWidth = 120;
         $lineHeight = 6.5;
         //nama
         $pdf->SetXY(32, 60);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->nama, 0, 'L');
         // nim
-        $pdf->SetXY(32, 67);
+        $pdf->SetXY(32, 68);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->nim, 0, 'L');
         //semester
@@ -244,13 +245,13 @@ class SeminarmhsController extends Controller
         $width2 = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($seminarmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
-        //ketua dhh
-        $yKetua = 263; // atur sesuai posisi bawah template
-        $xStart3 = 55;  // geser agar center dengan tanda tangan
-        $xEnd3   = 160; // sesuaikan dengan tanda tangan
+        //komisi pendidikan
+        $yKetua = 263; 
+        $xStart3 = 52; 
+        $xEnd3   = 160;
         $width3  = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
-        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
+        $pdf->Cell($width3, $lineHeight, "(" . ($seminarmhs->komisipendidikan->nama ?? '..................................') . ")",0, 0, 'C');        
 
         $pdf->Output('F', $output);
         return response()->download($output);                
@@ -260,11 +261,13 @@ class SeminarmhsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Seminarmhs $seminarmhs)
-    {
-        $ruangans = Ruangan::all();
+    {        
         $semesters = Semester::all();
         $listDosen = StaffDept::all();
-        return view('seminarmhs.edit', compact('seminarmhs', 'ruangans', 'semesters', 'listDosen'));
+        $ruanganSeminar = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'seminar');
+        })->get();
+        return view('seminarmhs.edit', compact('seminarmhs', 'ruanganSeminar', 'semesters', 'listDosen'));
     }
 
     /**
@@ -277,6 +280,7 @@ class SeminarmhsController extends Controller
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',

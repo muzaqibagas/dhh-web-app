@@ -15,6 +15,7 @@ class SyaratKomprehensifmhs extends Model
         'id_mahasiswa',
         'id_moderator',
         'id_penguji',
+        'id_penandatanganundangan',
         'formulir',
         'alasan_formulir',
         'bukti_sks',
@@ -40,6 +41,11 @@ class SyaratKomprehensifmhs extends Model
     public function penguji()
     {
         return $this->belongsTo(StaffDept::class, 'id_penguji');
+    }
+
+    public function penandatanganundangan()
+    {
+        return $this->belongsTo(StaffDept::class, 'id_penandatanganundangan');
     }
 
     public function komprehensifmhs()
