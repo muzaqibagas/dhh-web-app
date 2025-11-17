@@ -122,7 +122,7 @@
             @endif      
               <ol class="syarat-list">
                 <li><b>Batas Waktu</b><br>
-                  Pengurusan administrasi seminar tugas akhir paling lambat dilakukan 6 hari kerja sebelum pelaksanaan seminar (H-6). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
+                  Pengurusan administrasi komprehensif paling lambat dilakukan 6 hari kerja sebelum pelaksanaan komprehensif (H-6). Mahasiswa disarankan segera melengkapi seluruh persyaratan agar tidak melewati batas waktu yang telah ditentukan.
                 </li>
                 <li><b>Formulir Pendaftaran Ujian Akhir Sarjana</b><br>
                   Mahasiswa diminta mengisi formulir pendaftaran di halaman Komprehesif dan meminta tanda tangan dosen pembimbing (dapat menggunakan Digsign IPB) dan mengunggah file tersebut di halaman ini. Formulir ini akan disahkan oleh Ketua Departemen oleh pihak TU.
@@ -157,9 +157,10 @@
                 Dokumen Anda <b>ditolak</b>. Silakan perbaiki dan upload ulang dokumen berikut:
                 <ul>
                   @if($syarat->alasan_formulir)<li><b>Formulir Komprehensif Hasil:</b> {{ $syarat->alasan_formulir }}</li>@endif
-                  @if($syarat->alasan_bukti_sks)<li><b>Bukti SKS:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
+                  @if($syarat->alasan_makalah)<li><b>Draft Skripsi Komprehensif:</b> {{ $syarat->alasan_makalah }}</li>@endif
+                  @if($syarat->alasan_bukti_sks)<li><b>Bukti Transkrip Nilai:</b> {{ $syarat->alasan_bukti_sks }}</li>@endif
                   @if($syarat->alasan_bukti_spp)<li><b>Bukti SPP:</b> {{ $syarat->alasan_bukti_spp }}</li>@endif
-                  @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kehadiran:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
+                  @if($syarat->alasan_bukti_kehadiran)<li><b>Bukti Kartu Bimbingan:</b> {{ $syarat->alasan_bukti_kehadiran }}</li>@endif
                 </ul>
               </div>
               
@@ -173,9 +174,15 @@
                       <input type="file" name="formulir" accept=".pdf" required>
                     </div>
                   @endif
+                  @if($syarat->alasan_makalah)
+                    <div class="form-group">
+                      <label>Upload Ulang Draft Skripsi Komprehensif <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <input type="file" name="makalah" accept=".pdf" required>
+                    </div>
+                  @endif
                   @if($syarat->alasan_bukti_sks)
                     <div class="form-group">
-                      <label>Upload Ulang Bukti SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <label>Upload Ulang Transkrip Nilai <small class="text-danger">(*format wajib .PDF)</small></label>
                       <input type="file" name="bukti_sks" accept=".pdf" required>
                     </div>
                   @endif
@@ -187,7 +194,7 @@
                   @endif
                   @if($syarat->alasan_bukti_kehadiran)
                     <div class="form-group">
-                      <label>Upload Ulang Bukti Kehadiran Seminar Hasil <small class="text-danger">(*format wajib .PDF)</small></label>
+                      <label>Upload Ulang Bukti Kartu Bimbingan Komprehensif <small class="text-danger">(*format wajib .PDF)</small></label>
                       <input type="file" name="bukti_kehadiran" accept=".pdf" required>
                     </div>
                   @endif
@@ -206,7 +213,7 @@
             <!-- {{-- kondisi kalau BAP diterima --}} -->
             @elseif ($syarat && $syarat->bap === 'diterima')
                 <div class="alert alert-success">
-                    <strong>BAP Anda telah diterima.</strong> Semua persyaratan seminar hasil sudah lengkap dan disetujui.
+                    <strong>BAP Anda telah diterima.</strong> Semua persyaratan komprehensif sudah lengkap dan disetujui.
                 </div>
 
             <!-- {{-- kondisi kalau BAP ditolak --}} -->
@@ -225,22 +232,27 @@
                     <form action="{{ route('syaratkomprehensifmhs.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>Upload Formulir Pendaftaran Komprehensif</label>
+                            <label>Upload Formulir Pendaftaran Komprehensif <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="formulir" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </div>                      
+
+                         <div class="form-group">
+                            <label>Upload Draft Skripsi Komprehensif <small class="text-danger">(*format wajib .PDF)</small></label>
+                            <input type="file" name="makalah" accept=".pdf" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Bukti Menyelesaikan 110 SKS</label>
+                            <label>Upload Bukti Transkrip Nilai <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="bukti_sks" accept=".pdf,.jpg,.jpeg,.png" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Upload Bukti TF / SPP Lunas</label>
+                            <label>Upload Bukti TF / SPP Lunas <small class="text-danger">(*format wajib .PDF)</small></label>
                             <input type="file" name="bukti_spp" accept=".pdf,.jpg,.jpeg,.png" required>
                         </div>                      
 
                         <div class="form-group">
-                        <label>Upload Bukti Kehadiran Komprehensif</label>
+                        <label>Upload Bukti Kartu Bimbingan <small class="text-danger">(*format wajib .PDF)</small></label>
                         <input type="file" name="bukti_kehadiran" accept=".pdf,.jpg,.jpeg,.png" required>
                         </div>
 

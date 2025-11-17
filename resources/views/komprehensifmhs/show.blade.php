@@ -146,6 +146,10 @@
 				<label>Dosen Pembimbing 2</label>
 				<input type="text" value="{{ $komprehensifmhs->pembimbing2->nama ?? '-' }}" readonly>
 			</div>
+      <div class="form-group">
+        <label>Komisi Pendidikan</label>
+        <input type="text" value="{{ $komprehensifmhs->komisiPendidikan->nama ?? '-' }}" readonly>
+      </div>
 			<div class="form-group">
 				<label>Hari/Tanggal Sidang</label>
 				<input type="date" value="{{ \Carbon\Carbon::parse($komprehensifmhs->tanggal)->format('Y-m-d') }}" readonly>				

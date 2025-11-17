@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('id_penandatanganundangan')->nullable()->constrained('staff_depts')->onDelete('cascade');
             $table->string('formulir'); 
             $table->text('alasan_formulir')->nullable();
+            $table->string('makalah');
+            $table->text('alasan_makalah')->nullable();
             $table->string('bukti_sks');
             $table->text('alasan_bukti_sks')->nullable();
             $table->string('bukti_spp');

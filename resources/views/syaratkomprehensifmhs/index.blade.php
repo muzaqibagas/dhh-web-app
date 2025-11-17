@@ -219,12 +219,13 @@
                           <tr>
                               <th class="text-center align-middle" style="width: 10%;">Nama</th>
                               <th class="text-center align-middle" style="width: 10%;">Form Komprehensif</th>                              
-                              <th class="text-center align-middle" style="width: 10%;">Bukti 110 SKS</th>
+                              <th class="text-center align-middle" style="width: 10%;">Skripsi</th>                           
+                              <th class="text-center align-middle" style="width: 10%;">Transkrip Nilai</th>
                               <th class="text-center align-middle" style="width: 10%;">Bukti SPP</th>
-                              <th class="text-center align-middle" style="width: 10%;">Kartu Kehadiran</th>
+                              <th class="text-center align-middle" style="width: 10%;">Kartu Bimbingan</th>
                               <th class="text-center align-middle" style="width: 10%;">Verifikasi</th>
                               <th class="text-center align-middle" style="width: 10%;">Undangan</th>
-                              <th class="text-center align-middle" style="width: 10%;">BAP</th>
+                              <th class="text-center align-middle" style="width: 10%;">Kelengkapan Berkas</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -238,6 +239,13 @@
                                   </a>
                                 @endif
                               </td>                              
+                              <td class="align-middle text-center">
+                                @if($pendaftars->makalah)
+                                  <a href="{{asset($pendaftars->makalah)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
+                                      <p class="bi bi-eye" style="font-size: 18px"> Lihat</p> 
+                                  </a>
+                                @endif
+                              </td>
                               <td class="align-middle text-center">
                                 @if($pendaftars->bukti_sks)
                                   <a href="{{asset($pendaftars->bukti_sks)}}" target="_blank" class="btn btn-primary btn-sm d-flex flex-column align-items-center mx-auto" style="width: 90px; height: 30px; padding: 0;">                            
@@ -310,6 +318,7 @@
                             </td>
                           </tr>                        
 
+                          <!-- Modal verifikasi disetujui -->
                           <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalSetujuiLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -331,6 +340,7 @@
                             </div>
                           </div>
 
+                          <!-- Modal verifikasi ditolak -->
                           <div class="modal fade" id="modalTolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalTolakLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -345,13 +355,33 @@
                                 <div class="modal-footer justify-content-center">                                  
                                   <form action="{{ route('syaratkomprehensifmhs.tolak', $pendaftars->id) }}" method="POST">
                                     @csrf                                                                                                                                               
-                                      <div class="mb-3 mx-3 d-flex gap-2">
-                                        <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
-                                        <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti SKS..."></textarea>
-                                      </div>
-                                      <div class="mb-3 mx-3 d-flex gap-2">
-                                        <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
-                                        <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak bukti kehadiran..."></textarea>
+                                      <div>
+                                        <div class="mx-3 d-flex gap-2">
+                                          <div>
+                                              <label class="fw-bold fs-6">Alasan Formulir</label>
+                                              <textarea name="alasan_formulir" class="form-control mb-2" placeholder="Alasan tolak formulir..."></textarea>
+                                          </div>
+                                          <div>
+                                              <label class="fw-bold fs-6">Alasan Skripsi</label>
+                                              <textarea name="alasan_makalah" class="form-control mb-2" placeholder="Alasan tolak draft skripsi..."></textarea>
+                                          </div>                                        
+                                        </div>
+                                        <div class="mx-3 d-flex gap-2">
+                                          <div>
+                                              <label class="fw-bold fs-6">Alasan Transkrip Nilai</label>
+                                              <textarea name="alasan_bukti_sks" class="form-control mb-2" placeholder="Alasan tolak bukti Transkrip Nilai..."></textarea>
+                                          </div>
+                                          <div>
+                                              <label class="fw-bold fs-6">Alasan SPP</label>
+                                              <textarea name="alasan_bukti_spp" class="form-control mb-2" placeholder="Alasan tolak bukti SPP..."></textarea>
+                                          </div>
+                                        </div>
+                                        <div class="mx-3 d-flex justify-content-center">
+                                            <div class="w-50">
+                                                <label class="fw-bold fs-6">Alasan Kartu Bimbingan</label>
+                                                <textarea name="alasan_bukti_kehadiran" class="form-control mb-2" placeholder="Alasan tolak kartu bimbingan..."></textarea>
+                                            </div>
+                                        </div>
                                       </div>                                                                            
                                       <button type="submit" class="btn btn-danger">Tolak</button>                                      
                                   </form>
@@ -360,17 +390,17 @@
                             </div>
                           </div>   
 
-                          <!-- Modal BAP Diterima -->
+                          <!-- Modal Kelengkapan Berkas Diterima -->
                           <div class="modal fade" id="modalBapDiterima{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalBapDiterimaLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
                                 <div class="modal-header bg-success text-white">
-                                  <h5 class="modal-title" id="modalBapDiterimaLabel{{ $pendaftars->id }}">Konfirmasi BAP Diterima</h5>
+                                  <h5 class="modal-title" id="modalBapDiterimaLabel{{ $pendaftars->id }}">Konfirmasi Kelengkapan Berkas Diterima</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body text-center">
                                   <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
-                                  <p>Apakah Anda yakin sudah <strong>menerima</strong> BAP Komprehensif Mahasiswa <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
+                                  <p>Apakah Anda yakin sudah <strong>menerima</strong> Kelengkapan Berkas Komprehensif Mahasiswa <strong>{{ $pendaftars->mahasiswa->nama }}</strong>?</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                   <form action="{{ route('syaratkomprehensifmhs.bap.diterima', $pendaftars->id) }}" method="POST">
@@ -382,17 +412,17 @@
                             </div>
                           </div>
 
-                          <!-- Modal BAP Ditolak -->
+                          <!-- Modal Kelengkapan Berkas Ditolak -->
                           <div class="modal fade" id="modalBapDitolak{{ $pendaftars->id }}" tabindex="-1" aria-labelledby="modalBapDitolakLabel{{ $pendaftars->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
                                 <div class="modal-header bg-danger text-white">
-                                  <h5 class="modal-title" id="modalBapDitolakLabel{{ $pendaftars->id }}">Konfirmasi BAP Ditolak</h5>
+                                  <h5 class="modal-title" id="modalBapDitolakLabel{{ $pendaftars->id }}">Konfirmasi Kelengkapan Berkas Ditolak</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body text-center">
                                   <i class="bi bi-x-circle-fill text-danger" style="font-size: 3rem;"></i>
-                                  <p>Apakah Anda yakin <strong>belum menerima</strong> BAP untuk <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan komprehensif kembali?</p>
+                                  <p>Apakah Anda yakin <strong>belum menerima</strong> Kelengkapan Berkas dari <strong>{{ $pendaftars->mahasiswa->nama }}</strong> dan mengharuskan mahasiswa melakukan komprehensif kembali?</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
                                   <form action="{{ route('syaratkomprehensifmhs.bap.ditolak', $pendaftars->id) }}" method="POST">                                                        
@@ -405,7 +435,7 @@
                           </div>
                         @empty
                           <tr>
-                            <td colspan="7" class="text-center text-muted py-4">Belum ada mahasiswa komprehensif.</td>
+                            <td colspan="9" class="text-center text-muted py-4">Belum ada mahasiswa komprehensif.</td>
                           </tr>
                         @endforelse
                       </tbody>

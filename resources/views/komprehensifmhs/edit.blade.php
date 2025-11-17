@@ -4,103 +4,103 @@
 @section('content')
 <!-- SIDEBAR -->
 <div class="main-container">
-	<aside class="sidebar">
-      <a href="" class="menu-image-only">
-        <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
-      </a>
-      <!-- Untuk aktifin button sub menu ========================= -->
-      @php
-        $isBerandaActive = Request::is('dashboardmhs');
-        $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
-        $isTingkatAkhirActive = Request::is('kolokiummhs') || Request::is('syaratkolokiummhs') || Request::is('seminarmhs') || Request::is('syaratseminarmhs') || Request::is('komprehensifmhs*') || Request::is('syaratkomprehensifmhs');
-        $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
-        $isLogoutmhsActive = Request::is('logoutmhs');
-        @endphp
+  <aside class="sidebar">
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
+    <!-- Untuk aktifin button sub menu ========================= -->
+    @php
+      $isBerandaActive = Request::is('dashboardmhs');
+      $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
+      $isTingkatAkhirActive = Request::is('kolokiummhs') || Request::is('syaratkolokiummhs') || Request::is('seminarmhs') || Request::is('syaratseminarmhs') || Request::is('komprehensifmhs*') || Request::is('syaratkomprehensifmhs');
+      $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
+      $isLogoutmhsActive = Request::is('logoutmhs');
+      @endphp
 
-      <!-- BTN BERANDA ===================== -->
-      <a href="/dashboardmhs" class="menu {{ $isBerandaActive ? 'active' : '' }}">
-        <div class="menu-left">
-          <i class="bi bi-house-door-fill"></i>
-          <span> Beranda </span>
-        </div>
-      </a>   
-
-      <!-- BTN TINGKAT AKHIR ===================== -->
-      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="staffdept">
-        <div class="menu-left">
-          <i class="bi bi-mortarboard"></i>
-          <span> Mahasiswa Tingkat Akhir </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="staffdept">
-          {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
-        </span>
-      </a>
-      <div data-menu="staffdept"
-        style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/kolokiummhs"
-          class="submenu-link {{ Request::is('kolokiummhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-check2-circle"></i> Kolokium
-        </a>
-        <a href="/syaratkolokiummhs"
-          class="submenu-link {{ Request::is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-info-circle"></i> Syarat Kolokium
-        </a>
-        <a href="/seminarmhs"
-          class="submenu-link {{ Request::is('seminarmhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-calendar-event"></i> Seminar
-        </a>
-        <a href="/syaratseminarmhs"
-          class="submenu-link {{ Request::is('syaratseminarmhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-info-circle"></i> Syarat Seminar
-        </a>
-        <a href="/komprehensifmhs"
-          class="submenu-link {{ Request::is('komprehensifmhs*') ? 'active-submenu' : '' }}">
-          <i class="bi bi-journal-text"></i> Komprehensif
-        </a>
-        <a href="/syaratkomprehensifmhs"
-          class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-info-circle"></i> Syarat Komprehensif
-        </a>
+    <!-- BTN BERANDA ===================== -->
+    <a href="/dashboardmhs" class="menu {{ $isBerandaActive ? 'active' : '' }}">
+      <div class="menu-left">
+        <i class="bi bi-house-door-fill"></i>
+        <span> Beranda </span>
       </div>
-    
-      <!-- PEMBATAS EMAS ===================== -->
-      <a href="" class="menu-image-only">
-        <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
-      </a>
+    </a>   
 
-
-      <!-- BTN Profile MHS ===================== -->
-      <a href="#" class="menu {{ $isProfileMahasiswaActive ? 'active' : '' }}" data-dropdown="profilemhs">
-        <div class="menu-left">
-          <i class="bi bi-person"></i>
-          <span> Profil Mahasiswa </span>
-        </div>
-        <span class="dropdownArrow" data-arrow="profilemhs">
-          {!! $isProfileMahasiswaActive ? '&#9660;' : '&#9650;' !!}
-        </span>
-      </a>
-      <div data-menu="profilemhs"
-        style="margin-left:24px; flex-direction:column; {{ $isProfileMahasiswaActive ? 'display:flex;' : 'display:none;' }}">
-        <a href="/profilemhs"
-          class="submenu-link {{ Request::is('profilemhs', 'profilemhs/edit', 'user/*/edit') ? 'active-submenu' : '' }}">
-          <i class="bi bi-person-workspace"></i> Biodata Mahasiswa
-        </a>
-        <a href="/editpassmhs"
-          class="submenu-link {{ Request::is('editpassmhs') ? 'active-submenu' : '' }}">
-          <i class="bi bi-gear-wide-connected"></i> Edit Password
-        </a>
+    <!-- BTN TINGKAT AKHIR ===================== -->
+    <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="staffdept">
+      <div class="menu-left">
+        <i class="bi bi-mortarboard"></i>
+        <span> Mahasiswa Tingkat Akhir </span>
       </div>
+      <span class="dropdownArrow" data-arrow="staffdept">
+        {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="staffdept"
+      style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/kolokiummhs"
+        class="submenu-link {{ Request::is('kolokiummhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-check2-circle"></i> Kolokium
+      </a>
+      <a href="/syaratkolokiummhs"
+        class="submenu-link {{ Request::is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-info-circle"></i> Syarat Kolokium
+      </a>
+      <a href="/seminarmhs"
+        class="submenu-link {{ Request::is('seminarmhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-calendar-event"></i> Seminar
+      </a>
+      <a href="/syaratseminarmhs"
+        class="submenu-link {{ Request::is('syaratseminarmhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-info-circle"></i> Syarat Seminar
+      </a>
+      <a href="/komprehensifmhs"
+        class="submenu-link {{ Request::is('komprehensifmhs*') ? 'active-submenu' : '' }}">
+        <i class="bi bi-journal-text"></i> Komprehensif
+      </a>
+      <a href="/syaratkomprehensifmhs"
+        class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-info-circle"></i> Syarat Komprehensif
+      </a>
+    </div>
+  
+    <!-- PEMBATAS EMAS ===================== -->
+    <a href="" class="menu-image-only">
+      <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+    </a>
 
-      <!-- BTN LOGOUT ===================== -->
-      <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
-        @csrf
-        <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
-          <div class="menu-left">
-            <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
-          </div>
-        </button>
-      </form>      
-    </aside>
+
+    <!-- BTN Profile MHS ===================== -->
+    <a href="#" class="menu {{ $isProfileMahasiswaActive ? 'active' : '' }}" data-dropdown="profilemhs">
+      <div class="menu-left">
+        <i class="bi bi-person"></i>
+        <span> Profil Mahasiswa </span>
+      </div>
+      <span class="dropdownArrow" data-arrow="profilemhs">
+        {!! $isProfileMahasiswaActive ? '&#9660;' : '&#9650;' !!}
+      </span>
+    </a>
+    <div data-menu="profilemhs"
+      style="margin-left:24px; flex-direction:column; {{ $isProfileMahasiswaActive ? 'display:flex;' : 'display:none;' }}">
+      <a href="/profilemhs"
+        class="submenu-link {{ Request::is('profilemhs', 'profilemhs/edit', 'user/*/edit') ? 'active-submenu' : '' }}">
+        <i class="bi bi-person-workspace"></i> Biodata Mahasiswa
+      </a>
+      <a href="/editpassmhs"
+        class="submenu-link {{ Request::is('editpassmhs') ? 'active-submenu' : '' }}">
+        <i class="bi bi-gear-wide-connected"></i> Edit Password
+      </a>
+    </div>
+
+    <!-- BTN LOGOUT ===================== -->
+    <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
+      @csrf
+      <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
+        <div class="menu-left">
+          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+        </div>
+      </button>
+    </form>      
+  </aside>
 
 	<main class="content">
 		<div class="kolokium-card">
@@ -174,6 +174,19 @@
 					</select>
 				</div>				
 
+        <div class="form-group">
+            <label>Komisi Pendidikan</label>
+            <select name="id_komisipendidikan" id="komisipendidikan" required>
+                <option value="">Pilih Dosen</option>
+                @foreach ($listDosen as $dosen)
+                    <option value="{{ $dosen->id }}"
+                        {{ old('id_komisipendidikan', $komprehensifmhs->id_komisipendidikan) == $dosen->id ? 'selected' : '' }}>
+                        {{ $dosen->nama }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
 				<div class="form-group">
 					<label>Hari/Tanggal kolokium</label>                            
 					<div>
@@ -187,12 +200,12 @@
 				</div>
 				
 				<div class="form-group">
-					<label>Waktu Sidang</label>
+					<label>Waktu Komprehensif</label>
 					<div>
-						<div class="d-flex align-items-center gap-3">
-							<input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai', $komprehensifmhs->waktu_mulai) }}" required>
-							<p class="m-0">S/D</p>
-							<input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai', $komprehensifmhs->waktu_selesai) }}" required>
+						<div class="d-flex align-items-center gap-3">							
+              <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai', $komprehensifmhs->waktu_mulai ? \Carbon\Carbon::parse($komprehensifmhs->waktu_mulai)->format('H:i') : '') }}" required>
+							<p class="m-0">S/D</p>							
+              <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai', $komprehensifmhs->waktu_selesai ? \Carbon\Carbon::parse($komprehensifmhs->waktu_selesai)->format('H:i') : '') }}" required>
 						</div>
 						<small id="waktu-error" style="color:red;display:none;">Waktu Ujian Akhir Hasil tidak boleh pada jam istirahat (12:00 - 13:00).</small>
 						@error('waktu_mulai')
@@ -218,7 +231,7 @@
 					<label for="id_ruangan">Ruangan</label>
 					<select name="id_ruangan" id="id_ruangan" {{ old('tipe_pelaksanaan', $komprehensifmhs->tipe_pelaksanaan) == 'offline' ? 'required' : '' }}>
 						<option value="">Pilih Ruangan</option>
-						@foreach($ruangans as $ruangan)
+						@foreach($ruanganKomprehensif as $ruangan)
 							<option value="{{ $ruangan->id }}" 
 								{{ old('id_ruangan', $komprehensifmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
 								{{ $ruangan->nama }}
@@ -240,7 +253,7 @@
 
 				<div class="form-group">
 					<label>Ketua Sidang</label>
-					<div class="form-static">[Diisi oleh akademik]</div>
+					<input type="text" class="text-success fw-bold" value="{{ $komprehensif->syaratKomprehensif->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
 				</div>
 				<div class="form-actions d-flex justify-content-end">
 					<button type="submit" class="btn-submit">Update</button>	
@@ -311,7 +324,7 @@
         });
     </script>
 
-	<!-- waktu seminar -->
+	<!-- waktu komprehensif -->
     <script>
         const waktuMulaiInput = document.getElementById('waktu_mulai');
         const waktuSelesaiInput = document.getElementById('waktu_selesai');
@@ -378,11 +391,26 @@
 	$(document).ready(function () {
 		let pembimbing1Val = "{{ old('id_pembimbing1', $komprehensifmhs->id_pembimbing1) }}";
 		let pembimbing2Val = "{{ old('id_pembimbing2', $komprehensifmhs->id_pembimbing2) }}";
-		$('#pembimbing1, #pembimbing2').select2({
-			width: '100%',
-			placeholder: "Pilih Dosen Pembimbing 2",
-			allowClear: true,
-		});
+    let komisiPendidikanVal = "{{ old('id_komisipendidikan', $komprehensifmhs->id_komisipendidikan) }}";
+
+    $('#pembimbing1').select2({
+        width: '100%',
+        placeholder: "Pilih Dosen Pembimbing 1",
+        allowClear: true,
+    });
+
+    $('#pembimbing2').select2({
+        width: '100%',
+        placeholder: "Pilih Dosen Pembimbing 2",
+        allowClear: true,
+    });
+
+    $('#komisipendidikan').select2({
+        width: '100%',
+        placeholder: "Pilih Komisi Pendidikan",
+        allowClear: true,
+    });
+
 		let originalPembimbing2 = $('#pembimbing2 option').clone();
 		function filterPembimbing2(selected1) {
 			$('#pembimbing2').empty();

@@ -18,6 +18,8 @@ class SyaratKomprehensifmhs extends Model
         'id_penandatanganundangan',
         'formulir',
         'alasan_formulir',
+        'makalah',
+        'alasan_makalah',
         'bukti_sks',
         'alasan_bukti_sks',
         'bukti_spp',
