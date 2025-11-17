@@ -219,13 +219,13 @@ class KolokiummhsController extends Controller
         $width2  = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
-        //ketua dhh
+        //komisi pendidikan
         $yKetua = 263; 
         $xStart3 = 52;  
         $xEnd3   = 160; 
         $width3  = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
-        $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->komisipendidikan->nama ?? '..................................') . ")", 0, 0, 'C');
+        $pdf->Cell($width3, $lineHeight, "(" . ($kolokiummhs->komisipendidikan->nama ?? '..................................') . ")", 0, 0, 'C');
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -237,11 +237,13 @@ class KolokiummhsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Kolokiummhs $kolokiummhs)
-    {
-        $ruangans = Ruangan::all();
+    {        
         $semesters = Semester::all();
         $listDosen = StaffDept::all();        
-        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruangans', 'semesters', 'listDosen'));
+        $ruanganKolokium = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'kolokium');
+        })->get();
+        return view('kolokiummhs.edit', compact('kolokiummhs', 'ruanganKolokium', 'semesters', 'listDosen'));
     }
 
     /**

@@ -184,7 +184,20 @@
                     </option>
                 @endforeach                 
             </select>
-            </div>                  
+            </div>    
+            
+            <div class="form-group">
+                <label>Komisi Pendidikan</label>
+                <select name="id_komisipendidikan" id="komisipendidikan" required>
+                    <option value="">Pilih Dosen</option>
+                    @foreach ($listDosen as $dosen)
+                        <option value="{{ $dosen->id }}"
+                            {{ old('id_komisipendidikan', $seminarmhs->id_komisipendidikan) == $dosen->id ? 'selected' : '' }}>
+                            {{ $dosen->nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="form-group">
                 <label>Hari/Tanggal seminar</label>                            
@@ -201,10 +214,10 @@
             <div class="form-group">
                 <label>Waktu Seminar </label>
                 <div>
-                    <div class="d-flex align-items-center gap-3">
-                        <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai', $seminarmhs->waktu_mulai) }}" required>
+                    <div class="d-flex align-items-center gap-3">                        
+                        <input type="time" id="waktu_mulai" name="waktu_mulai" min="08:00" max="16:00" value="{{ old('waktu_mulai', $seminarmhs->waktu_mulai ? \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i') : '') }}" required>
                         <p class="m-0">S/D</p>
-                        <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai', $seminarmhs->waktu_selesai) }}" required>
+                        <input type="time" id="waktu_selesai" name="waktu_selesai" min="08:00" max="16:00" value="{{ old('waktu_selesai', $seminarmhs->waktu_selesai ? \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i') : '') }}" required>
                     </div>
                     <small id="waktu-error" style="color:red;display:none;">Waktu Seminar Hasil tidak boleh pada jam istirahat (12:00 - 13:00).</small>
                     @error('waktu_mulai')
@@ -231,7 +244,7 @@
                 <label for="id_ruangan">Ruangan</label>
                 <select name="id_ruangan" id="id_ruangan" {{ old('tipe_pelaksanaan', $seminarmhs->tipe_pelaksanaan) == 'offline' ? 'required' : '' }}>
                     <option value="">Pilih Ruangan</option>
-                    @foreach($ruangans as $ruangan)
+                    @foreach($ruanganSeminar as $ruangan)
                         <option value="{{ $ruangan->id }}" 
                             {{ old('id_ruangan', $seminarmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
                             {{ $ruangan->nama }}
@@ -252,8 +265,8 @@
             </div>     
 
             <div class="form-group">
-            <label>Dosen Moderator</label>
-            <div class="form-static">[Diisi oleh akademik]</div>
+                <label>Dosen Moderator</label>
+                <input type="text" class="text-success fw-bold" value="{{ $seminarmhs->syaratSeminar->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
             </div>
 
             <div class="form-actions d-flex justify-content-end">
@@ -394,11 +407,24 @@
             // Ambil nilai awal dari server
             let pembimbing1Val = "{{ old('id_pembimbing1', $seminarmhs->id_pembimbing1) }}";
             let pembimbing2Val = "{{ old('id_pembimbing2', $seminarmhs->id_pembimbing2) }}";
+            let komisiPendidikanVal = "{{ old('id_komisipendidikan', $seminarmhs->id_komisipendidikan) }}";
 
-            // Init Select2
-            $('#pembimbing1, #pembimbing2').select2({
+            // Init Select2 (placeholder DIPISAH)
+            $('#pembimbing1').select2({
+                width: '100%',
+                placeholder: "Pilih Dosen Pembimbing 1",
+                allowClear: true,
+            });
+
+            $('#pembimbing2').select2({
                 width: '100%',
                 placeholder: "Pilih Dosen Pembimbing 2",
+                allowClear: true,
+            });
+
+            $('#komisipendidikan').select2({
+                width: '100%',
+                placeholder: "Pilih Komisi Pendidikan",
                 allowClear: true,
             });
 

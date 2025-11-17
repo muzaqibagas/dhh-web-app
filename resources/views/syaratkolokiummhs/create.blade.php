@@ -187,7 +187,7 @@
                     <input type="file" name="bukti_kehadiran" accept=".pdf" required>
                   </div>
                 @endif
-                <div class="form-actions">
+                <div class="form-actions d-flex justify-content-end">
                   <button type="submit" class="btn btn-warning">Upload Ulang</button>
                 </div>
               </form>
@@ -231,7 +231,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Upload Bukti Menyelesaikan 110 SKS <small class="text-danger">(*format wajib .PDF)</small></label>
+                  <label>Upload Bukti Transkrip Nilai <small class="text-danger">(*format wajib .PDF)</small></label>
                   <input type="file" name="bukti_sks" accept=".pdf" required>
                 </div>
 
