@@ -59,15 +59,15 @@ class KomprehensifmhsController extends Controller
             $syaratSeminar->update([
                 'status' => 'ditolak',
                 'bap' => 'ditolak',
-                'alasan_formulir' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang formulir dengan jadwal baru',
-                'alasan_bukti_sks' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti SKS',
-                'alasan_bukti_spp' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti SPP',
-                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti kehadiran',
+                'alasan_formulir' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang formulir dengan jadwal baru',
+                'alasan_bukti_sks' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang transkrip nilai',
+                'alasan_bukti_spp' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang bukti SPP',
+                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan komprehensif hasil, silahkan upload ulang bukti kartu bimbingan',
             ]);
             
             return redirect()
                 ->route('syaratSeminarmhs.create')
-                ->with('error', 'BAP Seminar Hasil Anda belum diterima. Silakan unggah ulang seluruh persyaratan seminar hasil dengan jadwal terbaru.');
+                ->with('error', 'BAP komprehensif Anda belum diterima. Silakan unggah ulang seluruh persyaratan komprehensif dengan jadwal terbaru.');
         }
 
         if ($syaratSeminar->bap !== 'diterima') {
@@ -85,8 +85,10 @@ class KomprehensifmhsController extends Controller
         $komprehensifmhs = Komprehensifmhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
-        $ruangans = Ruangan::all();
-        return view('komprehensifmhs.create', compact('komprehensifmhs', 'listDosen', 'semesters', 'ruangans'));
+        $ruanganKomprehensif = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'komprehensif');
+        })->get();
+        return view('komprehensifmhs.create', compact('komprehensifmhs', 'listDosen', 'semesters', 'ruanganKomprehensif'));
     }
 
     /**
@@ -106,6 +108,7 @@ class KomprehensifmhsController extends Controller
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',
@@ -176,14 +179,14 @@ class KomprehensifmhsController extends Controller
         $pdf->useTemplate($tpl);
         $pdf->SetFont('Times', '', 12);
         $labelWidth = 40;
-        $valueWidth = 100;
+        $valueWidth = 120;
         $lineHeight = 6.5;
         // Nama Mahasiswa
         $pdf->SetXY(32, 60);        
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $komprehensifmhs->nama, 0, 'L');
         //nim
-        $pdf->SetXY(32, 67);
+        $pdf->SetXY(32, 68);
         $pdf->Cell($labelWidth, $lineHeight);        
         $pdf->MultiCell($valueWidth, $lineHeight, $komprehensifmhs->nim, 0, 'L');
         //semester
@@ -245,13 +248,13 @@ class KomprehensifmhsController extends Controller
         $width2 = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($komprehensifmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');       
-        //ketua dhh
+        //komisi pendidikan
         $yKetua = 263; 
-        $xStart3 = 55;  
+        $xStart3 = 52;  
         $xEnd3   = 160; 
         $width3  = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
-        $pdf->Cell($width3, $lineHeight, "(" . ($ketuaDhh->nama ?? '..................................') . ")",0, 0, 'C');
+        $pdf->Cell($width3, $lineHeight, "(" . ($komprehensifmhs->komisipendidikan->nama ?? '..................................') . ")",0, 0, 'C');        
 
         // Simpan PDF
         $pdf->Output('F', $output);
@@ -263,11 +266,13 @@ class KomprehensifmhsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Komprehensifmhs $komprehensifmhs)
-    {
-        $ruangans = Ruangan::all();
+    {        
         $semesters = Semester::all();
         $listDosen = StaffDept::all();
-        return view('komprehensifmhs.edit', compact('komprehensifmhs', 'ruangans', 'semesters', 'listDosen'));
+        $ruanganKomprehensif = Ruangan::whereHas('jenis', function($q) {
+            $q->where('jenis', 'komprehensif');
+        })->get();
+        return view('komprehensifmhs.edit', compact('komprehensifmhs', 'ruanganKomprehensif', 'semesters', 'listDosen'));
     }
 
     /**
@@ -280,6 +285,7 @@ class KomprehensifmhsController extends Controller
             'id_semester' => 'required|exists:semesters,id',
             'id_pembimbing1' => 'required|exists:staff_depts,id',
             'id_pembimbing2' => 'nullable|different:id_pembimbing1|exists:staff_depts,id',
+            'id_komisipendidikan' => 'required|exists:staff_depts,id',
             'nama' => 'required|string|max:255',
             'nim' => 'required|string|max:50',
             'alamat' => 'required|string|max:255',

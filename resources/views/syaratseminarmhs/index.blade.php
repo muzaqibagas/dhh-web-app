@@ -394,7 +394,7 @@
                           <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                               <div class="modal-header bg-success text-white">
-                                <h5 class="modal-title" id="modalBapDiterimaLabel{{ $pendaftars->id }}">Konfirmasi Kelengkapan Diterima</h5>
+                                <h5 class="modal-title" id="modalBapDiterimaLabel{{ $pendaftars->id }}">Konfirmasi Kelengkapan Berkas Diterima</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                               </div>
                               <div class="modal-body text-center">
@@ -434,7 +434,7 @@
                         </div>
                         @empty
                           <tr>
-                            <td colspan="7" class="text-center text-muted py-4">Belum ada mahasiswa seminar hasil.</td>
+                            <td colspan="9" class="text-center text-muted py-4">Belum ada mahasiswa seminar hasil.</td>
                           </tr>
                         @endforelse
                       </tbody>

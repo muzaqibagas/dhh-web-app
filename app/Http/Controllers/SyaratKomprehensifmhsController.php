@@ -43,6 +43,7 @@ class SyaratKomprehensifmhsController extends Controller
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
         ]);
@@ -50,6 +51,7 @@ class SyaratKomprehensifmhsController extends Controller
         $syarat->update([
             'status' => 'disetujui',
             'alasan_formulir' => null,
+            'alasan_makalah' => null,
             'alasan_bukti_sks' => null,
             'alasan_bukti_spp' => null,
             'alasan_bukti_kehadiran' => null,
@@ -71,6 +73,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
@@ -78,6 +81,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if (
             empty($request->alasan_formulir) &&
+            empty($request->alasan_makalah) &&
             empty($request->alasan_bukti_sks) &&
             empty($request->alasan_bukti_spp) &&
             empty($request->alasan_bukti_kehadiran)
@@ -88,6 +92,7 @@ class SyaratKomprehensifmhsController extends Controller
         $syarat->update([
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
+            'alasan_makalah' => $request->alasan_makalah,
             'alasan_bukti_sks' => $request->alasan_bukti_sks,
             'alasan_bukti_spp' => $request->alasan_bukti_spp,
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
@@ -95,9 +100,10 @@ class SyaratKomprehensifmhsController extends Controller
 
         $reasons = [
             'Formulir' => $request->alasan_formulir,
-            'Bukti SKS' => $request->alasan_bukti_sks,
+            'Draft Skripsi' => $request->alasan_makalah,
+            'Bukti Transkrip Nilai' => $request->alasan_bukti_sks,
             'Bukti SPP' => $request->alasan_bukti_spp,
-            'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
+            'Bukti Kartu Bimbingan' => $request->alasan_bukti_kehadiran,
         ];
 
         $reasonMessage = "⚠️ Berkas persyaratan komprehensif anda perlu diperbaiki:<br><ul>";
@@ -120,7 +126,7 @@ class SyaratKomprehensifmhsController extends Controller
 
     public function downloadPdf($id)
     {
-        $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji'])->findOrFail($id);
+        $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji',  'penandatanganundangan'])->findOrFail($id);
         $komprehensif = Komprehensifmhs::with([
             'mahasiswa',
             'ruangan',
@@ -159,6 +165,9 @@ class SyaratKomprehensifmhsController extends Controller
 
         $moderator = $syarat->moderator->nama ?? '-';
         $penguji = $syarat->penguji->nama ?? '-';
+        $penandatanganundangan = $syarat->penandatanganundangan->nama ?? '-';
+        $jabatanPenandatangan = $syarat->penandatanganundangan->jabatan ?? '-';
+        $nipPenandatangan = $syarat->penandatanganundangan->nip ?? '-';
 
         $pdf->SetXY(99,71.5);
         $pdf->MultiCell(86, 5, $komprehensif->pembimbing1->nama ?? '-', 0, 'L');
@@ -173,25 +182,34 @@ class SyaratKomprehensifmhsController extends Controller
         $pdf->SetXY(99,96);
         $pdf->MultiCell(86, 5.5, $moderator, 0, 'L');
 
-        $pdf->SetXY(79,129.3);
+        $pdf->SetXY(79,119);
         $pdf->MultiCell(106, 5.5, $komprehensif->mahasiswa->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(79,137);
+        $pdf->SetXY(79,124);
         $pdf->MultiCell(106, 5.5, $komprehensif->nim ?? '-', 0, 'L');
 
-        $pdf->SetXY(79,142);
+        $pdf->SetXY(79,129);
         $pdf->MultiCell(106, 5.5, $komprehensif->judul_tugasakhir, 0, 'L');
         
-        $pdf->SetXY(79,160.3);
+        $pdf->SetXY(79,150.3);
         $pdf->MultiCell(106, 5.5, "{$hari} / {$tanggal}", 0, 'L');
         
-        $pdf->SetXY(79,168);
+        $pdf->SetXY(79,156);
         $pdf->MultiCell(106, 5.5, "{$mulai} - {$selesai} WIB", 0, 'L');
         
-        $pdf->SetXY(79,176);
+        $pdf->SetXY(79,161);
         $pdf->MultiCell(106, 5.5, $tempat, 0, 'L');
 
-        $pdf->SetXY(126, 206.5);
+        $pdf->SetXY(113, 197);        
+        $pdf->MultiCell(85, 6, $jabatanPenandatangan, 0, 'L');
+
+        $pdf->SetXY(113, 223);        
+        $pdf->MultiCell(85, 6, $penandatanganundangan, 0, 'L');
+
+        $pdf->SetXY(113, 228);        
+        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');        
+
+        $pdf->SetXY(126, 192);
         $pdf->MultiCell(58, 5.5, now()->translatedFormat('d F Y'), 0, 'L');
 
         $pdf->Output($output, 'F');
@@ -234,6 +252,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         $data = $request->validate([
             'formulir' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'makalah' => 'required|mimes:pdf|max:2048',
             'bukti_sks' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
             'bukti_spp' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
             'bukti_kehadiran' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048',
@@ -260,6 +279,13 @@ class SyaratKomprehensifmhsController extends Controller
             $formulirName = 'formulir_komprehensif_' . $nim . '.' . $formulir->getClientOriginalExtension();
             $formulir->move($destinationPath, $formulirName);
             $data['formulir'] = 'syarat_komprehensif/' . $folderName . '/' . $formulirName;
+        }
+
+        if ($request->hasFile('makalah')) {
+            $makalah = $request->file('makalah');
+            $makalahName = 'makalah_komprehensif_' . $nim . '.' . $makalah->getClientOriginalExtension();
+            $makalah->move($destinationPath, $makalahName);
+            $data['makalah'] = 'syarat_komprehensif/' . $folderName . '/' . $makalahName;
         }
 
         if ($request->hasFile('bukti_sks')) {
@@ -314,6 +340,14 @@ class SyaratKomprehensifmhsController extends Controller
             $syarat->alasan_formulir = null;            
         }
 
+        if ($request->hasfile('makalah')) {
+            $file = $request->file('makalah');
+            $fileName = 'makalah_komprehensif_' . $nim . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName);
+            $syarat->makalah = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
+            $syarat->alasan_makalah = null;            
+        }
+
         if ($request->hasfile('bukti_sks')) {
             $file = $request->file('bukti_sks');
             $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
@@ -340,6 +374,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         if (
             !$syarat->alasan_formulir &&
+            !$syarat->alasan_makalah &&
             !$syarat->alasan_bukti_sks &&
             !$syarat->alasan_bukti_spp &&
             !$syarat->alasan_bukti_kehadiran
@@ -383,6 +418,7 @@ class SyaratKomprehensifmhsController extends Controller
 
         $request->validate([
             'alasan_formulir' => 'nullable|string|max:500',
+            'alasan_makalah' => 'nullable|string|max:500',
             'alasan_bukti_sks' => 'nullable|string|max:500',
             'alasan_bukti_spp' => 'nullable|string|max:500',
             'alasan_bukti_kehadiran' => 'nullable|string|max:500',
@@ -391,10 +427,11 @@ class SyaratKomprehensifmhsController extends Controller
         $syarat->update([
             'status' => 'ditolak',
             'bap' => 'ditolak',
-            'alasan_formulir' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang formulir dengan jadwal baru',
-            'alasan_bukti_sks' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti sks',
-            'alasan_bukti_spp' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti spp',
-            'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Seminar Hasil, silahkan upload ulang bukti kehadiran',
+            'alasan_formulir' => 'Anda belum melaksanakan Komprehensif, silahkan upload ulang formulir dengan jadwal baru',
+            'alasan_makalah' => 'Anda belum melaksanakan Komprehensif, silahkan upload ulang Draft Skripsi',
+            'alasan_bukti_sks' => 'Anda belum melaksanakan Komprehensif, silahkan upload ulang transkrip nilai',
+            'alasan_bukti_spp' => 'Anda belum melaksanakan Komprehensif, silahkan upload ulang bukti spp',
+            'alasan_bukti_kehadiran' => 'Anda belum melaksanakan Komprehensif, silahkan upload ulang bukti kartu bimbingan',
         ]);
 
         $this->sendNotification($syarat->id_mahasiswa,
@@ -432,13 +469,16 @@ class SyaratKomprehensifmhsController extends Controller
         $nama = $syaratKomprehensifmhs->mahasiswa->nama;        
         $moderatorId = $request->moderator;
         $pengujiId = $request->penguji;
+        $penandatanganundanganId = $request->penandatanganundangan;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
         $penguji = StaffDept::findOrFail($pengujiId)->nama;
+        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;        
 
         $syaratKomprehensifmhs->update([
             'id_moderator' => $moderatorId,
-            'id_penguji' => $pengujiId
+            'id_penguji' => $pengujiId,
+            'id_penandatanganundangan' => $penandatanganundanganId,
         ]); 
 
         $this->sendNotification($syaratKomprehensifmhs->id_mahasiswa,
