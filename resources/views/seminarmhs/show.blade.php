@@ -3,103 +3,106 @@
 @section('content')
 <!-- SIDEBAR -->
 <div class="main-container">
-  <aside class="sidebar">
-    <a href="" class="menu-image-only">
-      <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
-    </a>
-    <!-- Untuk aktifin button sub menu ========================= -->
-    @php
-      $isBerandaActive = Request::is('dashboardmhs');
-      $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
-      $isTingkatAkhirActive = Request::is('kolokiummhs') || Request::is('syaratkolokiummhs') || Request::is('seminarmhs*') || Request::is('syaratseminarmhs') || Request::is('komprehensifmhs') || Request::is('syaratkomprehensifmhs');
-      $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
-      $isLogoutmhsActive = Request::is('logoutmhs');
-      @endphp
+    <aside class="sidebar">
+      <a href="" class="menu-image-only">
+        <img src="{{ asset('img/logodashboardmhs.png') }}" alt="Layanan Akademik" class="menu-img">
+      </a>
+      <!-- Untuk aktifin button sub menu ========================= -->
+      @php
+        $isBerandaActive = Request::is('dashboardmhs');
+        $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
+        $isTingkatAkhirActive = 
+        Request::is('kolokiummhs') || Request::is('kolokiummhs/*') || Request::is('kolokiummhs/*/edit') || Request::is('syaratkolokiummhs/*') || 
+        Request::is('seminarmhs') || Request::is('seminarmhs/*') || Request::is('seminarmhs/*/edit') || Request::is('syaratseminarmhs/*') || 
+        Request::is('komprehensifmhs') || Request::is('komprehensifmhs/*') || Request::is('komprehensifmhs/*/edit') || Request::is('syaratkomprehensifmhs/*');
+        $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
+        $isLogoutmhsActive = Request::is('logoutmhs');
+        @endphp
 
-    <!-- BTN BERANDA ===================== -->
-    <a href="/dashboardmhs" class="menu {{ $isBerandaActive ? 'active' : '' }}">
-      <div class="menu-left">
-        <i class="bi bi-house-door-fill"></i>
-        <span> Beranda </span>
-      </div>
-    </a>   
-
-    <!-- BTN TINGKAT AKHIR ===================== -->
-    <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="staffdept">
-      <div class="menu-left">
-        <i class="bi bi-mortarboard"></i>
-        <span> Mahasiswa Tingkat Akhir </span>
-      </div>
-      <span class="dropdownArrow" data-arrow="staffdept">
-        {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
-      </span>
-    </a>
-    <div data-menu="staffdept"
-      style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
-      <a href="/kolokiummhs"
-        class="submenu-link {{ Request::is('kolokiummhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-check2-circle"></i> Kolokium
-      </a>
-      <a href="/syaratkolokiummhs"
-        class="submenu-link {{ Request::is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Kolokium
-      </a>
-      <a href="/seminarmhs"
-        class="submenu-link {{ Request::is('seminarmhs*') ? 'active-submenu' : '' }}">
-        <i class="bi bi-calendar-event"></i> Seminar
-      </a>
-      <a href="/syaratseminarmhs"
-        class="submenu-link {{ Request::is('syaratseminarmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Seminar
-      </a>
-      <a href="/komprehensifmhs"
-        class="submenu-link {{ Request::is('komprehensifmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-journal-text"></i> Komprehensif
-      </a>
-      <a href="/syaratkomprehensifmhs"
-        class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-info-circle"></i> Syarat Komprehensif
-      </a>
-    </div>
-  
-    <!-- PEMBATAS EMAS ===================== -->
-    <a href="" class="menu-image-only">
-      <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
-    </a>
-
-
-    <!-- BTN Profile MHS ===================== -->
-    <a href="#" class="menu {{ $isProfileMahasiswaActive ? 'active' : '' }}" data-dropdown="profilemhs">
-      <div class="menu-left">
-        <i class="bi bi-person"></i>
-        <span> Profil Mahasiswa </span>
-      </div>
-      <span class="dropdownArrow" data-arrow="profilemhs">
-        {!! $isProfileMahasiswaActive ? '&#9660;' : '&#9650;' !!}
-      </span>
-    </a>
-    <div data-menu="profilemhs"
-      style="margin-left:24px; flex-direction:column; {{ $isProfileMahasiswaActive ? 'display:flex;' : 'display:none;' }}">
-      <a href="/profilemhs"
-        class="submenu-link {{ Request::is('profilemhs', 'profilemhs/edit', 'user/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-person-workspace"></i> Biodata Mahasiswa
-      </a>
-      <a href="/editpassmhs"
-        class="submenu-link {{ Request::is('editpassmhs') ? 'active-submenu' : '' }}">
-        <i class="bi bi-gear-wide-connected"></i> Edit Password
-      </a>
-    </div>
-
-    <!-- BTN LOGOUT ===================== -->
-    <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
-      @csrf
-      <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
+      <!-- BTN BERANDA ===================== -->
+      <a href="/dashboardmhs" class="menu {{ $isBerandaActive ? 'active' : '' }}">
         <div class="menu-left">
-          <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+          <i class="bi bi-house-door-fill"></i>
+          <span> Beranda </span>
         </div>
-      </button>
-    </form>      
-  </aside>
+      </a>   
+
+      <!-- BTN TINGKAT AKHIR ===================== -->
+      <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="staffdept">
+        <div class="menu-left">
+          <i class="bi bi-mortarboard"></i>
+          <span> Mahasiswa Tingkat Akhir </span>
+        </div>
+        <span class="dropdownArrow" data-arrow="staffdept">
+          {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+        </span>
+      </a>
+      <div data-menu="staffdept"
+        style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/kolokiummhs"
+          class="submenu-link {{ Request::is('kolokiummhs', 'kolokiummhs*', 'kolokiummhs/*/edit') ? 'active-submenu' : '' }}">
+          <i class="bi bi-check2-circle"></i> Kolokium
+        </a>
+        <a href="/syaratkolokiummhs/create"
+          class="submenu-link {{ Request::is('syaratkolokiummhs', 'syaratkolokiummhs/*') ? 'active-submenu' : '' }}">
+          <i class="bi bi-info-circle"></i> Syarat Kolokium
+        </a>
+        <a href="/seminarmhs"
+          class="submenu-link {{ Request::is('seminarmhs', 'seminarmhs*', 'seminarmhs/*/edit') ? 'active-submenu' : '' }}">
+          <i class="bi bi-calendar-event"></i> Seminar
+        </a>
+        <a href="/syaratseminarmhs/create"
+          class="submenu-link {{ Request::is('syaratseminarmhs', 'syaratseminarmhs/*', 'syaratseminarmhs/*') ? 'active-submenu' : '' }}">
+          <i class="bi bi-info-circle"></i> Syarat Seminar
+        </a>
+        <a href="/komprehensifmhs"
+          class="submenu-link {{ Request::is('komprehensifmhs', 'komprehensifmhs*', 'komprehensifmhs/*/edit') ? 'active-submenu' : '' }}">
+          <i class="bi bi-journal-text"></i> Komprehensif
+        </a>
+        <a href="/syaratkomprehensifmhs/create"
+          class="submenu-link {{ Request::is('syaratkomprehensifmhs', 'syaratkomprehensifmhs/*') ? 'active-submenu' : '' }}">
+          <i class="bi bi-info-circle"></i> Syarat Komprehensif
+        </a>
+      </div>
+    
+      <!-- PEMBATAS EMAS ===================== -->
+      <a href="" class="menu-image-only">
+        <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+      </a>
+
+
+      <!-- BTN Profile MHS ===================== -->
+      <a href="#" class="menu {{ $isProfileMahasiswaActive ? 'active' : '' }}" data-dropdown="profilemhs">
+        <div class="menu-left">
+          <i class="bi bi-person"></i>
+          <span> Profil Mahasiswa </span>
+        </div>
+        <span class="dropdownArrow" data-arrow="profilemhs">
+          {!! $isProfileMahasiswaActive ? '&#9660;' : '&#9650;' !!}
+        </span>
+      </a>
+      <div data-menu="profilemhs"
+        style="margin-left:24px; flex-direction:column; {{ $isProfileMahasiswaActive ? 'display:flex;' : 'display:none;' }}">
+        <a href="/profilemhs"
+          class="submenu-link {{ Request::is('profilemhs', 'profilemhs/edit', 'user/*/edit') ? 'active-submenu' : '' }}">
+          <i class="bi bi-person-workspace"></i> Biodata Mahasiswa
+        </a>
+        <a href="/editpassmhs"
+          class="submenu-link {{ Request::is('editpassmhs') ? 'active-submenu' : '' }}">
+          <i class="bi bi-gear-wide-connected"></i> Edit Password
+        </a>
+      </div>
+
+      <!-- BTN LOGOUT ===================== -->
+      <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
+        @csrf
+        <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
+          <div class="menu-left">
+            <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
+          </div>
+        </button>
+      </form>      
+    </aside>      
 
   <main class="content">        
     <div class="kolokium-card">

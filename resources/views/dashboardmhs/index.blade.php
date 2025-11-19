@@ -11,7 +11,7 @@
       @php
         $isBerandaActive = Request::is('dashboardmhs');
         $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
-        $isTingkatAkhirActive = Request::is('kolokiummhs') || Request::is('syaratkolokiummhs') || Request::is('seminarmhs') || Request::is('syaratseminarmhs') || Request::is('komprehensifmhs') || Request::is('syaratkomprehensifmhs');
+        $isTingkatAkhirActive = Request::is('kolokiummhs/*') || Request::is('syaratkolokiummhs/*') || Request::is('seminarmhs/*') || Request::is('syaratseminarmhs/*') || Request::is('komprehensifmhs/*') || Request::is('syaratkomprehensifmhs/*');
         $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
         $isLogoutmhsActive = Request::is('logoutmhs');
         @endphp
@@ -40,24 +40,24 @@
           class="submenu-link {{ Request::is('kolokiummhs') ? 'active-submenu' : '' }}">
           <i class="bi bi-check2-circle"></i> Kolokium
         </a>
-        <a href="/syaratkolokiummhs"
-          class="submenu-link {{ Request::is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratkolokiummhs/create"
+          class="submenu-link {{ Request::is('syaratkolokiummhs', 'syaratkolokiummhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Kolokium
         </a>
         <a href="/seminarmhs"
           class="submenu-link {{ Request::is('seminarmhs') ? 'active-submenu' : '' }}">
           <i class="bi bi-calendar-event"></i> Seminar
         </a>
-        <a href="/syaratseminarmhs"
-          class="submenu-link {{ Request::is('syaratseminarmhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratseminarmhs/create"
+          class="submenu-link {{ Request::is('syaratseminarmhs', 'syaratseminarmhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Seminar
         </a>
         <a href="/komprehensifmhs"
           class="submenu-link {{ Request::is('komprehensifmhs') ? 'active-submenu' : '' }}">
           <i class="bi bi-journal-text"></i> Komprehensif
         </a>
-        <a href="/syaratkomprehensifmhs"
-          class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratkomprehensifmhs/create"
+          class="submenu-link {{ Request::is('syaratkomprehensifmhs', 'syaratkomprehensifmhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Komprehensif
         </a>
       </div>
@@ -99,7 +99,7 @@
           </div>
         </button>
       </form>      
-    </aside>  
+    </aside>     
     
     <main class="content">
       <div class="welcome-card">
