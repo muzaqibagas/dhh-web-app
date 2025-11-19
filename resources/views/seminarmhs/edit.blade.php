@@ -11,7 +11,10 @@
       @php
         $isBerandaActive = Request::is('dashboardmhs');
         $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');
-        $isTingkatAkhirActive = Request::is('kolokiummhs') || Request::is('syaratkolokiummhs') || Request::is('seminarmhs*') || Request::is('syaratseminarmhs') || Request::is('komprehensifmhs') || Request::is('syaratkomprehensifmhs');
+        $isTingkatAkhirActive = 
+        Request::is('kolokiummhs') || Request::is('kolokiummhs/*') || Request::is('kolokiummhs/*/edit') || Request::is('syaratkolokiummhs/*') || 
+        Request::is('seminarmhs') || Request::is('seminarmhs/*') || Request::is('seminarmhs/*/edit') || Request::is('syaratseminarmhs/*') || 
+        Request::is('komprehensifmhs') || Request::is('komprehensifmhs/*') || Request::is('komprehensifmhs/*/edit') || Request::is('syaratkomprehensifmhs/*');
         $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
         $isLogoutmhsActive = Request::is('logoutmhs');
         @endphp
@@ -37,27 +40,27 @@
       <div data-menu="staffdept"
         style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
         <a href="/kolokiummhs"
-          class="submenu-link {{ Request::is('kolokiummhs') ? 'active-submenu' : '' }}">
+          class="submenu-link {{ Request::is('kolokiummhs', 'kolokiummhs*', 'kolokiummhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-check2-circle"></i> Kolokium
         </a>
-        <a href="/syaratkolokiummhs"
-          class="submenu-link {{ Request::is('syaratkolokiummhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratkolokiummhs/create"
+          class="submenu-link {{ Request::is('syaratkolokiummhs', 'syaratkolokiummhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Kolokium
         </a>
         <a href="/seminarmhs"
-          class="submenu-link {{ Request::is('seminarmhs*') ? 'active-submenu' : '' }}">
+          class="submenu-link {{ Request::is('seminarmhs', 'seminarmhs*', 'seminarmhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-calendar-event"></i> Seminar
         </a>
-        <a href="/syaratseminarmhs"
-          class="submenu-link {{ Request::is('syaratseminarmhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratseminarmhs/create"
+          class="submenu-link {{ Request::is('syaratseminarmhs', 'syaratseminarmhs/*', 'syaratseminarmhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Seminar
         </a>
         <a href="/komprehensifmhs"
-          class="submenu-link {{ Request::is('komprehensifmhs') ? 'active-submenu' : '' }}">
+          class="submenu-link {{ Request::is('komprehensifmhs', 'komprehensifmhs*', 'komprehensifmhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-journal-text"></i> Komprehensif
         </a>
-        <a href="/syaratkomprehensifmhs"
-          class="submenu-link {{ Request::is('syaratkomprehensifmhs') ? 'active-submenu' : '' }}">
+        <a href="/syaratkomprehensifmhs/create"
+          class="submenu-link {{ Request::is('syaratkomprehensifmhs', 'syaratkomprehensifmhs/*') ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Komprehensif
         </a>
       </div>
@@ -99,7 +102,7 @@
           </div>
         </button>
       </form>      
-    </aside>
+    </aside>        
 
     <main class="content">
         <div class="kolokium-card">
