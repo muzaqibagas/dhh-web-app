@@ -59,15 +59,16 @@ class KomprehensifmhsController extends Controller
             $syaratSeminar->update([
                 'status' => 'ditolak',
                 'bap' => 'ditolak',
-                'alasan_formulir' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang formulir dengan jadwal baru',
-                'alasan_bukti_sks' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang transkrip nilai',
-                'alasan_bukti_spp' => 'Anda belum melaksanakan komprehensif, silahkan upload ulang bukti SPP',
-                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan komprehensif hasil, silahkan upload ulang bukti kartu bimbingan',
+                'alasan_formulir' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang formulir dengan jadwal baru',
+                'alasan_makalah' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang makalah',
+                'alasan_bukti_sks' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang transkrip nilai',
+                'alasan_bukti_spp' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti SPP',
+                'alasan_bukti_kehadiran' => 'Anda belum melaksanakan seminar hasil, silahkan upload ulang bukti kartu bimbingan',
             ]);
             
             return redirect()
-                ->route('syaratSeminarmhs.create')
-                ->with('error', 'BAP komprehensif Anda belum diterima. Silakan unggah ulang seluruh persyaratan komprehensif dengan jadwal terbaru.');
+                ->route('syaratseminarmhs.create')
+                ->with('error', 'Anda belum melaksanakan seminar hasil. Silakan unggah ulang seluruh persyaratan seminar hasil dengan jadwal terbaru.');
         }
 
         if ($syaratSeminar->bap !== 'diterima') {

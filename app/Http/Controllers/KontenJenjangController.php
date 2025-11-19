@@ -45,11 +45,15 @@ class KontenJenjangController extends Controller
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
-            'capaianpembelajaran' => 'nullable|string',
-            'leaflet.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            'capaianpembelajaran' => 'nullable|string',            
+            'leaflet.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'deskripsiakreditasi' => 'nullable|string|max:255',
         ]);
+
+        if ($request->hasFile('leaflet') && count($request->file('leaflet')) > 2) {
+            return back()->withErrors(['leaflet' => 'Maksimal upload 2 leaflet!']);
+        }
 
         $directories = [
             'foto' => 'foto_jenjang/foto',
@@ -57,35 +61,40 @@ class KontenJenjangController extends Controller
             'sertifikatakreditasi' => 'foto_jenjang/sertifikatakreditasi',
         ];
 
-        // === Handle upload foto dan sertifikat ===
+        // upload foto & sertifikat
         foreach ($directories as $field => $path) {
-            if ($field === 'leaflet') continue; // dilewati dulu
+            if ($field === 'leaflet') continue;
+
             if ($request->hasFile($field)) {
-                $file = $request->file($field);
-                $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
 
                 if (!file_exists(public_path($path))) {
                     mkdir(public_path($path), 0777, true);
                 }
 
+                $file = $request->file($field);
+                $filename = uniqid() . '_' . $field . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($path), $filename);
+
                 $validated[$field] = $path . '/' . $filename;
             }
         }
 
-        // === Simpan data konten utama ===
+        // pastikan leaflet tidak ikut ke kontenjenjang
+        unset($validated['leaflet']);
+
+        // simpan konten jenjang
         $konten = KontenJenjang::create($validated);
 
-        // === Simpan leaflet multiple ===
+        // upload leaflet multiple
         if ($request->hasFile('leaflet')) {
             foreach ($request->file('leaflet') as $file) {
-                $filename = time() . '_' . Str::random(5) . '.' . $file->getClientOriginalExtension();
-                $path = 'foto_jenjang/leaflet';
+                $path = $directories['leaflet'];
 
                 if (!file_exists(public_path($path))) {
                     mkdir(public_path($path), 0777, true);
                 }
 
+                $filename = uniqid() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($path), $filename);
 
                 LeafletJenjang::create([
@@ -95,8 +104,10 @@ class KontenJenjangController extends Controller
             }
         }
 
-        return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil ditambahkan.');
+        return redirect()->route('kontenjenjang.index')
+            ->with('success', 'Konten jenjang berhasil ditambahkan.');
     }
+
 
     
     public function pendidikan($jenjang)
@@ -144,11 +155,15 @@ class KontenJenjangController extends Controller
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
-            'capaianpembelajaran' => 'nullable|string',
-            'leaflet' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'capaianpembelajaran' => 'nullable|string',            
+            'leaflet.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'deskripsiakreditasi' => 'nullable|string|max:255',
         ]);
+
+        if ($request->hasFile('leaflet') && count($request->file('leaflet')) > 2) {
+            return back()->withErrors(['leaflet' => 'Maksimal upload 2 leaflet!'])->withInput();
+        }
 
         $directories = [
             'foto' => 'foto_jenjang/foto',
@@ -156,28 +171,60 @@ class KontenJenjangController extends Controller
             'sertifikatakreditasi' => 'foto_jenjang/sertifikatakreditasi',
         ];
 
-        foreach ($directories as $field => $path) {
+        foreach (['foto', 'sertifikatakreditasi'] as $field) {
             if ($request->hasFile($field)) {
                 $file = $request->file($field);
                 $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
 
-                // bikin folder kalau belum ada
-                if (!file_exists(public_path($path))) {
-                    mkdir(public_path($path), 0777, true);
+                if (!file_exists(public_path($directories[$field]))) {
+                    mkdir(public_path($directories[$field]), 0777, true);
                 }
 
                 // hapus file lama kalau ada
                 if ($kontenJenjang->$field && file_exists(public_path($kontenJenjang->$field))) {
-                    unlink(public_path($kontenJenjang->$field));
+                    @unlink(public_path($kontenJenjang->$field));
                 }
 
-                $file->move(public_path($path), $filename);
-                $validated[$field] = $path . '/' . $filename;
+                $file->move(public_path($directories[$field]), $filename);
+                $validated[$field] = $directories[$field] . '/' . $filename;
             }
         }
 
+        // proses leaflet multiple
+        $hasLeafletUpload = false;
+        if ($request->hasFile('leaflet')) {
+            $hasLeafletUpload = true;
+            // hapus file leaflet lama dan recordnya
+            if ($kontenJenjang->leaflets && $kontenJenjang->leaflets->count()) {
+                foreach ($kontenJenjang->leaflets as $old) {
+                    if ($old->gambar && file_exists(public_path($old->gambar))) {
+                        @unlink(public_path($old->gambar));
+                    }
+                    $old->delete();
+                }
+            }
+
+            // simpan leaflet baru
+            foreach ($request->file('leaflet') as $file) {
+                $path = $directories['leaflet'];
+                if (!file_exists(public_path($path))) {
+                    mkdir(public_path($path), 0777, true);
+                }
+
+                $filename = uniqid() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path($path), $filename);
+
+                LeafletJenjang::create([
+                    'id_kontenjenjang' => $kontenJenjang->id,
+                    'gambar' => $path . '/' . $filename,
+                ]);
+            }
+        }
+
+        if (isset($validated['leaflet'])) unset($validated['leaflet']);
+
         $kontenJenjang->fill($validated);
-        if (!$kontenJenjang->isDirty()) {
+        if (!$kontenJenjang->isDirty() && !$hasLeafletUpload) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 

@@ -32,7 +32,8 @@ class SyaratSeminarmhsController extends Controller
                     ->orWhere('nim', 'like', "%{$search}%");
                 });
             })
-            ->get();
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         return view('syaratseminarmhs.index', compact('pendaftar', 'listModerator'));
     }
 

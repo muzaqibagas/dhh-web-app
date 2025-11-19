@@ -32,7 +32,8 @@ class SyaratKolokiummhsController extends Controller
                     ->orWhere('nim', 'like', "%{$search}%");
                 });
             })
-            ->get();
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         return view('syaratkolokiummhs.index', compact('pendaftar', 'listModerator'));
     }
 

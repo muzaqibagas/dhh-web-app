@@ -13,16 +13,14 @@ class StaffDeptController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $staffdepts = StaffDept::all();
-
+    {        
         $query = StaffDept::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $staffdepts = $query->get();
+        $staffdepts = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();                
         return view('staffdept.index', compact('staffdepts'));
     }
 

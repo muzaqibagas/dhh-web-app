@@ -11,16 +11,14 @@ class ReviewAlumniController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $reviews = ReviewAlumni::all();
-        
+    {        
         $query = ReviewAlumni::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $reviews = $query->get();
+        $reviews = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                        
         return view('reviewalumni.index', compact('reviews'));
     }
 

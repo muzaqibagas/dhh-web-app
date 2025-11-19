@@ -12,15 +12,13 @@ class MitraController extends Controller
      */
     public function index()
     {
-        $mitras = Mitra::all();
-
         $query = Mitra::query();
         if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $mitras = $query->get();
+        $mitras = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();        
         return view('mitra.index', compact('mitras'));
     }
 

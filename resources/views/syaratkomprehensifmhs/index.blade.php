@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -440,6 +442,9 @@
                         @endforelse
                       </tbody>
                   </table>
+                  <div class="d-flex justify-content-end mt-3">
+                      {{ $pendaftar->onEachSide(1)->links('pagination::bootstrap-5') }}
+                  </div>
               </div>              
             </div>          
         </div>

@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -238,76 +240,79 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light ">
-                            <tr>
-                                <th>No.</th>
-                                <th>Foto</th>
-                                <th>Judul</th>
-                                <th>Tanggal</th>                                
-                                <th>Nama Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          @forelse($artikels as $index => $artikel)
-                            <tr>
-                              <td>{{ $index + 1 }}</td>
-                              <td>
-                                @if($artikel->foto)
-                                  <img src="{{ asset($artikel->foto) }}" 
-                                    alt="foto" 
-                                    class="img-thumbnail"
-                                    style="max-width: 80px; max-height: 80px; object-fit: cover;">
-                                @else
-                                  <span class="text-muted">-</span>
-                                @endif
-                              </td>
-                              <td class="text-start text-truncate" style="max-width: 200px;">
-                                {{ $artikel->judul }}
-                              </td>
-                              <td>{{ \Carbon\Carbon::parse($artikel->tanggal)->format('d/m/Y') }}</td>                              
-                              <td>{{ $artikel->kategoriartikel->nama ?? '-' }}</td>
-                              <td class="text-center">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
-                                  <a href="{{ route('artikel.edit', $artikel->id) }}" 
-                                    class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                                    <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                                  </a>
-                                  <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $artikel->id }}">
-                                    <i class="bi bi-trash" style="font-size: 18px;"></i>
-                                  </button>
-                                  <div class="modal fade" id="hapusModal{{ $artikel->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="hapusModalLabel"></h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
-                                          <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
-                                          <div>Apakah Anda yakin ingin menghapus Artikel ini?</div>                                          
-                                        </div>
-                                        <div class="modal-footer justify-content-center">
-                                          <form action="{{ route('artikel.destroy', $artikel->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')                                            
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                          </form>
-                                        </div>
+                  <table class="table table-bordered align-middle">
+                      <thead class="table-light ">
+                          <tr>
+                              <th>No.</th>
+                              <th>Foto</th>
+                              <th>Judul</th>
+                              <th>Tanggal</th>                                
+                              <th>Nama Kategori</th>
+                              <th>Aksi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @forelse($artikels as $index => $artikel)
+                          <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>
+                              @if($artikel->foto)
+                                <img src="{{ asset($artikel->foto) }}" 
+                                  alt="foto" 
+                                  class="img-thumbnail"
+                                  style="max-width: 80px; max-height: 80px; object-fit: cover;">
+                              @else
+                                <span class="text-muted">-</span>
+                              @endif
+                            </td>
+                            <td class="text-start text-truncate" style="max-width: 200px;">
+                              {{ $artikel->judul }}
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($artikel->tanggal)->format('d/m/Y') }}</td>                              
+                            <td>{{ $artikel->kategoriartikel->nama ?? '-' }}</td>
+                            <td class="text-center">
+                              <div style="display: flex; justify-content: center; gap: 6px;">
+                                <a href="{{ route('artikel.edit', $artikel->id) }}" 
+                                  class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                                  <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                                </a>
+                                <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $artikel->id }}">
+                                  <i class="bi bi-trash" style="font-size: 18px;"></i>
+                                </button>
+                                <div class="modal fade" id="hapusModal{{ $artikel->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                        <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                        <div>Apakah Anda yakin ingin menghapus Artikel ini?</div>                                          
+                                      </div>
+                                      <div class="modal-footer justify-content-center">
+                                        <form action="{{ route('artikel.destroy', $artikel->id) }}" method="POST">
+                                          @csrf
+                                          @method('DELETE')                                            
+                                          <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
                                       </div>
                                     </div>
-                                  </div>                                      
-                                </div>
-                              </td>
-                            </tr>
-                          @empty
-                            <tr>
-                              <td colspan="6" class="text-center text-muted py-4">Belum ada artikel.</td>
-                            </tr>
-                          @endforelse
-                        </tbody>
-                    </table>
+                                  </div>
+                                </div>                                      
+                              </div>
+                            </td>
+                          </tr>
+                        @empty
+                          <tr>
+                            <td colspan="6" class="text-center text-muted py-4">Belum ada artikel.</td>
+                          </tr>
+                        @endforelse
+                      </tbody>
+                  </table>
+                  <div class="d-flex justify-content-end mt-3 ">
+                    {{ $artikels->onEachSide(1)->links('pagination::bootstrap-5') }}
+                  </div>
                 </div>
             </div>
         </div>

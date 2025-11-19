@@ -28,7 +28,29 @@ class DatabaseSeeder extends Seeder
             KategoriStaffSeeder::class,   
             SemesterSeeder::class,
             StaffDeptSeeder::class,     
-            KategoriGaleriSeeder::class,                        
+            KategoriGaleriSeeder::class,            
+            // GaleriSeeder::class, 
+            KategoriArtikelSeeder::class,
+            // ArtikelSeeder::class,
+            // MitraSeeder::class,            
+            // ketuaDHHSSeeder::class,            
+            // ReviewAlumniSeeder::class,
+            // SyaratKolokiummhsSeeder::class,
+            // SyaratSeminarmhsSeeder::class,
+            // SyaratKomprehensifmhsSeeder::class,            
+
+            // seederbuatan 
+            // 1. Syaratkolokiummhs
+            // 2. Syaratseminarmhs
+            // 3. Syaratkomprehensifmhs
+            // 4. kategori galeri, kategori galeri jadi dosen dan mahasiswa saja
+            // 5. Galeri
+            // 6. kategori artikel, kategori artikel jadi dosen dan mahasiswa saja                   
+            // 7. Artikel
+            // 8. Review Alumni
+            // 9. Mitra
+            // 10. KategoriStaff
+            // 11. Ketua DHH
         ]);
     }
 }

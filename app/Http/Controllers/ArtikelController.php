@@ -12,16 +12,14 @@ class ArtikelController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {          
-        $artikels = Artikel::all();
-
+    {                  
         $query = Artikel::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('judul', 'like', "%$search%");
         }
 
-        $artikels = $query->get();
+        $artikels = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('artikel.index', compact('artikels'));
     }
 

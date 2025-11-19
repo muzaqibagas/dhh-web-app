@@ -12,15 +12,13 @@ class GaleriController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $galeris = Galeri::all();
-
+    {        
         $query = Galeri::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('judul', 'like', "%$search%");
-        }
-        $galeris = $query->get();
+        }        
+        $galeris = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
         return view('galeri.index', compact('galeris'));
     }
 
@@ -43,8 +41,7 @@ class GaleriController extends Controller
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
-            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
-            'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',
+            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',            
             'video_url' => 'nullable|url'
         ]);
 
@@ -57,14 +54,7 @@ class GaleriController extends Controller
         }
 
         if ($request->tipe == 'video') {
-            if ($request->hasFile('video_file')) {
-                $file = $request->file('video_file');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('galeri_upload/video'), $filename);
-                $data['video'] = 'galeri_upload/video/' . $filename;
-            } elseif ($request->filled('video_url')) {
-                $data['video'] = $request->video_url; // simpan link URL
-            }
+            $data['video'] = $request->video_url;  
             $data['gambar'] = null;
         }
 
@@ -104,8 +94,7 @@ class GaleriController extends Controller
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
-            'video_url' => 'nullable|string|max:255',
-            'video_file' => 'nullable|file|mimes:mp4,mov,avi|max:512000',
+            'video_url' => 'nullable|string|max:255',            
             'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
         ]);
 
@@ -126,14 +115,7 @@ class GaleriController extends Controller
             if ($galeri->video && !filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
                 unlink(public_path($galeri->video));
             }
-            if ($request->hasFile('video_file')) {
-                $file = $request->file('video_file');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('galeri_upload/video'), $filename);
-                $data['video'] = 'galeri_upload/video/' . $filename;
-            } elseif ($request->filled('video_url')) {
-                $data['video'] = $request->video_url;
-            }
+            $data['video'] = $request->video_url;
             $data['gambar'] = null;
         }
     

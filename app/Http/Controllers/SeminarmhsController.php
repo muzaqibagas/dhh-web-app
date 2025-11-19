@@ -60,6 +60,7 @@ class SeminarmhsController extends Controller
                 'status' => 'ditolak',
                 'bap' => 'ditolak',
                 'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
+                'alasan_makalah' => 'Anda belum melaksanakan kolokium, silahkan upload ulang makalah',            
                 'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang transkrip nilai',
                 'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti SPP',
                 'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
@@ -67,7 +68,7 @@ class SeminarmhsController extends Controller
 
             return redirect()
                 ->route('syaratkolokiummhs.create')
-                ->with('error', 'BAP Kolokium Anda belum diterima. Silakan unggah ulang seluruh persyaratan kolokium dengan jadwal terbaru.');
+                ->with('error', 'Anda belum melaksanakan kolokium. Silakan unggah ulang seluruh persyaratan kolokium dengan jadwal terbaru.');
         }
 
         if ($syaratKolokium->bap !== 'diterima') {

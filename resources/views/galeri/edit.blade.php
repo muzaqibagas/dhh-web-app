@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -268,20 +270,6 @@
                 </div>
               </div>
 
-              {{-- Upload Video --}}
-              <div class="row mb-3" id="video-upload-wrapper" style="display:none;">
-                <label for="video_file" class="text-start col-sm-2 col-form-label">Upload Video</label>
-                <div class="col-sm-10">
-                  <input type="file" name="video_file" id="video_file" class="form-control" accept="video/*">
-                  @if($galeri->tipe == 'video' && $galeri->video && !Str::startsWith($galeri->video, ['http', 'https']))
-                    <div class="mt-3" id="old-video-preview">                      
-                      <video src="{{ asset($galeri->video) }}" controls class="w-100" style="max-height:300px;"></video>
-                    </div>
-                  @endif
-                  <div id="preview-video" class="mt-3"></div>
-                </div>
-              </div>
-
               {{-- URL Video --}}
               <div class="row mb-3" id="url-upload-wrapper" style="display:none;">
                 <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
@@ -319,94 +307,42 @@
 <script>
   const tipeSelect = document.getElementById('tipe');
 
-  // Input
   const gambarInput = document.getElementById('gambar');
-  const videoFileInput = document.getElementById('video_file');
   const videoUrlInput = document.getElementById('video_url');
 
-  // Wrapper
   const gambarWrapper = document.getElementById('gambar-upload-wrapper');
-  const videoWrapper = document.getElementById('video-upload-wrapper');
   const urlWrapper = document.getElementById('url-upload-wrapper');
 
-  // Preview
   const previewGambar = document.getElementById('preview-gambar');
-  const previewVideo = document.getElementById('preview-video');
   const previewUrl = document.getElementById('preview-url');
-
-  function resetInputs() {
-    gambarInput.value = '';
-    videoFileInput.value = '';
-    videoUrlInput.value = '';
-    previewGambar.innerHTML = '';
-    previewVideo.innerHTML = '';
-    previewUrl.innerHTML = '';
-  }
 
   function updateInputState() {
     const tipe = tipeSelect.value;
 
     if (tipe === 'gambar') {
       gambarWrapper.style.display = 'flex';
-      videoWrapper.style.display = 'none';
       urlWrapper.style.display = 'none';
-
-      gambarInput.required = false;
-      videoFileInput.required = false;
-      videoUrlInput.required = false;
-
-    } else if (tipe === 'video') {
+    } 
+    else if (tipe === 'video') {
       gambarWrapper.style.display = 'none';
-      videoWrapper.style.display = 'flex';
       urlWrapper.style.display = 'flex';
-
-      gambarInput.required = false;
-      videoFileInput.disabled = false;
-      videoUrlInput.disabled = false;
-
-      enforceVideoRule(); // cek apakah salah satu sudah terisi
-    } else {
+    } 
+    else {
       gambarWrapper.style.display = 'none';
-      videoWrapper.style.display = 'none';
       urlWrapper.style.display = 'none';
-    }    
-  }
-
-
-  tipeSelect.addEventListener('change', updateInputState);
-  updateInputState();
-
-  // Wajib isi salah satu (file video atau url)
-  function enforceVideoRule() {
-    if (tipeSelect.value === 'video') {
-      if (videoFileInput.value) {
-        videoUrlInput.required = false;
-        videoFileInput.required = false;
-        videoUrlInput.disabled = true;
-        videoFileInput.disabled = false;
-      } else if (videoUrlInput.value) {
-        videoFileInput.disabled = true;
-        videoUrlInput.disabled = false;
-        videoFileInput.required = false;
-        videoUrlInput.required = false;
-      } else {
-        videoFileInput.disabled = false;
-        videoUrlInput.disabled = false;
-        videoFileInput.required = true;
-        videoUrlInput.required = true;
-      }
     }
   }
 
-  videoFileInput.addEventListener('input', enforceVideoRule);
-  videoUrlInput.addEventListener('input', enforceVideoRule);
+  tipeSelect.addEventListener('change', updateInputState);
+  updateInputState();
 
   // Preview gambar
   gambarInput.addEventListener('change', function(e) {
     previewGambar.innerHTML = '';
     const oldPreview = document.getElementById('old-gambar-preview');
     if (oldPreview) oldPreview.style.display = 'none';
-    const file = e.target.files[0];    
+
+    const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = function(event) {
@@ -420,52 +356,37 @@
     }
   });
 
-  // Preview video file
-  videoFileInput.addEventListener('change', function(e) {
-    previewVideo.innerHTML = '';
-    const oldPreview = document.getElementById('old-video-preview');
-    if (oldPreview) oldPreview.style.display = 'none';
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('video/')) {
-      const video = document.createElement('video');
-      video.src = URL.createObjectURL(file);
-      video.controls = true;
-      video.className = 'w-100';
-      video.style.maxHeight = '300px';
-      previewVideo.appendChild(video);
-    }
-    enforceVideoRule();
-  });
-
-  // Preview video URL (YouTube embed)
+  // Preview URL video
   videoUrlInput.addEventListener('input', function(e) {
     previewUrl.innerHTML = '';
     const oldPreview = document.getElementById('old-url-preview');
     if (oldPreview) oldPreview.style.display = 'none';
+
     const url = e.target.value;
-    if (url) {
-      let embedUrl = url;
-      let videoId = null;
+    if (!url) return;
 
-      if (url.includes('youtube.com/watch?v=')) {
-        videoId = url.split('v=')[1].split('&')[0];
-      } else if (url.includes('youtu.be/')) {
-        videoId = url.split('youtu.be/')[1].split('?')[0];
-      }
+    let embedUrl = url;
+    let videoId = null;
 
-      if (videoId) {
-        embedUrl = 'https://www.youtube.com/embed/' + videoId;
-      }
-
-      const iframe = document.createElement('iframe');
-      iframe.width = '320';
-      iframe.height = '180';
-      iframe.src = embedUrl;
-      iframe.frameBorder = '0';
-      iframe.allowFullscreen = true;
-      previewUrl.appendChild(iframe);
+    if (url.includes('youtube.com/watch?v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
     }
-    enforceVideoRule();
+
+    if (videoId) {
+      embedUrl = 'https://www.youtube.com/embed/' + videoId;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.width = '320';
+    iframe.height = '180';
+    iframe.src = embedUrl;
+    iframe.frameBorder = '0';
+    iframe.allowFullscreen = true;
+
+    previewUrl.appendChild(iframe);
   });
 </script>
+
 @endsection

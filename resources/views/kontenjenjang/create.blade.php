@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -233,7 +235,9 @@
                       <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
                       <div class="col-sm-10">
                           <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-foto')" required>
-                          <img id="preview-foto" class="img-thumbnail mt-2 d-none" width="150">
+                          <div class="preview-wrapper">
+                              <img id="preview-foto" class="d-none preview-img">
+                          </div>
                       </div>
                   </div>
 
@@ -281,8 +285,8 @@
                   <div class="row mb-3">
                       <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
                       <div class="col-sm-10">
-                          <input type="file" name="leaflet[]" class="form-control" accept="image/*" multiple>
-                          <div id="leaflet-preview" class="d-flex flex-wrap gap-2 mt-2"></div>
+                          <input type="file" name="leaflet[]" class="form-control" accept="image/*" multiple>                          
+                          <div id="leaflet-preview" class="d-flex justify-content-center flex-wrap gap-2 mt-2"></div>                
                       </div>
                   </div>
 
@@ -291,7 +295,9 @@
                       <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
                       <div class="col-sm-10">
                           <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-akreditasi')" required>
-                          <img id="preview-akreditasi" class="img-thumbnail mt-2 d-none" width="150">
+                          <div class="preview-wrapper">
+                              <img id="preview-akreditasi" class="d-none preview-img">
+                          </div>
                       </div>
                   </div>
                   <!-- Deskripsi Akreditasi -->
@@ -314,6 +320,24 @@
   </main>
 </div>
 
+<style>
+.preview-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.preview-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+</style>
+
+
 <script>
 function previewImage(event, previewId) {
     const input = event.target;
@@ -321,29 +345,52 @@ function previewImage(event, previewId) {
 
     if (input.files && input.files[0]) {
         const reader = new FileReader();
+
         reader.onload = function(e) {
             preview.src = e.target.result;
-            preview.classList.remove('d-none');
-        }
+            preview.classList.remove("d-none");
+        };
+
         reader.readAsDataURL(input.files[0]);
     }
 }
+</script>
+<script>
+document.querySelector('input[name="leaflet[]"]').addEventListener('change', function(e) {
+    const previewContainer = document.getElementById('leaflet-preview');
+    previewContainer.innerHTML = ""; // Reset preview
+    
+    const files = e.target.files;
 
-document.querySelector('input[name="leaflet[]"]').addEventListener('change', function(event) {
-  const previewContainer = document.getElementById('leaflet-preview');
-  previewContainer.innerHTML = '';
-  for (let file of event.target.files) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      img.classList.add('img-thumbnail');
-      img.style.width = '100px';
-      previewContainer.appendChild(img);
+    // Maksimal 2 file
+    if (files.length > 2) {
+        alert("Maksimal upload 2 leaflet!");
+        e.target.value = ""; 
+        return;
     }
-    reader.readAsDataURL(file);
-  }
+
+    // Loop untuk buat preview
+    Array.from(files).forEach(file => {
+        // Hanya file gambar
+        if (!file.type.startsWith("image/")) return;
+
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.className = "preview-img";
+            img.style.width = "150px";
+            img.style.height = "150px";
+            img.style.objectFit = "cover";
+            
+            previewContainer.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    });
 });
 </script>
+
 
 @endsection

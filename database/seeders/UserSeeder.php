@@ -75,5 +75,27 @@ class UserSeeder extends Seeder
                 'updated_at'       => now(),
             ],
         ]);
+
+        for ($i = 1; $i <= 50; $i++) {
+            DB::table('users')->insert([
+                'id_jenjang'       => 3,
+                'nim'              => 'DUMMY' . str_pad($i, 3, '0', STR_PAD_LEFT), // aman, tidak bentrok
+                'nama'             => "Mahasiswa $i",
+                'no_hp'            => '08120000' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'alamat'           => "Jl. Dummy No.$i",
+                'tanggal_lahir'    => '2003-01-01',
+                'angkatan'         => '2022',
+                'status'           => 'aktif',
+                'username'         => "mhs$i",
+                'email'            => "mhs$i@example.com",
+                'email_verified_at'=> now(),
+                'password'         => Hash::make('password'),
+                'jenis_kelamin'    => $i % 2 == 0 ? 'Laki-laki' : 'Perempuan',
+                'role'             => 'Mahasiswa',
+                'foto'             => null,
+                'created_at'       => now(),
+                'updated_at'       => now(),
+            ]);
+        }
     }
 }

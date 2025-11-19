@@ -14,11 +14,8 @@ class KategoriGaleriSeeder extends Seeder
     public function run(): void
     {
         DB::table('kategori_galeris')->insert([
-            ['nama' => 'Prestasi'],
-            ['nama' => 'Berita'],
-            ['nama' => 'Akademik'],                        
-            ['nama' => 'Kegiatan'],                        
-            ['nama' => 'fasilitas'],                                    
+            ['nama' => 'Dosen '],
+            ['nama' => 'Mahasiswa'],                   
         ]);
     }
 }

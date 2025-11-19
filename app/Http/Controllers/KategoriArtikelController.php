@@ -11,16 +11,14 @@ class KategoriArtikelController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $kategoriArtikel = KategoriArtikel::all();
-
+    {        
         $query = KategoriArtikel::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $kategoriArtikel = $query->get();
+        $kategoriArtikel = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();        
         return view('kategoriartikel.index', compact('kategoriArtikel'));
     }
 

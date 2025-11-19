@@ -11,15 +11,13 @@ class KategoriGaleriController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $kategoriGaleri = KategoriGaleri::all();      
-        
+    {                    
         $query = KategoriGaleri::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
-        $kategoriGaleri = $query->get();
+        $kategoriGaleri = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
         return view('kategorigaleri.index', compact('kategoriGaleri'));
     }
 

@@ -12,15 +12,13 @@ class KetuaDHHController extends Controller
      */
     public function index()
     {
-        $ketua_dhhs = KetuaDHH::all();
-
         $query = KetuaDHH::query();        
         if (request()->has('search')){
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $ketua_dhhs = $query->get();
+        $ketua_dhhs = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();                
         return view('ketuadhh.index', compact('ketua_dhhs'));
     }
 

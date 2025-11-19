@@ -32,7 +32,8 @@ class SyaratKomprehensifmhsController extends Controller
                     ->orWhere('nim', 'like', "%{$search}%");
                 });
             })
-            ->get();
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         return view('syaratkomprehensifmhs.index', compact('pendaftar', 'listModerator'));
     }
 

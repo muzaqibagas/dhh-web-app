@@ -12,11 +12,11 @@ class KategoriStaffSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {         
         $kategoristaffs = [
             'Tenaga Pendidik/Dosen',
             'Tenaga Kependidikan',
-            'Struktur Organisasi',            
+            'Struktur Organisasi',                  
         ];
 
         foreach ($kategoristaffs as $kategori) {

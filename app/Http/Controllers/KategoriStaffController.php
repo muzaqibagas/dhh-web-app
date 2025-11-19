@@ -26,15 +26,13 @@ class KategoriStaffController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $kategoriStaffs = KategoriStaff::all();
-
+    {    
         $query = KategoriStaff::query();
         if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
-        $kategoriStaffs = $query->get();
+        $kategoriStaffs = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('kategoristaff.index', compact('kategoriStaffs'));
     }
 

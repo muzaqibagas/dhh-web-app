@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -232,9 +234,11 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Foto</label>
                     <div class="col-sm-10">
-                      <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-foto')">
+                      <input type="file" name="foto" class="form-control" accept="image/*" onchange="previewSingle(this, 'preview-foto')">
                       @if($kontenJenjang->foto)
-                        <img id="preview-foto" src="{{ asset($kontenJenjang->foto) }}" alt="Foto" class="img-thumbnail mt-2" width="150">
+                        <img id="preview-foto" src="{{ asset($kontenJenjang->foto) }}" alt="Foto" class="preview-img mt-2">
+                      @else
+                        <img id="preview-foto" class="preview-img mt-2 d-none" alt="Foto">
                       @endif
                     </div>
                   </div>
@@ -279,14 +283,19 @@
                     </div>
                   </div>
 
-                  <!-- Leaflet -->
+                  <!-- Leaflet (multiple) -->
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Leaflet</label>
                     <div class="col-sm-10">
-                      <input type="file" name="leaflet" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-leaflet')">                      
-                      @if($kontenJenjang->leaflet)
-                        <img id="preview-leaflet" src="{{ asset($kontenJenjang->leaflet) }}" alt="Leaflet" class="img-thumbnail mt-2" width="150">                        
-                      @endif
+                      <input type="file" name="leaflet[]" class="form-control" accept="image/*" multiple>
+                      <div id="leaflet-preview" class="d-flex justify-content-center flex-wrap gap-2 mt-2">
+                        {{-- Tampilkan existing leaflet jika ada --}}
+                        @if($kontenJenjang->leaflets && $kontenJenjang->leaflets->count())
+                          @foreach($kontenJenjang->leaflets as $lf)
+                            <img src="{{ asset($lf->gambar) }}" class="preview-img" alt="Leaflet">
+                          @endforeach
+                        @endif
+                      </div>                      
                     </div>
                   </div>
 
@@ -294,9 +303,11 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label fw-bold text-start">Sertifikat Akreditasi</label>
                     <div class="col-sm-10">
-                      <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewImage(this, 'preview-akreditasi')">
+                      <input type="file" name="sertifikatakreditasi" class="form-control" accept="image/*" onchange="previewSingle(this, 'preview-akreditasi')">
                       @if($kontenJenjang->sertifikatakreditasi)
-                      <img id="preview-akreditasi" src="{{ asset($kontenJenjang->sertifikatakreditasi) }}" alt="Akreditasi" class="img-thumbnail mt-2" width="150">                                                
+                        <img id="preview-akreditasi" src="{{ asset($kontenJenjang->sertifikatakreditasi) }}" alt="Akreditasi" class="preview-img mt-2">
+                      @else
+                        <img id="preview-akreditasi" class="preview-img mt-2 d-none" alt="Akreditasi">
                       @endif
                     </div>
                   </div>
@@ -321,19 +332,68 @@
   </main>
 </div>
 
+<style>
+.preview-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.preview-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+</style>
+
 <script>
-  function previewImage(input, previewId) {
-    const file = input.files[0];
+  function previewSingle(input, previewId) {
+    const file = input.files && input.files[0];
+    const preview = document.getElementById(previewId);
     if (file) {
       const reader = new FileReader();
       reader.onload = function(e) {
-        const preview = document.getElementById(previewId);
         preview.src = e.target.result;
         preview.classList.remove('d-none');
+        // pastikan class preview-img dipakai
+        if (!preview.classList.contains('preview-img')) {
+          preview.classList.add('preview-img');
+        }
       }
       reader.readAsDataURL(file);
     }
   }
+
+  // preview multiple leaflet
+  document.querySelector('input[name="leaflet[]"]').addEventListener('change', function(e) {
+    const previewContainer = document.getElementById('leaflet-preview');
+    previewContainer.innerHTML = ""; // Reset preview
+    
+    const files = e.target.files;
+
+    // Maksimal 2 file
+    if (files.length > 2) {
+        alert("Maksimal upload 2 leaflet!");
+        e.target.value = ""; 
+        return;
+    }
+
+    Array.from(files).forEach(file => {
+        if (!file.type.startsWith("image/")) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.className = "preview-img";
+            previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+  });
 </script>
 
 @endsection

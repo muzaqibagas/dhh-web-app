@@ -166,10 +166,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>
@@ -198,113 +200,100 @@
     
 <!-- MAIN CONTENT -->
 <main class="content">
-<div class="container-fluid mt-4">
-  <div class="adm-header">
-    <h2 class="adm-title">Tambah Data Galeri</h2>
-  </div> 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card shadow-sm p-4">
-        <form action="{{ route('galeri.store') }}" method="POST" enctype="multipart/form-data">
-          @csrf
+  <div class="container-fluid mt-4">
+    <div class="adm-header">
+      <h2 class="adm-title">Tambah Data Galeri</h2>
+    </div> 
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card shadow-sm p-4">
+          <form action="{{ route('galeri.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-          <div class="row mb-3">
-            <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
-            <div class="col-sm-10">
-            <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul..." required>
+            <div class="row mb-3">
+              <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
+              <div class="col-sm-10">
+              <input type="text" name="judul" id="judul" class="form-control" placeholder="Judul..." required>
+              </div>
             </div>
-          </div>
 
-          <div class="row mb-3">
-            <label for="tipe" class="text-start col-sm-2 col-form-label">Tipe</label>
-            <div class="col-sm-10">
-              <select name="tipe" id="tipe" class="form-select" required>
-                <option value="">Pilih tipe</option>
-                <option value="gambar">Gambar</option>
-                <option value="video">Video</option>  
-              </select>
+            <div class="row mb-3">
+              <label for="tipe" class="text-start col-sm-2 col-form-label">Tipe</label>
+              <div class="col-sm-10">
+                <select name="tipe" id="tipe" class="form-select" required>
+                  <option value="">Pilih tipe</option>
+                  <option value="gambar">Gambar</option>
+                  <option value="video">Video</option>  
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="row mb-3">
-            <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
-            <div class="col-sm-10">
-              <select name="id_kategorigaleri" id="kategori" class="form-select" required>
-                <option value="">Pilih kategori</option>
-                @foreach ($kategorigaleri as $kategori)
-                  <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                @endforeach
-              </select>
+            <div class="row mb-3">
+              <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
+              <div class="col-sm-10">
+                <select name="id_kategorigaleri" id="kategori" class="form-select" required>
+                  <option value="">Pilih kategori</option>
+                  @foreach ($kategorigaleri as $kategori)
+                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="row mb-3">
-            <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
-            <div class="col-sm-10">
-              <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+            <div class="row mb-3">
+              <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
+              <div class="col-sm-10">
+                <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+              </div>
+            </div>          
+
+            <div class="row mb-3" id="gambar-upload-wrapper" style="display: none;">
+              <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
+              <div class="col-sm-10">
+                <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
+                <div id="preview-gambar" class="mt-3"></div>
+              </div>
+            </div>            
+
+            <div class="row mb-3" id="url-upload-wrapper" style="display: none;">
+              <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
+              <div class="col-sm-10">
+                <input type="url" name="video_url" id="video_url" class="form-control" placeholder="https://youtube.com/..." >
+                
+                <div id="preview-url" class="mt-3"></div>
+              </div>
             </div>
-          </div>          
 
-          <div class="row mb-3" id="gambar-upload-wrapper" style="display: none;">
-            <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
-            <div class="col-sm-10">
-              <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
-              <div id="preview-gambar" class="mt-3"></div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-success">Simpan</button>
             </div>
-          </div>
-
-          <!-- Untuk Video -->
-          <div class="row mb-3" id="video-upload-wrapper" style="display: none;">
-            <label for="video_file" class="text-start col-sm-2 col-form-label">Upload Video</label>
-            <div class="col-sm-10">
-              <input type="file" name="video_file" id="video_file" class="form-control" accept="video/*">
-              <div id="preview-video" class="mt-3"></div>
-            </div>
-          </div>
-
-          <div class="row mb-3" id="url-upload-wrapper" style="display: none;">
-            <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
-            <div class="col-sm-10">
-              <input type="url" name="video_url" id="video_url" class="form-control" placeholder="https://youtube.com/..." >
-              
-              <div id="preview-url" class="mt-3"></div>
-            </div>
-          </div>
-
-
-          <div class="text-end">
-            <button type="submit" class="btn btn-success">Simpan</button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 
 <script>
   const tipeSelect = document.getElementById('tipe');
 
   // Input
   const gambarInput = document.getElementById('gambar');
-  const videoFileInput = document.getElementById('video_file');
   const videoUrlInput = document.getElementById('video_url');
 
   // Wrapper
   const gambarWrapper = document.getElementById('gambar-upload-wrapper');
-  const videoWrapper = document.getElementById('video-upload-wrapper');
   const urlWrapper = document.getElementById('url-upload-wrapper');
 
   // Preview
-  const previewGambar = document.getElementById('preview-gambar');
-  const previewVideo = document.getElementById('preview-video');
+  const previewGambar = document.getElementById('preview-gambar');  
   const previewUrl = document.getElementById('preview-url');
 
   function resetInputs() {
     gambarInput.value = '';
-    videoFileInput.value = '';
     videoUrlInput.value = '';
     previewGambar.innerHTML = '';
-    previewVideo.innerHTML = '';
     previewUrl.innerHTML = '';
   }
 
@@ -313,28 +302,22 @@
 
     if (tipe === 'gambar') {
       gambarWrapper.style.display = 'flex';
-      videoWrapper.style.display = 'none';
       urlWrapper.style.display = 'none';
 
       gambarInput.required = true;
-      videoFileInput.required = false;
       videoUrlInput.required = false;
-
-      videoFileInput.disabled = true;
       videoUrlInput.disabled = true;
+
     } else if (tipe === 'video') {
       gambarWrapper.style.display = 'none';
-      videoWrapper.style.display = 'flex';
       urlWrapper.style.display = 'flex';
 
       gambarInput.required = false;
-      videoFileInput.disabled = false;
+      videoUrlInput.required = true;
       videoUrlInput.disabled = false;
 
-      enforceVideoRule(); // cek apakah salah satu wajib diisi
     } else {
       gambarWrapper.style.display = 'none';
-      videoWrapper.style.display = 'none';
       urlWrapper.style.display = 'none';
     }
 
@@ -343,29 +326,6 @@
 
   tipeSelect.addEventListener('change', updateInputState);
   updateInputState();
-
-  // Wajib isi salah satu (file video atau url)
-  function enforceVideoRule() {
-    if (tipeSelect.value === 'video') {
-      if (videoFileInput.value) {
-        videoUrlInput.required = false;
-        videoFileInput.required = false;
-        videoUrlInput.disabled = true;
-      } else if (videoUrlInput.value) {
-        videoFileInput.required = false;
-        videoUrlInput.required = false;
-        videoFileInput.disabled = true;
-      } else {
-        videoFileInput.required = true;
-        videoUrlInput.required = true;
-        videoFileInput.disabled = false;
-        videoUrlInput.disabled = false;
-      }
-    }
-  }
-
-  videoFileInput.addEventListener('input', enforceVideoRule);
-  videoUrlInput.addEventListener('input', enforceVideoRule);
 
   // Preview gambar
   gambarInput.addEventListener('change', function(e) {
@@ -384,48 +344,33 @@
     }
   });
 
-  // Preview video file
-  videoFileInput.addEventListener('change', function(e) {
-    previewVideo.innerHTML = '';
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('video/')) {
-      const video = document.createElement('video');
-      video.src = URL.createObjectURL(file);
-      video.controls = true;
-      video.className = 'w-100';
-      video.style.maxHeight = '300px';
-      previewVideo.appendChild(video);
-    }
-    enforceVideoRule();
-  });
-
   // Preview video URL (YouTube embed)
   videoUrlInput.addEventListener('input', function(e) {
     previewUrl.innerHTML = '';
     const url = e.target.value;
-    if (url) {
-      let embedUrl = url;
-      let videoId = null;
 
-      if (url.includes('youtube.com/watch?v=')) {
-        videoId = url.split('v=')[1].split('&')[0];
-      } else if (url.includes('youtu.be/')) {
-        videoId = url.split('youtu.be/')[1].split('?')[0];
-      }
+    if (!url) return;
 
-      if (videoId) {
-        embedUrl = 'https://www.youtube.com/embed/' + videoId;
-      }
+    let embedUrl = url;
+    let videoId = null;
 
-      const iframe = document.createElement('iframe');
-      iframe.width = '320';
-      iframe.height = '180';
-      iframe.src = embedUrl;
-      iframe.frameBorder = '0';
-      iframe.allowFullscreen = true;
-      previewUrl.appendChild(iframe);
+    if (url.includes('youtube.com/watch?v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
     }
-    enforceVideoRule();
+
+    if (videoId) {
+      embedUrl = 'https://www.youtube.com/embed/' + videoId;
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.width = '320';
+    iframe.height = '180';
+    iframe.src = embedUrl;
+    iframe.frameBorder = '0';
+    iframe.allowFullscreen = true;
+    previewUrl.appendChild(iframe);
   });
 </script>
 
