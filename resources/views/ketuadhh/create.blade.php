@@ -236,16 +236,20 @@
                       @endfor
                     </select>                    
                   </div>
-                </div>
-                
-                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                </div>                              
+
+                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
                   <div class="col-sm-2">
                       <label for="foto" class="col-form-label">Foto</label>
                   </div>
                   <div class="col-sm-10">
-                      <input type="file" name="foto" class="form-control" id="foto" placeholder="No file selected" required>
+                      <input type="file" name="foto" class="form-control" id="foto" required>                      
+                      <div class="mt-3 d-flex justify-content-center">
+                          <img id="preview-foto" class="img-thumbnail d-none shadow-sm border" style="max-width: 180px; max-height: 180px; object-fit: cover;" alt="Preview Foto">
+                      </div>
                   </div>
                 </div>
+
 
 
                 <!-- Tombol -->
@@ -261,4 +265,24 @@
       </div>
   </div>
 </div>
+@push('script')
+  <script>
+    // Preview foto saat input
+    document.addEventListener("DOMContentLoaded", function () {
+      const fotoInput = document.getElementById('foto');
+      const previewImg = document.getElementById('preview-foto');
+
+      fotoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          previewImg.src = URL.createObjectURL(file);
+          previewImg.classList.remove('d-none');
+        } else {
+          previewImg.src = "";
+          previewImg.classList.add('d-none');
+        }
+      });
+    });
+  </script>
+@endpush 
 @endsection

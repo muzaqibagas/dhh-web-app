@@ -205,7 +205,7 @@
           <h2 class="adm-title">Konten Jenjang</h2>                      
           <div class="d-flex justify-content-end align-items-center gap-2">
             <form action="{{ route('kontenjenjang.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
-              <input type="text" name="search" class="form-control" placeholder="Cari artikel..." value="{{ request('search') }}">
+              <input type="text" name="search" class="form-control" placeholder="Cari Jenjang..." value="{{ request('search') }}">
               <button type="submit" class="btn btn-primary px-3">
                 <i class="bi bi-search"></i>
               </button>
