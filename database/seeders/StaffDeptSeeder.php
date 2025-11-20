@@ -19,91 +19,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 3,
                 'id_divisi' => 5,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Ir. I Wayan Darmawan, M.Sc.',
-                'tanggal_lahir' => '1966-02-12',
-                'nip' => '196602121991031002',
-                'jabatan' => 'Ketua PS S2 dan PS S3 ITHH',
-                'email' => 'w_darmawan@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 2,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Ir. I Nyoman Jaya Wistara, M.S.',
-                'tanggal_lahir' => '1963-12-31',
-                'nip' => '196312311989031027',
-                'jabatan' => 'Ketua Divisi Kimia Hasil Hutan',
-                'email' => 'nwistara@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 5,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Ir. Imam Wahyudi, M.S.',
-                'tanggal_lahir' => '1963-01-06',
-                'nip' => '196301061987031004',
-                'jabatan' => 'Ketua Divisi Teknologi Peningkatan Mutu Kayu',
-                'email' => 'imamwa@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 1,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Ir. Dede Hermawan, M. Sc.',
-                'tanggal_lahir' => '1963-07-11',
-                'nip' => '196307111991031002',
-                'jabatan' => 'Ketua Divisi Biokomposit',
-                'email' => 'dedehe@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 3,
-                'foto' => null,
-                'nama' => 'Ir. Bintang C.H  Siamngunsong, M.S., PhD',
-                'tanggal_lahir' => '1963-04-13',
-                'nip' => '196304131987031004',
-                'jabatan' => 'Ketua Divisi Manajemen Industri Hasil Hutan',
-                'email' => 'bintangdhh@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 4,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Lina Karlinasari, S.Hut, M.Sc.F.trop',
-                'tanggal_lahir' => '1973-11-26',
-                'nip' => '197311261998022001',
-                'jabatan' => 'Ketua Divisi Rekayasa dan Desain Bangunan Kayu',
-                'email' => 'karlinasari@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 5,
-                'foto' => null,
-                'nama' => 'Prof. Dr. Ir. Trisna Priadi, M. Eng. Sc',
-                'tanggal_lahir' => '1967-04-25',
-                'nip' => '196704251993021001',
-                'jabatan' => 'Ketua Pendidikan dan PL',
-                'email' => 'trisnapr@apps.ipb.ac.id',                
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_kategoristaff' => 3,
-                'id_divisi' => 5,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Istie.jpg',
                 'nama' => 'Dr. Istie Sekartining Rahayu, S.Hut., M.Si',
                 'tanggal_lahir' => '1974-04-22',
                 'nip' => '197404222005012001',
@@ -115,7 +31,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 3,
                 'id_divisi' => 5,
-                'foto' => null,
+                'foto' => 'foto_staffdept/irsan.jpg',
                 'nama' => 'Dr. Irsan Alipraja,  S.Hut., M.Si.',
                 'tanggal_lahir' => '1987-11-22',
                 'nip' => '198711222014041001',
@@ -126,8 +42,32 @@ class StaffDeptSeeder extends Seeder
             ],
             [
                 'id_kategoristaff' => 3,
+                'id_divisi' => 5,
+                'foto' => 'foto_staffdept/Wayan.png',
+                'nama' => 'Prof. Dr. Ir. I Wayan Darmawan, M.Sc.',
+                'tanggal_lahir' => '1966-02-12',
+                'nip' => '196602121991031002',
+                'jabatan' => 'Ketua PS S2 dan PS S3 ITHH',
+                'email' => 'w_darmawan@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],  
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 5,
+                'foto' => 'foto_staffdept/Trisna.jpg',
+                'nama' => 'Prof. Dr. Ir. Trisna Priadi, M. Eng. Sc',
+                'tanggal_lahir' => '1967-04-25',
+                'nip' => '196704251993021001',
+                'jabatan' => 'Ketua Pendidikan dan PL',
+                'email' => 'trisnapr@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],        
+            [
+                'id_kategoristaff' => 3,
                 'id_divisi' => 1,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Mahdi.jpg',
                 'nama' => 'Dr. Mahdi Mubarok, S.Si., M.Si',
                 'tanggal_lahir' => '1983-12-30',
                 'nip' => '198312302010121008',
@@ -135,13 +75,73 @@ class StaffDeptSeeder extends Seeder
                 'email' => 'mahdi@apps.ipb.ac.id',
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],   
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 2,
+                'foto' => 'foto_staffdept/Nyoman.jpg',
+                'nama' => 'Prof. Dr. Ir. I Nyoman Jaya Wistara, M.S.',
+                'tanggal_lahir' => '1963-12-31',
+                'nip' => '196312311989031027',
+                'jabatan' => 'Ketua Divisi Kimia Hasil Hutan',
+                'email' => 'nwistara@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 4,
+                'foto' => 'foto_staffdept/Karlina.jpg',
+                'nama' => 'Prof. Dr. Lina Karlinasari, S.Hut, M.Sc.F.trop',
+                'tanggal_lahir' => '1973-11-26',
+                'nip' => '197311261998022001',
+                'jabatan' => 'Ketua Divisi Rekayasa dan Desain Bangunan Kayu',
+                'email' => 'karlinasari@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],    
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 1,
+                'foto' => 'foto_staffdept/Dede.jpg',
+                'nama' => 'Prof. Dr. Ir. Dede Hermawan, M. Sc.',
+                'tanggal_lahir' => '1963-07-11',
+                'nip' => '196307111991031002',
+                'jabatan' => 'Ketua Divisi Biokomposit',
+                'email' => 'dedehe@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],  
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 5,
+                'foto' => 'foto_staffdept/Imam.jpg',
+                'nama' => 'Prof. Dr. Ir. Imam Wahyudi, M.S.',
+                'tanggal_lahir' => '1963-01-06',
+                'nip' => '196301061987031004',
+                'jabatan' => 'Ketua Divisi Teknologi Peningkatan Mutu Kayu',
+                'email' => 'imamwa@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],            
+            [
+                'id_kategoristaff' => 3,
+                'id_divisi' => 3,
+                'foto' => 'foto_staffdept/Bintang.jpg',
+                'nama' => 'Ir. Bintang C.H  Siamngunsong, M.S., PhD',
+                'tanggal_lahir' => '1963-04-13',
+                'nip' => '196304131987031004',
+                'jabatan' => 'Ketua Divisi Manajemen Industri Hasil Hutan',
+                'email' => 'bintangdhh@apps.ipb.ac.id',                
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],                                                     
             
             //Tenaga Pendidik/Dosen
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 2,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Deded.jpg',
                 'nama' => 'Prof. Dr. Ir. Deded Sarip Nawawi, M.Sc.F.Trop',
                 'tanggal_lahir' => '1966-01-13',
                 'nip' => '196601131991031001',
@@ -153,7 +153,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 4,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Nares.jpg',
                 'nama' => 'Prof. Dr.Ir. Naresworo Nugroho, M.Si',
                 'tanggal_lahir' => '1965-01-22',
                 'nip' => '196501221989031002 ',
@@ -165,7 +165,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 2,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Rita.jpg',
                 'nama' => 'Dr. Ir. Rita Kartika Sari, M.S.',
                 'tanggal_lahir' => '1968-11-24',
                 'nip' => '196811241995122001 ',
@@ -177,7 +177,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 3,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Togu.jpg',
                 'nama' => 'Dr. Ir. Elisa Ganda Togu Manurung, M.S.',
                 'tanggal_lahir' => '1962-11-07',
                 'nip' => '196211071987031001 ',
@@ -189,7 +189,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 5,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Arinana.jpg',
                 'nama' => 'Dr. Arinana, S.Hut, M.Si',
                 'tanggal_lahir' => '1974-01-01',
                 'nip' => '197401012006042014 ',
@@ -201,7 +201,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 2,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Anne.jpg',
                 'nama' => 'Anne Carolina, S.Si., M.Si',
                 'tanggal_lahir' => '1981-09-24',
                 'nip' => '198109242009122004 ',
@@ -213,7 +213,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 4,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Fengky.jpg',
                 'nama' => 'Dr. Fengky Satria Yoresta, S.T., M.T',
                 'tanggal_lahir' => '1987-06-10',
                 'nip' => '1987061020101210005',
@@ -225,7 +225,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 1,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Lukman.jpg',
                 'nama' => 'Lukmanul Hakim Zaini, S.Hut., M.Sc.',
                 'tanggal_lahir' => '1986-07-31',
                 'nip' => '198607312015041001',
@@ -237,7 +237,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 3,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Vera.jpg',
                 'nama' => 'Vera Junita Br Sitanggang, S.Hut., M.Si',
                 'tanggal_lahir' => '1987-06-30',
                 'nip' => '198706302015042002',
@@ -249,7 +249,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 5,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Miftah.jpeg',
                 'nama' => 'M. Miftah Rahman, S.Hut., M.Si',
                 'tanggal_lahir' => '1994-02-07',
                 'nip' => '199402072020121004',
@@ -261,7 +261,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 1,
                 'id_divisi' => 2,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Yanico.jpg',
                 'nama' => 'Dr. Yanico Hadi Prayogo, M.Si.',
                 'tanggal_lahir' => null,
                 'nip' => '199501062024061001',
@@ -275,7 +275,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Anto.jpg',
                 'nama' => 'Anto Gustanto, S.P.',
                 'tanggal_lahir' => null,
                 'nip' => '197708052009101001',
@@ -287,7 +287,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Lina.jpg',
                 'nama' => 'Lina Meliantina',
                 'tanggal_lahir' => null,
                 'nip' => '197105201993032001',
@@ -299,7 +299,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Esti.jpg',
                 'nama' => 'Esti Prihatini, S.Si., M.Si.',
                 'tanggal_lahir' => null,
                 'nip' => '197512162000032006',
@@ -311,7 +311,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Irfan.jpg',
                 'nama' => 'Muhamad Irfan',
                 'tanggal_lahir' => null,
                 'nip' => '198006052008101002',
@@ -323,7 +323,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Junawan.jpg',
                 'nama' => 'Junawan Supriadi',
                 'tanggal_lahir' => null,
                 'nip' => '3201300501800005',
@@ -335,7 +335,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/lastri.jpg',
                 'nama' => 'Sulastri',
                 'tanggal_lahir' => null,
                 'nip' => '3201306405790003',
@@ -347,7 +347,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Kikin.jpg',
                 'nama' => 'Kikin Mutaqin',
                 'tanggal_lahir' => null,
                 'nip' => '3201381307850001',
@@ -359,7 +359,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Bunga.jpg',
                 'nama' => 'Siti Bunga Utami, S.Ak.',
                 'tanggal_lahir' => null,
                 'nip' => '3201305611910001',
@@ -371,7 +371,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Gilang.jpg',
                 'nama' => 'Gilang Dwi Laksono, S.Hut.',
                 'tanggal_lahir' => null,
                 'nip' => '3271041011960020',
@@ -383,7 +383,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Hendri.jpg',
                 'nama' => 'Hendri Yopiansyah',
                 'tanggal_lahir' => null,
                 'nip' => '1804180101930003',
@@ -395,7 +395,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Candra.png',
                 'nama' => 'Candra',
                 'tanggal_lahir' => null,
                 'nip' => '3271041301870008',
@@ -407,7 +407,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Yenah.jpg',
                 'nama' => 'Yenah',
                 'tanggal_lahir' => null,
                 'nip' => '3271045303770015',
@@ -419,7 +419,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Suwandi.jpg',
                 'nama' => 'Suwandi',
                 'tanggal_lahir' => null,
                 'nip' => '3201302007820009',
@@ -431,7 +431,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => null,
+                'foto' => 'foto_staffdept/Yusep.jpg',
                 'nama' => 'Muhamad Yusep',
                 'tanggal_lahir' => null,
                 'nip' => '3201301201880005',
@@ -444,7 +444,7 @@ class StaffDeptSeeder extends Seeder
             // Departemen Manajemen Hasil Hutan
             //Tenaga Pendidik/Dosen
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Elias',
@@ -456,7 +456,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. I Nengah Surati Jaya, M.Agr.',
@@ -468,7 +468,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr. Ir. Bramasto Nugroho, M.S.',
@@ -480,7 +480,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Hardjanto, M.S',
@@ -492,7 +492,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Didik Suharjito, M.S.',
@@ -504,7 +504,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Heri Purnomo, M.Comp.',
@@ -516,7 +516,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Juang Rata Matangaran, M.S.',
@@ -528,7 +528,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Dodik Ridho Nurrochmat, M.Sc.Forest.Trop',
@@ -540,7 +540,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Sudarsono Soedomo, M.S., MPPA',
@@ -552,7 +552,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Muhamad Buce Saleh, M.S.',
@@ -564,7 +564,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr. Efi Yuliati Yovi, S.Hut.M.Life.Env.Sc.',
@@ -576,7 +576,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Iin Ichwandi, M.Sc.Forest.Trop',
@@ -588,7 +588,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Hendrayanto, M.Agr.',
@@ -600,7 +600,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Ahmad Budiaman, M.Sc.Forest.Trop.',
@@ -612,7 +612,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Bahruni, MS',
@@ -624,7 +624,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Muhdin, M.Sc.Forest.Trop',
@@ -636,7 +636,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Leti Sundawati, M.Sc.Forest.Trop.',
@@ -648,7 +648,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Tatang Tiryana, S.Hut., M.Sc',
@@ -660,7 +660,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Budi Kuncahyo, MS',
@@ -672,7 +672,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Teddy Rusolono, MS',
@@ -684,7 +684,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Gunawan Santosa, MS',
@@ -696,7 +696,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dra. Sri Rahaju, Msi',
@@ -708,7 +708,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Dra.  Nining Puspaningsih, MSi.',
@@ -720,7 +720,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Ujang Suwarna, S.Hut. M.Sc',
@@ -732,7 +732,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr Handian Purwawangsa, S.Hut., M.Si',
@@ -744,7 +744,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Soni Trison, S.Hut., M.Si',
@@ -756,7 +756,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Priyanto, S.Hut., M.Si.',
@@ -768,7 +768,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Qori Pebrial Ilham, S.Hut., M.Si',
@@ -780,7 +780,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Fitta Setiajati, S.Hut., M.Si',
@@ -794,7 +794,7 @@ class StaffDeptSeeder extends Seeder
 
             //Tenaga Kependidikan
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Riksawati',
@@ -806,7 +806,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Ria Kodariah, S.Si',
@@ -818,7 +818,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'M. Hasanudin, A.Md',
@@ -830,7 +830,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Meli Sumarni',
@@ -842,7 +842,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Uus Saeful Mukarom, S.Hut.',
@@ -854,7 +854,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Achmad Fatoni',
@@ -866,7 +866,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Saeful Rohim',
@@ -878,7 +878,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Supriatna',
@@ -890,7 +890,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Linda Zakiah Savitri, S.Hut.',
@@ -902,7 +902,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Afiat Febrianyah, S.Komp.',
@@ -914,7 +914,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Irsya Muthia Muthmainah, S.Hut.',
@@ -926,7 +926,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Jumadi Jayadi',
@@ -938,7 +938,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Yeti Mulyawati',
@@ -950,7 +950,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Siti Sopiah',
@@ -962,7 +962,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Risma Amaliah',
@@ -974,7 +974,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Daniel Rachman',
@@ -986,7 +986,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 2,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Tsanie Ditya Kurnia, S.E',
@@ -1001,7 +1001,7 @@ class StaffDeptSeeder extends Seeder
             // Departemen Silvikultur
             //Tenaga Pendidik/Dosen
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Cecep Kusmana, MS',
@@ -1013,7 +1013,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Bambang Hero Saharjo, M.Agr',
@@ -1025,7 +1025,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Iskandar Z. Siregar, M.For.Sc',
@@ -1037,7 +1037,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Sri Wilarso Budi R, MS',
@@ -1049,7 +1049,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Nurheni Wijayanto, MS',
@@ -1061,7 +1061,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Lailan Syaufina, M.Sc',
@@ -1073,7 +1073,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Noor Farikhah Haneda, M. Si',
@@ -1085,7 +1085,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Prijanto Pamoengkas, M.Sc.F.Trop',
@@ -1097,7 +1097,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Ulfah Juniarti, M.Agr',
@@ -1109,7 +1109,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Basuki Wasis, M.Si',
@@ -1121,7 +1121,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Prof.Dr.Ir. Elis Nina Herliyana, M.Si',
@@ -1133,7 +1133,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Irdika Mansur, M.For.Sc',
@@ -1145,7 +1145,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Istomo, Msi',
@@ -1157,7 +1157,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Omo Rusdiana, M.Sc.Forest.Trop',
@@ -1169,7 +1169,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Ati Dwi Nurhayati, S.Hut, M.Si',
@@ -1181,7 +1181,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Erianto Indra Putra, S.Hut. M.Si',
@@ -1193,7 +1193,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr.Ir. Arum Sekar Wulandari, MS',
@@ -1205,7 +1205,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Ir. Andi Sukendro, MSi',
@@ -1217,7 +1217,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Muhammad Alam Firmansyah, S.Hut, MSi',
@@ -1229,7 +1229,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Yunik Istikorini, SP,M,P',
@@ -1241,7 +1241,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Dr. Adisti Permatasari Putri Hartoyo, S.Hut, M.Si',
@@ -1253,7 +1253,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Fifi Gus Dwiyanti, S.Hut, M.Agr, Ph.D',
@@ -1265,7 +1265,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Lufthi Rusniarsyah, SP., M.Si',
@@ -1277,7 +1277,7 @@ class StaffDeptSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id_kategoristaff' => 1,
+                'id_kategoristaff' => null,
                 'id_divisi' => null,
                 'foto' => null,
                 'nama' => 'Bayu Winata, S.Hut, M.Si',

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('staff_depts', function (Blueprint $table) {
             $table->id('id');            
-            $table->foreignId('id_kategoristaff')->constrained('kategori_staffs')->onDelete('cascade');
+            $table->foreignId('id_kategoristaff')->nullable()->constrained('kategori_staffs')->onDelete('cascade');
             $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
             $table->string('jabatan')->nullable();
             $table->string('foto')->nullable();

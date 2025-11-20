@@ -8,179 +8,345 @@
 </div>
 
     <!-- === Sejarah === -->
-    <section class="pend-section" data-aos="fade-up">
-    <div class="pend-text">
-        <h3>Sejarah</h3>
-        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
-    </div>
-        <p style="text-align: justify;">
-        {{ $kontenDept->sejarah ?? '-' }}
-        </p>
-    </div>
+    <section class="pend-section mt-5" data-aos="fade-up">
+        <div class="pend-text">
+            <h3>Sejarah</h3>
+            <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+        </div>        
+        @php
+            $text = $kontenDept->sejarah ?? '-';
+            $lines = preg_split('/\r\n|\r|\n/', trim($text));
+            $insideList = false;
+        @endphp
+
+        <div style="text-align: justify;">
+            @foreach ($lines as $line)
+                @php
+                    $isNumbered = preg_match('/^\s*\d+\./', $line);
+                @endphp
+                
+                @if ($isNumbered)
+                    {{-- Jika belum dalam <ol>, buka <ol> --}}
+                    @if (!$insideList)
+                        <ol style="padding-left: 20px; margin-left: 10px;">
+                        @php $insideList = true; @endphp
+                    @endif
+
+                    <li>{{ preg_replace('/^\s*\d+\.\s*/', '', $line) }}</li>
+
+                @else                    
+                    @if ($insideList)
+                        </ol>
+                        @php $insideList = false; @endphp
+                    @endif
+
+                    {{-- Tampilkan paragraf biasa --}}
+                    @if (trim($line) !== '')
+                        <p style="margin-top: 10px;">{{ $line }}</p>
+                    @endif
+                @endif
+            @endforeach
+            
+            @if ($insideList)
+                </ol>
+            @endif
+        </div>
     </section>
 
     <!-- ====== SECTION PIMPINAN DARI DULU HINGGA SEKARANG ====== -->
     <section class="ketdept-section py-5">
-    <div class="container position-relative">
+        <div class="container position-relative">
 
-        <!-- Panah kiri -->
-        <button class="ketdept-prev">
-        <i class="bi bi-chevron-left"></i>
-        </button>
+            <!-- Panah kiri -->
+            <button class="ketdept-prev">
+            <i class="bi bi-chevron-left"></i>
+            </button>
 
-        <!-- Panah kanan -->
-        <button class="ketdept-next">
-        <i class="bi bi-chevron-right"></i>
-        </button>
+            <!-- Panah kanan -->
+            <button class="ketdept-next">
+            <i class="bi bi-chevron-right"></i>
+            </button>
 
-        <!-- Wrapper Slide -->
-        <div class="ketdept-wrapper">
-        <div class="ketdept-slide">
-            <div class="ketdept-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 1">
-            <h5>Dr. Andi Saputra</h5>
-            <p>Ketua DHH (2000–2005)</p>
+            <!-- Wrapper Slide -->
+            <div class="ketdept-wrapper">
+            <div class="ketdept-slide">
+                <div class="ketdept-card">
+                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 1">
+                <h5>Dr. Andi Saputra</h5>
+                <p>Ketua DHH (2000–2005)</p>
+                </div>
+                <div class="ketdept-card">
+                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 2">
+                <h5>Dr. Budi Santoso</h5>
+                <p>Ketua DHH (2006–2010)</p>
+                </div>
+                <div class="ketdept-card">
+                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 3">
+                <h5>Prof. Dewi Rahayu</h5>
+                <p>Ketua DHH (2011–2016)</p>
+                </div>
+                <div class="ketdept-card">
+                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 4">
+                <h5>Ir. Cahyono</h5>
+                <p>Ketua DHH (2017–2021)</p>
+                </div>
+                <div class="ketdept-card">
+                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 5">
+                <h5>Dr. Istie S. Rahayu</h5>
+                <p>Ketua DHH (2022–Sekarang)</p>
+                </div>
             </div>
-            <div class="ketdept-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 2">
-            <h5>Dr. Budi Santoso</h5>
-            <p>Ketua DHH (2006–2010)</p>
-            </div>
-            <div class="ketdept-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 3">
-            <h5>Prof. Dewi Rahayu</h5>
-            <p>Ketua DHH (2011–2016)</p>
-            </div>
-            <div class="ketdept-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 4">
-            <h5>Ir. Cahyono</h5>
-            <p>Ketua DHH (2017–2021)</p>
-            </div>
-            <div class="ketdept-card">
-            <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 5">
-            <h5>Dr. Istie S. Rahayu</h5>
-            <p>Ketua DHH (2022–Sekarang)</p>
             </div>
         </div>
-        </div>
-    </div>
     </section>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const slide = document.querySelector(".ketdept-slide");
-    const cards = document.querySelectorAll(".ketdept-card");
-    const nextBtn = document.querySelector(".ketdept-next");
-    const prevBtn = document.querySelector(".ketdept-prev");
+        document.addEventListener("DOMContentLoaded", function () {
+            const slide = document.querySelector(".ketdept-slide");
+            const cards = document.querySelectorAll(".ketdept-card");
+            const nextBtn = document.querySelector(".ketdept-next");
+            const prevBtn = document.querySelector(".ketdept-prev");
 
-    let index = 0;
-    slide.innerHTML += slide.innerHTML; // efek loop
-    const totalCards = slide.querySelectorAll(".ketdept-card");
-    const cardCount = cards.length;
+            let index = 0;
+            slide.innerHTML += slide.innerHTML; // efek loop
+            const totalCards = slide.querySelectorAll(".ketdept-card");
+            const cardCount = cards.length;
 
-    function updateSlide() {
-        const cardWidth = totalCards[0].offsetWidth + 32; // +gap
-        slide.style.transform = `translateX(-${index * cardWidth}px)`;
-    }
+            function updateSlide() {
+                const cardWidth = totalCards[0].offsetWidth + 32; // +gap
+                slide.style.transform = `translateX(-${index * cardWidth}px)`;
+            }
 
-    nextBtn.addEventListener("click", () => {
-        index++;
-        updateSlide();
-        if (index >= cardCount) {
-        setTimeout(() => {
-            slide.style.transition = "none";
-            index = 0;
-            updateSlide();
-            void slide.offsetWidth;
-            slide.style.transition = "transform 0.4s ease-in-out";
-        }, 400);
-        }
-    });
+            nextBtn.addEventListener("click", () => {
+                index++;
+                updateSlide();
+                if (index >= cardCount) {
+                setTimeout(() => {
+                    slide.style.transition = "none";
+                    index = 0;
+                    updateSlide();
+                    void slide.offsetWidth;
+                    slide.style.transition = "transform 0.4s ease-in-out";
+                }, 400);
+                }
+            });
 
-    prevBtn.addEventListener("click", () => {
-        index--;
-        if (index < 0) {
-        slide.style.transition = "none";
-        index = cardCount - 1;
-        updateSlide();
-        void slide.offsetWidth;
-        slide.style.transition = "transform 0.4s ease-in-out";
-        }
-        updateSlide();
-    });
+            prevBtn.addEventListener("click", () => {
+                index--;
+                if (index < 0) {
+                slide.style.transition = "none";
+                index = cardCount - 1;
+                updateSlide();
+                void slide.offsetWidth;
+                slide.style.transition = "transform 0.4s ease-in-out";
+                }
+                updateSlide();
+            });
 
-    window.addEventListener("resize", updateSlide);
-    });
+            window.addEventListener("resize", updateSlide);
+        });
     </script>
 
     <!-- === Visi & Misi === -->
     <section class="pend-section" data-aos="fade-up">
-    <div class="pend-text">
-        <h3>Visi</h3>
-        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
-    </div>
-        <p style="text-align: justify;">
-        {{ $kontenDept->visi ?? '-'}}
-        </p>
-    </div>
+        <div class="pend-text">
+            <h3>Visi</h3>
+            <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+        </div>        
+        @php
+            $text = $kontenDept->visi ?? '-';
+            $lines = preg_split('/\r\n|\r|\n/', trim($text));
+            $insideList = false;
+        @endphp
+
+        <div style="text-align: justify;">
+            @foreach ($lines as $line)
+                @php
+                    $isNumbered = preg_match('/^\s*\d+\./', $line);
+                @endphp
+                
+                @if ($isNumbered)
+                    {{-- Jika belum dalam <ol>, buka <ol> --}}
+                    @if (!$insideList)
+                        <ol style="padding-left: 20px; margin-left: 10px;">
+                        @php $insideList = true; @endphp
+                    @endif
+
+                    <li>{{ preg_replace('/^\s*\d+\.\s*/', '', $line) }}</li>
+
+                @else                    
+                    @if ($insideList)
+                        </ol>
+                        @php $insideList = false; @endphp
+                    @endif
+
+                    {{-- Tampilkan paragraf biasa --}}
+                    @if (trim($line) !== '')
+                        <p style="margin-top: 10px;">{{ $line }}</p>
+                    @endif
+                @endif
+            @endforeach
+            
+            @if ($insideList)
+                </ol>
+            @endif
+        </div>
     </section>
 
     <section class="pend-section" data-aos="fade-up">
-    <div class="pend-text">
-        <h3>Misi</h3>
-        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
-    </div>
-        <p style="text-align: justify;">
-        {{ $kontenDept->misi ?? '-' }}
-        </p>
-    </div>
+        <div class="pend-text">
+            <h3>Misi</h3>
+            <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+        </div>    
+        @php
+            $text = $kontenDept->misi ?? '-';
+            $lines = preg_split('/\r\n|\r|\n/', trim($text));
+            $insideList = false;
+        @endphp
+
+        <div style="text-align: justify;">
+            @foreach ($lines as $line)
+                @php
+                    $isNumbered = preg_match('/^\s*\d+\./', $line);
+                @endphp
+                
+                @if ($isNumbered)
+                    {{-- Jika belum dalam <ol>, buka <ol> --}}
+                    @if (!$insideList)
+                        <ol style="padding-left: 20px; margin-left: 10px;">
+                        @php $insideList = true; @endphp
+                    @endif
+
+                    <li>{{ preg_replace('/^\s*\d+\.\s*/', '', $line) }}</li>
+
+                @else                    
+                    @if ($insideList)
+                        </ol>
+                        @php $insideList = false; @endphp
+                    @endif
+
+                    {{-- Tampilkan paragraf biasa --}}
+                    @if (trim($line) !== '')
+                        <p style="margin-top: 10px;">{{ $line }}</p>
+                    @endif
+                @endif
+            @endforeach
+            
+            @if ($insideList)
+                </ol>
+            @endif
+        </div>
     </section>
 
     <script>
-    AOS.init({
-    duration: 1000,
-    once: true
-    });
+        AOS.init({
+        duration: 1000,
+        once: true
+        });
     </script>
 
-    <!-- === TUJUAN === -->
+    <!-- === TUJUAN === -->    
     <section class="pend-section" data-aos="fade-up">
-    <div class="pend-text">
-        <h3>Tujuan</h3>
-        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
-    </div>
-        <p style="text-align: justify;">
-        {!! nl2br(e($kontenDept->tujuan ?? '-')) !!}
-        </p>
-    </div>
+        <div class="pend-text">
+            <h3>Tujuan</h3>
+            <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+        </div>
+        @php
+            $text = $kontenDept->tujuan ?? '-';
+            $lines = preg_split('/\r\n|\r|\n/', trim($text));
+            $insideList = false;
+        @endphp
+
+        <div style="text-align: justify;">
+            @foreach ($lines as $line)
+                @php
+                    $isNumbered = preg_match('/^\s*\d+\./', $line);
+                @endphp
+                
+                @if ($isNumbered)
+                    {{-- Jika belum dalam <ol>, buka <ol> --}}
+                    @if (!$insideList)
+                        <ol style="padding-left: 20px; margin-left: 10px;">
+                        @php $insideList = true; @endphp
+                    @endif
+
+                    <li>{{ preg_replace('/^\s*\d+\.\s*/', '', $line) }}</li>
+
+                @else                    
+                    @if ($insideList)
+                        </ol>
+                        @php $insideList = false; @endphp
+                    @endif
+
+                    {{-- Tampilkan paragraf biasa --}}
+                    @if (trim($line) !== '')
+                        <p style="margin-top: 10px;">{{ $line }}</p>
+                    @endif
+                @endif
+            @endforeach
+            
+            @if ($insideList)
+                </ol>
+            @endif
+        </div>
     </section>
 
     <!-- === KEBIJAKAN MUTU === -->
     <section class="pend-section" data-aos="fade-up">
-    <div class="pend-text">
-        <h3>Kebijakan Mutu</h3>
-        <img src="{{ asset('img/batasgold.png') }}" alt="divider">
-    </div>
-        <p style="text-align: justify;">
-        {!! nl2br(e($kontenDept->kebijakanmutu ?? '-')) !!}
-        </p>
-    </div>
-    </section>
+        <div class="pend-text">
+            <h3>Kebijakan Mutu</h3>
+            <img src="{{ asset('img/batasgold.png') }}" alt="divider">
+        </div>        
+        @php
+            $text = $kontenDept->kebijakanmutu ?? '-';
+            $lines = preg_split('/\r\n|\r|\n/', trim($text));
+            $insideList = false;
+        @endphp
 
+        <div style="text-align: justify;">
+            @foreach ($lines as $line)
+                @php
+                    $isNumbered = preg_match('/^\s*\d+\./', $line);
+                @endphp
+                
+                @if ($isNumbered)
+                    {{-- Jika belum dalam <ol>, buka <ol> --}}
+                    @if (!$insideList)
+                        <ol style="padding-left: 20px; margin-left: 10px;">
+                        @php $insideList = true; @endphp
+                    @endif
+
+                    <li>{{ preg_replace('/^\s*\d+\.\s*/', '', $line) }}</li>
+
+                @else                    
+                    @if ($insideList)
+                        </ol>
+                        @php $insideList = false; @endphp
+                    @endif
+
+                    {{-- Tampilkan paragraf biasa --}}
+                    @if (trim($line) !== '')
+                        <p style="margin-top: 10px;">{{ $line }}</p>
+                    @endif
+                @endif
+            @endforeach
+            
+            @if ($insideList)
+                </ol>
+            @endif
+        </div>
+    </section>
 
     <div class="judul-tengah">
         <h3 class="judul-tengah-title">Staff Departemen</h3>
         <img src="{{ asset('img/batasgold.png') }}" alt="divider" class="judul-tengah-divider">
     </div>
-
-
     <!-- Tabs -->
     <div class="sej-tabs">
-    <button class="sej-tab-button active" data-tab="sej-struktur">Struktur Organisasi</button>
-    <button class="sej-tab-button" data-tab="sej-dosen">Tenaga Pendidik/Dosen</button>
-    <button class="sej-tab-button" data-tab="sej-kependidikan">Tenaga Kependidikan</button>
+        <button class="sej-tab-button active" data-tab="sej-struktur">Struktur Organisasi</button>
+        <button class="sej-tab-button" data-tab="sej-dosen">Tenaga Pendidik/Dosen</button>
+        <button class="sej-tab-button" data-tab="sej-kependidikan">Tenaga Kependidikan</button>
     </div>
-
-        <!-- Tab Contents -->
+    <!-- Tab Contents -->
     <section>
         <div id="sej-struktur" class="sej-tab-content active">
             <div class="sej-card-grid">
@@ -229,7 +395,6 @@
             </div>
         </div>
     </section>
-</div>
 
     <script>
         const buttons = document.querySelectorAll('.sej-tab-button');
@@ -245,4 +410,14 @@
         });
         });
     </script>  
+
+@push('style')
+<style>
+    .pend-section {
+        padding: 0 8% !important;
+        margin-bottom: 40px;        
+    }
+</style>
+@endpush
+
 @endsection

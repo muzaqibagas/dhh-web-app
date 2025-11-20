@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             // GaleriSeeder::class, 
             KategoriArtikelSeeder::class,
             // ArtikelSeeder::class,
+            kontenDeptSeeder::class,
             // MitraSeeder::class,            
             // ketuaDHHSSeeder::class,            
             // ReviewAlumniSeeder::class,

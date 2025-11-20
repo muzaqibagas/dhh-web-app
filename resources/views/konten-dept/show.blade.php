@@ -102,7 +102,7 @@
         <i class="bi bi-star"></i>  Review Alumni
       </a>
       <a href="/konten-dept"
-        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
+        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/*', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
         <i class="bi bi-laptop"></i> Konten Departemen
       </a>
       <a href="/kontenjenjang"
