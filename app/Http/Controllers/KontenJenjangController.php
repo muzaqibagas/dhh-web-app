@@ -108,32 +108,36 @@ class KontenJenjangController extends Controller
             ->with('success', 'Konten jenjang berhasil ditambahkan.');
     }
 
-
-    
-    public function pendidikan($jenjang)
+    public function pendidikanS1()
     {
-        // Cari data konten berdasarkan nama jenjang (misal: S1, S2, S3)
         $data = KontenJenjang::with(['jenjang', 'leaflets'])
-            ->whereHas('jenjang', function($q) use ($jenjang) {
-                $q->where('nama', $jenjang);
-            })
+            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S1'))
             ->first();
 
-        // Jika tidak ditemukan
         if (!$data) {
-            return view('jenjang.pendidikan', [
-                'data' => null,
-                'jenjang' => $jenjang
-            ]);
+            return view('kontenjenjang.pendidikans1')->with('data', null);
         }
 
-        // Kirim data ke view
-        return view('jenjang.pendidikan', [
-            'data' => $data,
-            'jenjang' => $jenjang
-        ]);
+        return view('kontenjenjang.pendidikans1', compact('data'));
     }
 
+    public function pendidikanS2()
+    {
+        $data = KontenJenjang::with(['jenjang', 'leaflets'])
+            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S2'))
+            ->first();
+
+        return view('kontenjenjang.pendidikans2', compact('data'));
+    }
+
+    public function pendidikanS3()
+    {
+        $data = KontenJenjang::with(['jenjang', 'leaflets'])
+            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S3'))
+            ->first();
+
+        return view('kontenjenjang.pendidikans3', compact('data'));
+    }
 
     public function show(KontenJenjang $kontenJenjang)
     {

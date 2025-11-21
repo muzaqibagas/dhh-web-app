@@ -56,7 +56,7 @@ Route::get('/artikeledit', function () {
 
 Route::get('home', [Controller::class, 'home'])->name('guest.home');
 Route::get('file', [Controller::class, 'file'])->name('guest.file');
-Route::get('pendidikans11', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
+// Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
 // Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
 // Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
 Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
@@ -173,9 +173,9 @@ Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class
 Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
 Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
 
-Route::get('/pendidikans1', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S1');
-Route::get('/pendidikans2', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S2');
-Route::get('/pendidikans3', [KontenJenjangController::class, 'pendidikan'])->defaults('jenjang.pendidikan', 'S3');
+Route::get('/pendidikans1', [KontenJenjangController::class, 'pendidikanS1'])->name('pendidikan.s1');
+Route::get('/pendidikans2', [KontenJenjangController::class, 'pendidikanS2'])->name('pendidikan.s2');
+Route::get('/pendidikans3', [KontenJenjangController::class, 'pendidikanS3'])->name('pendidikan.s3');
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
@@ -237,9 +237,6 @@ Route::get('/undangankolokiummhs/{id}/pdf', [SyaratKolokiummhsController::class,
 Route::post('/syaratkolokiummhs/{id}/bap-diterima', [SyaratKolokiummhsController::class, 'bapDiterima'])->name('syaratkolokiummhs.bap.diterima');
 Route::post('/syaratkolokiummhs/{id}/bap-ditolak', [SyaratKolokiummhsController::class, 'bapDitolak'])->name('syaratkolokiummhs.bap.ditolak');
 
-// Undangan Kolokium
-Route::get('undangankolokium', [UndanganKolokiumController::class, 'index'])->name('undangankolokium.index');
-
 // Seminar Mahasiswa form
 Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
 Route::get('seminarmhs/create', [SeminarmhsController::class, 'create'])->name('seminarmhs.create');
@@ -262,9 +259,6 @@ Route::post('syaratseminarmhs/{syaratSeminarmhs}/tambah-moderator', [SyaratSemin
 Route::get('/undanganseminarmhs/{id}/pdf', [SyaratSeminarmhsController::class, 'downloadPdf'])->name('undangan.seminar.pdf');
 Route::post('/syaratseminarmhs/{id}/bap-diterima', [SyaratSeminarmhsController::class, 'bapDiterima'])->name('syaratseminarmhs.bap.diterima');
 Route::post('/syaratseminarmhs/{id}/bap-ditolak', [SyaratSeminarmhsController::class, 'bapDitolak'])->name('syaratseminarmhs.bap.ditolak');
-
-// Undangan Seminar
-Route::get('undanganseminar', [UndanganSeminarController::class, 'index'])->name('undanganseminar.index');
 
 // Sidang Akhir atau Komprehensif
 Route::get('komprehensifmhs', [KomprehensifmhsController::class, 'index'])->name('komprehensifmhs.index');
@@ -289,10 +283,6 @@ Route::get('/undangankomprehensif/{id}/pdf', [SyaratkomprehensifmhsController::c
 Route::post('/syaratkomprehensifmhs/{id}/bap-diterima', [SyaratkomprehensifmhsController::class, 'bapDiterima'])->name('syaratkomprehensifmhs.bap.diterima');
 Route::post('/syaratkomprehensifmhs/{id}/bap-ditolak', [SyaratkomprehensifmhsController::class, 'bapDitolak'])->name('syaratkomprehensifmhs.bap.ditolak');
 
-
-// Undangan Komprehensif
-Route::get('undangankomprehensif', [UndanganKomprehensifController::class, 'index'])->name('undangankomprehensif.index');
-
 // StaffDept
 Route::get('staff-dept', [StaffDeptController::class, 'index'])->name('staffdept.index');
 Route::get('staff-dept/create', [StaffDeptController::class, 'create'])->name('staffdept.create');
@@ -312,15 +302,6 @@ Route::delete('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'destroy'])->na
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');
-
-// Undangan
-Route::get('undangan', [UndanganController::class, 'index'])->name('undangan.index');
-Route::get('undangan/create', [UndanganController::class, 'create'])->name('undangan.create');
-Route::post('undangan', [UndanganController::class, 'store'])->name('undangan.store');
-Route::get('undangan/{undangan}', [UndanganController::class, 'show'])->name('undangan.show');
-Route::get('undangan/{undangan}/edit', [UndanganController::class, 'edit'])->name('undangan.edit');
-Route::put('undangan/{undangan}', [UndanganController::class, 'update'])->name('undangan.update');
-Route::delete('undangan/{undangan}', [UndanganController::class, 'destroy'])->name('undangan.destroy');
 
 // Recap Data Admin
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');

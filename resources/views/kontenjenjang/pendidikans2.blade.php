@@ -4,7 +4,7 @@
 
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
-  <a href="#">Home</a> / <span>Pendidikan S3</span>
+  <a href="#">Home</a> / <span>Pendidikan S2</span>
 </div>
 <!-- === Profil Program Studi === -->
 <section class="pend-section">
@@ -12,7 +12,7 @@
 
     <!-- Kiri: Teks -->
     <div class="pend-text">
-      <h3>Profil Program Studi S3</h3>
+      <h3>Profil Program Studi S2</h3>
       <img src="{{ asset('img/batasgold.png') }}" alt="divider">
       <p>
         Program Studi S3 Hasil Hutan (PS HH) telah mendapatkan akreditasi A dari Badan Akreditasi Nasional Perguruan Tinggi Republik Indonesia (BAN-PT) pada tahun 2006. 
