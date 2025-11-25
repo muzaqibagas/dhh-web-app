@@ -42,7 +42,7 @@
           </ul>
         </li>
         <li><a href="/alumni">Alumni</a></li>
-        <li><a href="/artikelguest">Artikel</a></li>
+        <li><a href="/artikels">Artikel</a></li>
         <li><a href="/gallery">Gallery</a></li>
       </ul>
     </div>
@@ -64,7 +64,7 @@
         </li>
         
         <li><a href="/alumni">Alumni</a></li>
-        <li><a href="/artikelguest">Artikel</a></li>
+        <li><a href="/artikels">Artikel</a></li>
         <li><a href="/gallery">Gallery</a></li>
       </ul>
     </nav>

@@ -4,7 +4,7 @@
 
 <!-- ======= Breadcrumb ======= -->
 <div class="guest-breadcrumb py-2 px-3">
-  <a href="#">Home</a> / <span>Pendidikan S1</span>
+  <a href="#">Home</a> / <span>Departemen</span>
 </div>
 
     <!-- === Sejarah === -->

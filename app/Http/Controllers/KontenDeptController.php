@@ -75,9 +75,9 @@ class KontenDeptController extends Controller
         return view('konten-dept.show', compact('kontenDept'));
     }
 
-    public function sejarah(KontenDept $kontenDept)
+    public function sejarah()
     {
-        $konten = KontenDept::first();
+        $kontenDept = KontenDept::first();
 
         $struktur = StaffDept::whereHas('kategoristaff', function($strukturs){
             $strukturs->where('nama', 'Struktur Organisasi');
@@ -93,7 +93,7 @@ class KontenDeptController extends Controller
 
         $divisiList = \App\Models\Divisi::with('staff')->get();
 
-        return view('konten-dept.sejarah', compact('konten', 'kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList'));
+        return view('konten-dept.sejarah', compact('kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList'));
     }
 
     /**
