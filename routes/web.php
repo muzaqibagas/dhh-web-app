@@ -292,6 +292,7 @@ Route::post('/syaratkomprehensifmhs/{id}/bap-ditolak', [SyaratkomprehensifmhsCon
 Route::get('staff-dept', [StaffDeptController::class, 'index'])->name('staffdept.index');
 Route::get('staff-dept/create', [StaffDeptController::class, 'create'])->name('staffdept.create');
 Route::post('staff-dept', [StaffDeptController::class, 'store'])->name('staffdept.store');
+Route::get('staff-dept/{staffDept}', [StaffDeptController::class, 'show'])->name('staffdept.show');
 Route::get('staff-dept/{staffDept}/edit', [StaffDeptController::class, 'edit'])->name('staffdept.edit');
 Route::put('staff-dept/{staffDept}', [StaffDeptController::class, 'update'])->name('staffdept.update');
 Route::delete('staff-dept/{staffDept}', [StaffDeptController::class, 'destroy'])->name('staffdept.destroy');

@@ -66,36 +66,17 @@
             <button class="ketdept-next">
             <i class="bi bi-chevron-right"></i>
             </button>
-
-            <!-- Wrapper Slide -->
+            
             <div class="ketdept-wrapper">
-            <div class="ketdept-slide">
-                <div class="ketdept-card">
-                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 1">
-                <h5>Dr. Andi Saputra</h5>
-                <p>Ketua DHH (2000–2005)</p>
+                <div class="ketdept-slide">
+                    @foreach ($ketuadhh as $ketua)
+                        <div class="ketdept-card">
+                            <img src="{{ asset($ketua->foto) }}" alt="{{ $ketua->nama }}">
+                            <h5>{{ $ketua->nama }}</h5>
+                            <p>Ketua DHH ({{ $ketua->tahun_mulai }}–{{ $ketua->tahun_selesai }})</p>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="ketdept-card">
-                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 2">
-                <h5>Dr. Budi Santoso</h5>
-                <p>Ketua DHH (2006–2010)</p>
-                </div>
-                <div class="ketdept-card">
-                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 3">
-                <h5>Prof. Dewi Rahayu</h5>
-                <p>Ketua DHH (2011–2016)</p>
-                </div>
-                <div class="ketdept-card">
-                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 4">
-                <h5>Ir. Cahyono</h5>
-                <p>Ketua DHH (2017–2021)</p>
-                </div>
-                <div class="ketdept-card">
-                <img src="{{ asset('img/buistie.jpg') }}" alt="Pimpinan 5">
-                <h5>Dr. Istie S. Rahayu</h5>
-                <p>Ketua DHH (2022–Sekarang)</p>
-                </div>
-            </div>
             </div>
         </div>
     </section>
@@ -351,11 +332,11 @@
         <div id="sej-struktur" class="sej-tab-content active">
             <div class="sej-card-grid">
                 @forelse ($struktur as $staff)
-                    <div class="sej-staff-card">
+                    <a href="{{ route('staffdept.show', $staff->id) }}" class="sej-staff-card" style="text-decoration:none; color:inherit;">
                         <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                         <h4>{{ $staff->nama }}</h4>
                         <p>{{ $staff->jabatan }}</p>
-                    </div>
+                    </a>
                 @empty
                     <p class="text-center">Belum ada data struktur organisasi.</p>
                 @endforelse

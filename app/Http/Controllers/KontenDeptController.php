@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KontenDept;
 use App\Models\StaffDept;
+use App\Models\KetuaDHH;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -23,7 +24,6 @@ class KontenDeptController extends Controller
             // Jika belum ada data, arahkan ke halaman create
             return redirect()->route('konten-dept.create');
         }
-
     }
 
     /**
@@ -78,6 +78,7 @@ class KontenDeptController extends Controller
     public function sejarah()
     {
         $kontenDept = KontenDept::first();
+        $ketuadhh = KetuaDHH::orderBy('tahun_mulai', 'DESC')->get();
 
         $struktur = StaffDept::whereHas('kategoristaff', function($strukturs){
             $strukturs->where('nama', 'Struktur Organisasi');
@@ -93,7 +94,7 @@ class KontenDeptController extends Controller
 
         $divisiList = \App\Models\Divisi::with('staff')->get();
 
-        return view('konten-dept.sejarah', compact('kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList'));
+        return view('konten-dept.sejarah', compact('kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList', 'ketuadhh'));
     }
 
     /**

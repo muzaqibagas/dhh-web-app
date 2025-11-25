@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             kontenJenjangSeeder::class,
             LeafletJenjangSeeder::class,
             // MitraSeeder::class,            
-            // ketuaDHHSSeeder::class,            
+            ketuaDHHSSeeder::class,            
             ReviewAlumniSeeder::class,
             // SyaratKolokiummhsSeeder::class,
             // SyaratSeminarmhsSeeder::class,

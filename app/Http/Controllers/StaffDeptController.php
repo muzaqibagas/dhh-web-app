@@ -85,7 +85,7 @@ class StaffDeptController extends Controller
      */
     public function show(StaffDept $staffDept)
     {
-        //
+        return view('staffdept.show', compact('staffDept'));        
     }
 
     /**
