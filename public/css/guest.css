@@ -2172,7 +2172,7 @@
 .guest-carousel-alumni-container {
   position: relative;
   width: 100%;
-  height: 200px; /* lebih kecil dari home */
+  height: 250px; /* lebih kecil dari home */
   overflow: hidden;
 }
 

@@ -325,7 +325,7 @@
   </section>
   @endif
 
-  <!-- === Kurikulum ===
+  <!-- === Kurikulum === -->
   <section class="pend-section" data-aos="fade-up">
     <div class="pend-text">
       <h3>Kurikulum dan Mata Kuliah</h3>
@@ -335,14 +335,8 @@
       Silakan kunjungi laman 
       <a href="https://panduan.ipb.ac.id" target="_blank">panduan.ipb.ac.id</a>
       untuk melihat informasi lengkap mengenai mata kuliah dan kurikulum.
-    </p>
-    <iframe src="https://panduan.ipb.ac.id/kurikulum-doktor/"
-            width="100%"
-            height="800px"
-            style="border:none;">
-    </iframe>
-
-  </section> -->
+    </p>    
+  </section>
 
   <!-- === Akreditasi Nasional === -->
   @if(!empty(trim($data->deskripsiakreditasi ?? '')))  

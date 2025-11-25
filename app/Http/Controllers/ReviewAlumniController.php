@@ -22,6 +22,13 @@ class ReviewAlumniController extends Controller
         return view('reviewalumni.index', compact('reviews'));
     }
 
+    public function alumni()
+    {
+        $reviews = ReviewAlumni::orderBy('id', 'DESC')->paginate(9);
+        return view('reviewalumni.alumni', compact('reviews'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -65,7 +72,12 @@ class ReviewAlumniController extends Controller
      */
     public function show(ReviewAlumni $reviewAlumni)
     {
-        return view('reviewalumni.show', compact('reviewAlumni'));
+        $randomReviews = ReviewAlumni::where('id', '!=', $reviewAlumni->id)
+                                ->inRandomOrder()
+                                ->take(3)
+                                ->get();
+
+        return view('reviewalumni.show', compact('reviewAlumni', 'randomReviews'));
     }
 
     /**

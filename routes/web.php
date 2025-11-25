@@ -61,9 +61,9 @@ Route::get('file', [Controller::class, 'file'])->name('guest.file');
 // Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
 Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
 // Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
-Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
-Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
-Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
+// Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
+// Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
+// Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
 Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
 
 Route::get('email/verify', function () {
@@ -211,6 +211,7 @@ Route::delete('mitra/{mitra}', [MitraController::class, 'destroy'])->name('mitra
 
 // ReviewAlumni
 Route::get('review-alumni', [ReviewAlumniController::class, 'index'])->name('review-alumni.index');
+Route::get('alumni', [ReviewAlumniController::class, 'alumni'])->name('review-alumni.home');
 Route::get('review-alumni/create', [ReviewAlumniController::class, 'create'])->name('review-alumni.create');
 Route::post('review-alumni', [ReviewAlumniController::class, 'store'])->name('review-alumni.store');
 Route::get('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'show'])->name('review-alumni.show');
