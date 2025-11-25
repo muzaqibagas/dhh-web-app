@@ -18,4 +18,14 @@ class KategoriArtikel extends Model
     {
         return $this->hasMany(Artikel::class, 'id_kategoriartikel');
     }
+
+    public function getBadgeColor()
+    {
+        // Hash nama kategori → ambil 6 digit hexadecimal
+        $hash = substr(md5($this->nama), 0, 6);
+
+        // Hasilnya jadi warna HEX tak terbatas
+        return '#' . $hash;
+    }
+
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Artikel;
 use App\Models\KategoriArtikel;
+use App\Models\Sdgs;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArtikelController extends Controller
 {
@@ -20,8 +22,75 @@ class ArtikelController extends Controller
         }
 
         $artikels = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
-        return view('artikel.index', compact('artikels'));
+        $sdgs = Sdgs::all();
+        return view('artikel.index', compact('artikels', 'sdgs'));
     }
+
+    public function artikel(Request $request)
+    {                          
+        $query = Artikel::with('kategoriartikel', 'user')
+                ->orderBy('tanggal', 'DESC')
+                ->orderBy('created_at', 'DESC');                
+
+        if ($request->has('q') && $request->q != '') {
+            $query->where(function ($q) use ($request) {
+                $q->where('judul', 'LIKE', "%" . $request->q . "%");                
+            });
+        }
+
+        $artikels = $query->get();
+
+        $featured = $artikels->take(4);
+
+        // Sisanya (acak)
+        $random = $artikels->skip(4)->shuffle();
+
+        $perPage = 6; // 3 kolom × 2 item
+        $currentPage = request()->get('page', 1);
+
+        $currentItems = $random->forPage($currentPage, $perPage);
+
+        $pagination = new LengthAwarePaginator(
+            $currentItems,
+            $random->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
+                        ->orderBy('created_at', 'DESC')
+                        ->take(5)
+                        ->get();
+
+        $kategoris = KategoriArtikel::whereHas('artikel')->get();
+        $sdgs = Sdgs::all();
+        $keyword = $request->q ?? null;
+        return view('artikel.artikels', compact('artikels', 'kategoris', 'keyword', 'latestArtikels', 'sdgs', 'featured', 'pagination'));
+    }
+
+    public function filterByKategori($kategoriId)
+    {
+        $artikels = Artikel::with('kategoriartikel', 'user')
+                            ->where('id_kategoriartikel', $kategoriId)
+                            ->orderBy('tanggal', 'DESC')
+                            ->orderBy('created_at', 'DESC')
+                            ->get();
+
+        $kategoris = KategoriArtikel::whereHas('artikel')->get();
+        $sdgs = Sdgs::all();
+
+        $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
+                            ->orderBy('created_at', 'DESC')
+                            ->take(5)
+                            ->get();
+
+        $keyword = null;
+        $isKategori = true;
+
+        return view('artikel.artikels', compact('artikels', 'kategoris', 'latestArtikels', 'sdgs'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +98,8 @@ class ArtikelController extends Controller
     public function create()
     {
         $kategoriartikel = KategoriArtikel::all();
-        return view('artikel.create', compact('kategoriartikel'));
+        $sdgs = Sdgs::all();
+        return view('artikel.create', compact('kategoriartikel', 'sdgs'));
     }
 
     /**
@@ -40,6 +110,7 @@ class ArtikelController extends Controller
         $data = $request->validate([
             'id_user' => 'nullable|exists:users,id',
             'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',
+            'id_sdgs' => 'nullable|exists:sdgs,id',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',            
@@ -83,7 +154,16 @@ class ArtikelController extends Controller
      */
     public function show(Artikel $artikel)
     {
-        return view('artikel.show', compact('artikel'));
+        
+        $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
+                        ->orderBy('created_at', 'DESC')
+                        ->take(5)
+                        ->get();
+
+        $kategoris = KategoriArtikel::whereHas('artikel')->get();
+        $sdgs = Sdgs::all();                  
+
+        return view('artikel.show', compact('artikel', 'kategoris','latestArtikels', 'sdgs'));
     }
 
     /**
@@ -92,7 +172,8 @@ class ArtikelController extends Controller
     public function edit(Artikel $artikel)
     {
         $kategoriartikel = KategoriArtikel::all();
-        return view('artikel.edit', compact('artikel', 'kategoriartikel'));
+        $sdgs = Sdgs::all();
+        return view('artikel.edit', compact('artikel', 'kategoriartikel', 'sdgs'));
     }
 
     /**
@@ -103,6 +184,7 @@ class ArtikelController extends Controller
         $data = $request->validate([
             'id_user' => 'nullable|exists:users,id',                   
             'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',             
+            'id_sdgs' => 'nullable|exists:sdgs,id',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',

@@ -198,7 +198,7 @@
     </script>
   </aside>
 
-<!-- KONTEN -->
+  <!-- KONTEN -->
   <main class="content">
     <div class="container-fluid">
       <div class="adm-header">
@@ -243,6 +243,21 @@
                         <option value="">Pilih kategori</option>
                           @foreach($kategoriartikel as $kategori)
                               <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- SGDs -->
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="sdgs" class="col-form-label">SGDs</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <select class="form-select" id="sdgs" name="id_sdgs" required>
+                        <option value="">Pilih SDGs</option>
+                          @foreach($sdgs as $sdgss)
+                              <option value="{{ $sdgss->id }}">{{ $sdgss->nama_sdgs }}</option>
                           @endforeach
                       </select>
                     </div>

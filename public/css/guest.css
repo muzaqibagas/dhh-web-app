@@ -1569,6 +1569,27 @@
   background-color: #0B2A7D;
   color: #FFD700;
 }
+.guest-galery-pagination a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #caac01;
+  color: #0B2A7D;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.guest-galery-pagination a:hover:not(.disabled) {
+  background-color: #081f5f;
+  color: #FFD700;
+}
 
 .guest-galery-pages {
   display: flex;

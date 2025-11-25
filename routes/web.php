@@ -60,7 +60,7 @@ Route::get('file', [Controller::class, 'file'])->name('guest.file');
 // Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
 // Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
 Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
-Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
+// Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
 Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
 Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
@@ -138,12 +138,16 @@ Route::delete('kategoriartikel/{kategoriArtikel}', [KategoriArtikelController::c
 
 // Artikel
 Route::get('artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+Route::get('artikels', [ArtikelController::class, 'artikel'])->name('artikel.home');
 Route::get('artikel/create', [ArtikelController::class, 'create'])->name('artikel.create');
 Route::post('artikel', [ArtikelController::class, 'store'])->name('artikel.store');
 Route::get('artikel/{artikel}', [ArtikelController::class, 'show'])->name('artikel.show');
 Route::get('artikel/{artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
 Route::put('artikel/{artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
 Route::delete('artikel/{artikel}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
+// Filter artikel berdasarkan kategori
+Route::get('artikels/kategori/{kategori}', [ArtikelController::class, 'filterByKategori'])->name('artikels.kategori');
+
 
 // KategoriGaleri
 Route::get('kategorigaleri', [KategoriGaleriController::class, 'index'])->name('kategorigaleri.index');
