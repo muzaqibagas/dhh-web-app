@@ -22,6 +22,70 @@ class GaleriController extends Controller
         return view('galeri.index', compact('galeris'));
     }
 
+    public function Gallery()
+    {                
+        $kategoriAktif = null;
+
+        $videoTerbaru = Galeri::where('tipe', 'video')->latest()->first();
+        $videoLainnya = Galeri::where('tipe', 'video')
+                            ->when($videoTerbaru, fn($q) => $q->where('id', '!=', $videoTerbaru->id))
+                            ->inRandomOrder()
+                            ->take(3)
+                            ->get();
+
+        $kategoriGaleri = KategoriGaleri::all();
+
+        $semuaFoto = Galeri::where('tipe', 'gambar')->get();
+
+        $galeriFoto = Galeri::where('tipe', 'gambar')
+                    ->whereNotNull('gambar')
+                    ->orderBy('id', 'desc') // ⬅ tambahan
+                    ->paginate(10);
+
+
+        return view('galeri.gallery', compact(
+            'videoTerbaru',
+            'videoLainnya',
+            'kategoriGaleri',
+            'galeriFoto',
+            'semuaFoto',
+            'kategoriAktif'
+        ));
+    }
+
+
+    public function filterByKategori($id)
+    {
+        $kategoriAktif = $id;
+
+        $videoTerbaru = Galeri::where('tipe', 'video')->latest()->first();
+        $videoLainnya = Galeri::where('tipe', 'video')
+            ->when($videoTerbaru, fn($q) => $q->where('id', '!=', $videoTerbaru->id))
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+
+        $kategoriGaleri = KategoriGaleri::all();
+        $semuaFoto = Galeri::where('tipe', 'gambar')->get();
+
+        // FIX ⬇ kategori filter akhirnya diterapkan
+        $galeriFoto = Galeri::where('tipe', 'gambar')
+                    ->where('id_kategorigaleri', $id)
+                    ->whereNotNull('gambar')
+                    ->orderBy('id', 'desc')
+                    ->paginate(10);
+
+        return view('galeri.gallery', compact(
+            'videoTerbaru',
+            'videoLainnya',
+            'kategoriGaleri',
+            'galeriFoto',
+            'semuaFoto',
+            'kategoriAktif'
+        ));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -48,8 +112,8 @@ class GaleriController extends Controller
         if ($request->tipe == 'gambar' && $request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('galeri_upload/gambar'), $filename);
-            $data['gambar'] = 'galeri_upload/gambar/' . $filename;
+            $file->move(public_path('galeri_upload'), $filename);
+            $data['gambar'] = 'galeri_upload/' . $filename;
             $data['video'] = null;
         }
 
@@ -105,8 +169,8 @@ class GaleriController extends Controller
             }
             $file = $request->file('gambar');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('galeri_upload/gambar'), $filename);
-            $data['gambar'] = 'galeri_upload/gambar/' . $filename;
+            $file->move(public_path('galeri_upload'), $filename);
+            $data['gambar'] = 'galeri_upload/' . $filename;
             $data['video'] = null;
         }
 

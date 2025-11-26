@@ -15,6 +15,14 @@ class TemplateController extends Controller
         $templates = template::all();
         return view('template.index', compact('templates'));
     }
+    public function home()
+    {     
+        return view('template.index');
+    }
+    public function file()
+    {     
+        return view('template.index');
+    }
 
     /**
      * Show the form for creating a new resource.

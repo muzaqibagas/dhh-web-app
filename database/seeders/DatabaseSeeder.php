@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             SemesterSeeder::class,
             StaffDeptSeeder::class,     
             KategoriGaleriSeeder::class,            
-            // GaleriSeeder::class, 
+            GaleriSeeder::class, 
             KategoriArtikelSeeder::class,
             SdgsSeeder::class,
             ArtikelSeeder::class,
