@@ -749,3 +749,48 @@ body {
   width: 100%;
   overflow-x: auto;
 }
+
+/* Wrapper pie + legend */
+.chart-kategori-wrapper {
+    display: flex;
+    flex-direction: column;   /* LEGEND SELALU DI BAWAH */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ukuran chart */
+.chart-container canvas {
+    width: 260px !important;
+    height: 260px !important;
+    margin-bottom: 20px;
+}
+
+/* Legend default: 1 kolom */
+.kategori-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 20px;
+    width: 100%;
+    max-width: 600px;  /* biar nggak terlalu melebar */
+}
+
+/* Tablet & Laptop → 2 kolom */
+@media (min-width: 768px) {
+    .kategori-legend {
+        grid-template-columns: 1fr 1fr  1fr;
+    }
+}
+
+/* Desktop besar → 3 kolom */
+@media (min-width: 1200px) {
+    .kategori-legend {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Style item legend */
+.kategori-legend div {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}

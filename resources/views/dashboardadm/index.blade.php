@@ -246,12 +246,14 @@
       <div class="col-12 col-lg-6">
         <div class="card shadow-sm p-3 h-100">
           <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per Kategori</h5>
-          <div class="d-flex justify-content-center align-items-center flex-wrap flex-lg-nowrap">
-            <div class="me-lg-4">
-              <canvas id="kategoriChart" style="width:260px;height:260px;"></canvas>
+          <div class="chart-kategori-wrapper">
+            <div class="chart-container">
+              <canvas id="kategoriChart"></canvas>
             </div>
-            <div id="kategoriLegend" class="text-start mt-3 mt-lg-0"></div>
+
+            <div id="kategoriLegend" class="kategori-legend"></div>
           </div>
+
         </div>
       </div>
 
@@ -309,7 +311,15 @@
     },
     options: {
       responsive: true,
-      plugins: { legend: { display: true, position: 'bottom' } },
+      plugins: {
+        legend: { display: true, position: 'bottom' },
+        datalabels: {
+            color: '#6b1414', // 🔥 warna angka
+            align: 'top',
+            anchor: 'end',
+            font: { weight: 'bold' }
+        }
+    },
       scales: { y: { beginAtZero: true } }
     }
   });
@@ -322,12 +332,18 @@
         labels: ['Disetujui', 'Ditolak', 'Belum diverifikasi'],
         datasets: [{
           data: data,
-          backgroundColor: ['#013880', '#d9534f', '#bfbfbf'],
+          backgroundColor: ['#006effff', 'rgba(255, 75, 69, 1)', '#bfbfbf'],
           borderWidth: 0
         }]
       },
       options: {
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+              color: '#333',   // 🔥 warna angka
+              font: { weight: 'bold'},
+          }
+      },
         cutout: '70%'
       }
     });
@@ -337,9 +353,10 @@
   donutChart('verifKompre', [80, 10, 10]);
 
   /* === Pie Chart Artikel per Kategori (dengan label persentase) === */
-  const kategoriData = [55, 75, 12, 45, 23];
-  const kategoriLabels = ['Prestasi', 'Akademik', 'Berita', 'Karir', 'SDGS'];
-  const kategoriColors = ['#f39c12', '#2980b9', '#9b59b6', '#e74c3c', '#27ae60'];
+  const kategoriData = [55, 75, 12, 45, 23, 34, 67, 89, 34, 23, 45, 56, 78, 90, 12, 34, 22];
+  const kategoriLabels = ['SDGs 1', 'SDGs 2', 'SDGs 3', 'SDGs 4', 'SDGs 5', 'SDGs 6', 'SDGs 7', 'SDGs 8', 'SDGs 9', 'SDGs 10', 'SDGs 11', 'SDGs 12', 'SDGs 13', 'SDGs 14', 'SDGs 15', 'SDGs 16', 'SDGs 17'];
+  const kategoriColors = ['#ff6b6b', '#4ecdc4', '#1a535c', '#ffa600', '#ff7f50', '#6a4c93', '#1982c4', '#8ac926', '#ffca3a', '#d81159', '#218380', '#9a031e', '#5f0f40', '#0f4c5c', '#e36414', '#fb8b24', '#5bc0be'];
+
 
   const kategoriChart = new Chart(document.getElementById('kategoriChart'), {
     type: 'pie',
@@ -356,13 +373,26 @@
         legend: { display: false },
         datalabels: {
           color: '#fff',
-          font: { weight: 'bold' },
+          font: {
+              weight: 'bold',
+              size: 12
+          },
+          align: 'end',
+
+          // === SELANG SELING OFFSET ===
+          offset: function(context) {
+              const index = context.dataIndex;
+              return index % 2 === 0 ? -5 : 20;
+          },
+
+          padding: 6,
           formatter: (value, ctx) => {
-            const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-            const percentage = ((value / total) * 100).toFixed(1) + '%';
-            return percentage;
+              const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+              const percentage = ((value / total) * 100).toFixed(1) + '%';
+              return percentage;
           }
         }
+
       }
     }
   });
@@ -372,14 +402,15 @@
   const totalKategori = kategoriData.reduce((a, b) => a + b, 0);
   const legendDiv = document.getElementById('kategoriLegend');
   legendDiv.innerHTML = kategoriLabels.map((label, i) => {
-    const percent = ((kategoriData[i] / totalKategori) * 100).toFixed(1);
-    return `
-      <div style="display:flex;align-items:center;margin-bottom:6px;">
-        <span style="width:14px;height:14px;border-radius:3px;background:${kategoriColors[i]};margin-right:8px;"></span>
-        <span>${label} — <strong>${percent}%</strong></span>
-      </div>
-    `;
+      const percent = ((kategoriData[i] / totalKategori) * 100).toFixed(1);
+      return `
+        <div style="display:flex;align-items:center;">
+          <span style="width:14px;height:14px;border-radius:3px;background:${kategoriColors[i]};margin-right:8px;"></span>
+          <span>${label} — <strong>${percent}%</strong></span>
+        </div>
+      `;
   }).join('');
+
 
 
   /* === Bar Chart Status Tingkat Akhir === */
@@ -398,7 +429,15 @@
       responsive: true,
       maintainAspectRatio: true, // ✅ biar proporsional (tidak kepanjangan)
       aspectRatio: 1.6,          // ✅ atur perbandingan lebar : tinggi chart
-      plugins: { legend: { position: 'bottom' } },
+      plugins: {
+        legend: { position: 'bottom' },
+        datalabels: {
+            color: '#000', // 🔥 warna angka
+            anchor: 'end',
+            align: 'top',
+            font: { weight: 'bold' }
+            }
+        },
       scales: {
         y: {
           beginAtZero: true,
