@@ -59,12 +59,12 @@ Route::get('file', [Controller::class, 'file'])->name('guest.file');
 // Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
 // Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
 // Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
-Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
+// Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
 // Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
 // Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
 // Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
 // Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
-Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
+// Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
 
 Route::get('email/verify', function () {
     return view('auth.verify-email');
@@ -161,9 +161,10 @@ Route::delete('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::clas
 
 // Galeri
 Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');
+Route::get('gallery', [GaleriController::class, 'gallery'])->name('galeri.gallery');
+Route::get('/galeri/kategori/{id}', [GaleriController::class, 'filterByKategori'])->name('galeri.kategori');
 Route::get('galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 Route::post('galeri', [GaleriController::class, 'store'])->name('galeri.store');
-Route::get('galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.show');
 Route::get('galeri/{galeri}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
 Route::put('galeri/{galeri}', [GaleriController::class, 'update'])->name('galeri.update');
 Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy'])->name('galeri.destroy');

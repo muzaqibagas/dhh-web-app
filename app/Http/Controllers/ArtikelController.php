@@ -77,6 +77,22 @@ class ArtikelController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->get();
 
+        // Sisanya (acak)
+        $random = $artikels->skip(4)->shuffle();
+
+        $perPage = 6; // 3 kolom × 2 item
+        $currentPage = request()->get('page', 1);
+
+        $currentItems = $random->forPage($currentPage, $perPage);
+
+        $pagination = new LengthAwarePaginator(
+            $currentItems,
+            $random->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
         $kategoris = KategoriArtikel::whereHas('artikel')->get();
         $sdgs = Sdgs::all();
 
@@ -88,7 +104,7 @@ class ArtikelController extends Controller
         $keyword = null;
         $isKategori = true;
 
-        return view('artikel.artikels', compact('artikels', 'kategoris', 'latestArtikels', 'sdgs'));
+        return view('artikel.artikels', compact('artikels', 'kategoris', 'latestArtikels', 'sdgs', 'keyword', 'isKategori', 'pagination'));
     }
 
 

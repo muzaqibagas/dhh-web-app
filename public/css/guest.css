@@ -1649,9 +1649,10 @@
 }
 
 .guest-galery-item {
-  overflow: hidden; 
+  position: relative;
+  overflow: hidden;
   border-radius: 10px;
-  display: block; 
+  display: block;
 }
 
 .guest-galery-item img {
@@ -1675,8 +1676,26 @@
   transform: scale(1.05);
 }
 
-.guest-galery-item {
-  display: block; /* default semua muncul */
+.gallery-caption {
+  width: 100%;
+  height: 100%;
+  position: absolute;  
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.35); /* transparan, bukan overlay full */
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* biar hover tetap kena gambar */
+}
+
+/* --- Muncul saat hover --- */
+.guest-galery-item:hover .gallery-caption {
+  opacity: 1;
 }
 
 .guest-galery-item.hidden {
