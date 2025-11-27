@@ -2,32 +2,78 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Mitra;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MitraSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // Ambil user admin
-        $admin = User::where('role', 'Admin')->first();
-
-        if (!$admin) {
-            return;
-        }
-
-        // Buat 10 data dummy untuk mitra
-        for ($i = 1; $i <= 12; $i++) {
-            Mitra::create([
-                'id_user' => $admin->id,
-                'nama' => "Mitra Kerja Sama {$i}",
-                'foto' => "uploads/mitra/mitra_dummy.png",
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        DB::table('mitras')->insert([
+            [
+                'id_user' => 1,
+                'nama' => 'BRIN',
+                'foto' => 'img/mitra1.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'PT Iida Group Holdings',
+                'foto' => 'img/mitra2.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'PT Nose',
+                'foto' => 'img/mitra3.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'ISWA',
+                'foto' => 'img/mitra4.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'ILWA',
+                'foto' => 'img/mitra5.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'Mapeki',
+                'foto' => 'img/mitra6.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'IFPF',
+                'foto' => 'img/mitra7.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'Universite de Lorraine',
+                'foto' => 'img/mitra8.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'id_user' => 1,
+                'nama' => 'Tokyo University',
+                'foto' => 'img/mitra9.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]);
     }
 }
-

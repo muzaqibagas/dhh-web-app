@@ -54,8 +54,8 @@ Route::get('/artikeledit', function () {
     return view('artikel.edit');
 });
 
-Route::get('home', [Controller::class, 'home'])->name('guest.home');
-Route::get('file', [Controller::class, 'file'])->name('guest.file');
+// Route::get('home', [Controller::class, 'home'])->name('guest.home');
+// Route::get('file', [Controller::class, 'file'])->name('guest.file');
 // Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
 // Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
 // Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
@@ -317,6 +317,8 @@ Route::get('/admrecapdata/export', [AdmRecapDataController::class, 'export'])->n
 Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
 
 // User
+Route::get('home', [UserController::class, 'home'])->name('user.home');
+Route::get('file', [UserController::class, 'file'])->name('user.file');
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');

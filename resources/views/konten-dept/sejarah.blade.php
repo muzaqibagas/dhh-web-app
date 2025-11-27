@@ -400,5 +400,4 @@
     }
 </style>
 @endpush
-
 @endsection

@@ -306,7 +306,7 @@
 
 .guest-btn-about {
   background-color: #0B2A7D;
-  color: #fff;
+  color: #fff !important;
   border: none;
   padding: 10px 25px;
   border-radius: 10px;
@@ -386,6 +386,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  display: block;
 }
 .guest-blog-image img {
   width: 100%;
@@ -554,6 +555,8 @@
 }
 
 #guestAlumniCarousel .carousel-item img {
+  width: 120px;
+  height: 120px;
   border: 3px solid #fff;
 }
 
@@ -573,7 +576,7 @@
 }
 
 #guestAlumniCarousel .carousel-item p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: #f0f0f0;
 }
@@ -937,7 +940,8 @@
 
 .guest-partner-track {
   display: flex;
-  gap: 40px;
+  gap: 40px;  
+  width: max-content; 
   animation: slideMitra 20s linear infinite;
 }
 
@@ -956,11 +960,11 @@
 }
 
 @keyframes slideMitra {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translateX(-80%); /* ❗ Harus 100% karena track digandakan */
   }
 }
 
