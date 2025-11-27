@@ -3,10 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Artikel;
+use App\Models\Galeri;
+use App\Models\ReviewAlumni;
+use App\Models\Mitra;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function home()
+    {     
+        $featured = Artikel::latest()->first();
+        $artikels = Artikel::latest()->skip(1)->take(4)->get();
+        $galeri = Galeri::where('tipe', 'gambar')->latest()->take(10)->get();
+        $reviewAlumni = ReviewAlumni::latest()->take(3)->get();
+        $mitra = Mitra::all();
+        return view('user.home', compact('featured', 'artikels', 'galeri', 'reviewAlumni', 'mitra'));        
+    }
+
+    public function file()
+    {     
+        return view('user.file');
+    }
+
     /**
      * Display a listing of the resource.
      */
