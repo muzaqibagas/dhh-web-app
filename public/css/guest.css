@@ -964,7 +964,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-80%); /* ❗ Harus 100% karena track digandakan */
+    transform: translateX(-85%); /* ❗ Harus 100% karena track digandakan */
   }
 }
 

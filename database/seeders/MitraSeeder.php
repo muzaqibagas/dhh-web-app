@@ -74,6 +74,13 @@ class MitraSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'id_user' => 1,
+                'nama' => 'PT PWKWI (Prima Wana Kreasi Wood Industry)',
+                'foto' => 'img/mitra10.png',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }
