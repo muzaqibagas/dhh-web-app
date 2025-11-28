@@ -383,7 +383,8 @@
                   legend: { display: false },
                   datalabels: {
                       color: '#333',
-                      font: { weight: 'bold' }
+                      font: { weight: 'bold' },
+                      formatter: (value) => value > 0 ? value : ''
                   }
               },
               cutout: '70%'
