@@ -23,6 +23,11 @@ class SyaratSeminarmhsSeeder extends Seeder
         $penandatangan = StaffDept::inRandomOrder()->first();
 
         foreach ($mahasiswaList as $mhs) {
+            $randomDate = now()
+                ->setMonth(10)
+                ->setDay(rand(1, 31))
+                ->setTime(rand(0, 23), rand(0, 59), rand(0, 59));
+
             SyaratSeminarmhs::create([
                 'id_mahasiswa' => $mhs->id,
                 'id_moderator' => $moderator?->id, // boleh null
@@ -43,11 +48,12 @@ class SyaratSeminarmhsSeeder extends Seeder
                 'alasan_bukti_kehadiran' => null,
 
                 // Status awal
-                'status' => 'pending',  
-                'bap' => 'belum_melaksanakan',
+                'status' => 'disetujui',  
+                'bap' => 'ditolak',
 
-                'created_at' => now(),
-                'updated_at' => now(),
+                
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate,
             ]);
         }
     }

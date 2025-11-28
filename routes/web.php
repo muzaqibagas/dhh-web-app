@@ -54,18 +54,6 @@ Route::get('/artikeledit', function () {
     return view('artikel.edit');
 });
 
-// Route::get('home', [Controller::class, 'home'])->name('guest.home');
-// Route::get('file', [Controller::class, 'file'])->name('guest.file');
-// Route::get('pendidikans1', [Controller::class, 'pendidikans1'])->name('guest.pendidikans1');
-// Route::get('pendidikans2', [Controller::class, 'pendidikans2'])->name('guest.pendidikans2');
-// Route::get('pendidikans3', [Controller::class, 'pendidikans3'])->name('guest.pendidikans3');
-// Route::get('gallery', [Controller::class, 'galleryguest'])->name('guest.gallery');
-// Route::get('artikelguest', [Controller::class, 'artikelguest'])->name('guest.artikel');
-// Route::get('artikeldetail', [Controller::class, 'artikeldetail'])->name('guest.artikeldetail');
-// Route::get('alumnikami', [Controller::class, 'alumnikami'])->name('guest.alumnikami');
-// Route::get('alumnidetail', [Controller::class, 'alumnidetail'])->name('guest.alumnidetail');
-// Route::get('staffdetail', [Controller::class, 'staffdetail'])->name('guest.staffdetail');
-
 Route::get('email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');

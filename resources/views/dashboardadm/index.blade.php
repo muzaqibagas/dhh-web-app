@@ -179,89 +179,98 @@
   <main class="content px-4 py-4">
     <h2 class="text-center fw-bold mb-4" style="color:#6b1414;">Dashboard Admin</h2>
 
-    {{-- === DATA PENDAFTAR === --}}
-    <div class="row g-3 mb-4">
-      @foreach([
-        ['title' => 'Kolokium', 'jumlah' => 17],
-        ['title' => 'Seminar', 'jumlah' => 34],
-        ['title' => 'Komprehensif', 'jumlah' => 243]
-      ] as $item)
-        <div class="col-12 col-md-4">
-          <div class="data-card shadow-sm border-0 text-center">
-            <h5 class="fw-bold" style="color:#6b1414;">{{ $item['title'] }}</h5>
-            <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $item['jumlah'] }}</h2>
+    <!-- DATA PENDAFTAR KOLOKIUM -->
+    <div class="d-flex gap-2 mb-4">      
+        <div class="col-md-4">
+          <div class="card shadow-sm text-center">
+            <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Kolokium</h5>
+            <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahKolokium }}</h2>
             <p class="text-secondary mb-0">Mahasiswa</p>
           </div>
-        </div>
-      @endforeach
-    </div>
+        </div>              
+        <div class="col-md-4">
+          <div class="card shadow-sm text-center">
+            <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Seminar Hasil</h5>
+            <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahSeminar }}</h2>
+            <p class="text-secondary mb-0">Mahasiswa</p>
+          </div>
+        </div>  
+        <div class="col-md-4">
+          <div class="card shadow-sm text-center">
+            <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Komprehensif</h5>
+            <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahKompre }}</h2>
+            <p class="text-secondary mb-0">Mahasiswa</p>
+          </div>
+        </div>  
+    </div>        
 
     {{-- === GRID CHARTS === --}}
-    <div class="row g-4">
-      
-      {{-- Grafik Tren Pendaftar --}}
-      <div class="col-12 col-lg-6">
-        <div class="card shadow-sm p-3 h-100">
-          <h5 class="fw-bold mb-3" style="color:#6b1414;">Grafik Tren Pendaftar</h5>
-          <canvas id="trendChart" height="200"></canvas>
-        </div>
-      </div>
-
-      {{-- Verifikasi Tingkat Akhir --}}
-      <div class="col-12 col-lg-6">
-        <div class="card shadow-sm p-3 h-100">
-          <h5 class="fw-bold mb-3" style="color:#6b1414;">Verifikasi Tingkat Akhir</h5>
-          <div class="d-flex justify-content-around flex-wrap">
-            <div class="text-center my-2">
-              <canvas id="verifKolokium" width="100" height="100"></canvas>
-              <p class="fw-semibold mt-2">Kolokium</p>
-            </div>
-            <div class="text-center my-2">
-              <canvas id="verifSeminar" width="100" height="100"></canvas>
-              <p class="fw-semibold mt-2">Seminar</p>
-            </div>
-            <div class="text-center my-2">
-              <canvas id="verifKompre" width="100" height="100"></canvas>
-              <p class="fw-semibold mt-2">Komprehensif</p>
-            </div>
-          </div>
-          <div class="text-center mt-3">
-            <div class="d-inline-block mx-2">
-              <span style="display:inline-block;width:14px;height:14px;background:#013880;border-radius:3px;margin-right:5px;"></span>
-              Disetujui
-            </div>
-            <div class="d-inline-block mx-2">
-              <span style="display:inline-block;width:14px;height:14px;background:#d9534f;border-radius:3px;margin-right:5px;"></span>
-              Ditolak
-            </div>
-            <div class="d-inline-block mx-2">
-              <span style="display:inline-block;width:14px;height:14px;background:#bfbfbf;border-radius:3px;margin-right:5px;"></span>
-              Belum diverifikasi
-            </div>
+    <div class="d-flex flex-column">
+      <div class="d-flex gap-3 mb-4">
+        {{-- Grafik Tren Pendaftar --}}
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm p-3 h-100">
+            <h5 class="fw-bold mb-3" style="color:#6b1414;">Grafik Tren Pendaftar</h5>
+            <canvas id="trendChart" height="200"></canvas>
           </div>
         </div>
-      </div>
 
-      {{-- Artikel per Kategori --}}
-      <div class="col-12 col-lg-6">
-        <div class="card shadow-sm p-3 h-100">
-          <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per Kategori</h5>
-          <div class="chart-kategori-wrapper">
-            <div class="chart-container">
-              <canvas id="kategoriChart"></canvas>
+        {{-- Verifikasi Tingkat Akhir --}}
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm p-3 h-100">
+            <h5 class="fw-bold mb-3" style="color:#6b1414;">Verifikasi Tingkat Akhir</h5>
+            <div class="d-flex justify-content-around flex-wrap">
+              <div class="text-center my-2">
+                <canvas id="verifKolokium" width="100" height="100"></canvas>
+                <p class="fw-semibold mt-2">Kolokium</p>
+              </div>
+              <div class="text-center my-2">
+                <canvas id="verifSeminar" width="100" height="100"></canvas>
+                <p class="fw-semibold mt-2">Seminar</p>
+              </div>
+              <div class="text-center my-2">
+                <canvas id="verifKompre" width="100" height="100"></canvas>
+                <p class="fw-semibold mt-2">Komprehensif</p>
+              </div>
             </div>
-
-            <div id="kategoriLegend" class="kategori-legend"></div>
+            <div class="text-center mt-3">
+              <div class="d-inline-block mx-2">
+                <span style="display:inline-block;width:14px;height:14px;background:#013880;border-radius:3px;margin-right:5px;"></span>
+                Disetujui
+              </div>
+              <div class="d-inline-block mx-2">
+                <span style="display:inline-block;width:14px;height:14px;background:#d9534f;border-radius:3px;margin-right:5px;"></span>
+                Ditolak
+              </div>
+              <div class="d-inline-block mx-2">
+                <span style="display:inline-block;width:14px;height:14px;background:#bfbfbf;border-radius:3px;margin-right:5px;"></span>
+                Belum diverifikasi
+              </div>
+            </div>
           </div>
-
         </div>
-      </div>
+      </div>      
 
-      {{-- Status Tingkat Akhir --}}
-      <div class="col-12 col-lg-6">
-        <div class="card shadow-sm p-3 h-100">
-          <h5 class="fw-bold mb-3" style="color:#6b1414;">Status Tingkat Akhir</h5>
-          <canvas id="statusChart" height="200"></canvas>
+      <div class="d-flex gap-3">
+        {{-- Artikel per Kategori --}}
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm p-3 h-100">
+            <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per Kategori</h5>
+            <div class="chart-kategori-wrapper">
+              <div class="chart-container">
+                <canvas id="kategoriChart"></canvas>
+              </div>
+              <div id="kategoriLegend" class="kategori-legend"></div>
+            </div>
+          </div>
+        </div>
+
+        {{-- Status Tingkat Akhir --}}
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm p-3 h-100">
+            <h5 class="fw-bold mb-3" style="color:#6b1414;">Status Tingkat Akhir</h5>
+            <canvas id="statusChart" height="200"></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -272,142 +281,156 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
 <!-- sidebar -->
- <script>
-    document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
+<script>
+  document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
 
-        const target = this.getAttribute('data-dropdown');
-        const menu = document.querySelector(`[data-menu="${target}"]`);
-        const arrow = document.querySelector(`[data-arrow="${target}"]`);
-        const isOpen = menu.style.display === 'flex';
+      const target = this.getAttribute('data-dropdown');
+      const menu = document.querySelector(`[data-menu="${target}"]`);
+      const arrow = document.querySelector(`[data-arrow="${target}"]`);
+      const isOpen = menu.style.display === 'flex';
 
-        // Tutup semua dulu
-        document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-        document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+      // Tutup semua dulu
+      document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+      document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-        // Kalau belum terbuka, buka
-        if (!isOpen) {
-          menu.style.display = 'flex';
-          arrow.innerHTML = '&#9660;';
-        }
-      });
+      // Kalau belum terbuka, buka
+      if (!isOpen) {
+        menu.style.display = 'flex';
+        arrow.innerHTML = '&#9660;';
+      }
     });
-  </script>
+  });
+</script>
+
+<script>
+    const trendKolokium = @json($trendKolokium);
+    const trendSeminar  = @json($trendSeminar);
+    const trendKompre   = @json($trendKompre);
+
+    const bulanLabel = [
+        "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+        "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+    ];
+</script>
+<script>
+    const verifKolokium = @json([$kolokiumDisetujui, $kolokiumDitolak, $kolokiumPending]);
+    const verifSeminar  = @json([$seminarDisetujui,  $seminarDitolak,  $seminarPending]);
+    const verifKompre   = @json([$kompreDisetujui,   $kompreDitolak,   $komprePending]);
+</script>
+<script>
+    const kategoriLabels = @json($sdgsNames);
+    const kategoriColors = @json($sdgsColors);
+    const kategoriCounts = @json($kategoriCount);
+</script>
+<script>
+    const lulusKolokium = @json($lulusKolokium);
+    const belumKolokium = @json($belumKolokium);
+
+    const lulusSeminar = @json($lulusSeminar);
+    const belumSeminar = @json($belumSeminar);
+
+    const lulusKompre = @json($lulusKompre);
+    const belumLulusKompre = @json($belumLulusKompre);
+</script>
 
 <script>
   Chart.register(ChartDataLabels);
 
-  /* === Grafik Tren Pendaftar (Line Chart) === */
+  /* === Grafik Tren Pendaftar (Line Chart) === */  
   new Chart(document.getElementById('trendChart'), {
-    type: 'line',
-    data: {
-      labels: ['Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November'],
-      datasets: [
-        { label: 'Kolokium', data: [100, 60, 40, 80, 90, 70], borderColor: '#6b1414', tension: 0.3 },
-        { label: 'Seminar', data: [40, 70, 80, 120, 100, 110], borderColor: '#b44b4b', tension: 0.3 },
-        { label: 'Komprehensif', data: [60, 80, 90, 60, 70, 120], borderColor: '#e0a400', tension: 0.3 },
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: true, position: 'bottom' },
-        datalabels: {
-            color: '#6b1414', // 🔥 warna angka
-            align: 'top',
-            anchor: 'end',
-            font: { weight: 'bold' }
-        }
-    },
-      scales: { y: { beginAtZero: true } }
-    }
+      type: 'line',
+      data: {
+          labels: bulanLabel,
+          datasets: [
+              {
+                  label: 'Kolokium',
+                  data: trendKolokium,
+                  borderColor: '#e0a400',
+                  tension: 0.4
+              },
+              {
+                  label: 'Seminar',
+                  data: trendSeminar,
+                  borderColor: '#b44b4b',
+                  tension: 0.4
+              },
+              {
+                  label: 'Komprehensif',
+                  data: trendKompre,
+                  borderColor: '#6b1414',
+                  tension: 0.4
+              }
+          ]
+      }
   });
 
   /* === Donut Chart Verifikasi === */
   function donutChart(id, data) {
-    return new Chart(document.getElementById(id), {
-      type: 'doughnut',
+      return new Chart(document.getElementById(id), {
+          type: 'doughnut',
+          data: {
+              labels: ['Disetujui', 'Ditolak', 'Belum diverifikasi'],
+              datasets: [{
+                  data: data,
+                  backgroundColor: ['#013880', '#d9534f', '#bfbfbf'],
+                  borderWidth: 0
+              }]
+          },
+          options: {
+              plugins: {
+                  legend: { display: false },
+                  datalabels: {
+                      color: '#333',
+                      font: { weight: 'bold' }
+                  }
+              },
+              cutout: '70%'
+          }
+      });
+  }
+
+  donutChart('verifKolokium', verifKolokium);
+  donutChart('verifSeminar',  verifSeminar);
+  donutChart('verifKompre',   verifKompre);  
+
+  // === Pie Chart Artikel per Kategori ===
+  const kategoriChart = new Chart(document.getElementById('kategoriChart'), {
+      type: 'pie',
       data: {
-        labels: ['Disetujui', 'Ditolak', 'Belum diverifikasi'],
-        datasets: [{
-          data: data,
-          backgroundColor: ['#006effff', 'rgba(255, 75, 69, 1)', '#bfbfbf'],
-          borderWidth: 0
-        }]
+          labels: kategoriLabels,
+          datasets: [{
+              label: 'Jumlah Artikel per SDGs',
+              data: kategoriCounts,
+              backgroundColor: kategoriColors, // ← pakai warna dari database
+              borderWidth: 1
+          }]
       },
       options: {
-        plugins: {
-          legend: { display: false },
-          datalabels: {
-              color: '#333',   // 🔥 warna angka
-              font: { weight: 'bold'},
+          responsive: true,
+          plugins: {
+              legend: { position: false },
+              datalabels: {
+                  color: '#333',
+                  font: { weight: 'bold' },
+                  formatter: (value) => value > 0 ? value : ''
+              }
           }
-      },
-        cutout: '70%'
       }
-    });
-  }
-  donutChart('verifKolokium', [70, 20, 10]);
-  donutChart('verifSeminar', [60, 30, 10]);
-  donutChart('verifKompre', [80, 10, 10]);
-
-  /* === Pie Chart Artikel per Kategori (dengan label persentase) === */
-  const kategoriData = [55, 75, 12, 45, 23, 34, 67, 89, 34, 23, 45, 56, 78, 90, 12, 34, 22];
-  const kategoriLabels = ['SDGs 1', 'SDGs 2', 'SDGs 3', 'SDGs 4', 'SDGs 5', 'SDGs 6', 'SDGs 7', 'SDGs 8', 'SDGs 9', 'SDGs 10', 'SDGs 11', 'SDGs 12', 'SDGs 13', 'SDGs 14', 'SDGs 15', 'SDGs 16', 'SDGs 17'];
-  const kategoriColors = ['#ff6b6b', '#4ecdc4', '#1a535c', '#ffa600', '#ff7f50', '#6a4c93', '#1982c4', '#8ac926', '#ffca3a', '#d81159', '#218380', '#9a031e', '#5f0f40', '#0f4c5c', '#e36414', '#fb8b24', '#5bc0be'];
-
-
-  const kategoriChart = new Chart(document.getElementById('kategoriChart'), {
-    type: 'pie',
-    data: {
-      labels: kategoriLabels,
-      datasets: [{
-        data: kategoriData,
-        backgroundColor: kategoriColors
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        datalabels: {
-          color: '#fff',
-          font: {
-              weight: 'bold',
-              size: 12
-          },
-          align: 'end',
-
-          // === SELANG SELING OFFSET ===
-          offset: function(context) {
-              const index = context.dataIndex;
-              return index % 2 === 0 ? -5 : 20;
-          },
-
-          padding: 6,
-          formatter: (value, ctx) => {
-              const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-              const percentage = ((value / total) * 100).toFixed(1) + '%';
-              return percentage;
-          }
-        }
-
-      }
-    }
   });
 
-  // Buat legend manual biar bisa ada kategori + warna + persentase
-  // Buat legend di kanan pie chart
-  const totalKategori = kategoriData.reduce((a, b) => a + b, 0);
+  // === Legend manual ===
+  const totalKategori = kategoriCounts.reduce((a, b) => a + b, 0);
   const legendDiv = document.getElementById('kategoriLegend');
+
   legendDiv.innerHTML = kategoriLabels.map((label, i) => {
-      const percent = ((kategoriData[i] / totalKategori) * 100).toFixed(1);
+      const percent = ((kategoriCounts[i] / totalKategori) * 100).toFixed(1);
       return `
-        <div style="display:flex;align-items:center;">
-          <span style="width:14px;height:14px;border-radius:3px;background:${kategoriColors[i]};margin-right:8px;"></span>
-          <span>${label} — <strong>${percent}%</strong></span>
-        </div>
+          <div style="display:flex;align-items:center;margin-bottom:4px;">
+              <span style="width:14px;height:14px;border-radius:3px;background:${kategoriColors[i]};margin-right:8px;"></span>
+              <span>${label} — <strong>${percent}%</strong></span>
+          </div>
       `;
   }).join('');
 
@@ -416,41 +439,48 @@
   /* === Bar Chart Status Tingkat Akhir === */
   const statusCtx = document.getElementById('statusChart').getContext('2d');
 
-  new Chart(statusCtx, {
+new Chart(statusCtx, {
     type: 'bar',
     data: {
-      labels: ['Kolokium', 'Seminar', 'Komprehensif'],
-      datasets: [
-        { label: 'Lulus', data: [90, 70, 110], backgroundColor: '#013880' },
-        { label: 'Belum Lulus', data: [40, 50, 60], backgroundColor: '#d9534f' }
-      ]
+        labels: ['Kolokium', 'Seminar', 'Komprehensif'],
+        datasets: [
+            {
+                label: 'Lulus',
+                data: [lulusKolokium, lulusSeminar, lulusKompre],
+                backgroundColor: '#013880'
+            },
+            {
+                label: 'Belum Lulus',
+                data: [belumKolokium, belumSeminar, belumLulusKompre],
+                backgroundColor: '#d9534f'
+            }
+        ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: true, // ✅ biar proporsional (tidak kepanjangan)
-      aspectRatio: 1.6,          // ✅ atur perbandingan lebar : tinggi chart
-      plugins: {
-        legend: { position: 'bottom' },
-        datalabels: {
-            color: '#000', // 🔥 warna angka
-            anchor: 'end',
-            align: 'top',
-            font: { weight: 'bold' }
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 1.6,
+        plugins: {
+            legend: { position: 'bottom' },
+            datalabels: {
+                color: '#000',
+                anchor: 'end',
+                align: 'top',
+                font: { weight: 'bold' },
+                formatter: value => value > 0 ? value : ''
             }
         },
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 120,
-          ticks: { stepSize: 20 }
-        },
-        x: {
-          barPercentage: 0.4,     // ✅ atur lebar batang
-          categoryPercentage: 0.5 // ✅ kasih jarak antar grup
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: { stepSize: 10 }
+            },
+            x: {
+                barPercentage: 0.45,
+                categoryPercentage: 0.55
+            }
         }
-      }
     }
-  });
-
+});
 </script>
 @endsection

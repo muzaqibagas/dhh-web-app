@@ -87,7 +87,7 @@ class LoginmhsController extends Controller
 
         if ($user->role === 'Admin') {
             // return redirect()->route('dashboardadm.index');
-            return redirect()->route('admprofile.index');
+            return redirect()->route('dashboardadm.index');
         } else {
             return redirect()->route('dashboardmhs.index');
         }

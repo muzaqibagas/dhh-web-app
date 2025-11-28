@@ -72,7 +72,7 @@ Kuliah umum dosen luar negeri seperti ini memberikan manfaat yang jauh melampaui
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 1,
-                'id_sdgs' => 1,
+                'id_sdgs' => 2,
                 'foto' => 'img/artikel3.jpg',
                 'judul' => 'Inovasi Kayu Magnet: Penelitian Dosen Departemen Hasil Hutan IPB University Hadirkan Material Fungsional Ramah Lingkungan',
                 'tanggal' => now(),
@@ -102,7 +102,7 @@ Diterbitkan ulang oleh Departemen Hasil Hutan, Fakultas Kehutanan dan Lingkungan
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 1,
-                'id_sdgs' => 1,
+                'id_sdgs' => 3,
                 'foto' => 'img/artikel4.png',
                 'judul' => 'Dosen Departemen Hasil Hutan inisiasi kerjasama dengan University of Tokyo, Japan',
                 'tanggal' => now(),
@@ -129,7 +129,7 @@ Melalui kunjungan ini, diharapkan kolaborasi antara IPB University dan Universit
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 1,
-                'id_sdgs' => 1,
+                'id_sdgs' => 3,
                 'foto' => 'img/artikel5.png',
                 'judul' => 'Dosen Departemen Hasil Hutan Inisiasi Kerja Sama dengan Atase Pendidikan dan Kebudayaan Kedutaan Indonesia untuk Jepang',
                 'tanggal' => now(),
@@ -154,7 +154,7 @@ Melalui inisiatif kerja sama ini, Departemen Hasil Hutan IPB University berharap
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 1,
-                'id_sdgs' => 1,
+                'id_sdgs' => 4,
                 'foto' => 'img/artikel6.jpg',
                 'judul' => '[Erasmus Mobility 2025 – Teaching Programme] Pawel Czarniak, Ph.D. from Warsaw University of Life Sciences (WULS), Poland.',
                 'tanggal' => now(),
@@ -171,7 +171,7 @@ Thank you for the fruitful discussions and knowledge exchange, Dr. Czarniak',
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 2,
-                'id_sdgs' => 1,
+                'id_sdgs' => 5,
                 'foto' => 'img/artikel7.png',
                 'judul' => 'DHH Menyerahan Mahasiswa PKL TA 2024/2025 (Angkatan 59) di Jawa Barat, Jawa Tengah dan Jawa TImur)',
                 'tanggal' => now(),
@@ -200,7 +200,7 @@ Untuk itu, bidang praktik di lokasi PKL mencakup semua kegiatan di industry hasi
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 2,
-                'id_sdgs' => 1,
+                'id_sdgs' => 6,
                 'foto' => 'img/artikel8.png',
                 'judul' => 'DHH Melaksanakan Kuliah Pembekalan PKL TA 2024/2025 (Angkatan 59)',
                 'tanggal' => now(),
@@ -225,7 +225,7 @@ Setelah melaksanakan kuliah pembekalan, para mahasiswa bersiap-siap untuk berang
             [
                 'id_user' => 1,
                 'id_kategoriartikel' => 1,
-                'id_sdgs' => 1,
+                'id_sdgs' => 17,
                 'foto' => 'img/artikel9.jpg',
                 'judul' => 'DHH menerima Kunjungan Civitas Akademika dari Kangwon National University (KNU), Korea Selatan',
                 'tanggal' => now(),

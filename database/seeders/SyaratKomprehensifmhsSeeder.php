@@ -23,11 +23,20 @@ class SyaratKomprehensifmhsSeeder extends Seeder
         $penandatangan = StaffDept::inRandomOrder()->first();
 
         foreach ($mahasiswaList as $mhs) {
+            $randomDate = now()
+                ->setMonth(11)
+                ->setDay(rand(1, 31))
+                ->setTime(rand(0, 23), rand(0, 59), rand(0, 59));
+
+            $updated = (clone $randomDate)->addDays(rand(1, 5));
+
             SyaratKomprehensifmhs::create([
                 'id_mahasiswa' => $mhs->id,
                 'id_moderator' => $moderator?->id,
                 'id_penguji' => $penguji?->id,
                 'id_penandatanganundangan' => $penandatangan?->id,
+
+                
 
                 // File dummy
                 'formulir' => 'uploads/syarat/formulir_dummy.pdf',
@@ -44,11 +53,11 @@ class SyaratKomprehensifmhsSeeder extends Seeder
                 'alasan_bukti_kehadiran' => null,
 
                 // Status awal
-                'status' => 'pending',
+                'status' => 'disetujui',
                 'bap' => 'belum_melaksanakan',
 
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $randomDate,
+                'updated_at' => $updated,
             ]);
         }
     }
