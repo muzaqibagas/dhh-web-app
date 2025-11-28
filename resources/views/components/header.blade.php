@@ -44,6 +44,7 @@
         <li><a href="/alumni">Alumni</a></li>
         <li><a href="/artikels">Artikel</a></li>
         <li><a href="/gallery">Galeri</a></li>
+        <li><a href="/file">Layanan</a></li>
       </ul>
     </div>
 
@@ -66,6 +67,7 @@
         <li><a href="/alumni">Alumni</a></li>
         <li><a href="/artikels">Artikel</a></li>
         <li><a href="/gallery">Galeri</a></li>
+        <li><a href="/file">Layanan</a></li>
       </ul>
     </nav>
 
