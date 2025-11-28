@@ -54,19 +54,16 @@ class DashboardadmController extends Controller
 
         // grafik donut
         $kolokiumDisetujui = SyaratKolokiummhs::where('status', 'disetujui')->count();
-        $kolokiumDitolak = SyaratKolokiummhs::whereColumn('updated_at', '!=', 'created_at')
-            ->count();        
-        $kolokiumPending = SyaratKolokiummhs::where('status', 'pending')->count();
+        $kolokiumDitolak   = SyaratKolokiummhs::where('status', 'ditolak')->count();
+        $kolokiumPending   = SyaratKolokiummhs::where('status', 'pending')->count();
 
         $seminarDisetujui = SyaratSeminarmhs::where('status', 'disetujui')->count();
-        $seminarDitolak = SyaratSeminarmhs::whereColumn('updated_at', '!=', 'created_at')
-            ->count();
-        $seminarPending = SyaratSeminarmhs::where('status', 'pending')->count();
+        $seminarDitolak   = SyaratSeminarmhs::where('status', 'ditolak')->count();
+        $seminarPending   = SyaratSeminarmhs::where('status', 'pending')->count();
 
         $kompreDisetujui = SyaratKomprehensifmhs::where('status', 'disetujui')->count();
-        $kompreDitolak = SyaratKomprehensifmhs::whereColumn('updated_at', '!=', 'created_at')
-            ->count();
-        $komprePending = SyaratKomprehensifmhs::where('status', 'pending')->count();
+        $kompreDitolak   = SyaratKomprehensifmhs::where('status', 'ditolak')->count();
+        $komprePending   = SyaratKomprehensifmhs::where('status', 'pending')->count();
 
         // ==== Artikel per SDGs ====        
         $sdgsList = Sdgs::all();        
