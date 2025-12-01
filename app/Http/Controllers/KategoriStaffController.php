@@ -88,11 +88,7 @@ class KategoriStaffController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-        ]);
-
-        $update = $kategoriStaff->update([
-            'nama' => $request->nama,
-        ]);
+        ]);       
 
         $kategoriStaff->fill([
             'nama' => $request->nama,
@@ -102,11 +98,10 @@ class KategoriStaffController extends Controller
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
-        if ($update) {
-            return redirect()->route('kategoristaff.index')->with('success', 'Kategori Staff berhasil diperbarui.');
-        } else {
-            return redirect()->back()->with('error', 'Gagal memperbarui Kategori Staff.');
-        }
+        if ($kategoriStaff->save()) 
+            return redirect()->route('kategoristaff.index')->with('success', 'Kategori Staff Berhasil Diupdate.');
+        else
+            return back()->with('error', 'Kategori Staff Gagal Diupdate');        
     }
 
     /**

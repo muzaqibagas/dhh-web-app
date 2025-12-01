@@ -72,16 +72,7 @@ class KategoriGaleriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-        ]);
-
-        // cek apakah ada perubahan data
-        if ($kategoriGaleri->nama === $request->nama) {
-            return redirect()->route('kategorigaleri.index')->with('info', 'Tidak ada perubahan data yang disimpan.');
-        }
-
-        $update = $kategoriGaleri->update([
-            'nama' => $request->nama,
-        ]);    
+        ]);        
         
         $kategoriGaleri->fill([
             'nama' => $request->nama,
@@ -91,7 +82,7 @@ class KategoriGaleriController extends Controller
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
-        if ($update)
+        if ($kategoriGaleri->save())
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Diupdate.');
         else
             return back()->with('error', 'Kategori Galeri Gagal Diupdate');

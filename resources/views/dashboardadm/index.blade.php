@@ -182,31 +182,7 @@
           <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
               <i class="bi bi-box-arrow-right"></i> Log Out
           </button>
-      </form>
-    <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
-  
-    <script>
-      document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          const target = this.getAttribute('data-dropdown');
-          const menu = document.querySelector(`[data-menu="${target}"]`);
-          const arrow = document.querySelector(`[data-arrow="${target}"]`);
-          const isOpen = menu.style.display === 'flex';
-
-          // Tutup semua dulu
-          document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-          document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
-
-          // Kalau belum terbuka, buka
-          if (!isOpen) {
-            menu.style.display = 'flex';
-            arrow.innerHTML = '&#9660;';
-          }
-        });
-      });
-    </script>
+      </form>        
   </aside>
 
   <main class="content px-4 py-4">

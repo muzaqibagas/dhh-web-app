@@ -72,11 +72,7 @@ class KategoriArtikelController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-        ]);
-
-        $update = $kategoriArtikel->update([
-            'nama' => $request->nama,
-        ]);      
+        ]);             
 
         $kategoriArtikel->fill([
             'nama' => $request->nama,
@@ -86,7 +82,7 @@ class KategoriArtikelController extends Controller
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
-        if ($update)
+        if ($kategoriArtikel->save()) 
             return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Diupdate.');
         else
             return back()->with('error', 'Kategori Artikel Gagal Diupdate');
