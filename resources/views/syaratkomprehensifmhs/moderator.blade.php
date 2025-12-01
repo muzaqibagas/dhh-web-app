@@ -10,6 +10,8 @@
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
       $isDashboardActive = Request::is('dashboardadm');
+      
+      $isRecapdataActive = Request::is('recapdata*');
 
       $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
 
@@ -35,10 +37,18 @@
           Request::is('ketuadhh*');
     @endphp
 
-        <!-- BTN Dashboard ===================== -->
+    <!-- BTN Dashboard ===================== -->
     <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
       <div class="menu-left">
         <i class="bi bi-graph-up"></i> <span> Dashboard </span>
+      </div>
+      <span class="dropdownArrow"></span>
+    </a>
+
+    <!-- BTN RECAP DATA ===================== -->
+    <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
+      <div class="menu-left">
+        <i class="bi bi-database-check"></i> <span> Recap Data </span>
       </div>
       <span class="dropdownArrow"></span>
     </a>
@@ -166,10 +176,12 @@
         class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
         <i class="bi bi-gear-wide-connected"></i> Edit Password
       </a>
-      <a href="/logoutadmprofile"
-        class="submenu-link {{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-        <i class="bi bi-box-arrow-right"></i> Log Out
-    </a>
+      <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+          @csrf
+          <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+              <i class="bi bi-box-arrow-right"></i> Log Out
+          </button>
+      </form>
     <!-- <a href="#" class="menu logout"><i class="bi bi-box-arrow-right"></i> Keluar Akun</a> -->
   
     <script>

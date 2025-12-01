@@ -10,6 +10,8 @@
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
       $isDashboardActive = Request::is('dashboardadm');
+      
+      $isRecapdataActive = Request::is('recapdata*');
 
       $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
 
@@ -35,10 +37,18 @@
           Request::is('ketuadhh*');
     @endphp
 
-        <!-- BTN Dashboard ===================== -->
+    <!-- BTN Dashboard ===================== -->
     <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
       <div class="menu-left">
         <i class="bi bi-graph-up"></i> <span> Dashboard </span>
+      </div>
+      <span class="dropdownArrow"></span>
+    </a>
+
+    <!-- BTN RECAP DATA ===================== -->
+    <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
+      <div class="menu-left">
+        <i class="bi bi-database-check"></i> <span> Recap Data </span>
       </div>
       <span class="dropdownArrow"></span>
     </a>
@@ -102,7 +112,7 @@
         <i class="bi bi-star"></i>  Review Alumni
       </a>
       <a href="/konten-dept"
-        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
+        class="submenu-link {{ Request::is('konten-dept/*', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
         <i class="bi bi-laptop"></i> Konten Departemen
       </a>
       <a href="/kontenjenjang"
@@ -238,58 +248,60 @@
         @endif     
       <div class="card shadow-sm">
         <div class="card-body">
-          <table class="table table-bordered text-center align-middle">
-            <thead>
-              <tr>
-                <th style="width: 5%">No</th>
-                <th style="width: 20%">Jenjang</th>
-                <th style="width: 20%">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse($kontenJenjangs as $key => $konten)
+          <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle">
+              <thead>
                 <tr>
-                  <td>{{ $key+1 }}</td>
-                  <td class="text-start">{{ $konten->jenjang->nama }}</td>
-                  <td class="text-center">
-                    <div style="display: flex; justify-content: center; gap: 6px;">                                                                           
-                      <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
-                        <i class="bi bi-pencil" style="font-size: 18px;"></i>
-                      </a>
-                      <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $konten->id }}">
-                        <i class="bi bi-trash" style="font-size: 18px;"></i>
-                      </button>
-                      <div class="modal fade" id="hapusModal{{ $konten->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="hapusModalLabel"></h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
-                              <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
-                              <div>Apakah Anda yakin ingin menghapus Konten Jenjang ini?</div>                                          
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                              <form action="{{ route('kontenjenjang.destroy', $konten->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')                                            
-                                <button type="submit" class="btn btn-danger">Hapus</button>
-                              </form>
+                  <th style="width: 5%">No</th>
+                  <th style="width: 20%">Jenjang</th>
+                  <th style="width: 20%">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                @forelse($kontenJenjangs as $key => $konten)
+                  <tr>
+                    <td>{{ $key+1 }}</td>
+                    <td class="text-start">{{ $konten->jenjang->nama }}</td>
+                    <td class="text-center">
+                      <div style="display: flex; justify-content: center; gap: 6px;">                                                                           
+                        <a href="{{ route('kontenjenjang.edit', $konten->id) }}" class="btn btn-success btn-sm" style="width: 30px; height: 30px; padding: 0;">
+                          <i class="bi bi-pencil" style="font-size: 18px;"></i>
+                        </a>
+                        <button type="submit" class="btn btn-danger btn-sm" style="width: 30px; height: 30px; padding: 0;" data-bs-toggle="modal" data-bs-target="#hapusModal{{ $konten->id }}">
+                          <i class="bi bi-trash" style="font-size: 18px;"></i>
+                        </button>
+                        <div class="modal fade" id="hapusModal{{ $konten->id }}" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="hapusModalLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body d-flex flex-column align-items-center justify-content-center">                                          
+                                <i class="bi bi-emoji-frown-fill text-warning" style="font-size: 4rem;"></i>
+                                <div>Apakah Anda yakin ingin menghapus Konten Jenjang ini?</div>                                          
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                <form action="{{ route('kontenjenjang.destroy', $konten->id) }}" method="POST">
+                                  @csrf
+                                  @method('DELETE')                                            
+                                  <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>                                        
-                    </div>
-                  </td>
-                </tr>
-              @empty
-                <tr>
-                  <td colspan="3" class="text-center">Belum ada data</td>
-                </tr>
-              @endforelse
-            </tbody>
-          </table>
+                        </div>                                        
+                      </div>
+                    </td>
+                  </tr>
+                @empty
+                  <tr>
+                    <td colspan="3" class="text-center">Belum ada data</td>
+                  </tr>
+                @endforelse
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

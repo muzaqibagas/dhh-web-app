@@ -10,6 +10,8 @@
     <!-- Untuk aktifin button sub menu ========================= -->
     @php
       $isDashboardActive = Request::is('dashboardadm');
+      
+      $isRecapdataActive = Request::is('recapdata*');
 
       $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
 
@@ -35,10 +37,18 @@
           Request::is('ketuadhh*');
     @endphp
 
-        <!-- BTN Dashboard ===================== -->
+    <!-- BTN Dashboard ===================== -->
     <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
       <div class="menu-left">
         <i class="bi bi-graph-up"></i> <span> Dashboard </span>
+      </div>
+      <span class="dropdownArrow"></span>
+    </a>
+
+    <!-- BTN RECAP DATA ===================== -->
+    <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
+      <div class="menu-left">
+        <i class="bi bi-database-check"></i> <span> Recap Data </span>
       </div>
       <span class="dropdownArrow"></span>
     </a>
@@ -102,7 +112,7 @@
         <i class="bi bi-star"></i>  Review Alumni
       </a>
       <a href="/konten-dept"
-        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/*', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
+        class="submenu-link {{ Request::is('konten-dept/*', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
         <i class="bi bi-laptop"></i> Konten Departemen
       </a>
       <a href="/kontenjenjang"
