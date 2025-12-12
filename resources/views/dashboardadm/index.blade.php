@@ -191,7 +191,6 @@
     <div class="mb-4 d-flex justify-content-end">
         <form method="GET" action="{{ route('dashboardadm.index') }}" class="d-flex align-items-center gap-2">
             <label for="tahun_ajaran" class="me-2" style="white-space: nowrap;">Tahun Ajaran</label>
-
             <select id="tahun_ajaran" name="tahun_ajaran" class="form-select">
                 <option value="">(Default: tahun sekarang)</option>
                 @php
@@ -204,7 +203,6 @@
                     </option>
                 @endfor
             </select>
-
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>
     </div>
