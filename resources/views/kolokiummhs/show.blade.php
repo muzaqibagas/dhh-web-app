@@ -146,7 +146,7 @@
 
             <div class="form-group">
                 <label>Judul Makalah Kolokium</label>
-                <textarea placeholder="Masukkan Judul" readonly>{{ $kolokiummhs->judul_kolokium }}</textarea>
+                <textarea placeholder="Masukkan Judul" readonly>{{ $kolokiummhs->judul_kolokium ?? '-' }}</textarea>
             </div>
 
             <div class="form-group">
@@ -161,20 +161,21 @@
 
             <div class="form-group">
                 <label>Komisi Pendidikan</label>
-                <input type="text" value="{{ $kolokiummhs->komisipendidikan->nama ?? '-' }}" readonly>
+                <input type="text" value="{{ optional($kolokiummhs->komisipendidikan)->nama ?? '-' }}" readonly>
             </div>
 
             <div class="form-group">
                 <label>Hari/Tanggal Kolokium</label>                        
-                <input type="date" value="{{ \Carbon\Carbon::parse($kolokiummhs->tanggal)->format('Y-m-d') }}" readonly>                
+                <input type="date" value="{{ $kolokiummhs->tanggal ? \Carbon\Carbon::parse($kolokiummhs->tanggal)->format('Y-m-d') : '' }}" readonly>                
+                                   
             </div>
 
             <div class="form-group">
                 <label>Waktu Kolokium</label>
-                <div class="d-flex align-items-center gap-3">                    
-                    <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i') }}" readonly>
-                    <p class="m-0">S/D</p>
-                    <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i') }}" readonly>                    
+                <div class="d-flex align-items-center gap-3">                                        
+                    <input type="text" class="w-25" value="{{ $kolokiummhs->waktu_mulai ? \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i') : '-' }}" readonly>
+                    <p class="m-0">S/D</p>                    
+                    <input type="text" class="w-25" value="{{ $kolokiummhs->waktu_selesai ? \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i') : '-' }}" readonly>
                 </div>
             </div>
 
