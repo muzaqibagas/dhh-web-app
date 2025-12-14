@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdmRecapData;
-use App\Models\KolokiumMhs;
-use App\Models\KomprehensifMhs;
-use App\Models\SeminarMhs;
+use App\Models\Kolokiummhs;
+use App\Models\Komprehensifmhs;
+use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdmRecapDataExport;
