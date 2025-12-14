@@ -136,7 +136,7 @@
             
             <div class="form-group">
                 <label>Semester</label>
-                <input type="text" value="{{ $kolokiummhs->semester->semester}}" placeholder="Masukkan Semester" readonly required>
+                <input type="text" value="{{ $kolokiummhs->semester->semester ?? '-' }}" placeholder="Masukkan Semester" readonly required>                                          
             </div>
 
             <div class="form-group">
@@ -156,7 +156,7 @@
 
             <div class="form-group">
                 <label>Dosen Pembimbing 2</label>
-                <input type="text" value="{{ $kolokiummhs->pembimbing2->nama ?? '-' }}" readonly>
+                <input type="text" value="(optional($kolokiummhs->pembimbing2)->nama ?? '-')" readonly>
             </div>      
 
             <div class="form-group">
@@ -186,7 +186,7 @@
             <div class="form-group">
                 <label>Tempat Kolokium</label>
                 @if ($kolokiummhs->tipe_pelaksanaan === 'offline')
-                    <input type="text" value="{{ $kolokiummhs->ruangan->nama ?? '-' }}" readonly>
+                    <input type="text" value="{{ optional($kolokiummhs->ruangan)->nama ?? '-' }}" readonly>                                     
                 @elseif ($kolokiummhs->tipe_pelaksanaan === 'online')
                     <input type="text" value="{{ $kolokiummhs->link_meeting ?? '-' }}" readonly>
                 @else
@@ -196,7 +196,7 @@
 
             <div class="form-group">
                 <label>Dosen Moderator</label>
-                <input type="text" class="text-success fw-bold" value="{{ $kolokiummhs->syaratKolokium->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
+                <input type="text" class="text-success fw-bold" value="{{ optional($kolokiummhs->syaratKolokium?->moderator)->nama ?? '[Diisi oleh akademik]' }}" readonly>                                                                                                                                             
             </div>
 
             <div class="form-actions mt-3 d-flex justify-content-end">                
