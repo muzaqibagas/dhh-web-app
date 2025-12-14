@@ -7,7 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
-use App\Models\KetuaDhh;
+use App\Models\KetuaDHH;
 use App\Models\SyaratKolokiummhs;
 use App\Models\Kolokiummhs;
 use Illuminate\Http\Request;
@@ -164,7 +164,7 @@ class SeminarmhsController extends Controller
     {
         $seminarmhs = Seminarmhs::findOrFail($id);
         $template = public_path('pdf/templateseminar.pdf');
-        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();
+        $ketuaDhh = KetuaDHH::orderByDesc('tahun_mulai')->first();
         $outputPath = public_path('pdf/ditandatangani_seminar');
         if (!file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);

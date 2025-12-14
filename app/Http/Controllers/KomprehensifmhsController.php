@@ -7,7 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
-use App\Models\KetuaDhh;
+use App\Models\KetuaDHH;
 use App\Models\SyaratSeminarmhs;
 use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
@@ -166,7 +166,7 @@ class KomprehensifmhsController extends Controller
     public function generatePdf($id)
     {
         $komprehensifmhs = Komprehensifmhs::findOrFail($id);        
-        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();        
+        $ketuaDhh = KetuaDHH::orderByDesc('tahun_mulai')->first();        
         $template = public_path('pdf/templatekomprehensif.pdf');
         $outputPath = public_path("pdf/ditandatanganikomprehensif");
         if (!file_exists($outputPath)) {
