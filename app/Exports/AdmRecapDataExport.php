@@ -2,9 +2,9 @@
 
 namespace App\Exports;
 
-use App\Models\KolokiumMhs;
-use App\Models\SeminarMhs;
-use App\Models\KomprehensifMhs;
+use App\Models\Kolokiummhs;
+use App\Models\Seminarmhs;
+use App\Models\Komprehensifmhs;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
