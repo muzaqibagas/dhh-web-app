@@ -56,7 +56,7 @@ class AdmRecapDataController extends Controller
                 }
 
                 // Ambil tanggal dan semester dengan pengecekan null
-                $semester = $kolokiumData->semester->semester ?? '-';
+                $semester = $kolokiumData?->semester->semester ?? '-';
                 $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
                 $tanggal_seminar = $seminarData->tanggal ?? '-';
                 $tanggal_komprehensif = $kompreData->tanggal ?? '-';
@@ -81,7 +81,7 @@ class AdmRecapDataController extends Controller
                 $genap_2024_2025 = $kompreData->status ?? '-';
 
                 $recap[] = [
-                    'nama' => $identitas->nama ?? '-',
+                    'nama' => $identitas?->nama ?? '-',                    
                     'nim' => $nim,
                     'pembimbing1' => $pembimbing1,
                     'pembimbing2' => $pembimbing2,

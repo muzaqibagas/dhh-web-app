@@ -35,10 +35,10 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             $pembimbing1 = $this->decodePembimbing($identitas->pembimbing1 ?? '-');
             $pembimbing2 = $this->decodePembimbing($identitas->pembimbing2 ?? '-');
 
-            $semester = $kolokiumData->semester->semester ?? '-';
+            $semester = $kolokiumData?->semester->semester ?? '-';            
 
             $recap->push([
-                'Nama' => $identitas->nama ?? '-',
+                'Nama' => $identitas?->nama ?? '-',
                 'NIM' => $nim,
                 'Pembimbing 1' => $pembimbing1,
                 'Pembimbing 2' => $pembimbing2,
@@ -46,7 +46,7 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'Tanggal Kolokium' => $kolokiumData->tanggal ?? '-',
                 'Tanggal Seminar' => $seminarData->tanggal ?? '-',
                 'Tanggal Ujian' => $kompreData->tanggal ?? '-',
-                'Tanggal SKL' => $kompreData->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-',
+                'Tanggal SKL' => $kompreData?->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-',
                 'Tahun Lulus' => $kompreData->status ?? '-',
             ]);
         }

@@ -299,7 +299,7 @@ Route::get('template', [TemplateController::class, 'index'])->name('template.ind
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
 Route::post('/admrecapdata/skl/{nim}', [AdmRecapDataController::class, 'updateSKL']);
 Route::get('/admrecapdata/export', [AdmRecapDataController::class, 'export'])->name('admrecapdata.export');
-Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
+// Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
 
 // User
 Route::get('/', [UserController::class, 'home'])->name('user.home');
