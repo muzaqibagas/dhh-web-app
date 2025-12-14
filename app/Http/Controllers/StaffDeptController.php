@@ -33,7 +33,7 @@ class StaffDeptController extends Controller
         })->get();
 
         $staffdepts = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
-        return view('staffdept.index', compact('staffdepts'));
+        return view('staffdept.index', compact('staffdepts', 'struktur', 'dosen', 'kependidikan'));
     }
 
     /**
