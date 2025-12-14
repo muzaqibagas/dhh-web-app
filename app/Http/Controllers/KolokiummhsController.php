@@ -128,7 +128,7 @@ class KolokiummhsController extends Controller
      */
     public function show(Kolokiummhs $kolokiummhs)
     {
-        $kolokiummhs->loadMissing('syaratKolokium.moderator');
+        $kolokiummhs->load(['syaratKolokium.moderator']);
         return view('kolokiummhs.show', compact('kolokiummhs'));
     }
 
@@ -201,7 +201,7 @@ class KolokiummhsController extends Controller
         $yMhs = 188;        
         $xStart = 210; 
         $xEnd   = 110; 
-        $width  = abs($xEnd - $xStart);
+        $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yMhs);
         $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->nama ?? '-') . ")", 0, 0, 'C' 
         );
@@ -209,21 +209,21 @@ class KolokiummhsController extends Controller
         $yPemb1 = 223;
         $xStart = 5;  
         $xEnd   = 110; 
-        $width  = abs($xEnd - $xStart);
+        $width  = $xEnd - $xStart; 
         $pdf->SetXY($xStart, $yPemb1);
         $pdf->Cell($width, $lineHeight, "(" . ($kolokiummhs->pembimbing1->nama ?? '-' ) . ")", 0, 0, 'C');
         // Dosen Pembimbing 2 
         $yPemb2 = 223;
         $xStart2 = 103;  
-        $xEnd2   = 215;          
-        $width2  = abs($xEnd2 - $xStart2);
+        $xEnd2   = 215;  
+        $width2  = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
         $pdf->Cell($width2, $lineHeight, "(" . ($kolokiummhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
         //komisi pendidikan
         $yKetua = 263; 
         $xStart3 = 52;  
-        $xEnd3   = 160;         
-        $width3  = abs($xEnd3 - $xStart3);
+        $xEnd3   = 160; 
+        $width3  = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
         $pdf->Cell($width3, $lineHeight, "(" . ($kolokiummhs->komisipendidikan->nama ?? '..................................') . ")", 0, 0, 'C');
 

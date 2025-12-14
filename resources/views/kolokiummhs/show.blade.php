@@ -136,7 +136,7 @@
             
             <div class="form-group">
                 <label>Semester</label>
-                <input type="text" value="{{ $kolokiummhs->semester->semester ?? '-' }}" placeholder="Masukkan Semester" readonly required>                                          
+                <input type="text" value="{{ $kolokiummhs->semester->semester}}" placeholder="Masukkan Semester" readonly required>
             </div>
 
             <div class="form-group">
@@ -146,7 +146,7 @@
 
             <div class="form-group">
                 <label>Judul Makalah Kolokium</label>
-                <textarea placeholder="Masukkan Judul" readonly>{{ $kolokiummhs->judul_kolokium ?? '-' }}</textarea>
+                <textarea placeholder="Masukkan Judul" readonly>{{ $kolokiummhs->judul_kolokium }}</textarea>
             </div>
 
             <div class="form-group">
@@ -156,26 +156,25 @@
 
             <div class="form-group">
                 <label>Dosen Pembimbing 2</label>
-                <input type="text" value="{{ optional($kolokiummhs->pembimbing2)->nama ?? '-' }}" readonly>
+                <input type="text" value="{{ $kolokiummhs->pembimbing2->nama ?? '-' }}" readonly>
             </div>      
 
             <div class="form-group">
                 <label>Komisi Pendidikan</label>
-                <input type="text" value="{{ optional($kolokiummhs->komisipendidikan)->nama ?? '-' }}" readonly>
+                <input type="text" value="{{ $kolokiummhs->komisiPendidikan->nama ?? '-' }}" readonly>
             </div>
 
             <div class="form-group">
                 <label>Hari/Tanggal Kolokium</label>                        
-                <input type="date" value="{{ $kolokiummhs->tanggal ? \Carbon\Carbon::parse($kolokiummhs->tanggal)->format('Y-m-d') : '' }}" readonly>                
-                                   
+                <input type="date" value="{{ \Carbon\Carbon::parse($kolokiummhs->tanggal)->format('Y-m-d') }}" readonly>                
             </div>
 
             <div class="form-group">
                 <label>Waktu Kolokium</label>
-                <div class="d-flex align-items-center gap-3">                                        
-                    <input type="text" class="w-25" value="{{ $kolokiummhs->waktu_mulai ? \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i') : '-' }}" readonly>
-                    <p class="m-0">S/D</p>                    
-                    <input type="text" class="w-25" value="{{ $kolokiummhs->waktu_selesai ? \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i') : '-' }}" readonly>
+                <div class="d-flex align-items-center gap-3">                    
+                    <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($kolokiummhs->waktu_mulai)->format('H:i') }}" readonly>
+                    <p class="m-0">S/D</p>
+                    <input type="text" class="w-25" value="{{ \Carbon\Carbon::parse($kolokiummhs->waktu_selesai)->format('H:i') }}" readonly>                    
                 </div>
             </div>
 
@@ -187,7 +186,7 @@
             <div class="form-group">
                 <label>Tempat Kolokium</label>
                 @if ($kolokiummhs->tipe_pelaksanaan === 'offline')
-                    <input type="text" value="{{ optional($kolokiummhs->ruangan)->nama ?? '-' }}" readonly>                                     
+                    <input type="text" value="{{ $kolokiummhs->ruangan->nama ?? '-' }}" readonly>
                 @elseif ($kolokiummhs->tipe_pelaksanaan === 'online')
                     <input type="text" value="{{ $kolokiummhs->link_meeting ?? '-' }}" readonly>
                 @else
@@ -197,11 +196,12 @@
 
             <div class="form-group">
                 <label>Dosen Moderator</label>
-                <input type="text" class="text-success fw-bold" value="{{ optional($kolokiummhs->syaratKolokium?->moderator)->nama ?? '[Diisi oleh akademik]' }}" readonly>                                                                                                                                             
+                <input type="text" class="text-success fw-bold" value="{{ $kolokiummhs->syaratKolokium->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
             </div>
-            <div class="form-actions mt-3 d-flex justify-content-end">
-                <a href="{{ route('kolokiummhs.edit', $kolokiummhs->id) }}" class="btn btn-warning">Edit</a>
-                <a href="{{ route('kolokiummhs.pdf', $kolokiummhs->id) }}" class="btn btn-primary">Download PDF</a>
+
+            <div class="form-actions mt-3 d-flex justify-content-end">                
+                <a href="{{ route('kolokiummhs.edit', $kolokiummhs->id) }}" class="btn btn-warning">Edit</a>                
+                <a href="{{ route('kolokiummhs.pdf', $kolokiummhs->id) }}" class="btn btn-primary">Download PDF</a>                                   
             </div>
         </div>
     </main>

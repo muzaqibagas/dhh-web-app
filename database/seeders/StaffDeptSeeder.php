@@ -31,7 +31,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 3,
                 'id_divisi' => 5,
-                'foto' => 'foto_staffdept/irsan.jpg',
+                'foto' => 'foto_staffdept/Irsan.jpg',
                 'nama' => 'Dr. Irsan Alipraja,  S.Hut., M.Si.',
                 'tanggal_lahir' => '1987-11-22',
                 'nip' => '198711222014041001',
@@ -335,7 +335,7 @@ class StaffDeptSeeder extends Seeder
             [
                 'id_kategoristaff' => 2,
                 'id_divisi' => null,
-                'foto' => 'foto_staffdept/lastri.jpg',
+                'foto' => 'foto_staffdept/Lastri.jpg',
                 'nama' => 'Sulastri',
                 'tanggal_lahir' => null,
                 'nip' => '3201306405790003',
