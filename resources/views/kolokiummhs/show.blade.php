@@ -161,7 +161,7 @@
 
             <div class="form-group">
                 <label>Komisi Pendidikan</label>
-                <input type="text" value="{{ $kolokiummhs->komisiPendidikan->nama ?? '-' }}" readonly>
+                <input type="text" value="{{ $kolokiummhs->komisipendidikan->nama ?? '-' }}" readonly>
             </div>
 
             <div class="form-group">
