@@ -19,6 +19,12 @@ class StaffDeptController extends Controller
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
+        
+        if (request()->filled('kategori')) {
+            $query->whereHas('kategoristaff', function ($q) {
+                $q->where('nama', request('kategori'));
+            });
+        }
 
         $staffdepts = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('staffdept.index', compact('staffdepts'));
