@@ -19,9 +19,9 @@ class AdmRecapDataController extends Controller
      */
     public function index()
     {
-        $kolokium = KolokiumMhs::all()->keyBy('nim');
-        $seminar = SeminarMhs::all()->keyBy('nim');
-        $kompre = KomprehensifMhs::all()->keyBy('nim');
+        $kolokium = Kolokiummhs::all()->keyBy('nim');
+        $seminar = Seminarmhs::all()->keyBy('nim');
+        $kompre = Komprehensifmhs::all()->keyBy('nim');
 
         $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
 
@@ -55,8 +55,8 @@ class AdmRecapDataController extends Controller
                     }
                 }
 
-                // Ambil tanggal dan semester dengan pengecekan null
-                $semester = $kolokiumData?->semester->semester ?? '-';
+                // Ambil tanggal dan semester dengan pengecekan null                
+                $semester = $kolokiumData?->semester?->semester ?? '-';
                 $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
                 $tanggal_seminar = $seminarData->tanggal ?? '-';
                 $tanggal_komprehensif = $kompreData->tanggal ?? '-';

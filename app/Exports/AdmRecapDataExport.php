@@ -18,9 +18,9 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
 {    
     public function collection()
     {
-        $kolokium = KolokiumMhs::all()->keyBy('nim');
-        $seminar = SeminarMhs::all()->keyBy('nim');
-        $kompre = KomprehensifMhs::all()->keyBy('nim');
+        $kolokium = Kolokiummhs::all()->keyBy('nim');
+        $seminar = Seminarmhs::all()->keyBy('nim');
+        $kompre = Komprehensifmhs::all()->keyBy('nim');
 
         $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
         $recap = collect();
@@ -34,8 +34,8 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             if (!$identitas) continue;
             $pembimbing1 = $this->decodePembimbing($identitas->pembimbing1 ?? '-');
             $pembimbing2 = $this->decodePembimbing($identitas->pembimbing2 ?? '-');
-
-            $semester = $kolokiumData?->semester->semester ?? '-';            
+                       
+            $semester = $kolokiumData?->semester?->semester ?? '-';
 
             $recap->push([
                 'Nama' => $identitas?->nama ?? '-',

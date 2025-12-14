@@ -2,9 +2,10 @@
 
 namespace App\Exports;
 
-use App\Models\KolokiumMhs;
-use App\Models\SeminarMhs;
-use App\Models\KomprehensifMhs;
+use App\Exports\AdmRecapDataExport;
+use App\Models\Kolokiummhs;
+use App\Models\Seminarmhs;
+use App\Models\Komprehensifmhs;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class AdmRecapMultiSheetExport implements WithMultipleSheets
@@ -17,19 +18,19 @@ class AdmRecapMultiSheetExport implements WithMultipleSheets
         $tahunSemesterList = collect();
 
         $tahunSemesterList = $tahunSemesterList
-            ->merge(KolokiumMhs::with('semester')->get()->map(function ($item) {
+            ->merge(Kolokiummhs::with('semester')->get()->map(function ($item) {
+                return [
+                    'semester' => $item->semester?->semester ?? '-',                        
+                    'tahun_ajaran' => $item->tahun_ajaran ?? null,
+                ];
+            }))
+            ->merge(Seminarmhs::with('semester')->get()->map(function ($item) {
                 return [
                     'semester' => $item->semester->semester ?? '-',
                     'tahun_ajaran' => $item->tahun_ajaran ?? null,
                 ];
             }))
-            ->merge(SeminarMhs::with('semester')->get()->map(function ($item) {
-                return [
-                    'semester' => $item->semester->semester ?? '-',
-                    'tahun_ajaran' => $item->tahun_ajaran ?? null,
-                ];
-            }))
-            ->merge(KomprehensifMhs::with('semester')->get()->map(function ($item) {
+            ->merge(Komprehensifmhs::with('semester')->get()->map(function ($item) {
                 return [
                     'semester' => $item->semester->semester ?? '-',
                     'tahun_ajaran' => $item->tahun_ajaran ?? null,
