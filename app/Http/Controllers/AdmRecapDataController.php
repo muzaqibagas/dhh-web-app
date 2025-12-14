@@ -105,27 +105,55 @@ class AdmRecapDataController extends Controller
 
     public function updateSKL($nim)
     {
-        $kompre = KomprehensifMhs::where('nim', $nim)->first();
+        $kolokium = Kolokiummhs::where('nim', $nim)->first();
+        $seminar  = Seminarmhs::where('nim', $nim)->first();
+        $kompre   = Komprehensifmhs::where('nim', $nim)->first();
 
-        if ($kompre) {
-            $tanggalSKL = Carbon::now();
-
-            // Tentukan semester otomatis
-            $bulan = $tanggalSKL->month;
-            $tahun = $tanggalSKL->year;
-            if ($bulan >= 1 && $bulan <= 7) {
-                $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
-            } else {
-                $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
-            }
-
-            // Update data kompre
-            $kompre->update([
-                'skl' => 'SKL Sudah',
-                'tanggal_skl' => $tanggalSKL,
-                'status' => $status,
+        // ❌ Tidak ada data komprehensif
+        if (!$kompre) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum mengikuti ujian komprehensif.'
             ]);
         }
+
+        // ❌ Kolokium belum ada atau tanggal kosong
+        if (!$kolokium || !$kolokium->tanggal) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal kolokium belum tersedia.'
+            ]);
+        }
+
+        // ❌ Seminar belum ada atau tanggal kosong
+        if (!$seminar || !$seminar->tanggal) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal seminar hasil belum tersedia.'
+            ]);
+        }
+
+        // ❌ Komprehensif belum ada tanggal
+        if (!$kompre->tanggal) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal ujian komprehensif belum tersedia.'
+            ]);
+        }
+
+        // ✅ SEMUA SYARAT TERPENUHI → BOLEH UPDATE
+        $tanggalSKL = Carbon::now();
+
+        $bulan = $tanggalSKL->month;
+        $tahun = $tanggalSKL->year;
+
+        if ($bulan >= 1 && $bulan <= 7) {
+            $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
+        } else {
+            $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
+        }
+
+        $kompre->update([
+            'skl' => 'SKL Sudah',
+            'tanggal_skl' => $tanggalSKL,
+            'status' => $status,
+        ]);
 
         return redirect()->back()->with('success', 'SKL berhasil dikonfirmasi dan status diperbarui.');
     }

@@ -213,9 +213,9 @@
     <div class="container-fluid mt-4">
         <div class="adm-header">
             <h2 class="adm-title">Daftar Daftar Rekap Data</h2>
-              <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
-                <i class="bi bi-download"></i>Download Excel
-              </a>
+            <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
+              <i class="bi bi-download"></i>Download Excel
+            </a>            
         </div>
         @if(session('success'))
           <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -223,6 +223,13 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
           </div>
         @endif
+        @if($errors->has('skl'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errors->first('skl') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">                    
