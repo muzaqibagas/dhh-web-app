@@ -156,7 +156,7 @@
 
             <div class="form-group">
                 <label>Dosen Pembimbing 2</label>
-                <input type="text" value="(optional($kolokiummhs->pembimbing2)->nama ?? '-')" readonly>
+                <input type="text" value="{{ optional($kolokiummhs->pembimbing2)->nama ?? '-' }}" readonly>
             </div>      
 
             <div class="form-group">
@@ -198,10 +198,9 @@
                 <label>Dosen Moderator</label>
                 <input type="text" class="text-success fw-bold" value="{{ optional($kolokiummhs->syaratKolokium?->moderator)->nama ?? '[Diisi oleh akademik]' }}" readonly>                                                                                                                                             
             </div>
-
-            <div class="form-actions mt-3 d-flex justify-content-end">                
-                <a href="{{ route('kolokiummhs.edit', $kolokiummhs->id) }}" class="btn btn-warning">Edit</a>                
-                <a href="{{ route('kolokiummhs.pdf', $kolokiummhs->id) }}" class="btn btn-primary">Download PDF</a>                                   
+            <div class="form-actions mt-3 d-flex justify-content-end">
+                <a href="{{ route('kolokiummhs.edit', $kolokiummhs->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('kolokiummhs.pdf', $kolokiummhs->id) }}" class="btn btn-primary">Download PDF</a>
             </div>
         </div>
     </main>
