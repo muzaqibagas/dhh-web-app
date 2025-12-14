@@ -20,11 +20,17 @@ class StaffDeptController extends Controller
             $query->where('nama', 'like', "%$search%");
         }
         
-        if (request()->filled('kategori')) {
-            $query->whereHas('kategoristaff', function ($q) {
-                $q->where('nama', request('kategori'));
-            });
-        }
+        $struktur = StaffDept::whereHas('kategoristaff', function($strukturs){
+            $strukturs->where('nama', 'Struktur Organisasi');
+        })->get();
+
+        $dosen = StaffDept::whereHas('kategoristaff', function($dosens){
+            $dosens->where('nama', 'Tenaga Pendidik/Dosen');
+        })->get();
+
+        $kependidikan = StaffDept::whereHas('kategoristaff', function($kependidikans){
+            $kependidikans->where('nama', 'Tenaga Kependidikan');
+        })->get();
 
         $staffdepts = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('staffdept.index', compact('staffdepts'));
