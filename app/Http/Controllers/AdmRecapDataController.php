@@ -109,31 +109,24 @@ class AdmRecapDataController extends Controller
         $seminar  = Seminarmhs::where('nim', $nim)->first();
         $kompre   = Komprehensifmhs::where('nim', $nim)->first();
 
-        // ❌ Tidak ada data komprehensif
-        if (!$kompre) {
+         // ❌ BELUM ADA DATA SEMINAR & KOMPRE
+        if (!$seminar && !$kompre) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum mengikuti ujian komprehensif.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum melaksanakan Seminar Hasil dan Ujian Komprehensif.'
             ]);
         }
 
-        // ❌ Kolokium belum ada atau tanggal kosong
-        if (!$kolokium || !$kolokium->tanggal) {
+        // ❌ BELUM SEMINAR (tanggal kosong)
+        if (!$seminar || empty($seminar->tanggal)) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal kolokium belum tersedia.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Seminar Hasil belum dilaksanakan.'
             ]);
         }
 
-        // ❌ Seminar belum ada atau tanggal kosong
-        if (!$seminar || !$seminar->tanggal) {
+        // ❌ BELUM KOMPRE (tanggal kosong)
+        if (!$kompre || empty($kompre->tanggal)) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal seminar hasil belum tersedia.'
-            ]);
-        }
-
-        // ❌ Komprehensif belum ada tanggal
-        if (!$kompre->tanggal) {
-            return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena tanggal ujian komprehensif belum tersedia.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Ujian Komprehensif belum dilaksanakan.'
             ]);
         }
 
