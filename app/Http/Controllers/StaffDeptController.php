@@ -20,7 +20,7 @@ class StaffDeptController extends Controller
             $query->where('nama', 'like', "%$search%");
         }
 
-        $staffdepts = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();                
+        $staffdepts = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('staffdept.index', compact('staffdepts'));
     }
 
