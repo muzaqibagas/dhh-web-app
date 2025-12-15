@@ -51,7 +51,7 @@
     <!-- RIGHT MENU -->
     <nav class="navbar">
       <ul class="nav-menu d-flex">
-        <li><a href="/home">Beranda</a></li>
+        <li><a href="{{ route('user.home') }}">Beranda</a></li>
         <li><a href="/sejarah">Departemen</a></li>
         
         <!-- Dropdown Pendidikan -->
