@@ -27,10 +27,7 @@ return new class extends Migration
             $table->string('judul_tugasakhir');
             $table->string('skl')->nullable();
             $table->date('tanggal_skl')->nullable();
-            $table->string('status')->nullable();
-            $table->string('tipe_pelaksanaan')->default('offline');
-            $table->foreignId('id_ruangan')->nullable()->constrained('ruangans')->onDelete('cascade');
-            $table->string('link_meeting')->nullable();
+            $table->string('status')->nullable();            
             $table->timestamps();
         });
     }

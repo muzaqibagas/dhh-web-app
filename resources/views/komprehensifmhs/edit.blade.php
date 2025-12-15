@@ -218,41 +218,7 @@
 							<div class="text-danger">{{ $message }}</div>
 						@enderror
 					</div>					
-				</div>
-				<div class="form-group">
-					<label for="tipe">Tipe Pelaksanaan</label>
-					<select id="tipe" name="tipe_pelaksanaan" required>
-						<option value="offline" {{ old('tipe_pelaksanaan', $komprehensifmhs->tipe_pelaksanaan) == 'offline' ? 'selected' : '' }}>Offline</option>
-						<option value="online"  {{ old('tipe_pelaksanaan', $komprehensifmhs->tipe_pelaksanaan) == 'online' ? 'selected' : '' }}>Online (Zoom/Meet)</option>
-					</select>
-					@error('tipe_pelaksanaan')
-						<div class="text-danger">{{ $message }}</div>
-					@enderror
-				</div>  
-
-				<div class="form-group" id="ruangan-field">
-					<label for="id_ruangan">Ruangan</label>
-					<select name="id_ruangan" id="id_ruangan" {{ old('tipe_pelaksanaan', $komprehensifmhs->tipe_pelaksanaan) == 'offline' ? 'required' : '' }}>
-						<option value="">Pilih Ruangan</option>
-						@foreach($ruanganKomprehensif as $ruangan)
-							<option value="{{ $ruangan->id }}" 
-								{{ old('id_ruangan', $komprehensifmhs->id_ruangan) == $ruangan->id ? 'selected' : '' }}>
-								{{ $ruangan->nama }}
-							</option>
-						@endforeach
-					</select>
-					@error('id_ruangan')
-						<div class="text-danger">{{ $message }}</div>
-					@enderror
-				</div>
-
-				<div class="form-group d-none" id="link-field">
-					<label for="link_meeting">Link Meeting</label>          
-					<input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting', $komprehensifmhs->link_meeting) }}" {{ old('tipe_pelaksanaan', $komprehensifmhs->tipe_pelaksanaan) == 'online' ? 'required' : '' }}>
-					@error('link_meeting')
-						<div class="text-danger">{{ $message }}</div>
-					@enderror
-				</div>   
+				</div>								 
 
 				<div class="form-group">
 					<label>Ketua Sidang</label>
@@ -327,13 +293,12 @@
         });
     </script>
 
-	<!-- waktu komprehensif -->
-    <script>
-        const waktuMulaiInput = document.getElementById('waktu_mulai');
-        const waktuSelesaiInput = document.getElementById('waktu_selesai');
-        const waktuError = document.getElementById('waktu-error');
+	<script>
+    const waktuMulaiInput = document.getElementById('waktu_mulai');
+    const waktuSelesaiInput = document.getElementById('waktu_selesai');
+    const waktuError = document.getElementById('waktu-error');
 
-        function validasiJam(input) {
+    function validasiJam(input) {
         let val = input.value;
         if (!val) return false;
 
@@ -344,31 +309,48 @@
             return false;
         }
         return true;
-        }
+    }
 
-        waktuMulaiInput.addEventListener("change", function() {
+    waktuMulaiInput.addEventListener("change", function () {
         if (!validasiJam(this)) return;
-        
+
+        // larangan jam istirahat
         if (this.value >= "12:00" && this.value < "13:00") {
             this.value = "";
+            waktuSelesaiInput.value = "";
             waktuError.style.display = "inline";
             waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
-            waktuSelesaiInput.value = "";
             return;
         }
-        
+
         let [jam, menit] = this.value.split(":").map(Number);
-        jam++;
-        if (jam === 12) jam = 13; // skip istirahat
-        if (jam > 17) jam = 17;   // batas maksimal
+        let totalMenit = jam * 60 + menit;
 
-        let jamStr = jam.toString().padStart(2, "0");
-        let menitStr = menit.toString().padStart(2, "0");
-        waktuSelesaiInput.value = `${jamStr}:${menitStr}`;
+        // tambah 2 jam
+        totalMenit += 120;
+
+        // skip jam istirahat
+        if (totalMenit > 12 * 60 && jam < 12) {
+            totalMenit += 60;
+        }
+
+        // batas maksimal 17:00
+        if (totalMenit > 17 * 60) {
+            totalMenit = 17 * 60;
+        }
+
+        let jamSelesai = Math.floor(totalMenit / 60);
+        let menitSelesai = totalMenit % 60;
+
+        waktuSelesaiInput.value =
+            jamSelesai.toString().padStart(2, "0") +
+            ":" +
+            menitSelesai.toString().padStart(2, "0");
+
         waktuError.style.display = "none";
-        });
+    });
 
-        waktuSelesaiInput.addEventListener("change", function() {
+    waktuSelesaiInput.addEventListener("change", function () {
         if (!validasiJam(this)) return;
 
         let mulai = waktuMulaiInput.value;
@@ -379,6 +361,7 @@
             waktuError.textContent = "Tidak boleh pada jam istirahat (12:00 - 13:00).";
             return;
         }
+
         if (mulai && this.value <= mulai) {
             this.value = "";
             waktuError.style.display = "inline";
@@ -387,8 +370,9 @@
         }
 
         waktuError.style.display = "none";
-        });
-    </script>
+    });
+  </script>
+
 
 	<script>
 	$(document).ready(function () {
@@ -438,36 +422,7 @@
 			$('#pembimbing2').val('').trigger('change.select2');
 		});
 	});
-	</script>
-
-	<script>
-        const tipe = document.getElementById('tipe');
-        const ruanganField = document.getElementById('ruangan-field');
-        const linkField = document.getElementById('link-field');
-        const idRuangan = document.getElementById('id_ruangan');
-        const linkMeeting = document.getElementById('link_meeting');
-
-        function toggleTipe() {
-            if (tipe.value === 'online') {
-                ruanganField.classList.add('d-none');
-                linkField.classList.remove('d-none');
-                idRuangan.removeAttribute('required');
-                idRuangan.value = ''; // <-- ini penting!
-                linkMeeting.setAttribute('required', 'required');
-            } else {
-                ruanganField.classList.remove('d-none');
-                linkField.classList.add('d-none');
-                idRuangan.setAttribute('required', 'required');
-                linkMeeting.removeAttribute('required');
-            }
-        }
-
-        // jalankan saat pertama kali load
-        toggleTipe();
-
-        // jalankan saat ada perubahan select
-        tipe.addEventListener('change', toggleTipe);
-    </script>	
+	</script>	
 	
 	<script>
 		document.querySelectorAll('[data-dropdown]').forEach(toggle => {

@@ -16,6 +16,7 @@ class SyaratKomprehensifmhs extends Model
         'id_moderator',
         'id_penguji',
         'id_penandatanganundangan',
+        'ruangan',
         'formulir',
         'alasan_formulir',
         'makalah',

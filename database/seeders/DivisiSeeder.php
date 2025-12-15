@@ -15,7 +15,7 @@ class DivisiSeeder extends Seeder
     {
         DB::table('divisis')->insert([
             ['nama' => 'Biokomposit'],
-            ['nama' => 'Kimia Hasil Hutan'],
+            ['nama' => 'biorefinery Hasil Hutan'],
             ['nama' => 'Manajemen Industri Hasil Hutan'],
             ['nama' => 'Rekayasa dan Desain Bangunan Kayu'],
             ['nama' => 'Teknologi Peningkatan Mutu Kayu'],            

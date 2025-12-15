@@ -463,7 +463,9 @@ class SyaratKomprehensifmhsController extends Controller
     {
         $request->validate([
             'moderator' => 'required|string|max:255',
-            'penguji' => 'required|string|max:255'
+            'penguji' => 'required|string|max:255',
+            'penandatanganundangan' => 'required|exists:staff_depts,id',
+            'ruangan' => 'required|string|max:255',
         ]);
 
         $nim = $syaratKomprehensifmhs->mahasiswa->nim;        
@@ -480,11 +482,13 @@ class SyaratKomprehensifmhsController extends Controller
             'id_moderator' => $moderatorId,
             'id_penguji' => $pengujiId,
             'id_penandatanganundangan' => $penandatanganundanganId,
+            'ruangan' => $request->ruangan,
         ]); 
 
         $this->sendNotification($syaratKomprehensifmhs->id_mahasiswa,
             '🔔 Ketua Sidang dan Dosen Penguji Ditentukan',            
-            "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.",
+            "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.<br>
+            Ruangan Pelaksanaan: <strong>{$request->ruangan}</strong>",
             route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)          
         );
                 
