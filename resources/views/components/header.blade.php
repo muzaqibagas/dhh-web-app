@@ -31,7 +31,7 @@
         <img src="{{ asset('img/dhhputih.png') }}" alt="DHH Logo" class="sidebar-logo">
       </div>
       <ul class="sidebar-menu">
-        <li><a href="/home">Beranda</a></li>
+        <li><a href="/">Beranda</a></li>
         <li><a href="/sejarah">Departemen</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle">Pendidikan</a>
