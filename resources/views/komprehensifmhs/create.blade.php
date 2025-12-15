@@ -121,16 +121,18 @@
             @endif
             <form action="{{ route('komprehensifmhs.store') }}" method="POST">
                 @csrf   
+                @auth
                 <div class="form-group">
                     <label>Nama</label>
-                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ Auth::user()->nama ?? 'Guest' }}" required>
-                    <input type="hidden" name="id_mahasiswa" value="{{ Auth::user()->id }}">
+                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ auth()->user()->nama }}" required>
+                    <input type="hidden" name="id_mahasiswa" value="{{ auth()->user()->id }}">
                 </div>
 
                 <div class="form-group">
                     <label>NIM</label>
-                    <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ Auth::user()->nim ?? '' }}" required>
+                    <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ auth()->user()->nim }}" required>
                 </div>
+                @endauth
 
                 <div class="form-group">
                     <label>Semester</label>

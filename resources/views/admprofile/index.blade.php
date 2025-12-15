@@ -220,10 +220,12 @@
           <img id="preview-image" src="{{ asset('img/default.jpeg') }}" alt="" class="w-100 h-100 object-fit-cover">
         @endif
       </div>
-            
+
+      @auth
       <button class="btn-edit-photo">        
         <a href="{{ route('user.edit', Auth::user()->id) }}" class="bi bi-pencil-square text-light text-decoration-none"> Edit Profile</a>
       </button>    
+      @@endauth
     </div>
 
     <div class="card p-4 shadow-sm w-100 border-2" style="border:solid #1b2a6d">
