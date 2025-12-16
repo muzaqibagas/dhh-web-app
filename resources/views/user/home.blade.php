@@ -235,12 +235,11 @@
             <span class="gallery-caption">{{ $item->judul }}</span>
           </div>
         @endforeach    
-        
+      </div>
         <!-- Tombol Lihat Selengkapnya -->
         <div class="d-flex justify-content-end mt-3">      
           <a href="{{ route('galeri.gallery') }}" class="btn-see-more">Lihat Selengkapnya →</a>
         </div>
-      </div>
     </section>
 
     <!-- Alumni Testimonial Section -->
@@ -361,8 +360,7 @@
     </section>
 
     <!-- Mitra Section -->
-    <section class="guest-partner-section py-5">
-      <div class="container text-center">
+    <section class="guest-galery-section">
         <h3 class="guest-pend-section-title mb-4">Mitra Kami</h3>
         <img src="img/batasgold.png" class="guest-pend-divider mb-5" alt="divider">
 
