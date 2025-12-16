@@ -129,8 +129,7 @@ class SyaratKomprehensifmhsController extends Controller
     {
         $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji',  'penandatanganundangan'])->findOrFail($id);
         $komprehensif = Komprehensifmhs::with([
-            'mahasiswa',
-            'ruangan',
+            'mahasiswa',            
             'semester',
             'pembimbing1',
             'pembimbing2',
@@ -159,11 +158,7 @@ class SyaratKomprehensifmhsController extends Controller
         $tanggal = $tanggalCarbon->translatedFormat('d F Y');
         $mulai = Carbon::parse($komprehensif->waktu_mulai)->format('H.i');
         $selesai = Carbon::parse($komprehensif->waktu_selesai)->format('H.i');
-
-        $tempat = ($komprehensif->tipe_pelaksanaan === 'offline')
-            ? ($komprehensif->ruangan->nama ?? '-')
-            : ($komprehensif->link_meeting ?? '-');
-
+        $tempat = $syarat->ruangan ?? '-';
         $moderator = $syarat->moderator->nama ?? '-';
         $penguji = $syarat->penguji->nama ?? '-';
         $penandatanganundangan = $syarat->penandatanganundangan->nama ?? '-';

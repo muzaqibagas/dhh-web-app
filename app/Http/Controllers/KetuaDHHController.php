@@ -18,7 +18,7 @@ class KetuaDHHController extends Controller
             $query->where('nama', 'like', "%$search%");
         }
 
-        $ketua_dhhs = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();                
+        $ketua_dhhs = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
         return view('ketuadhh.index', compact('ketua_dhhs'));
     }
 

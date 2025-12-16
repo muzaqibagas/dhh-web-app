@@ -241,24 +241,27 @@
                   <div class="col-sm-2">
                     <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
                   </div>
+                  @php
+                    $maxYear = date('Y') + 10; // boleh sampai 10 tahun ke depan
+                  @endphp
                   <div class="col-sm-10 d-flex align-items-center">
                     <select name="tahun_mulai" id="tahun_mulai" class="form-select me-2" required>
                       <option value="">Tahun mulai</option>
-                      @for ($year = date('Y'); $year >= 1900; $year--)
-                        <option value="{{ $year }}" 
-                          {{ old('tahun_mulai', $ketuaDHH->tahun_mulai ?? '') == $year ? 'selected' : '' }}>
-                          {{ $year }}
-                        </option>
-                      @endfor
+                        @for ($year = $maxYear; $year >= 1900; $year--)
+                            <option value="{{ $year }}"
+                                {{ old('tahun_mulai', $ketuaDHH->tahun_mulai) == $year ? 'selected' : '' }}>
+                                {{ $year }}
+                            </option>
+                        @endfor
                     </select>
                     <span class="mx-2">s/d</span>
                     <select name="tahun_selesai" id="tahun_selesai" class="form-select ms-2" required>
                       <option value="">Tahun selesai</option>
-                      @for ($year = date('Y'); $year >= 1900; $year--)
-                        <option value="{{ $year }}" 
-                          {{ old('tahun_selesai', $ketuaDHH->tahun_selesai ?? '') == $year ? 'selected' : '' }}>
-                          {{ $year }}
-                        </option>
+                      @for ($year = $maxYear; $year >= 1900; $year--)
+                          <option value="{{ $year }}"
+                              {{ old('tahun_selesai', $ketuaDHH->tahun_selesai) == $year ? 'selected' : '' }}>
+                              {{ $year }}
+                          </option>
                       @endfor
                     </select>
                   </div>
