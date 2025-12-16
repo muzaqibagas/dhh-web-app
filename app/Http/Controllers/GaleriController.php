@@ -18,7 +18,7 @@ class GaleriController extends Controller
             $search = request()->search;
             $query->where('judul', 'like', "%$search%");
         }        
-        $galeris = $query->orderBy('id', 'ESC')->paginate(10)->withQueryString();
+        $galeris = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
         return view('galeri.index', compact('galeris'));
     }
 
