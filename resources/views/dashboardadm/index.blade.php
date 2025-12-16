@@ -191,7 +191,6 @@
     <div class="mb-4 d-flex justify-content-end">
         <form method="GET" action="{{ route('dashboardadm.index') }}" class="d-flex align-items-center gap-2">
             <label for="tahun_ajaran" class="me-2" style="white-space: nowrap;">Tahun Ajaran</label>
-
             <select id="tahun_ajaran" name="tahun_ajaran" class="form-select">
                 <option value="">(Default: tahun sekarang)</option>
                 @php
@@ -204,7 +203,6 @@
                     </option>
                 @endfor
             </select>
-
             <button type="submit" class="btn btn-primary">Filter</button>
         </form>
     </div>
@@ -285,7 +283,7 @@
         {{-- Artikel per Kategori --}}
         <div class="col-12 col-lg-6">
           <div class="card shadow-sm p-3 h-100">
-            <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per Kategori</h5>
+            <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per SDGs</h5>
             <div class="chart-kategori-wrapper">
               <div class="chart-container">
                 <canvas id="kategoriChart"></canvas>

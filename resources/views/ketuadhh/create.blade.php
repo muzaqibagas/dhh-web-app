@@ -210,71 +210,79 @@
 
 <!-- create Ketua -->
 <main class="content">
-<div class="container-fluid mt-4">
-    <div class="adm-header">
-        <h2 class="adm-title">Create Pimpinan DHH</h2>
-    </div> 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
+  <div class="container-fluid mt-4">
+      <div class="adm-header">
+          <h2 class="adm-title">Create Pimpinan DHH</h2>
+      </div> 
+      <div class="card shadow-sm">
+          <div class="card-body">
+              <div class="table-responsive">
 
-            <form action="{{ route('ketuadhh.store') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                  <div class="col-sm-2">
-                      <label for="nama" class="col-form-label">Nama</label>
+              <form action="{{ route('ketuadhh.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                        <label for="nama" class="col-form-label">Nama</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Pimpinan" required>
+                    </div>
                   </div>
-                  <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan Nama Pimpinan" required>
-                  </div>
-                </div>
 
-                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                  <div class="col-sm-2">
-                    <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
-                  </div>
-                  <div class="col-sm-10 d-flex align-items-center">
-                    <select name="tahun_mulai" id="tahun_mulai" class="form-select" required>
-                      @for ($year = date('Y'); $year >= 1900; $year--)
-                        <option value="{{ $year }}">{{ $year }}</option>
-                      @endfor
-                    </select>                    
-                    <span class="mx-2">s/d</span>
-                    <select name="tahun_selesai" id="tahun_selesai" class="form-select" required>
-                      @for ($year = date('Y'); $year >= 1900; $year--)
-                        <option value="{{ $year }}">{{ $year }}</option>
-                      @endfor
-                    </select>                    
-                  </div>
-                </div>                              
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                    <div class="col-sm-2">
+                      <label for="tahun_mulai" class="col-form-label">Masa Jabatan</label>
+                    </div>
+                    <div class="col-sm-10 d-flex align-items-center">
+                      @php
+                        $startYear = date('Y') + 10; // boleh sampai 10 tahun ke depan
+                      @endphp
 
-                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
-                  <div class="col-sm-2">
-                      <label for="foto" class="col-form-label">Foto</label>
+                      <select name="tahun_mulai" class="form-select" required>
+                        @for ($year = $startYear; $year >= 1900; $year--)
+                          <option value="{{ $year }}">{{ $year }}</option>
+                        @endfor
+                      </select>
+
+                      <span class="mx-2">s/d</span>
+
+                      <select name="tahun_selesai" class="form-select" required>
+                        @for ($year = $startYear; $year >= 1900; $year--)
+                          <option value="{{ $year }}">{{ $year }}</option>
+                        @endfor
+                      </select>
+                  
+                    </div>
+                  </div>                              
+
+                  <div class="text-start row row-cols-1 row-cols-sm-2 align-items-start mb-3">
+                    <div class="col-sm-2">
+                        <label for="foto" class="col-form-label">Foto</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="file" name="foto" class="form-control" id="foto" required>                      
+                        <div class="mt-3 d-flex justify-content-center">
+                            <img id="preview-foto" class="img-thumbnail d-none shadow-sm border" style="max-width: 180px; max-height: 180px; object-fit: cover;" alt="Preview Foto">
+                        </div>
+                    </div>
                   </div>
-                  <div class="col-sm-10">
-                      <input type="file" name="foto" class="form-control" id="foto" required>                      
-                      <div class="mt-3 d-flex justify-content-center">
-                          <img id="preview-foto" class="img-thumbnail d-none shadow-sm border" style="max-width: 180px; max-height: 180px; object-fit: cover;" alt="Preview Foto">
+
+
+
+                  <!-- Tombol -->
+                  <div>
+                  <div class="row">
+                      <div class="mb-3 d-flex justify-content-between align-items-center">
+                          <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
+                          <button type="submit" class="btn btn-success">Simpan</button>
                       </div>
                   </div>
-                </div>
-
-
-
-                <!-- Tombol -->
-                <div>
-                <div class="row">
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                        <a href="{{route('ketuadhh.index')}}" class="btn btn-secondary text-decoration-none">Kembali</a>
-                        <button type="submit" class="btn btn-success">Simpan</button>
-                    </div>
-                </div>
-                </div>
-          </form>
-      </div>
+                  </div>
+            </form>
+        </div>
+    </div>
   </div>
-</div>
+</main>
 @push('script')
   <script>
     // Preview foto saat input

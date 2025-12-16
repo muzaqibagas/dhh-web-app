@@ -85,7 +85,7 @@
             <!-- Pendaftaran -->
             <a href="https://admisi.ipb.ac.id/" class="guest-menu-card">
               <img src="img/icon1.png" alt="Pendaftaran">
-              <p>Pendaftaran</p>
+              <p>Admisi IPB</p>
             </a>
             <!-- Program Studi -->
             <a href="{{ route('pendidikan.s1') }}" class="guest-menu-card">

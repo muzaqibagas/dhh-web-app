@@ -121,16 +121,18 @@
             @endif
             <form action="{{ route('komprehensifmhs.store') }}" method="POST">
                 @csrf   
+                @auth
                 <div class="form-group">
                     <label>Nama</label>
-                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ Auth::user()->nama ?? 'Guest' }}" required>
-                    <input type="hidden" name="id_mahasiswa" value="{{ Auth::user()->id }}">
+                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" value="{{ auth()->user()->nama }}" required>
+                    <input type="hidden" name="id_mahasiswa" value="{{ auth()->user()->id }}">
                 </div>
 
                 <div class="form-group">
                     <label>NIM</label>
-                    <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ Auth::user()->nim ?? '' }}" required>
+                    <input type="text" name="nim" placeholder="Masukkan NIM" value="{{ auth()->user()->nim }}" required>
                 </div>
+                @endauth
 
                 <div class="form-group">
                     <label>Semester</label>
@@ -200,30 +202,7 @@
                         </div>
                         <small id="waktu-error" style="color:red;display:none;">Waktu Seminar tidak boleh pada jam istirahat (12:00 - 13:00).</small>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="tipe">Tipe Pelaksanaan</label>
-                    <select id="tipe" name="tipe_pelaksanaan" required>
-                        <option value="offline">Offline</option>
-                        <option value="online">Online (Zoom/Meet)</option>
-                    </select>            
-                </div>
-
-                <div class="form-group" id="ruangan-field">
-                    <label for="id_ruangan">Ruangan</label>
-                    <select name="id_ruangan" id="id_ruangan">
-                    <option value="">Pilih Ruangan</option>
-                    @foreach($ruanganKomprehensif as $ruangan)
-                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
-                    @endforeach
-                    </select>            
-                </div>
-
-                <div class="form-group d-none" id="link-field">
-                    <label for="link_meeting">Link Meeting</label>
-                    <input type="url" name="link_meeting" id="link_meeting" placeholder="https://zoom.us/..." value="{{ old('link_meeting') }}">            
-                </div>
+                </div>                            
             
                 <div class="form-group">
                     <label>Ketua Sidang</label>
@@ -394,36 +373,7 @@
                 $('#pembimbing2').val(null).trigger('change');
             });
         });
-    </script>
-
-    <!-- ruangan -->
-    <script>
-        const tipe = document.getElementById('tipe');
-        const ruanganField = document.getElementById('ruangan-field');
-        const linkField = document.getElementById('link-field');
-
-        function toggleTipe() {
-        if (tipe.value === 'online') {
-            ruanganField.classList.add('d-none');
-            linkField.classList.remove('d-none');
-            document.getElementById('id_ruangan').removeAttribute('required');
-            document.getElementById('id_ruangan').value = '';
-            document.getElementById('link_meeting').setAttribute('required', 'required');
-        } else {
-            ruanganField.classList.remove('d-none');
-            linkField.classList.add('d-none');
-            document.getElementById('id_ruangan').setAttribute('required', 'required');
-            document.getElementById('link_meeting').removeAttribute('required');
-            document.getElementById('link_meeting').value = '';
-        }
-        }
-
-        // jalankan saat pertama kali halaman load
-        toggleTipe();
-
-        // jalankan saat ada perubahan select
-        tipe.addEventListener('change', toggleTipe);
-    </script>  
+    </script>    
     
     <script>
         document.querySelectorAll('[data-dropdown]').forEach(toggle => {

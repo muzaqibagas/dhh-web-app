@@ -287,6 +287,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-12 col-md-8 d-flex align-items-center">
+                                <label for="ruangan" class="form-label mb-0 w-50 text-start">
+                                    Ruangan Pelaksanaan
+                                </label>
+                                <span style="margin-right: 8px;">: </span>
+                                <input type="text" name="ruangan" id="ruangan" class="form-control" placeholder="Contoh: Ruang Sidang Lt. 2 / Zoom Meeting" value="{{ old('ruangan', $syaratKomprehensifmhs->ruangan) }}" required>
+                            </div>
+
 
                             <!-- Button di bawah kanan -->
                             <div class="col-12 d-flex justify-content-end">

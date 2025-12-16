@@ -7,7 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
-use App\Models\KetuaDhh;
+use App\Models\KetuaDHH;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -135,7 +135,7 @@ class KolokiummhsController extends Controller
     public function generatePdf($id)
     {
         $kolokiummhs = Kolokiummhs::findOrFail($id);
-        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();                
+        $ketuaDhh = KetuaDHH::orderByDesc('tahun_mulai')->first();                
         $template = public_path('pdf/templatekolokium.pdf');
         $outputPath = public_path("pdf/ditandatanganikolokium");
         if (!file_exists($outputPath)) {

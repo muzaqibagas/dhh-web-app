@@ -31,7 +31,7 @@
         <img src="{{ asset('img/dhhputih.png') }}" alt="DHH Logo" class="sidebar-logo">
       </div>
       <ul class="sidebar-menu">
-        <li><a href="/home">Beranda</a></li>
+        <li><a href="{{ route('user.home') }}">Beranda</a></li>
         <li><a href="/sejarah">Departemen</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle">Pendidikan</a>
@@ -51,7 +51,7 @@
     <!-- RIGHT MENU -->
     <nav class="navbar">
       <ul class="nav-menu d-flex">
-        <li><a href="/home">Beranda</a></li>
+        <li><a href="{{ route('user.home') }}">Beranda</a></li>
         <li><a href="/sejarah">Departemen</a></li>
         
         <!-- Dropdown Pendidikan -->

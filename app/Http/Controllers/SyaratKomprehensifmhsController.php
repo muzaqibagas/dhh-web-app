@@ -129,8 +129,7 @@ class SyaratKomprehensifmhsController extends Controller
     {
         $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji',  'penandatanganundangan'])->findOrFail($id);
         $komprehensif = Komprehensifmhs::with([
-            'mahasiswa',
-            'ruangan',
+            'mahasiswa',            
             'semester',
             'pembimbing1',
             'pembimbing2',
@@ -159,11 +158,7 @@ class SyaratKomprehensifmhsController extends Controller
         $tanggal = $tanggalCarbon->translatedFormat('d F Y');
         $mulai = Carbon::parse($komprehensif->waktu_mulai)->format('H.i');
         $selesai = Carbon::parse($komprehensif->waktu_selesai)->format('H.i');
-
-        $tempat = ($komprehensif->tipe_pelaksanaan === 'offline')
-            ? ($komprehensif->ruangan->nama ?? '-')
-            : ($komprehensif->link_meeting ?? '-');
-
+        $tempat = $syarat->ruangan ?? '-';
         $moderator = $syarat->moderator->nama ?? '-';
         $penguji = $syarat->penguji->nama ?? '-';
         $penandatanganundangan = $syarat->penandatanganundangan->nama ?? '-';
@@ -463,7 +458,9 @@ class SyaratKomprehensifmhsController extends Controller
     {
         $request->validate([
             'moderator' => 'required|string|max:255',
-            'penguji' => 'required|string|max:255'
+            'penguji' => 'required|string|max:255',
+            'penandatanganundangan' => 'required|exists:staff_depts,id',
+            'ruangan' => 'required|string|max:255',
         ]);
 
         $nim = $syaratKomprehensifmhs->mahasiswa->nim;        
@@ -480,11 +477,13 @@ class SyaratKomprehensifmhsController extends Controller
             'id_moderator' => $moderatorId,
             'id_penguji' => $pengujiId,
             'id_penandatanganundangan' => $penandatanganundanganId,
+            'ruangan' => $request->ruangan,
         ]); 
 
         $this->sendNotification($syaratKomprehensifmhs->id_mahasiswa,
             '🔔 Ketua Sidang dan Dosen Penguji Ditentukan',            
-            "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.",
+            "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.<br>
+            Ruangan Pelaksanaan: <strong>{$request->ruangan}</strong>",
             route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)          
         );
                 

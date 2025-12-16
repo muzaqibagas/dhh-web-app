@@ -13,7 +13,7 @@ class SemesterSeeder extends Seeder
      */
     public function run(): void
     {
-        \DB::table('Semesters')->insert([
+        \DB::table('semesters')->insert([
             ['semester' => '7'],
             ['semester' => '8'],
             ['semester' => '9'],

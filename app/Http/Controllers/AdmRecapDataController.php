@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdmRecapData;
-use App\Models\KolokiumMhs;
-use App\Models\KomprehensifMhs;
-use App\Models\SeminarMhs;
+use App\Models\Kolokiummhs;
+use App\Models\Komprehensifmhs;
+use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdmRecapDataExport;
@@ -19,9 +19,9 @@ class AdmRecapDataController extends Controller
      */
     public function index()
     {
-        $kolokium = KolokiumMhs::all()->keyBy('nim');
-        $seminar = SeminarMhs::all()->keyBy('nim');
-        $kompre = KomprehensifMhs::all()->keyBy('nim');
+        $kolokium = Kolokiummhs::all()->keyBy('nim');
+        $seminar = Seminarmhs::all()->keyBy('nim');
+        $kompre = Komprehensifmhs::all()->keyBy('nim');
 
         $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
 
@@ -55,8 +55,8 @@ class AdmRecapDataController extends Controller
                     }
                 }
 
-                // Ambil tanggal dan semester dengan pengecekan null
-                $semester = $kolokiumData->semester->semester ?? '-';
+                // Ambil tanggal dan semester dengan pengecekan null                
+                $semester = $kolokiumData?->semester?->semester ?? '-';
                 $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
                 $tanggal_seminar = $seminarData->tanggal ?? '-';
                 $tanggal_komprehensif = $kompreData->tanggal ?? '-';
@@ -81,7 +81,7 @@ class AdmRecapDataController extends Controller
                 $genap_2024_2025 = $kompreData->status ?? '-';
 
                 $recap[] = [
-                    'nama' => $identitas->nama ?? '-',
+                    'nama' => $identitas?->nama ?? '-',                    
                     'nim' => $nim,
                     'pembimbing1' => $pembimbing1,
                     'pembimbing2' => $pembimbing2,
@@ -105,27 +105,48 @@ class AdmRecapDataController extends Controller
 
     public function updateSKL($nim)
     {
-        $kompre = KomprehensifMhs::where('nim', $nim)->first();
+        $kolokium = Kolokiummhs::where('nim', $nim)->first();
+        $seminar  = Seminarmhs::where('nim', $nim)->first();
+        $kompre   = Komprehensifmhs::where('nim', $nim)->first();
 
-        if ($kompre) {
-            $tanggalSKL = Carbon::now();
-
-            // Tentukan semester otomatis
-            $bulan = $tanggalSKL->month;
-            $tahun = $tanggalSKL->year;
-            if ($bulan >= 1 && $bulan <= 7) {
-                $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
-            } else {
-                $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
-            }
-
-            // Update data kompre
-            $kompre->update([
-                'skl' => 'SKL Sudah',
-                'tanggal_skl' => $tanggalSKL,
-                'status' => $status,
+         // ❌ BELUM ADA DATA SEMINAR & KOMPRE
+        if (!$seminar && !$kompre) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum melaksanakan Seminar Hasil dan Ujian Komprehensif.'
             ]);
         }
+
+        // ❌ BELUM SEMINAR (tanggal kosong)
+        if (!$seminar || empty($seminar->tanggal)) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Seminar Hasil belum dilaksanakan.'
+            ]);
+        }
+
+        // ❌ BELUM KOMPRE (tanggal kosong)
+        if (!$kompre || empty($kompre->tanggal)) {
+            return redirect()->back()->withErrors([
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Ujian Komprehensif belum dilaksanakan.'
+            ]);
+        }
+
+        // ✅ SEMUA SYARAT TERPENUHI → BOLEH UPDATE
+        $tanggalSKL = Carbon::now();
+
+        $bulan = $tanggalSKL->month;
+        $tahun = $tanggalSKL->year;
+
+        if ($bulan >= 1 && $bulan <= 7) {
+            $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
+        } else {
+            $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
+        }
+
+        $kompre->update([
+            'skl' => 'SKL Sudah',
+            'tanggal_skl' => $tanggalSKL,
+            'status' => $status,
+        ]);
 
         return redirect()->back()->with('success', 'SKL berhasil dikonfirmasi dan status diperbarui.');
     }

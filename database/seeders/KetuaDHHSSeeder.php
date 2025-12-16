@@ -21,7 +21,7 @@ class KetuaDHHSSeeder extends Seeder
             ['id_user' => 1, 'nama' => 'Dr. Ir. I Wayan Darmawan, MSc',    'foto' => 'foto_ketuadhh/wayan.png',  'tahun_mulai' => 2009, 'tahun_selesai' => 2013],            
             ['id_user' => 1, 'nama' => 'Prof.Dr. Ir. Fauzi Febrianto, M.S.',   'foto' => 'foto_ketuadhh/fauzi.jpg', 'tahun_mulai' => 2014, 'tahun_selesai' => 2018],
             ['id_user' => 1, 'nama' => 'Prof.Dr. Ir. Deded Sarip Nawawi, M.Sc.F.Trop',   'foto' => 'foto_ketuadhh/deded.jpg', 'tahun_mulai' => 2018, 'tahun_selesai' => 2023],
-            ['id_user' => 1, 'nama' => 'Dr. Ir. Sekartining Rahayu, S.Hut., M.Si.,',   'foto' => 'foto_ketuadhh/istie.jpg', 'tahun_mulai' => 2023, 'tahun_selesai' => 2028],            
+            ['id_user' => 1, 'nama' => 'Dr. Istie Sekartining Rahayu, S.Hut., M.Si',   'foto' => 'foto_ketuadhh/istie.jpg', 'tahun_mulai' => 2023, 'tahun_selesai' => 2028],                                                    
         ]);    
     }
 }

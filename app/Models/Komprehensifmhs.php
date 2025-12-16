@@ -26,21 +26,13 @@ class Komprehensifmhs extends Model
         'judul_tugasakhir',
         'skl',
         'tanggal_skl',
-        'status',
-        'tipe_pelaksanaan',
-        'id_ruangan',
-        'link_meeting',
+        'status',        
     ];
 
     public function mahasiswa()
     {
         return $this->belongsTo(User::class, 'id_mahasiswa');
-    }
-
-    public function ruangan()
-    {
-        return $this->belongsTo(Ruangan::class, 'id_ruangan');
-    }
+    }    
 
     public function semester()
     {

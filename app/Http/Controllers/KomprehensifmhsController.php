@@ -7,7 +7,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use App\Models\StaffDept;
 use App\Models\Semester;
-use App\Models\KetuaDhh;
+use App\Models\KetuaDHH;
 use App\Models\SyaratSeminarmhs;
 use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
@@ -116,16 +116,8 @@ class KomprehensifmhsController extends Controller
             'tanggal' => 'required|date|after_or_equal:today',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
-            'judul_tugasakhir' => 'required|string|max:255',
-            'id_ruangan' => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
-            'link_meeting' => 'required_if:tipe_pelaksanaan,online|nullable|url',
-            'tipe_pelaksanaan' => 'required|in:offline,online',
-        ]);
-        if ($data['tipe_pelaksanaan'] === 'online') {
-            $data['id_ruangan'] = null;
-        } else {
-            $data['link_meeting'] = null;
-        }
+            'judul_tugasakhir' => 'required|string|max:255',            
+        ]);        
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']);
         $data['alamat'] = Str::title($data['alamat']);        
@@ -138,10 +130,7 @@ class KomprehensifmhsController extends Controller
                 $words[$i] = Str::ucfirst($word);
             }
         }
-        $data['judul_tugasakhir'] = implode(' ', $words);
-        if (!$request->id_ruangan && !$request->link_meeting) {
-            return back()->withInput()->with('error', 'Pilih ruangan atau isi link meeting.');
-        }
+        $data['judul_tugasakhir'] = implode(' ', $words);       
         
         $insert = Komprehensifmhs::create($data);
         if ($insert) {
@@ -166,7 +155,7 @@ class KomprehensifmhsController extends Controller
     public function generatePdf($id)
     {
         $komprehensifmhs = Komprehensifmhs::findOrFail($id);        
-        $ketuaDhh = KetuaDhh::orderByDesc('tahun_mulai')->first();        
+        $ketuaDhh = KetuaDHH::orderByDesc('tahun_mulai')->first();        
         $template = public_path('pdf/templatekomprehensif.pdf');
         $outputPath = public_path("pdf/ditandatanganikomprehensif");
         if (!file_exists($outputPath)) {
@@ -217,12 +206,7 @@ class KomprehensifmhsController extends Controller
         // Tempat offline
         $pdf->SetXY(32, 132.5);
         $pdf->Cell($labelWidth, $lineHeight);
-        $tempat = '-';
-        if (!empty($komprehensifmhs->ruangan?->nama)) {
-            $tempat = $komprehensifmhs->ruangan->nama;
-        } elseif (!empty($komprehensifmhs->link_meeting)) {
-            $tempat = $komprehensifmhs->link_meeting;
-        }
+        $tempat = $komprehensifmhs->syaratKomprehensif->ruangan ?? '-';       
         $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');
         // Judul Tugas Akhir
         $pdf->SetXY(32, 140);
@@ -293,16 +277,8 @@ class KomprehensifmhsController extends Controller
             'tanggal' => 'required|date|after_or_equal:today',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
-            'judul_tugasakhir' => 'required|string|max:255',
-            'id_ruangan' => 'required_if:tipe_pelaksanaan,offline|nullable|exists:ruangans,id',
-            'link_meeting' => 'required_if:tipe_pelaksanaan,online|nullable|url',
-            'tipe_pelaksanaan' => 'required|in:offline,online',
-        ]);
-        if ($data['tipe_pelaksanaan'] === 'online') {
-            $data['id_ruangan'] = null;
-        } else {
-            $data['link_meeting'] = null;
-        }
+            'judul_tugasakhir' => 'required|string|max:255',            
+        ]);        
         $data['nama'] = Str::title($data['nama']);
         $data['nim'] = Str::upper($data['nim']);
         $data['alamat'] = Str::title($data['alamat']);        

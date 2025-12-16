@@ -168,13 +168,7 @@
 			</div>			
 			<div class="form-group">
 				<label>Tempat Sidang</label>
-				@if ($komprehensifmhs->tipe_pelaksanaan === 'offline')
-					<input type="text" value="{{ $komprehensifmhs->ruangan->nama ?? '-' }}" readonly>
-				@elseif ($komprehensifmhs->tipe_pelaksanaan === 'online')
-					<input type="text" value="{{ $komprehensifmhs->link_meeting ?? '-' }}" readonly>
-				@else
-					<input type="text" value="-" readonly>
-				@endif
+        <input type="text" class="text-success fw-bold" value="{{ $komprehensifmhs->syaratKomprehensif->ruangan ?? '[Diisi oleh akademik]' }}" readonly>						
 			</div>  
 			<div class="form-group">
 				<label>Ketua Sidang</label>

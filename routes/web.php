@@ -47,9 +47,6 @@ use App\Http\Controllers\SyaratKomprehensifmhsController;
 
 
 // ROUTE ADMIN
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/artikeledit', function () {
     return view('artikel.edit');
 });
@@ -302,10 +299,10 @@ Route::get('template', [TemplateController::class, 'index'])->name('template.ind
 Route::get('recapdata', [AdmRecapDataController::class, 'index'])->name('recapdata.index');
 Route::post('/admrecapdata/skl/{nim}', [AdmRecapDataController::class, 'updateSKL']);
 Route::get('/admrecapdata/export', [AdmRecapDataController::class, 'export'])->name('admrecapdata.export');
-Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
+// Route::post('/admrecapdata/skl/{nim}/{tahun?}/{bulan?}', [AdmRecapDataController::class, 'updateSKL']);
 
 // User
-Route::get('home', [UserController::class, 'home'])->name('user.home');
+Route::get('/', [UserController::class, 'home'])->name('user.home');
 Route::get('file', [UserController::class, 'file'])->name('user.file');
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
