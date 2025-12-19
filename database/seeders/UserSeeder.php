@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'username'         => 'Hasilhutan',
                 'email'            => 'dhht@apps.ipb.ac.id',
                 'email_verified_at'=> now(), // sudah diverifikasi agar bisa login langsung
-                'password'         => Hash::make('HasilHutan1P8'),
+                'password'         => Hash::make('Hasilhutan1P8'),
                 'jenis_kelamin'    => 'Laki-laki',
                 'role'             => 'Admin',
                 'foto'             => null,
