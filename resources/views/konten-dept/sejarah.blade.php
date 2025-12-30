@@ -349,13 +349,16 @@
                     <div class="sej-division">
                         <h3 class="sej-division-title">Divisi {{ $div->nama }}</h3>
                         <div class="sej-card-grid">
-                            @foreach($div->staff as $staff)
-                                <div class="sej-staff-card">
+                            @forelse($div->staff as $staff)
+                            
+                                <a href="{{ route('staffdept.show', $staff->id) }}" class="sej-staff-card" style="text-decoration:none; color:inherit;">
                                     <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                                     <h4>{{ $staff->nama }}</h4>
                                     <p>{{ $staff->jabatan }}</p>
-                                </div>
-                            @endforeach
+                                </a>
+                            @empty
+                                <p class="text-center">Belum ada data struktur organisasi.</p>
+                            @endforelse
                         </div>
                     </div>
                 @endif
@@ -365,13 +368,13 @@
         <div id="sej-kependidikan" class="sej-tab-content">
             <div class="sej-card-grid">
                 @forelse($kependidikan as $staff)
-                    <div class="sej-staff-card">
+                    <a href="{{ route('staffdept.show', $staff->id) }}" class="sej-staff-card" style="text-decoration:none; color:inherit;">
                         <img src="{{ asset($staff->foto ?? 'foto_staffdept/default.png') }}" alt="{{ $staff->nama }}">
                         <h4>{{ $staff->nama }}</h4>
                         <p>{{ $staff->jabatan }}</p>
-                    </div>
+                    </a>
                 @empty
-                    <p class="text-center">Belum ada data tenaga kependidikan.</p>
+                    <p class="text-center">Belum ada data struktur organisasi.</p>
                 @endforelse
             </div>
         </div>

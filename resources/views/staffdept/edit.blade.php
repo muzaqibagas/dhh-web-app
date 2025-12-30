@@ -229,7 +229,7 @@
 
           <!-- {{-- NAMA --}} -->
           <div class="row mb-3">
-            <label for="nama" class="col-sm-2 col-form-label text-start">Nama</label>
+            <label for="nama" class="col-sm-2 col-form-label text-start">Nama<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <input type="text" name="nama" class="form-control" id="nama" 
                      value="{{ old('nama', $staffDept->nama) }}" placeholder="Masukkan Nama Staff" required>
@@ -238,7 +238,7 @@
 
           <!-- {{-- NIP --}} -->
           <div class="row mb-3">
-            <label for="nip" class="col-sm-2 col-form-label text-start">NIP</label>
+            <label for="nip" class="col-sm-2 col-form-label text-start">NIP<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <input type="text" name="nip" class="form-control" id="nip" 
                      value="{{ old('nip', $staffDept->nip) }}" placeholder="Masukkan NIP" required>
@@ -264,7 +264,7 @@
 
           <!-- {{-- KATEGORI --}} -->
           <div class="row mb-3">
-            <label for="kategori" class="col-sm-2 col-form-label text-start">Kategori</label>
+            <label for="kategori" class="col-sm-2 col-form-label text-start">Kategori<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <select name="id_kategoristaff" id="kategori" class="form-select" required>
                 <option value="">Pilih kategori</option>
@@ -280,7 +280,7 @@
 
           <!-- {{-- DIVISI --}} -->
           <div class="row mb-3">
-            <label for="divisi" class="col-sm-2 col-form-label text-start">Divisi</label>
+            <label for="divisi" class="col-sm-2 col-form-label text-start">Divisi<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <select name="id_divisi" id="divisi" class="form-select" required>
                 <option value="">Pilih divisi</option>
@@ -296,7 +296,7 @@
 
           <!-- {{-- JABATAN --}} -->
           <div class="row mb-3">
-            <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan</label>
+            <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <input type="jabatan" name="jabatan" class="form-control" id="jabatan" 
                      value="{{ old('jabatan', $staffDept->jabatan) }}" placeholder="Masukkan Jabatan" required>              
@@ -305,7 +305,7 @@
 
           <!-- {{-- TANGGAL --}} -->
           <div class="row mb-3">
-            <label for="tanggal_lahir" class="col-sm-2 col-form-label text-start">Tanggal Lahir</label>
+            <label for="tanggal_lahir" class="col-sm-2 col-form-label text-start">Tanggal Lahir<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" 
                      value="{{ old('tanggal_lahir', $staffDept->tanggal_lahir ? \Carbon\Carbon::parse($staffDept->tanggal_lahir)->format('Y-m-d') : '') }}" required>
@@ -314,7 +314,7 @@
 
           {{-- EMAIL --}}
           <div class="row mb-3">
-            <label for="email" class="col-sm-2 col-form-label text-start">Email</label>
+            <label for="email" class="col-sm-2 col-form-label text-start">Email<small class="text-danger"> *</small></label>
             <div class="col-sm-10">
               <input type="email" name="email" class="form-control" id="email" 
                      value="{{ old('email', $staffDept->email) }}" placeholder="Masukkan Email" required>
