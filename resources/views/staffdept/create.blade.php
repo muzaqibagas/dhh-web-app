@@ -250,7 +250,7 @@
 
             <!-- {{-- NIP --}} -->
             <div class="row mb-3">
-              <label for="nip" class="col-sm-2 col-form-label text-start">NIP <small class="text-danger"> </label>
+              <label for="nip" class="col-sm-2 col-form-label text-start">NIP<small class="text-danger"> *</small></label>
               <div class="col-sm-10">                
                 <input type="text" name="nip" id="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" placeholder="Masukkan NIP" required>
                 @error('nip')
@@ -261,7 +261,7 @@
 
             <!-- {{-- FOTO --}} -->
             <div class="row mb-3">
-              <label for="foto" class="col-sm-2 col-form-label text-start">Foto<small class="text-danger"> </label>
+              <label for="foto" class="col-sm-2 col-form-label text-start">Foto<small class="text-danger"> *</small></label>
               <div class="col-sm-10">
                 <input type="file" name="foto" class="form-control" id="foto" accept="image/*" {{ old('foto') ? 'value=' . old('foto') : '' }} required>
                 <img id="preview-foto" class="img-thumbnail mt-2 d-none" width="150" alt="Foto">
@@ -270,7 +270,7 @@
 
             <!-- {{-- KATEGORI --}} -->
             <div class="row mb-3">
-              <label for="kategori" class="col-sm-2 col-form-label text-start">Kategori<small class="text-danger"> </label>
+              <label for="kategori" class="col-sm-2 col-form-label text-start">Kategori<small class="text-danger"> *</small></label>
               <div class="col-sm-10">
                 <select name="id_kategoristaff" id="kategori" class="form-select" required>
                   <option value="">Pilih kategori</option>
@@ -283,7 +283,7 @@
 
             <!-- {{-- DIVISI --}} -->
             <div class="row mb-3" >
-              <label for="divisi" class="col-sm-2 col-form-label text-start">Divisi<small class="text-danger"> </label>
+              <label for="divisi" class="col-sm-2 col-form-label text-start">Divisi<small class="text-danger"> *</small></label>
               <div class="col-sm-10">
                 <select name="id_divisi" id="divisi" class="form-select" required>
                   <option value="">Pilih divisi</option>
@@ -296,7 +296,7 @@
 
             <!-- {{-- JABATAN --}} -->              
             <div class="row mb-3">
-              <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan<small class="text-danger"> </label>
+              <label for="jabatan" class="col-sm-2 col-form-label text-start">Jabatan<small class="text-danger"> *</small></label>
               <div class="col-sm-10">
                 <input name="jabatan" class="form-control" id="jabatan" placeholder="Masukkan Jabatan" value="{{ old('jabatan') }}" required>
               </div>
@@ -304,7 +304,7 @@
 
             <!-- {{-- TANGGAL --}} -->
             <div class="row mb-3">
-                <label for="tanggal_lahir" class="col-sm-2 col-form-label text-start">Tanggal Lahir<small class="text-danger"> </label>
+                <label for="tanggal_lahir" class="col-sm-2 col-form-label text-start">Tanggal Lahir<small class="text-danger"> *</small></label>
               <div class="col-sm-10">
                 <input type="date" 
                       name="tanggal_lahir" 
@@ -317,7 +317,7 @@
 
             <!-- {{-- EMAIL --}} -->
             <div class="row mb-3">
-              <label for="email" class="col-sm-2 col-form-label text-start">Email<small class="text-danger"> </label>
+              <label for="email" class="col-sm-2 col-form-label text-start">Email<small class="text-danger"> *</small></label>
               <div class="col-sm-10">                
                 <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Masukkan Email" required>
                 @error('email')
