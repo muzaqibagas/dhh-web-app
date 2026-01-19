@@ -7,6 +7,7 @@ use App\Models\Loginmhs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class LoginmhsController extends Controller
 {
@@ -79,18 +80,26 @@ class LoginmhsController extends Controller
             return back()->withErrors(['username' => 'Username atau password salah.']);
         }
 
-        if (!$user->email_verified_at) {
-            return back()->withErrors(['username' => 'Email belum diverifikasi. Silakan cek email.']);
-        }
-
         Auth::login($user);
 
-        if ($user->role === 'Admin') {
-            // return redirect()->route('dashboardadm.index');
-            return redirect()->route('dashboardadm.index');
-        } else {
-            return redirect()->route('dashboardmhs.index');
+        return redirect()->intended(
+            $user->role === 'Admin'
+                ? route('dashboardadm.index')
+                : route('dashboardmhs.index')
+        );
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request)
+    {        
+        if (!$request->user()->hasVerifiedEmail()) {
+            $request->fulfill();
         }
+
+        return redirect()->intended(
+            auth()->user()->role === 'Admin'
+                ? route('admprofile.index')
+                : route('profilemhs.edit')
+        );
     }
 
 

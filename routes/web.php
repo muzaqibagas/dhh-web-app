@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
@@ -55,14 +54,9 @@ Route::get('email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); 
-    if (Auth::user()->role == 'admin') {
-        return redirect()->route('admprofile.index');
-    } else {
-        return redirect()->route('profilemhs.edit');
-    }
-})->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [LoginmhsController::class, 'verifyEmail'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
