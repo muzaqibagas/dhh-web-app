@@ -111,13 +111,7 @@
           Selamat datang di <b>Layanan Akademik Departemen Hasil Hutan</b>.  
           Pantau status akademikmu, ajukan kolokium dan seminar, serta unduh dokumen penting secara mudah dan cepat.
         </p>
-      </div>
-
-      <div>
-        <div></div>
-        <div></div>
-      </div>
-      
+      </div>          
       <!-- Status Cards -->
       <div class="status-cards">
         <div class="pengumuman">

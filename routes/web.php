@@ -28,12 +28,17 @@ use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\AdmProfileController;
 use App\Http\Controllers\AdmRecapDataController;
+use App\Http\Controllers\RubrikController;
 
 // ROUTE MAHASISWA
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginmhsController;
+use App\Http\Controllers\LoginDosenController;
 use App\Http\Controllers\DashboardmhsController;
 use App\Http\Controllers\DashboardadmController;
+use App\Http\Controllers\DashboarddosenController;
+use App\Http\Controllers\jadwalTAController;
+use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\ProfilemhsController;
 use App\Http\Controllers\FormulirlayananakademikmhsController;
 use App\Http\Controllers\KolokiummhsController;
@@ -42,6 +47,8 @@ use App\Http\Controllers\SeminarmhsController;
 use App\Http\Controllers\SyaratSeminarmhsController;
 use App\Http\Controllers\KomprehensifmhsController;
 use App\Http\Controllers\SyaratKomprehensifmhsController;
+
+use App\Http\Controllers\ProfileDosenController;
 
 
 
@@ -63,6 +70,15 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Link verifikasi telah dikirim ke email kamu!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+Route::middleware(['auth:staff'])->group(function () {
+    Route::get('/dashboard-dosen', [DashboarddosenController::class, 'index'])
+        ->name('dashboardDosen.index');
+});
+
+Route::get('login', [LoginmhsController::class, 'index'])->name('login');
+Route::post('login', [LoginmhsController::class, 'signin'])->name('login.signin');
+Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard-mahasiswa', function () {
         return view('profilemhs.edit'); // sesuaikan view-nya
@@ -73,9 +89,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('admprofile');
 });
 
-Route::get('login', [LoginmhsController::class, 'index'])->name('login');
-Route::post('login', [LoginmhsController::class, 'signin'])->name('login.signin');
-Route::post('logout', [LoginmhsController::class, 'logout'])->name('login.logout');
+Route::get('login-dosen', function() { return view('auth.logindosen'); })->name('logindosen');
+Route::post('login-dosen', [LoginDosenController::class, 'signin'])->name('logindosen.signin');
+Route::post('logout-dosen', [LoginDosenController::class, 'logout'])->name('logindosen.logout');
 
 Route::get('register', [RegisterController::class, 'index'])->name('register.index');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
@@ -97,11 +113,39 @@ Route::get('/notification/open/{id}', function($id){
 
     return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan    
 })->name('notification.open');
+
+Route::get('/staff-notification/{id}', function($id){
+    $notif = StaffNotification::findOrFail($id);  
+
+    $dosen = Auth::guard('staff')->user();
+
+    if ($notif->staff_id !== $dosen->id) {
+        abort(403, 'Akses tidak diizinkan');
+    }
+
+    $notif->update(['is_read' => true]);    
+
+    return redirect($notif->redirect_url ?? '/');    
+})->name('staff-notification.open');
+
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
 Route::get('dashboardadm', [DashboardadmController::class, 'index'])->name('dashboardadm.index');
+Route::get('dashboarddosen', [DashboarddosenController::class, 'index'])->name('dashboarddosen.index');
 Route::get('profilemhs', [ProfilemhsController::class, 'index'])->name('profilemhs.index');
 Route::get('profilemhs/edit', [ProfilemhsController::class, 'edit'])->name('profilemhs.edit');
 Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::class, 'index'])->name('formulirlayananakademikmhs.index');
+
+Route::get('profiledosen', [ProfileDosenController::class, 'index'])->name('profiledosen.index');
+
+// JADWAL TA
+Route::get('jadwalta', [jadwalTAController::class, 'index'])->name('jadwalta.index');
+
+// PENILAIAN
+Route::get('penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+Route::get('penilaian/create', [PenilaianController::class, 'create'])->name('penilaian.create');
+Route::post('penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
+Route::get('penilaian/{penilaian}', [PenilaianController::class, 'show'])->name('penilaian.show');
+
 
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
@@ -285,6 +329,15 @@ Route::get('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'show'])->name('ke
 Route::get('ketuadhh/{ketuaDHH}/edit', [KetuaDHHController::class, 'edit'])->name('ketuadhh.edit');
 Route::put('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'update'])->name('ketuadhh.update');
 Route::delete('ketuadhh/{ketuaDHH}', [KetuaDHHController::class, 'destroy'])->name('ketuadhh.destroy');
+
+// Rubrik
+Route::get('rubrik', [RubrikController::class, 'index'])->name('rubrik.index');
+Route::get('rubrik/create', [RubrikController::class, 'create'])->name('rubrik.create');
+Route::post('rubrik', [RubrikController::class, 'store'])->name('rubrik.store');
+Route::get('rubrik/{rubrik}', [RubrikController::class, 'show'])->name('rubrik.show');
+Route::get('rubrik/{rubrik}/edit', [RubrikController::class, 'edit'])->name('rubrik.edit');
+Route::put('rubrik/{rubrik}', [RubrikController::class, 'update'])->name('rubrik.update');
+Route::delete('rubrik/{rubrik}', [RubrikController::class, 'destroy'])->name('rubrik.destroy');
 
 // Template
 Route::get('template', [TemplateController::class, 'index'])->name('template.index');

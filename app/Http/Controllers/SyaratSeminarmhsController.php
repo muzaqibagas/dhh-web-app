@@ -7,6 +7,7 @@ use App\Models\Seminarmhs;
 use App\Models\StaffDept;
 use App\Models\User;
 use App\Models\Notification as AppNotification;
+use App\Models\StaffNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -471,6 +472,12 @@ class SyaratSeminarmhsController extends Controller
             "Moderator <strong>{$moderator}</strong> telah ditetapkan untuk seminar hasil Anda.",
             route('seminarmhs.show', $syaratSeminarmhs->seminarmhs->id)          
         );
+
+        $this->sendStaffNotification($syaratSeminarmhs->id_moderator,
+            '📢 Anda Menjadi Moderator',
+            "Anda ditunjuk sebagai moderator untuk seminar hasil mahasiswa {$nama}.",
+            route('dashboarddosen.index', $syaratSeminarmhs->seminarmhs->id)
+        );
                 
         return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
     }
@@ -503,6 +510,16 @@ class SyaratSeminarmhsController extends Controller
     {
         AppNotification::create([
             'user_id' => $userId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
+    }
+
+    private function sendStaffNotification($staffId, $title, $message, $redirect = null)
+    {
+        StaffNotification::create([
+            'staff_id' => $staffId,
             'title' => $title,
             'message' => $message,
             'redirect_url' => $redirect,

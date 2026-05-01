@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             MitraSeeder::class,            
             KetuaDHHSSeeder::class,            
             ReviewAlumniSeeder::class,
+            RubrikSeeder::class,
             // SyaratKolokiummhsSeeder::class,
             // SyaratSeminarmhsSeeder::class,
             // SyaratKomprehensifmhsSeeder::class,            

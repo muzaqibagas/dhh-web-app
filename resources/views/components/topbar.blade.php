@@ -8,7 +8,15 @@
       </button>
   </div>
   <div class="user-info">
-    <i class="bi bi-person-circle"></i> {{ Auth::user()->username ?? 'Guest' }}
+    <i class="bi bi-person-circle"></i> 
+    @if(Auth::guard('staff')->check())
+        {{ Auth::guard('staff')->user()->username }}
+    @elseif(Auth::check())
+        {{ Auth::user()->username }}
+    @else
+        Guest
+    @endif
+
   </div>
 </div>
 <script>

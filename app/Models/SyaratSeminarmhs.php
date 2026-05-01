@@ -48,4 +48,10 @@ class SyaratSeminarmhs extends Model
     {
         return $this->hasOne(Seminarmhs::class, 'id_mahasiswa', 'id_mahasiswa');
     }
+
+    public function penilaian()
+    {
+        return $this->hasOne(Penilaian::class, 'id_syarat_seminarmhs');
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Models\Kolokiummhs;
 use App\Models\StaffDept;
 use App\Models\User;
 use App\Models\Notification as AppNotification;
+use App\Models\StaffNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -479,8 +480,13 @@ class SyaratKolokiummhsController extends Controller
             '🔔 Moderator Ditentukan',            
             "Moderator <strong>{$moderator}</strong> telah ditetapkan untuk kolokium Anda.",
             route('kolokiummhs.show', $syaratKolokiummhs->kolokiummhs->id)          
-        );
+        );        
 
+        $this->sendStaffNotification($syaratKolokiummhs->id_moderator,
+            '📢 Anda Menjadi Moderator',
+            "Anda ditunjuk sebagai moderator untuk kolokium mahasiswa {$nama}.",
+            route('dashboarddosen.index', $syaratKolokiummhs->kolokiummhs->id)
+        );
         
         return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
     }
@@ -509,10 +515,21 @@ class SyaratKolokiummhsController extends Controller
         //
     }
 
-    private function sendNotification($userId, $title, $message, $redirect = null)
+    private function sendNotification($userId, $staffId, $title, $message, $redirect = null)
     {
         AppNotification::create([
             'user_id' => $userId,
+            'staff_id' => $staffId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
+    }
+
+    private function sendStaffNotification($staffId, $title, $message, $redirect = null)
+    {
+        StaffNotification::create([
+            'staff_id' => $staffId,
             'title' => $title,
             'message' => $message,
             'redirect_url' => $redirect,

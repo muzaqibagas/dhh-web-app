@@ -67,27 +67,44 @@ class LoginmhsController extends Controller
         //
     }    
 
-   public function signin(Request $request)
+    public function signin(Request $request)
     {
         $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
+        // ========================
+        // CEK USER (ADMIN / MAHASISWA)
+        // ========================
         $user = User::where('username', $request->username)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['username' => 'Username atau password salah.']);
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::guard('web')->login($user);
+
+            return redirect()->intended(
+                $user->role === 'Admin'
+                    ? route('dashboardadm.index')
+                    : route('dashboardmhs.index')
+            );
         }
 
-        Auth::login($user);
+        // ========================
+        // CEK STAFF / DOSEN
+        // ========================
+        $staff = \App\Models\StaffDept::where('username', $request->username)->first();
 
-        return redirect()->intended(
-            $user->role === 'Admin'
-                ? route('dashboardadm.index')
-                : route('dashboardmhs.index')
-        );
+        if ($staff && Hash::check($request->password, $staff->password)) {
+            Auth::guard('staff')->login($staff);
+
+            return redirect()->route('dashboarddosen.index');
+        }
+
+        return back()->withErrors([
+            'username' => 'Username atau password salah.'
+        ]);
     }
+
 
     public function verifyEmail(EmailVerificationRequest $request)
     {        
@@ -105,10 +122,14 @@ class LoginmhsController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+        Auth::guard('staff')->logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
+
 
 }

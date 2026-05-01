@@ -14,6 +14,26 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
+            // dosen        
+            // [
+            //     'id_jenjang'       => null,
+            //     'nim'              => 'J0123',
+            //     'nama'             => 'Dr. Mahdi Mubarok, S.Si., M.Si',
+            //     'no_hp'            => '0123456789',
+            //     'alamat'           => 'Jl. dosen  No. 1',
+            //     'tanggal_lahir'    => '2000-01-01',
+            //     'angkatan'         => null,
+            //     'status'           => 'aktif',
+            //     'username'         => 'dosen',
+            //     'email'            => 'dosen@example.com',
+            //     'email_verified_at'=> now(), // sudah diverifikasi agar bisa login langsung
+            //     'password'         => Hash::make('dosen123')
+            //     'jenis_kelamin'    => 'Laki-laki',
+            //     'role'             => 'Dosen',
+            //     'foto'             => null,
+            //     'created_at'       => now(),
+            //     'updated_at'       => now(),
+            // ],
             // Admin
             [
                 'id_jenjang'       => null,

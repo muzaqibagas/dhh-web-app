@@ -207,6 +207,7 @@
       });
     </script>
   </aside>
+  
   <!-- MAIN KONTEN -->
   <main class="content">
     <div class="container-fluid mt-4">

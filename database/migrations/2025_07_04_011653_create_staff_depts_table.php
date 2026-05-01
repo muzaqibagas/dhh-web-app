@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('jabatan')->nullable();
             $table->string('foto')->nullable();
             $table->string('nama')->nullable();
+            $table->string('username')->unique()->nullable();          
             $table->date('tanggal_lahir')->nullable();
             $table->string('nip')->nullable()->unique();
             $table->string('email')->nullable()->unique();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->text('keahlian')->nullable();
             $table->text('publikasi')->nullable();
             $table->text('riwayat_pendidikan')->nullable();
+            $table->string('password')->nullable();        
             $table->timestamps();
         });
     }

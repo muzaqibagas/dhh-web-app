@@ -7,6 +7,7 @@ use App\Models\Komprehensifmhs;
 use App\Models\StaffDept;
 use App\Models\User;
 use App\Models\Notification as AppNotification;
+use App\Models\StaffNotification;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
@@ -485,6 +486,12 @@ class SyaratKomprehensifmhsController extends Controller
             "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.<br>
             Ruangan Pelaksanaan: <strong>{$request->ruangan}</strong>",
             route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)          
+        );
+
+        $this->sendStaffNotification($syaratKomprehensifmhs->id_moderator,
+            '📢 Anda Menjadi Moderator',
+            "Anda ditunjuk sebagai moderator untuk kolokium mahasiswa {$nama}.",
+            route('dashboarddosen.index', $syaratKomprehensifmhs->komprehensifmhs->id)
         );
                 
         return redirect()->back()->with('success', "Ketua Sidang <strong>{$moderator}</strong> dan Dosen Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");

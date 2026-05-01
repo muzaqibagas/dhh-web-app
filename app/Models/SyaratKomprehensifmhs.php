@@ -55,4 +55,10 @@ class SyaratKomprehensifmhs extends Model
     {
         return $this->hasone(Komprehensifmhs::class, 'id_mahasiswa', 'id_mahasiswa');
     }
+
+    public function penilaian()
+    {
+        return $this->hasOne(Penilaian::class, 'id_syarat_komprehensifmhs');
+    }
+
 }

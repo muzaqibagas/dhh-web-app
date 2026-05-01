@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class StaffNotification extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'staff_id',
+        'title',
+        'message',
+        'is_read',
+        'redirect_url',
+    ];
+
+    public function staff()
+    {
+        return $this->belongsTo(StaffDept::class, 'staff_id');
+    }
+}
+
+
