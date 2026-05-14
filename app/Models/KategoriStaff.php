@@ -10,6 +10,7 @@ class KategoriStaff extends Model
     use HasFactory;
 
     protected $table = 'kategori_staffs';
+
     protected $fillable = [
         'nama',
     ];

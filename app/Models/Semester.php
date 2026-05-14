@@ -10,7 +10,8 @@ class Semester extends Model
     use HasFactory;
 
     protected $table = 'semesters';
+
     protected $fillable = [
-        'semester',        
-    ];    
+        'semester',
+    ];
 }

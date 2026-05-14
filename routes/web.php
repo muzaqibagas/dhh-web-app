@@ -1,56 +1,48 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\NotificationController;
-use App\Models\Notification as AppNotification;
-use App\Http\Controllers\ArtikelController;
-use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\KategoriStaffController; 
-use App\Http\Controllers\KategoriGaleriController;
-use App\Http\Controllers\KategoriArtikelController;
-use App\Http\Controllers\KolokiumController;
-use App\Http\Controllers\KontenDeptController;
-use App\Http\Controllers\MitraController;
-use App\Http\Controllers\KontenJenjangController;
-use App\Http\Controllers\ReviewAlumniController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\RuanganController;
-use App\Http\Controllers\SeminarController;
-use App\Http\Controllers\SidangController;
-use App\Http\Controllers\StaffDeptController;
-use App\Http\Controllers\KetuaDHHController;
-use App\Http\Controllers\TemplateController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\EditPasswordAdmController;
-use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\AdmProfileController;
 use App\Http\Controllers\AdmRecapDataController;
-use App\Http\Controllers\RubrikController;
-
-// ROUTE MAHASISWA
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginmhsController;
-use App\Http\Controllers\LoginDosenController;
-use App\Http\Controllers\DashboardmhsController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DashboardadmController;
 use App\Http\Controllers\DashboarddosenController;
-use App\Http\Controllers\jadwalTAController;
-use App\Http\Controllers\PenilaianController;
-use App\Http\Controllers\ProfilemhsController;
+use App\Http\Controllers\DashboardmhsController;
+use App\Http\Controllers\EditPasswordAdmController;
+use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\FormulirlayananakademikmhsController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\jadwalTAController;
+use App\Http\Controllers\KategoriArtikelController;
+use App\Http\Controllers\KategoriGaleriController;
+use App\Http\Controllers\KategoriStaffController;
+use App\Http\Controllers\KetuaDHHController;
 use App\Http\Controllers\KolokiummhsController;
-use App\Http\Controllers\SyaratKolokiummhsController;
-use App\Http\Controllers\SeminarmhsController;
-use App\Http\Controllers\SyaratSeminarmhsController;
 use App\Http\Controllers\KomprehensifmhsController;
-use App\Http\Controllers\SyaratKomprehensifmhsController;
-
+use App\Http\Controllers\KontenDeptController;
+use App\Http\Controllers\KontenJenjangController;
+use App\Http\Controllers\LoginDosenController;
+use App\Http\Controllers\LoginmhsController;
+use App\Http\Controllers\MitraController;
+use App\Http\Controllers\PenilaianAdmController;
+use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\ProfileDosenController;
-
-
+// ROUTE MAHASISWA
+use App\Http\Controllers\ProfilemhsController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReviewAlumniController;
+use App\Http\Controllers\RubrikController;
+use App\Http\Controllers\SeminarmhsController;
+use App\Http\Controllers\StaffDeptController;
+use App\Http\Controllers\SyaratUjianController;
+use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\UserController;
+use App\Models\Notification as AppNotification;
+// use App\Http\Controllers\SyaratKolokiummhsController;
+use App\Models\StaffNotification;
+// use App\Http\Controllers\SyaratSeminarmhsController;
+use Illuminate\Http\Request;
+// use App\Http\Controllers\SyaratKomprehensifmhsController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // ROUTE ADMIN
 Route::get('/artikeledit', function () {
@@ -67,6 +59,7 @@ Route::get('/email/verify/{id}/{hash}', [LoginmhsController::class, 'verifyEmail
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
+
     return back()->with('message', 'Link verifikasi telah dikirim ke email kamu!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -89,7 +82,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('admprofile');
 });
 
-Route::get('login-dosen', function() { return view('auth.logindosen'); })->name('logindosen');
+Route::get('login-dosen', function () {
+    return view('auth.logindosen');
+})->name('logindosen');
 Route::post('login-dosen', [LoginDosenController::class, 'signin'])->name('logindosen.signin');
 Route::post('logout-dosen', [LoginDosenController::class, 'logout'])->name('logindosen.logout');
 
@@ -102,20 +97,18 @@ Route::post('editpassadm/update', [EditPasswordAdmController::class, 'update'])-
 Route::get('editpassmhs', [EditPasswordMhsController::class, 'index'])->name('editpassmhs.index');
 Route::post('editpassmhs/update', [EditPasswordMhsController::class, 'update'])->name('editpassmhs.update');
 
-
-
-//ADMIN
+// ADMIN
 // ROUTE MAHASISWA
-Route::get('/notification/open/{id}', function($id){
-    $notif = AppNotification::findOrFail($id);  
+Route::get('/notification/open/{id}', function ($id) {
+    $notif = AppNotification::findOrFail($id);
 
-    $notif->update(['is_read' => true]); // tandai sudah dibaca    
+    $notif->update(['is_read' => true]); // tandai sudah dibaca
 
-    return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan    
+    return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan
 })->name('notification.open');
 
-Route::get('/staff-notification/{id}', function($id){
-    $notif = StaffNotification::findOrFail($id);  
+Route::get('/staff-notification/{id}', function ($id) {
+    $notif = StaffNotification::findOrFail($id);
 
     $dosen = Auth::guard('staff')->user();
 
@@ -123,9 +116,9 @@ Route::get('/staff-notification/{id}', function($id){
         abort(403, 'Akses tidak diizinkan');
     }
 
-    $notif->update(['is_read' => true]);    
+    $notif->update(['is_read' => true]);
 
-    return redirect($notif->redirect_url ?? '/');    
+    return redirect($notif->redirect_url ?? '/');
 })->name('staff-notification.open');
 
 Route::get('dashboardmhs', [DashboardmhsController::class, 'index'])->name('dashboardmhs.index');
@@ -146,9 +139,12 @@ Route::get('penilaian/create', [PenilaianController::class, 'create'])->name('pe
 Route::post('penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
 Route::get('penilaian/{penilaian}', [PenilaianController::class, 'show'])->name('penilaian.show');
 
-
 // ROUTE ADMIN AKADEMIK
 Route::get('admprofile', [AdmProfileController::class, 'index'])->name('admprofile.index');
+
+// PENILAIAN ADMIN
+Route::get('penilaianadm', [PenilaianAdmController::class, 'index'])->name('penilaianadm.index');
+Route::get('penilaianadm/{id_syarat_ujian}', [PenilaianAdmController::class, 'show'])->name('penilaianadm.show');
 
 // KategoriArtikel
 Route::get('kategoriartikel', [KategoriArtikelController::class, 'index'])->name('kategoriartikel.index');
@@ -171,7 +167,6 @@ Route::delete('artikel/{artikel}', [ArtikelController::class, 'destroy'])->name(
 // Filter artikel berdasarkan kategori
 Route::get('artikels/kategori/{kategori}', [ArtikelController::class, 'filterByKategori'])->name('artikels.kategori');
 
-
 // KategoriGaleri
 Route::get('kategorigaleri', [KategoriGaleriController::class, 'index'])->name('kategorigaleri.index');
 Route::get('kategorigaleri/create', [KategoriGaleriController::class, 'create'])->name('kategorigaleri.create');
@@ -180,7 +175,6 @@ Route::get('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 
 Route::get('kategorigaleri/{kategoriGaleri}/edit', [KategoriGaleriController::class, 'edit'])->name('kategorigaleri.edit');
 Route::put('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 'update'])->name('kategorigaleri.update');
 Route::delete('kategorigaleri/{kategoriGaleri}', [KategoriGaleriController::class, 'destroy'])->name('kategorigaleri.destroy');
-
 
 // Galeri
 Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');
@@ -197,7 +191,7 @@ Route::get('kontenjenjang', [KontenJenjangController::class, 'index'])->name('ko
 Route::get('kontenjenjang/create', [KontenJenjangController::class, 'create'])->name('kontenjenjang.create');
 Route::post('kontenjenjang', [KontenJenjangController::class, 'store'])->name('kontenjenjang.store');
 Route::get('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'show'])->name('kontenjenjang.show');
-Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit'); 
+Route::get('kontenjenjang/{kontenJenjang}/edit', [KontenJenjangController::class, 'edit'])->name('kontenjenjang.edit');
 Route::put('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'update'])->name('kontenjenjang.update');
 Route::delete('kontenjenjang/{kontenJenjang}', [KontenJenjangController::class, 'destroy'])->name('kontenjenjang.destroy');
 
@@ -207,10 +201,10 @@ Route::get('/pendidikans3', [KontenJenjangController::class, 'pendidikanS3'])->n
 
 // KategoriStaff
 Route::get('kategoristaff', [KategoriStaffController::class, 'index'])->name('kategoristaff.index');
-Route::get('kategoristaff/create', [KategoriStaffController::class, 'create'])->name('kategoristaff.create');                                                                                      
+Route::get('kategoristaff/create', [KategoriStaffController::class, 'create'])->name('kategoristaff.create');
 Route::post('kategoristaff', [KategoriStaffController::class, 'store'])->name('kategoristaff.store');
 Route::get('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'show'])->name('kategoristaff.show');
-Route::get('kategoristaff/{kategoriStaff}/edit', [KategoriStaffController::class, 'edit'])->name('kategoristaff.edit');                           
+Route::get('kategoristaff/{kategoriStaff}/edit', [KategoriStaffController::class, 'edit'])->name('kategoristaff.edit');
 Route::put('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'update'])->name('kategoristaff.update');
 Route::delete('kategoristaff/{kategoriStaff}', [KategoriStaffController::class, 'destroy'])->name('kategoristaff.destroy');
 
@@ -223,8 +217,8 @@ Route::get('konten-dept/{kontenDept}', [KontenDeptController::class, 'show'])->n
 Route::get('konten-dept/{kontenDept}/edit', [KontenDeptController::class, 'edit'])->name('konten-dept.edit');
 Route::put('konten-dept/{kontenDept}', [KontenDeptController::class, 'update'])->name('konten-dept.update');
 Route::delete('konten-dept/{kontenDept}', [KontenDeptController::class, 'destroy'])->name('konten-dept.destroy');
-                            
-//Mitra
+
+// Mitra
 Route::get('mitra', [MitraController::class, 'index'])->name('mitra.index');
 Route::get('mitra/create', [MitraController::class, 'create'])->name('mitra.create');
 Route::post('mitra', [MitraController::class, 'store'])->name('mitra.store');
@@ -246,25 +240,37 @@ Route::delete('review-alumni/{reviewAlumni}', [ReviewAlumniController::class, 'd
 // Kolokium
 Route::get('kolokiummhs', [KolokiummhsController::class, 'index'])->name('kolokiummhs.index');
 Route::get('kolokiummhs/create', [KolokiummhsController::class, 'create'])->name('kolokiummhs.create');
-Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');     
+Route::post('kolokiummhs', [KolokiummhsController::class, 'store'])->name('kolokiummhs.store');
 Route::get('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'show'])->name('kolokiummhs.show');
 Route::get('/kolokiummhs/{id}/pdf', [KolokiummhsController::class, 'generatePdf'])->name('kolokiummhs.pdf');
 Route::get('kolokiummhs/{kolokiummhs}/edit', [KolokiummhsController::class, 'edit'])->name('kolokiummhs.edit');
 Route::put('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'update'])->name('kolokiummhs.update');
-Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');     
+Route::delete('kolokiummhs/{kolokiummhs}', [KolokiummhsController::class, 'destroy'])->name('kolokiummhs.destroy');
+
+Route::get('syaratujian', [SyaratUjianController::class, 'index'])->name('syaratujian.index');
+Route::post('syaratujian/{id}/setujui', [SyaratUjianController::class, 'setujui'])->name('syaratujian.setujui');
+Route::post('syaratujian/{id}/tolak', [SyaratUjianController::class, 'tolak'])->name('syaratujian.tolak');
+Route::get('syaratujian/{id}/pdf', [SyaratUjianController::class, 'downloadPdf'])->name('undangan.pdf');
+Route::get('syaratujian/create', [SyaratUjianController::class, 'create'])->name('syaratujian.create');
+Route::post('syaratujian', [SyaratUjianController::class, 'store'])->name('syaratujian.store');
+Route::post('syaratujian/{id}/reupload', [SyaratUjianController::class, 'reupload'])->name('syaratujian.reupload');
+Route::post('syaratujian/{id}/bap-diterima', [SyaratUjianController::class, 'bapDiterima'])->name('syaratujian.bap.diterima');
+Route::post('syaratujian/{id}/bap-ditolak', [SyaratUjianController::class, 'bapDitolak'])->name('syaratujian.bap.ditolak');
+Route::get('syaratujian/{syaratUjian}', [SyaratUjianController::class, 'show'])->name('syaratujian.show');
+Route::post('syaratujian/{syaratUjian}/tambah-moderator', [SyaratUjianController::class, 'tambahModerator'])->name('syaratujian.tambahModerator');
 
 // Syarat Kolokium
-Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index'); //syarat kolokium admin
-Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create'); //syarat kolokium mahasiswa form
-Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store'); //syarat kolokium mahasiswa form
-Route::post('syaratkolokiummhs/{id}/reupload', [SyaratKolokiummhsController::class, 'reupload'])->name('syaratkolokiummhs.reupload');
-Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui'); //syarat kolokium admin
-Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
-Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
-Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
-Route::get('/undangankolokiummhs/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
-Route::post('/syaratkolokiummhs/{id}/bap-diterima', [SyaratKolokiummhsController::class, 'bapDiterima'])->name('syaratkolokiummhs.bap.diterima');
-Route::post('/syaratkolokiummhs/{id}/bap-ditolak', [SyaratKolokiummhsController::class, 'bapDitolak'])->name('syaratkolokiummhs.bap.ditolak');
+// Route::get('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'index'])->name('syaratkolokiummhs.index'); //syarat kolokium admin
+// Route::get('syaratkolokiummhs/create', [SyaratKolokiummhsController::class, 'create'])->name('syaratkolokiummhs.create'); //syarat kolokium mahasiswa form
+// Route::post('syaratkolokiummhs', [SyaratKolokiummhsController::class, 'store'])->name('syaratkolokiummhs.store'); //syarat kolokium mahasiswa form
+// Route::post('syaratkolokiummhs/{id}/reupload', [SyaratKolokiummhsController::class, 'reupload'])->name('syaratkolokiummhs.reupload');
+// Route::post('syaratkolokiummhs/{id}/setujui', [SyaratKolokiummhsController::class, 'setujui'])->name('syaratkolokiummhs.setujui'); //syarat kolokium admin
+// Route::post('syaratkolokiummhs/{id}/tolak', [SyaratKolokiummhsController::class, 'tolak'])->name('syaratkolokiummhs.tolak'); //syarat kolokium admin
+// Route::get('syaratkolokiummhs/{syaratKolokiummhs}', [SyaratKolokiummhsController::class, 'show'])->name('syaratkolokiummhs.show'); //syarat kolokium admin
+// Route::post('syaratkolokiummhs/{syaratKolokiummhs}/tambah-moderator', [SyaratKolokiummhsController::class, 'tambahModerator'])->name('syaratkolokiummhs.tambahModerator'); //syarat kolokium admin
+// Route::get('/undangankolokiummhs/{id}/pdf', [SyaratKolokiummhsController::class, 'downloadPdf'])->name('undangan.kolokium.pdf');
+// Route::post('/syaratkolokiummhs/{id}/bap-diterima', [SyaratKolokiummhsController::class, 'bapDiterima'])->name('syaratkolokiummhs.bap.diterima');
+// Route::post('/syaratkolokiummhs/{id}/bap-ditolak', [SyaratKolokiummhsController::class, 'bapDitolak'])->name('syaratkolokiummhs.bap.ditolak');
 
 // Seminar Mahasiswa form
 Route::get('seminarmhs', [SeminarmhsController::class, 'index'])->name('seminarmhs.index');
@@ -277,17 +283,17 @@ Route::put('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'update'])->
 Route::delete('seminarmhs/{seminarmhs}', [SeminarmhsController::class, 'destroy'])->name('seminarmhs.destroy');
 
 // Syarat Seminar
-Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index'); //syarat seminar admin
-Route::get('syaratseminarmhs/create', [SyaratSeminarmhsController::class, 'create'])->name('syaratseminarmhs.create'); //syarat seminar mahasiswa form
-Route::post('syaratseminarmhs', [SyaratSeminarmhsController::class, 'store'])->name('syaratseminarmhs.store'); //syarat seminar mahasiswa form
-Route::post('syaratseminarmhs/{id}/reupload', [SyaratSeminarmhsController::class, 'reupload'])->name('syaratseminarmhs.reupload');
-Route::post('syaratseminarmhs/{id}/setujui', [SyaratSeminarmhsController::class, 'setujui'])->name('syaratseminarmhs.setujui'); //syarat seminar admin
-Route::post('syaratseminarmhs/{id}/tolak', [SyaratSeminarmhsController::class, 'tolak'])->name('syaratseminarmhs.tolak'); //syarat seminar admin
-Route::get('syaratseminarmhs/{syaratSeminarmhs}', [SyaratSeminarmhsController::class, 'show'])->name('syaratseminarmhs.show'); //syarat seminar admin
-Route::post('syaratseminarmhs/{syaratSeminarmhs}/tambah-moderator', [SyaratSeminarmhsController::class, 'tambahModerator'])->name('syaratseminarmhs.tambahModerator'); //syarat seminar admin
-Route::get('/undanganseminarmhs/{id}/pdf', [SyaratSeminarmhsController::class, 'downloadPdf'])->name('undangan.seminar.pdf');
-Route::post('/syaratseminarmhs/{id}/bap-diterima', [SyaratSeminarmhsController::class, 'bapDiterima'])->name('syaratseminarmhs.bap.diterima');
-Route::post('/syaratseminarmhs/{id}/bap-ditolak', [SyaratSeminarmhsController::class, 'bapDitolak'])->name('syaratseminarmhs.bap.ditolak');
+// Route::get('syaratseminarmhs', [SyaratSeminarmhsController::class, 'index'])->name('syaratseminarmhs.index'); //syarat seminar admin
+// Route::get('syaratseminarmhs/create', [SyaratSeminarmhsController::class, 'create'])->name('syaratseminarmhs.create'); //syarat seminar mahasiswa form
+// Route::post('syaratseminarmhs', [SyaratSeminarmhsController::class, 'store'])->name('syaratseminarmhs.store'); //syarat seminar mahasiswa form
+// Route::post('syaratseminarmhs/{id}/reupload', [SyaratSeminarmhsController::class, 'reupload'])->name('syaratseminarmhs.reupload');
+// Route::post('syaratseminarmhs/{id}/setujui', [SyaratSeminarmhsController::class, 'setujui'])->name('syaratseminarmhs.setujui'); //syarat seminar admin
+// Route::post('syaratseminarmhs/{id}/tolak', [SyaratSeminarmhsController::class, 'tolak'])->name('syaratseminarmhs.tolak'); //syarat seminar admin
+// Route::get('syaratseminarmhs/{syaratSeminarmhs}', [SyaratSeminarmhsController::class, 'show'])->name('syaratseminarmhs.show'); //syarat seminar admin
+// Route::post('syaratseminarmhs/{syaratSeminarmhs}/tambah-moderator', [SyaratSeminarmhsController::class, 'tambahModerator'])->name('syaratseminarmhs.tambahModerator'); //syarat seminar admin
+// Route::get('/undanganseminarmhs/{id}/pdf', [SyaratSeminarmhsController::class, 'downloadPdf'])->name('undangan.seminar.pdf');
+// Route::post('/syaratseminarmhs/{id}/bap-diterima', [SyaratSeminarmhsController::class, 'bapDiterima'])->name('syaratseminarmhs.bap.diterima');
+// Route::post('/syaratseminarmhs/{id}/bap-ditolak', [SyaratSeminarmhsController::class, 'bapDitolak'])->name('syaratseminarmhs.bap.ditolak');
 
 // Sidang Akhir atau Komprehensif
 Route::get('komprehensifmhs', [KomprehensifmhsController::class, 'index'])->name('komprehensifmhs.index');
@@ -300,17 +306,17 @@ Route::put('komprehensifmhs/{komprehensifmhs}', [KomprehensifmhsController::clas
 Route::delete('komprehensifmhs/{komprehensifmhs}', [KomprehensifmhsController::class, 'destroy'])->name('komprehensifmhs.destroy');
 
 // Syarat Komprehensif
-Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
-Route::get('syaratkomprehensifmhs/create', [SyaratKomprehensifmhsController::class, 'create'])->name('syaratkomprehensifmhs.create'); //syarat seminar mahasiswa form
-Route::post('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'store'])->name('syaratkomprehensifmhs.store'); //syarat seminar mahasiswa form
-Route::post('syaratkomprehensifmhs/{id}/reupload', [SyaratKomprehensifmhsController::class, 'reupload'])->name('syaratkomprehensifmhs.reupload');
-Route::post('syaratkomprehensifmhs/{id}/setujui', [SyaratKomprehensifmhsController::class, 'setujui'])->name('syaratkomprehensifmhs.setujui'); //syarat seminar admin
-Route::post('syaratkomprehensifmhs/{id}/tolak', [SyaratKomprehensifmhsController::class, 'tolak'])->name('syaratkomprehensifmhs.tolak'); //syarat seminar admin
-Route::get('syaratkomprehensifmhs/{syaratKomprehensifmhs}', [SyaratKomprehensifmhsController::class, 'show'])->name('syaratkomprehensifmhs.show'); //syarat seminar admin
-Route::post('syaratkomprehensifmhs/{syaratKomprehensifmhs}/tambah-moderator', [SyaratKomprehensifmhsController::class, 'tambahModerator'])->name('syaratkomprehensifmhs.tambahModerator'); //syarat seminar admin
-Route::get('/undangankomprehensif/{id}/pdf', [SyaratkomprehensifmhsController::class, 'downloadPdf'])->name('undangan.komprehensif.pdf');
-Route::post('/syaratkomprehensifmhs/{id}/bap-diterima', [SyaratkomprehensifmhsController::class, 'bapDiterima'])->name('syaratkomprehensifmhs.bap.diterima');
-Route::post('/syaratkomprehensifmhs/{id}/bap-ditolak', [SyaratkomprehensifmhsController::class, 'bapDitolak'])->name('syaratkomprehensifmhs.bap.ditolak');
+// Route::get('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'index'])->name('syaratkomprehensifmhs.index');
+// Route::get('syaratkomprehensifmhs/create', [SyaratKomprehensifmhsController::class, 'create'])->name('syaratkomprehensifmhs.create'); //syarat seminar mahasiswa form
+// Route::post('syaratkomprehensifmhs', [SyaratKomprehensifmhsController::class, 'store'])->name('syaratkomprehensifmhs.store'); //syarat seminar mahasiswa form
+// Route::post('syaratkomprehensifmhs/{id}/reupload', [SyaratKomprehensifmhsController::class, 'reupload'])->name('syaratkomprehensifmhs.reupload');
+// Route::post('syaratkomprehensifmhs/{id}/setujui', [SyaratKomprehensifmhsController::class, 'setujui'])->name('syaratkomprehensifmhs.setujui'); //syarat seminar admin
+// Route::post('syaratkomprehensifmhs/{id}/tolak', [SyaratKomprehensifmhsController::class, 'tolak'])->name('syaratkomprehensifmhs.tolak'); //syarat seminar admin
+// Route::get('syaratkomprehensifmhs/{syaratKomprehensifmhs}', [SyaratKomprehensifmhsController::class, 'show'])->name('syaratkomprehensifmhs.show'); //syarat seminar admin
+// Route::post('syaratkomprehensifmhs/{syaratKomprehensifmhs}/tambah-moderator', [SyaratKomprehensifmhsController::class, 'tambahModerator'])->name('syaratkomprehensifmhs.tambahModerator'); //syarat seminar admin
+// Route::get('/undangankomprehensif/{id}/pdf', [SyaratkomprehensifmhsController::class, 'downloadPdf'])->name('undangan.komprehensif.pdf');
+// Route::post('/syaratkomprehensifmhs/{id}/bap-diterima', [SyaratkomprehensifmhsController::class, 'bapDiterima'])->name('syaratkomprehensifmhs.bap.diterima');
+// Route::post('/syaratkomprehensifmhs/{id}/bap-ditolak', [SyaratkomprehensifmhsController::class, 'bapDitolak'])->name('syaratkomprehensifmhs.bap.ditolak');
 
 // StaffDept
 Route::get('staff-dept', [StaffDeptController::class, 'index'])->name('staffdept.index');
@@ -354,6 +360,3 @@ Route::get('file', [UserController::class, 'file'])->name('user.file');
 Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('user/{user}', [UserController::class, 'update'])->name('user.update');
 Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-
-
-

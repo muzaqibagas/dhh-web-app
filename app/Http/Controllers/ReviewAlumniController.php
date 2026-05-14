@@ -11,23 +11,24 @@ class ReviewAlumniController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {        
-        $query = ReviewAlumni::query();        
-        if (request()->has('search')){
+    {
+        $query = ReviewAlumni::query();
+        if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $reviews = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                        
+        $reviews = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+
         return view('reviewalumni.index', compact('reviews'));
     }
 
     public function alumni()
     {
         $reviews = ReviewAlumni::orderBy('id', 'DESC')->paginate(9);
+
         return view('reviewalumni.alumni', compact('reviews'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -51,20 +52,21 @@ class ReviewAlumniController extends Controller
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        $data['id_user'] = auth()->id();        
+        $data['id_user'] = auth()->id();
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time().'_'.$file->getClientOriginalName();
             $file->move(public_path('foto_alumni'), $filename);
-            $data['foto'] = 'foto_alumni/' . $filename;
+            $data['foto'] = 'foto_alumni/'.$filename;
         }
 
         $insert = ReviewAlumni::create($data);
-        if ($insert)
+        if ($insert) {
             return redirect()->route('review-alumni.index')->with('success', 'Data berhasil disimpan!');
-        else
+        } else {
             return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
 
     /**
@@ -73,9 +75,9 @@ class ReviewAlumniController extends Controller
     public function show(ReviewAlumni $reviewAlumni)
     {
         $randomReviews = ReviewAlumni::where('id', '!=', $reviewAlumni->id)
-                                ->inRandomOrder()
-                                ->take(3)
-                                ->get();
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
         return view('reviewalumni.show', compact('reviewAlumni', 'randomReviews'));
     }
@@ -109,22 +111,23 @@ class ReviewAlumniController extends Controller
                 unlink(public_path($reviewAlumni->foto));
             }
             $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time().'_'.$file->getClientOriginalName();
             $file->move(public_path('foto_alumni'), $filename);
-            $data['foto'] = 'foto_alumni/' . $filename;
+            $data['foto'] = 'foto_alumni/'.$filename;
         }
 
         $reviewAlumni->fill($data);
 
-        if (!$reviewAlumni->isDirty()) {
+        if (! $reviewAlumni->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $reviewAlumni->update($data);
-        if ($update)
+        if ($update) {
             return redirect()->route('review-alumni.index')->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
 
     /**
@@ -137,6 +140,7 @@ class ReviewAlumniController extends Controller
         }
 
         $reviewAlumni->delete();
+
         return redirect()->route('review-alumni.index');
     }
 }

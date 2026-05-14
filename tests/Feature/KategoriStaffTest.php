@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\KategoriStaff;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class KategoriStaffTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_index_page_can_be_accessed(): void
     {
         $response = $this->get('/kategoristaff');
@@ -34,33 +34,33 @@ class KategoriStaffTest extends TestCase
 
     public function test_show_kategori_staff(): void
     {
-        $kategoriStaff = \App\Models\KategoriStaff::factory()->create();
-        $response = $this->get('/kategoristaff/' . $kategoriStaff->id);
+        $kategoriStaff = KategoriStaff::factory()->create();
+        $response = $this->get('/kategoristaff/'.$kategoriStaff->id);
         $response->assertStatus(200);
     }
 
     public function test_edit_page_can_be_accessed(): void
     {
-        $kategoriStaff = \App\Models\KategoriStaff::factory()->create();
-        $response = $this->get('/kategoristaff/' . $kategoriStaff->id . '/edit');
+        $kategoriStaff = KategoriStaff::factory()->create();
+        $response = $this->get('/kategoristaff/'.$kategoriStaff->id.'/edit');
         $response->assertStatus(200);
     }
 
     public function test_update_kategori_staff(): void
     {
-        $kategoriStaff = \App\Models\KategoriStaff::factory()->create();
+        $kategoriStaff = KategoriStaff::factory()->create();
         $data = [
-            'nama' => 'Kategori Staff Updated'
+            'nama' => 'Kategori Staff Updated',
         ];
-        $response = $this->put('/kategoristaff/' . $kategoriStaff->id, $data);
+        $response = $this->put('/kategoristaff/'.$kategoriStaff->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('kategori_staffs', ['nama' => 'Kategori Staff Updated']);
     }
 
     public function test_destroy_kategori_staff(): void
     {
-        $kategoriStaff = \App\Models\KategoriStaff::factory()->create();
-        $response = $this->delete('/kategoristaff/' . $kategoriStaff->id);
+        $kategoriStaff = KategoriStaff::factory()->create();
+        $response = $this->delete('/kategoristaff/'.$kategoriStaff->id);
         $response->assertStatus(302);
         $this->assertDatabaseMissing('kategori_staffs', ['id' => $kategoriStaff->id]);
     }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jenjang;
 use App\Models\KontenJenjang;
 use App\Models\LeafletJenjang;
-use App\Models\Jenjang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,27 +14,28 @@ class KontenJenjangController extends Controller
     private $jenjangList = ['S1', 'S2', 'S3'];
 
     public function index()
-    {                
-        $query = KontenJenjang::with('jenjang');   
+    {
+        $query = KontenJenjang::with('jenjang');
 
-        if (request()->has('search')){
+        if (request()->has('search')) {
             $search = request()->search;
-            $query->whereHas('jenjang', function($q) use ($search) {
+            $query->whereHas('jenjang', function ($q) use ($search) {
                 $q->where('nama', 'like', "%$search%");
             });
         }
 
         $kontenJenjangs = $query->get();
+
         return view('kontenjenjang.index', compact('kontenJenjangs'));
     }
 
     public function create(Request $request)
-    {        
+    {
         $jenjangs = Jenjang::whereDoesntHave('konten')->get();
 
         return view('kontenjenjang.create', compact('jenjangs'));
     }
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -45,7 +46,7 @@ class KontenJenjangController extends Controller
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
-            'capaianpembelajaran' => 'nullable|string',            
+            'capaianpembelajaran' => 'nullable|string',
             'leaflet.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'deskripsiakreditasi' => 'nullable|string|max:255',
@@ -63,19 +64,21 @@ class KontenJenjangController extends Controller
 
         // upload foto & sertifikat
         foreach ($directories as $field => $path) {
-            if ($field === 'leaflet') continue;
+            if ($field === 'leaflet') {
+                continue;
+            }
 
             if ($request->hasFile($field)) {
 
-                if (!file_exists(public_path($path))) {
+                if (! file_exists(public_path($path))) {
                     mkdir(public_path($path), 0777, true);
                 }
 
                 $file = $request->file($field);
-                $filename = uniqid() . '_' . $field . '.' . $file->getClientOriginalExtension();
+                $filename = uniqid().'_'.$field.'.'.$file->getClientOriginalExtension();
                 $file->move(public_path($path), $filename);
 
-                $validated[$field] = $path . '/' . $filename;
+                $validated[$field] = $path.'/'.$filename;
             }
         }
 
@@ -90,16 +93,16 @@ class KontenJenjangController extends Controller
             foreach ($request->file('leaflet') as $file) {
                 $path = $directories['leaflet'];
 
-                if (!file_exists(public_path($path))) {
+                if (! file_exists(public_path($path))) {
                     mkdir(public_path($path), 0777, true);
                 }
 
-                $filename = uniqid() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
+                $filename = uniqid().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
                 $file->move(public_path($path), $filename);
 
                 LeafletJenjang::create([
                     'id_kontenjenjang' => $konten->id,
-                    'gambar' => $path . '/' . $filename,
+                    'gambar' => $path.'/'.$filename,
                 ]);
             }
         }
@@ -111,10 +114,10 @@ class KontenJenjangController extends Controller
     public function pendidikanS1()
     {
         $data = KontenJenjang::with(['jenjang', 'leaflets'])
-            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S1'))
+            ->whereHas('jenjang', fn ($q) => $q->where('nama', 'S1'))
             ->first();
 
-        if (!$data) {
+        if (! $data) {
             return view('kontenjenjang.pendidikans1')->with('data', null);
         }
 
@@ -124,7 +127,7 @@ class KontenJenjangController extends Controller
     public function pendidikanS2()
     {
         $data = KontenJenjang::with(['jenjang', 'leaflets'])
-            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S2'))
+            ->whereHas('jenjang', fn ($q) => $q->where('nama', 'S2'))
             ->first();
 
         return view('kontenjenjang.pendidikans2', compact('data'));
@@ -133,7 +136,7 @@ class KontenJenjangController extends Controller
     public function pendidikanS3()
     {
         $data = KontenJenjang::with(['jenjang', 'leaflets'])
-            ->whereHas('jenjang', fn($q) => $q->where('nama', 'S3'))
+            ->whereHas('jenjang', fn ($q) => $q->where('nama', 'S3'))
             ->first();
 
         return view('kontenjenjang.pendidikans3', compact('data'));
@@ -146,9 +149,8 @@ class KontenJenjangController extends Controller
 
     public function edit(KontenJenjang $kontenJenjang)
     {
-        return view('kontenjenjang.edit', compact('kontenJenjang'));        
+        return view('kontenjenjang.edit', compact('kontenJenjang'));
     }
-
 
     public function update(Request $request, KontenJenjang $kontenJenjang)
     {
@@ -159,7 +161,7 @@ class KontenJenjangController extends Controller
             'misi' => 'nullable|string',
             'tujuanpendidikan' => 'nullable|string',
             'kompetensilulusan' => 'nullable|string',
-            'capaianpembelajaran' => 'nullable|string',            
+            'capaianpembelajaran' => 'nullable|string',
             'leaflet.*' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'sertifikatakreditasi' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'deskripsiakreditasi' => 'nullable|string|max:255',
@@ -178,9 +180,9 @@ class KontenJenjangController extends Controller
         foreach (['foto', 'sertifikatakreditasi'] as $field) {
             if ($request->hasFile($field)) {
                 $file = $request->file($field);
-                $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
+                $filename = time().'_'.$field.'.'.$file->getClientOriginalExtension();
 
-                if (!file_exists(public_path($directories[$field]))) {
+                if (! file_exists(public_path($directories[$field]))) {
                     mkdir(public_path($directories[$field]), 0777, true);
                 }
 
@@ -190,7 +192,7 @@ class KontenJenjangController extends Controller
                 }
 
                 $file->move(public_path($directories[$field]), $filename);
-                $validated[$field] = $directories[$field] . '/' . $filename;
+                $validated[$field] = $directories[$field].'/'.$filename;
             }
         }
 
@@ -211,34 +213,37 @@ class KontenJenjangController extends Controller
             // simpan leaflet baru
             foreach ($request->file('leaflet') as $file) {
                 $path = $directories['leaflet'];
-                if (!file_exists(public_path($path))) {
+                if (! file_exists(public_path($path))) {
                     mkdir(public_path($path), 0777, true);
                 }
 
-                $filename = uniqid() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
+                $filename = uniqid().'_'.Str::random(8).'.'.$file->getClientOriginalExtension();
                 $file->move(public_path($path), $filename);
 
                 LeafletJenjang::create([
                     'id_kontenjenjang' => $kontenJenjang->id,
-                    'gambar' => $path . '/' . $filename,
+                    'gambar' => $path.'/'.$filename,
                 ]);
             }
         }
 
-        if (isset($validated['leaflet'])) unset($validated['leaflet']);
+        if (isset($validated['leaflet'])) {
+            unset($validated['leaflet']);
+        }
 
         $kontenJenjang->fill($validated);
-        if (!$kontenJenjang->isDirty() && !$hasLeafletUpload) {
+        if (! $kontenJenjang->isDirty() && ! $hasLeafletUpload) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $kontenJenjang->update($validated);
-        if ($update)
+        if ($update) {
             return redirect()->route('kontenjenjang.index')->with('success', 'Konten jenjang berhasil diperbarui.');
-        else
+        } else {
             return back()->with('error', 'Konten jenjang gagal diperbarui.');
-    }   
-    
+        }
+    }
+
     public function destroy(KontenJenjang $kontenJenjang)
     {
         // Hapus file terkait jika ada

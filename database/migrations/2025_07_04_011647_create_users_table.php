@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('id');                        
+            $table->id('id');
             $table->foreignId('id_jenjang')->nullable()->constrained('jenjangs')->onDelete('cascade');
             $table->string('nim')->nullable()->unique();
             $table->string('nama');
@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');            
+            $table->string('password');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->default('Laki-laki');
             $table->enum('role', ['Admin', 'Mahasiswa', 'Dosen'])->default('Mahasiswa');
-            $table->string('foto')->nullable();            
+            $table->string('foto')->nullable();
             $table->string('tanda_tangan')->nullable();
             $table->timestamps();
         });

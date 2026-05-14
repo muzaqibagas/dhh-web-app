@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Jenjang;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Jenjang;
 
 class JenjangTest extends TestCase
 {
@@ -36,14 +36,14 @@ class JenjangTest extends TestCase
     public function test_show_jenjang()
     {
         $jenjang = Jenjang::factory()->create();
-        $response = $this->get('/jenjang/' . $jenjang->id);
+        $response = $this->get('/jenjang/'.$jenjang->id);
         $response->assertStatus(200);
     }
 
     public function test_edit_page_can_be_accessed()
     {
         $jenjang = Jenjang::factory()->create();
-        $response = $this->get('/jenjang/' . $jenjang->id . '/edit');
+        $response = $this->get('/jenjang/'.$jenjang->id.'/edit');
         $response->assertStatus(200);
     }
 
@@ -54,7 +54,7 @@ class JenjangTest extends TestCase
             'nama' => 'Jenjang Updated',
             // tambahkan field lain sesuai kebutuhan
         ];
-        $response = $this->put('/jenjang/' . $jenjang->id, $data);
+        $response = $this->put('/jenjang/'.$jenjang->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('jenjangs', ['nama' => 'Jenjang Updated']);
     }
@@ -62,7 +62,7 @@ class JenjangTest extends TestCase
     public function test_destroy_jenjang()
     {
         $jenjang = Jenjang::factory()->create();
-        $response = $this->delete('/jenjang/' . $jenjang->id);
+        $response = $this->delete('/jenjang/'.$jenjang->id);
         $response->assertStatus(302);
         $this->assertDatabaseMissing('jenjangs', ['id' => $jenjang->id]);
     }

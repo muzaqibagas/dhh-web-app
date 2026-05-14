@@ -26,13 +26,18 @@ class Komprehensifmhs extends Model
         'judul_tugasakhir',
         'skl',
         'tanggal_skl',
-        'status',        
+        'status',
     ];
 
     public function mahasiswa()
     {
         return $this->belongsTo(User::class, 'id_mahasiswa');
-    }    
+    }
+
+    public function ruangan()
+    {
+        return $this->belongsTo(Ruangan::class, 'id_ruangan');
+    }
 
     public function semester()
     {
@@ -54,8 +59,14 @@ class Komprehensifmhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_komisipendidikan');
     }
 
-    public function syaratKomprehensif()
+    public function syaratUjian()
     {
-        return $this->hasOne(SyaratKomprehensifmhs::class, 'id_mahasiswa', 'id_mahasiswa');
-    }    
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
+
+    public function syaratUjianKomprehensif()
+    {
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa')
+            ->where('jenis_ujian', 'komprehensif');
+    }
 }

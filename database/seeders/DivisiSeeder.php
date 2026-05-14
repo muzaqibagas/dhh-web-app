@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +17,7 @@ class DivisiSeeder extends Seeder
             ['nama' => 'biorefinery Hasil Hutan'],
             ['nama' => 'Manajemen Industri Hasil Hutan'],
             ['nama' => 'Rekayasa dan Desain Bangunan Kayu'],
-            ['nama' => 'Teknologi Peningkatan Mutu Kayu'],            
-        ]); 
+            ['nama' => 'Teknologi Peningkatan Mutu Kayu'],
+        ]);
     }
 }

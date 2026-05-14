@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\StaffDept;
+use App\Models\User;
+
 return [
 
     /*
@@ -47,7 +50,6 @@ return [
         ],
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -68,11 +70,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),            
+            'model' => env('AUTH_MODEL', User::class),
         ],
         'staff' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL_STAFF', App\Models\StaffDept::class),
+            'model' => env('AUTH_MODEL_STAFF', StaffDept::class),
         ],
 
         // 'users' => [

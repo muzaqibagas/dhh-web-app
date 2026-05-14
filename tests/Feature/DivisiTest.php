@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Feature;
 
+use App\Models\Divisi;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Divisi;
 
 class DivisiTest extends TestCase
 {
@@ -34,14 +35,14 @@ class DivisiTest extends TestCase
     public function test_show_divisi()
     {
         $divisi = Divisi::factory()->create();
-        $response = $this->get('/divisi/' . $divisi->id);
+        $response = $this->get('/divisi/'.$divisi->id);
         $response->assertStatus(200);
     }
 
     public function test_edit_page_can_be_accessed()
     {
         $divisi = Divisi::factory()->create();
-        $response = $this->get('/divisi/' . $divisi->id . '/edit');
+        $response = $this->get('/divisi/'.$divisi->id.'/edit');
         $response->assertStatus(200);
     }
 
@@ -49,7 +50,7 @@ class DivisiTest extends TestCase
     {
         $divisi = Divisi::factory()->create();
         $data = ['nama' => 'Divisi Updated'];
-        $response = $this->put('/divisi/' . $divisi->id, $data);
+        $response = $this->put('/divisi/'.$divisi->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('divisis', ['nama' => 'Divisi Updated']);
     }
@@ -57,7 +58,7 @@ class DivisiTest extends TestCase
     public function test_destroy_divisi()
     {
         $divisi = Divisi::factory()->create();
-        $response = $this->delete('/divisi/' . $divisi->id);
+        $response = $this->delete('/divisi/'.$divisi->id);
         $response->assertStatus(302);
         $this->assertDatabaseMissing('divisis', ['id' => $divisi->id]);
     }

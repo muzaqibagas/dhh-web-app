@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProfileDosen;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProfileDosenController extends Controller
@@ -15,9 +14,10 @@ class ProfileDosenController extends Controller
     {
         $user = auth()->guard('staff')->user();
 
-        if (!$user) {
+        if (! $user) {
             abort(403, 'Unauthorized');
         }
+
         return view('profiledosen.index', compact('user'));
     }
 

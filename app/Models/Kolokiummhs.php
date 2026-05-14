@@ -33,7 +33,7 @@ class Kolokiummhs extends Model
     {
         return $this->belongsTo(User::class, 'id_mahasiswa');
     }
-    
+
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'id_ruangan');
@@ -53,14 +53,20 @@ class Kolokiummhs extends Model
     {
         return $this->belongsTo(StaffDept::class, 'id_pembimbing2');
     }
+
     public function komisipendidikan()
     {
         return $this->belongsTo(StaffDept::class, 'id_komisipendidikan');
     }
 
-    public function syaratKolokium()
+    public function syaratUjian()
     {
-        return $this->hasOne(SyaratKolokiummhs::class, 'id_mahasiswa', 'id_mahasiswa');
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa');
     }
 
+    public function syaratUjianKolokium()
+    {
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa')
+            ->where('jenis_ujian', 'kolokium');
+    }
 }

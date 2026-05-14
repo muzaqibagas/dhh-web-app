@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Register;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -41,7 +37,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'jenis_kelamin' => 'required',
-        ]);        
+        ]);
 
         $user = User::create([
             'nama' => $request->nama,
@@ -49,12 +45,12 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'jenis_kelamin' => $request->jenis_kelamin,
-            'role' => 'mahasiswa', // default role mahasiswa            
+            'role' => 'mahasiswa', // default role mahasiswa
         ]);
 
         $user->sendEmailVerificationNotification();
-                
-        Auth::login($user);    
+
+        Auth::login($user);
 
         return redirect()->route('verification.notice');
     }
@@ -89,6 +85,5 @@ class RegisterController extends Controller
     public function destroy(Register $register)
     {
         //
-    }    
-
+    }
 }

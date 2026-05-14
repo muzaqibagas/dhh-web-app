@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class KontenDept extends Model
 {
     protected $table = 'konten_depts';
-    protected $fillable = [        
+
+    protected $fillable = [
         'sejarah',
         'visi',
         'misi',
         'tujuan',
-        'kebijakanmutu'
+        'kebijakanmutu',
     ];
 
     public function user()

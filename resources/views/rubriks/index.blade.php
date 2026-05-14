@@ -4,88 +4,214 @@
     <div class="main-container">
         <!-- SIDEBAR -->
         <aside class="sidebar">
-            <div class="d-flex align-items-center menu pb-0 mb-0 pt-0 mt-0">            
-                <h5 class="fw-bold" style="color: #721B29">
-                    @if(Auth::guard('staff')->check())
-                        {{ Auth::guard('staff')->user()->username }}
-                    @elseif(Auth::check())
-                        {{ Auth::user()->username }}
-                    @else
-                        Guest
-                    @endif
-                </h5>        
-            </div>
             <a href="" class="menu-image-only">
-                <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+                <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
             </a>
             <!-- Untuk aktifin button sub menu ========================= -->
             @php
-                $isDashboardActive = Request::is('dashboarddosen');
-                $isJadwalTAActive = Request::is('jadwalta');
-                $isPenilaianActive = Request::is('penilaian');
-                $isFormulirLayananActive = Request::is('formulirlayananakademikmhs');        
-                $isProfileMahasiswaActive = Request::is('profilemhs') || Request::is('user/*/edit') || Request::is('profilemhs/edit') || Request::is('editpassmhs');
-                $isLogoutmhsActive = Request::is('logoutmhs');
-                @endphp
+                $isDashboardActive = Request::is('dashboardadm');
 
-            <!-- BTN BERANDA ===================== -->
-            <a href="{{ route('dashboarddosen.index') }}" class="menu {{ $isDashboardActive ? 'active' : '' }}">
+                $isRecapdataActive = Request::is('recapdata*');
+
+                $isAdminProfileActive =
+                    Request::is('admprofile') ||
+                    Request::is('user/*/edit') ||
+                    Request::is('editpassadm') ||
+                    Request::is('logoutadmprofile');
+
+                $isRubrikActive = Request::is('rubrik*');
+
+                $isTingkatAkhirActive =
+                    Request::is('syaratkolokiummhs') ||
+                    Request::is('syaratkolokiummhs*') ||
+                    Request::is('syaratseminarmhs') ||
+                    Request::is('syaratseminarmhs*') ||
+                    Request::is('syaratkomprehensifmhs') ||
+                    Request::is('syaratkomprehensifmhs*');
+
+                $isKontenActive =
+                    Request::is('kategorigaleri*') ||
+                    Request::is('galeri*') ||
+                    Request::is('kategoriartikel*') ||
+                    Request::is('artikel*') ||
+                    Request::is('review-alumni*') ||
+                    Request::is('konten-dept*') ||
+                    Request::is('kontenjenjang*') ||
+                    Request::is('mitra*');
+
+                $isStaffDeptActive =
+                    Request::is('kategoristaff*') || Request::is('staff-dept*') || Request::is('ketuadhh*');
+            @endphp
+
+            <!-- BTN Dashboard ===================== -->
+            <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
                 <div class="menu-left">
-                <i class="bi bi-house-door-fill"></i>
-                <span> Beranda </span>
+                    <i class="bi bi-graph-up"></i> <span> Dasbor </span>
                 </div>
+                <span class="dropdownArrow"></span>
             </a>
-            <a href="{{ route('jadwalta.index') }}" class="menu {{ $isJadwalTAActive ? 'active' : '' }}">
-                <div class="menu-left">          
-                <i class="bi bi-calendar-event-fill"></i>
-                <span> Jadwal TA </span>
+
+            <!-- BTN RECAP DATA ===================== -->
+            <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-database-check"></i> <span> Rekapitulasi Data </span>
                 </div>
+                <span class="dropdownArrow"></span>
             </a>
-            <a href="{{ route('penilaian.create') }}" class="menu {{ $isPenilaianActive ? 'active' : '' }}">
-                <div class="menu-left">          
-                <i class="bi bi-file-earmark-bar-graph-fill"></i>
-                <span> Penilaian </span>
+
+            <!-- BTN RUBRIK ===================== -->
+            <a href="{{ route('rubrik.index') }}" class="menu {{ $isRubrikActive ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-journal-check"></i><span> Rubrik </span>
                 </div>
+                <span class="dropdownArrow"></span>
             </a>
-            
+
+            <!-- BTN PENILAIAN ===================== -->
+            <a href="{{ route('penilaianadm.index') }}" class="menu {{ Request::is('penilaianadm*') ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i> <span> Penilaian </span>
+                </div>
+                <span class="dropdownArrow"></span>
+            </a>
+
+            <!-- BTN TINGKAT AKHIR===================== -->
+            <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+                <div class="menu-left">
+                    <i class="bi bi-mortarboard"></i>
+                    <span> Tingkat Akhir </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="tingkatakhir">
+                    {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="tingkatakhir"
+                style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+
+                {{-- KOLOKIUM --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'kolokium']) }}"
+                    class="submenu-link {{ request('jenis') == 'kolokium' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
+                </a>
+
+                {{-- SEMINAR --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'seminar']) }}"
+                    class="submenu-link {{ request('jenis') == 'seminar' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
+                </a>
+
+                {{-- KOMPRE --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'komprehensif']) }}"
+                    class="submenu-link {{ request('jenis') == 'komprehensif' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
+                </a>
+            </div>
+
+            <!-- BTN KONTEN ===================== -->
+            <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+                <div class="menu-left">
+                    <i class="bi bi-collection"></i>
+                    <span> Konten </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="konten">
+                    {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="konten"
+                style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/kategorigaleri"
+                    class="submenu-link {{ Request::is('kategorigaleri', 'kategorigaleri/create', 'kategorigaleri/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Kategori Galeri
+                </a>
+                <a href="/galeri"
+                    class="submenu-link {{ Request::is('galeri', 'galeri/create', 'galeri/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-images"></i> Galeri
+                </a>
+                <a href="/kategoriartikel"
+                    class="submenu-link {{ Request::is('kategoriartikel', 'kategoriartikel/create', 'kategoriartikel/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Kategori Artikel
+                </a>
+                <a href="/artikel"
+                    class="submenu-link {{ Request::is('artikel', 'artikel/create', 'artikel/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-layout-text-window"></i> Artikel
+                </a>
+                <a href="/review-alumni"
+                    class="submenu-link {{ Request::is('review-alumni', 'review-alumni/create', 'review-alumni/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-star"></i> Review Alumni
+                </a>
+                <a href="/konten-dept"
+                    class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-laptop"></i> Konten Departemen
+                </a>
+                <a href="/kontenjenjang"
+                    class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit', 'kontenjenjang/create') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-house-door"></i> Konten Jenjang
+                </a>
+                <a href="/mitra"
+                    class="submenu-link {{ Request::is('mitra', 'mitra/create', 'mitra/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-person-check"></i> Mitra
+                </a>
+            </div>
+
+            <!-- BTN SDM ===================== -->
+            <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
+                <div class="menu-left">
+                    <i class="bi bi-people-fill"></i>
+                    <span> Sumber Daya Manusia </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="staffdept">
+                    {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="staffdept"
+                style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/kategoristaff"
+                    class="submenu-link {{ Request::is('kategoristaff', 'kategoristaff/create', 'kategoristaff/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
+                </a>
+                <a href="/staff-dept"
+                    class="submenu-link {{ Request::is('staff-dept', 'staff-dept/create', 'staff-dept/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-check2-circle"></i> Staff Departemen
+                </a>
+                <a href="/ketuadhh"
+                    class="submenu-link {{ Request::is('ketuadhh', 'ketuadhh/create', 'ketuadhh/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-calendar-event"></i> Ketua DHH
+                </a>
+            </div>
+
             <!-- PEMBATAS EMAS ===================== -->
             <a href="" class="menu-image-only">
                 <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
             </a>
 
-
-            <!-- BTN Profile MHS ===================== -->
-            <a href="#" class="menu {{ $isProfileMahasiswaActive ? 'active' : '' }}" data-dropdown="profilemhs">
+            <!-- BTN ADMIN ===================== -->
+            <a href="#" class="menu {{ $isAdminProfileActive ? 'active' : '' }}" data-dropdown="admprofile">
                 <div class="menu-left">
-                <i class="bi bi-person"></i>
-                <span> Profil Mahasiswa </span>
+                    <i class="bi bi-person-badge"></i>
+                    <span> Profil Admin </span>
                 </div>
-                <span class="dropdownArrow" data-arrow="profilemhs">
-                {!! $isProfileMahasiswaActive ? '&#9660;' : '&#9650;' !!}
+                <span class="dropdownArrow" data-arrow="admprofile">
+                    {!! $isAdminProfileActive ? '&#9660;' : '&#9650;' !!}
                 </span>
             </a>
-            <div data-menu="profilemhs"
-                style="margin-left:24px; flex-direction:column; {{ $isProfileMahasiswaActive ? 'display:flex;' : 'display:none;' }}">
-                <a href="/profilemhs"
-                    class="submenu-link {{ Request::is('profilemhs', 'profilemhs/edit', 'user/*/edit') ? 'active-submenu' : '' }}">
-                    <i class="bi bi-person-workspace"></i> Biodata Mahasiswa
+            <div data-menu="admprofile"
+                style="margin-left:24px; flex-direction:column; {{ $isAdminProfileActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/admprofile"
+                    class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-person-workspace"></i> Detail Profil Admin
                 </a>
-                <a href="/editpassmhs"
-                    class="submenu-link {{ Request::is('editpassmhs') ? 'active-submenu' : '' }}">
-                    <i class="bi bi-gear-wide-connected"></i> Edit Password
+                <a href="/editpassadm" class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-gear-wide-connected"></i> Ubah Kata Sandi
                 </a>
+                <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+                    @csrf
+                    <button type="submit"
+                        class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+                        <i class="bi bi-box-arrow-right"></i> Keluar
+                    </button>
+                </form>
             </div>
-
-            <!-- BTN LOGOUT ===================== -->
-            <form action="{{ route('login.logout') }}" method="POST" class="menu p-0 m-0">
-                @csrf
-                <button type="submit" class="menu w-100 text-start border-0 bg-transparent">
-                <div class="menu-left">
-                    <i class="bi bi-box-arrow-right"></i> <span> Keluar Akun </span>
-                </div>
-                </button>
-            </form>      
-        </aside>     
+        </aside>
         
         <main class="content">
             <div class="container-fluid mt-4">
@@ -138,7 +264,7 @@
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">No</th>                        
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">Nama Rubrik</th>                        
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">Bobot</th>                        
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Jenis Sidang</th>                        
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Jenis Kegiatan</th>                        
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">Aksi</th>                        
                     </tr>
                     @php
@@ -170,5 +296,27 @@
         </main>        
     </div>
 @push('script')
+<script>
+  document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const target = this.getAttribute('data-dropdown');
+      const menu = document.querySelector(`[data-menu="${target}"]`);
+      const arrow = document.querySelector(`[data-arrow="${target}"]`);
+      const isOpen = menu.style.display === 'flex';
+
+      // Tutup semua dulu
+      document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+      document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+
+      // Kalau belum terbuka, buka
+      if (!isOpen) {
+        menu.style.display = 'flex';
+        arrow.innerHTML = '&#9660;';
+      }
+    });
+  });
+</script>
 @endpush
 @endsection

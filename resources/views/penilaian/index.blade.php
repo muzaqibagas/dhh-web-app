@@ -105,7 +105,7 @@
               <tr style="background-color:#ffffff;">
                   <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nama ?? '-' }}</td>
                   <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nim ?? '-' }}</td>
-                  <td style="padding:12px 14px; font-size:14px;">{{ $item->jenis_ujian ?? '-' }}</td>
+                  <td style="padding:12px 14px; font-size:14px;">{{ $item->jenis_ujian_label ?? '-' }}</td>
                   <td style="padding:12px 14px; font-size:14px;">
                       <span style="padding:4px 10px;border-radius:4px;font-size:12px;font-weight:bold;background:#e0e7ff;color:#3730a3; display:inline-block;">
                           {{ $item->peran_dosen ?? '-' }}

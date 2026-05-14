@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AdmRecapMultiSheetExport;
 use App\Models\AdmRecapData;
 use App\Models\Kolokiummhs;
 use App\Models\Komprehensifmhs;
 use App\Models\Seminarmhs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\AdmRecapDataExport;
-use App\Exports\AdmRecapMultiSheetExport;
-use Carbon\Carbon;
 
 class AdmRecapDataController extends Controller
 {
@@ -26,107 +25,109 @@ class AdmRecapDataController extends Controller
         $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
 
         $recap = [];
-            foreach ($nims as $nim) {
-                // Ambil data jika ada
-                $kolokiumData = $kolokium[$nim] ?? null;
-                $seminarData = $seminar[$nim] ?? null;
-                $kompreData = $kompre[$nim] ?? null;
+        foreach ($nims as $nim) {
+            // Ambil data jika ada
+            $kolokiumData = $kolokium[$nim] ?? null;
+            $seminarData = $seminar[$nim] ?? null;
+            $kompreData = $kompre[$nim] ?? null;
 
-                // Ambil identitas prioritas: kolokium > seminar > kompre
-                $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
+            // Ambil identitas prioritas: kolokium > seminar > kompre
+            $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
 
-                // Ambil pembimbing 1
-                $pembimbing1 = '-';
-                if ($identitas && !empty($identitas->pembimbing1)) {
-                    $pembimbing1 = $identitas->pembimbing1;
-                    if ($this->isJson($pembimbing1)) {
-                        $json = json_decode($pembimbing1, true);
-                        $pembimbing1 = $json['nama'] ?? '-';
-                    }
+            // Ambil pembimbing 1
+            $pembimbing1 = '-';
+            if ($identitas && ! empty($identitas->pembimbing1)) {
+                $pembimbing1 = $identitas->pembimbing1;
+                if ($this->isJson($pembimbing1)) {
+                    $json = json_decode($pembimbing1, true);
+                    $pembimbing1 = $json['nama'] ?? '-';
                 }
-
-                // Ambil pembimbing 2
-                $pembimbing2 = '-';
-                if ($identitas && !empty($identitas->pembimbing2)) {
-                    $pembimbing2 = $identitas->pembimbing2;
-                    if ($this->isJson($pembimbing2)) {
-                        $json = json_decode($pembimbing2, true);
-                        $pembimbing2 = $json['nama'] ?? '-';
-                    }
-                }
-
-                // Ambil tanggal dan semester dengan pengecekan null                
-                $semester = $kolokiumData?->semester?->semester ?? '-';
-                $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
-                $tanggal_seminar = $seminarData->tanggal ?? '-';
-                $tanggal_komprehensif = $kompreData->tanggal ?? '-';
-                
-                $tanggal_skl = $kompreData?->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-';                
-                
-                $status = $kompreData->status ?? '-';
-                if ($kompreData && $kompreData->tanggal_skl) {
-                    $bulan = Carbon::parse($kompreData->tanggal_skl)->month;
-                    $tahun = Carbon::parse($kompreData->tanggal_skl)->year;
-
-                    // Jika bulan 1–7 → Genap, 8–12 → Ganjil
-                    if ($bulan >= 1 && $bulan <= 7) {
-                        $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
-                    } else {
-                        $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
-                    }
-                }
-
-                // Ambil SKL dan status genap jika ada di kompre
-                $ket_sem_ganjil = $kompreData ? ($kompreData->skl ? 'SKL sudah' : '-') : '-';
-                $genap_2024_2025 = $kompreData->status ?? '-';
-
-                $recap[] = [
-                    'nama' => $identitas?->nama ?? '-',                    
-                    'nim' => $nim,
-                    'pembimbing1' => $pembimbing1,
-                    'pembimbing2' => $pembimbing2,
-                    'semester_genap' => $semester,
-                    'tanggal_kolokium' => $tanggal_kolokium,
-                    'tanggal_seminar' => $tanggal_seminar,
-                    'tanggal_ujian' => $tanggal_komprehensif,
-                    'tanggal_skl' => $tanggal_skl,
-                    'skl' => $kompreData->skl ?? '-',
-                    'status' => $status,
-                ];
             }
+
+            // Ambil pembimbing 2
+            $pembimbing2 = '-';
+            if ($identitas && ! empty($identitas->pembimbing2)) {
+                $pembimbing2 = $identitas->pembimbing2;
+                if ($this->isJson($pembimbing2)) {
+                    $json = json_decode($pembimbing2, true);
+                    $pembimbing2 = $json['nama'] ?? '-';
+                }
+            }
+
+            // Ambil tanggal dan semester dengan pengecekan null
+            $semester = $kolokiumData?->semester?->semester ?? '-';
+            $tanggal_kolokium = $kolokiumData->tanggal ?? '-';
+            $tanggal_seminar = $seminarData->tanggal ?? '-';
+            $tanggal_komprehensif = $kompreData->tanggal ?? '-';
+
+            $tanggal_skl = $kompreData?->tanggal_skl ? Carbon::parse($kompreData->tanggal_skl)->format('Y-m-d') : '-';
+
+            $status = $kompreData->status ?? '-';
+            if ($kompreData && $kompreData->tanggal_skl) {
+                $bulan = Carbon::parse($kompreData->tanggal_skl)->month;
+                $tahun = Carbon::parse($kompreData->tanggal_skl)->year;
+
+                // Jika bulan 1–7 → Genap, 8–12 → Ganjil
+                if ($bulan >= 1 && $bulan <= 7) {
+                    $status = 'Lulus Semester Genap '.($tahun - 1).'/'.$tahun;
+                } else {
+                    $status = 'Lulus Semester Ganjil '.$tahun.'/'.($tahun + 1);
+                }
+            }
+
+            // Ambil SKL dan status genap jika ada di kompre
+            $ket_sem_ganjil = $kompreData ? ($kompreData->skl ? 'SKL sudah' : '-') : '-';
+            $genap_2024_2025 = $kompreData->status ?? '-';
+
+            $recap[] = [
+                'nama' => $identitas?->nama ?? '-',
+                'nim' => $nim,
+                'pembimbing1' => $pembimbing1,
+                'pembimbing2' => $pembimbing2,
+                'semester_genap' => $semester,
+                'tanggal_kolokium' => $tanggal_kolokium,
+                'tanggal_seminar' => $tanggal_seminar,
+                'tanggal_ujian' => $tanggal_komprehensif,
+                'tanggal_skl' => $tanggal_skl,
+                'skl' => $kompreData->skl ?? '-',
+                'status' => $status,
+            ];
+        }
 
         return view('recapdata.index', compact('recap'));
     }
 
-    private function isJson($string) {
+    private function isJson($string)
+    {
         json_decode($string);
-        return (json_last_error() == JSON_ERROR_NONE);
+
+        return json_last_error() == JSON_ERROR_NONE;
     }
 
     public function updateSKL($nim)
     {
         $kolokium = Kolokiummhs::where('nim', $nim)->first();
-        $seminar  = Seminarmhs::where('nim', $nim)->first();
-        $kompre   = Komprehensifmhs::where('nim', $nim)->first();
+        $seminar = Seminarmhs::where('nim', $nim)->first();
+        $kompre = Komprehensifmhs::where('nim', $nim)->first();
 
-         // ❌ BELUM ADA DATA SEMINAR & KOMPRE
-        if (!$seminar && !$kompre) {
+        // ❌ BELUM ADA DATA SEMINAR & KOMPRE
+        if (! $seminar && ! $kompre) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum melaksanakan Seminar Hasil dan Ujian Komprehensif.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena mahasiswa belum melaksanakan Seminar Hasil dan Ujian Komprehensif.',
             ]);
         }
 
         // ❌ BELUM SEMINAR (tanggal kosong)
-        if (!$seminar || empty($seminar->tanggal)) {
+        if (! $seminar || empty($seminar->tanggal)) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena Seminar Hasil belum dilaksanakan.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Seminar Hasil belum dilaksanakan.',
             ]);
         }
 
         // ❌ BELUM KOMPRE (tanggal kosong)
-        if (!$kompre || empty($kompre->tanggal)) {
+        if (! $kompre || empty($kompre->tanggal)) {
             return redirect()->back()->withErrors([
-                'skl' => 'SKL tidak dapat dikonfirmasi karena Ujian Komprehensif belum dilaksanakan.'
+                'skl' => 'SKL tidak dapat dikonfirmasi karena Ujian Komprehensif belum dilaksanakan.',
             ]);
         }
 
@@ -137,9 +138,9 @@ class AdmRecapDataController extends Controller
         $tahun = $tanggalSKL->year;
 
         if ($bulan >= 1 && $bulan <= 7) {
-            $status = 'Lulus Semester Genap ' . ($tahun - 1) . '/' . $tahun;
+            $status = 'Lulus Semester Genap '.($tahun - 1).'/'.$tahun;
         } else {
-            $status = 'Lulus Semester Ganjil ' . $tahun . '/' . ($tahun + 1);
+            $status = 'Lulus Semester Ganjil '.$tahun.'/'.($tahun + 1);
         }
 
         $kompre->update([
@@ -151,10 +152,10 @@ class AdmRecapDataController extends Controller
         return redirect()->back()->with('success', 'SKL berhasil dikonfirmasi dan status diperbarui.');
     }
 
-
     public function export()
     {
-        $filename = 'rekap_data_' . date('Y_m_d_His') . '.xlsx';
+        $filename = 'rekap_data_'.date('Y_m_d_His').'.xlsx';
+
         return Excel::download(new AdmRecapMultiSheetExport, 'rekap-tahunan.xlsx');
     }
 

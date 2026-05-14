@@ -10,6 +10,7 @@ class KategoriArtikel extends Model
     use HasFactory;
 
     protected $table = 'kategori_artikels';
+
     protected $fillable = [
         'nama',
     ];
@@ -25,7 +26,6 @@ class KategoriArtikel extends Model
         $hash = substr(md5($this->nama), 0, 6);
 
         // Hasilnya jadi warna HEX tak terbatas
-        return '#' . $hash;
+        return '#'.$hash;
     }
-
 }

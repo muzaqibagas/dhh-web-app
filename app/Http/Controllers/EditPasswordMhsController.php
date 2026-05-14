@@ -56,13 +56,13 @@ class EditPasswordMhsController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed', 
+            'new_password' => 'required|min:8|confirmed',
         ]);
 
         $user = Auth::user();
 
         // Cek apakah password lama cocok
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
         }
 
@@ -75,7 +75,7 @@ class EditPasswordMhsController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return back()->with('success', 'Password berhasil diubah.');   
+        return back()->with('success', 'Password berhasil diubah.');
     }
 
     /**

@@ -11,14 +11,15 @@ class KategoriArtikelController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {        
-        $query = KategoriArtikel::query();        
-        if (request()->has('search')){
+    {
+        $query = KategoriArtikel::query();
+        if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
 
-        $kategoriArtikel = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();        
+        $kategoriArtikel = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+
         return view('kategoriartikel.index', compact('kategoriArtikel'));
     }
 
@@ -43,10 +44,11 @@ class KategoriArtikelController extends Controller
             'nama' => $request->nama,
         ]);
 
-        if ($insert)
+        if ($insert) {
             return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Disimpan.');
-        else
+        } else {
             return back()->with('error', 'Kategori Artikel Gagal Disimpan');
+        }
     }
 
     /**
@@ -72,20 +74,21 @@ class KategoriArtikelController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-        ]);             
+        ]);
 
         $kategoriArtikel->fill([
             'nama' => $request->nama,
         ]);
-        
-        if (!$kategoriArtikel->isDirty()) {
+
+        if (! $kategoriArtikel->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
-        if ($kategoriArtikel->save()) 
+        if ($kategoriArtikel->save()) {
             return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Diupdate.');
-        else
+        } else {
             return back()->with('error', 'Kategori Artikel Gagal Diupdate');
+        }
     }
 
     /**
@@ -95,9 +98,10 @@ class KategoriArtikelController extends Controller
     {
         $delete = $kategoriArtikel->delete();
 
-        if ($delete)
+        if ($delete) {
             return redirect()->route('kategoriartikel.index')->with('success', 'Kategori Artikel Berhasil Dihapus');
-        else
+        } else {
             return back()->with('error', 'Kategori Artikel Gagal Dihapus');
+        }
     }
 }

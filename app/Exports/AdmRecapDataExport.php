@@ -3,19 +3,20 @@
 namespace App\Exports;
 
 use App\Models\Kolokiummhs;
-use App\Models\Seminarmhs;
 use App\Models\Komprehensifmhs;
+use App\Models\Seminarmhs;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Events\AfterSheet;
-use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithStyles
-{    
+class AdmRecapDataExport implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings, WithStyles
+{
     public function collection()
     {
         $kolokium = Kolokiummhs::all()->keyBy('nim');
@@ -31,10 +32,12 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             $kompreData = $kompre[$nim] ?? null;
             $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
 
-            if (!$identitas) continue;
+            if (! $identitas) {
+                continue;
+            }
             $pembimbing1 = $this->decodePembimbing($identitas->pembimbing1 ?? '-');
             $pembimbing2 = $this->decodePembimbing($identitas->pembimbing2 ?? '-');
-                       
+
             $semester = $kolokiumData?->semester?->semester ?? '-';
 
             $recap->push([
@@ -58,14 +61,17 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
     {
         if ($this->isJson($value)) {
             $json = json_decode($value, true);
+
             return $json['nama'] ?? '-';
         }
+
         return $value;
     }
 
     private function isJson($string)
     {
         json_decode($string);
+
         return json_last_error() === JSON_ERROR_NONE;
     }
 
@@ -80,7 +86,7 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Tanggal Kolokium',
             'Tanggal Seminar',
             'Tanggal Ujian',
-            "Tanggal SKL",
+            'Tanggal SKL',
             'Tahun Lulus',
         ];
     }
@@ -98,11 +104,11 @@ class AdmRecapDataExport implements FromCollection, WithHeadings, ShouldAutoSize
                     $event->sheet->getColumnDimension($columnID)->setAutoSize(true);
                 }
 
-                $cellRange = 'A1:' . $event->sheet->getHighestColumn() . $event->sheet->getHighestRow();
+                $cellRange = 'A1:'.$event->sheet->getHighestColumn().$event->sheet->getHighestRow();
                 $event->sheet->getStyle($cellRange)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'borderStyle' => Border::BORDER_THIN,
                             'color' => ['argb' => '000000'],
                         ],
                     ],

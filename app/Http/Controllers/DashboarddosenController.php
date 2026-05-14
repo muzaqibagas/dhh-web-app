@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\SyaratKolokiummhs;
-use App\Models\SyaratSeminarmhs;
-use App\Models\SyaratKomprehensifmhs;
-use App\Models\Penilaian;
 use App\Models\Dashboarddosen;
 use App\Models\StaffNotification;
+use App\Models\SyaratUjian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboarddosenController extends Controller
 {
@@ -25,123 +22,78 @@ class DashboarddosenController extends Controller
             ->take(10)
             ->get();
 
-        $dosen = Auth::guard('staff')->user();
-
-        $kolokium = SyaratKolokiummhs::with(['mahasiswa','kolokiummhs', 'penilaian'])
+        $data = SyaratUjian::with([
+            'mahasiswa',
+            'kolokiummhs',
+            'seminarmhs',
+            'komprehensifmhs',
+            'penilaian' => function ($q) use ($dosen) {
+                $q->where(function ($query) use ($dosen) {
+                    $query->where('id_moderator', $dosen->id)
+                        ->orWhere('id_pembimbing1', $dosen->id)
+                        ->orWhere('id_pembimbing2', $dosen->id)
+                        ->orWhere('id_penguji', $dosen->id);
+                });
+            },
+        ])
             ->where('status', 'disetujui')
             ->get()
             ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->kolokiummhs->id_pembimbing1 == $dosen->id || 
-                       $item->kolokiummhs->id_pembimbing2 == $dosen->id;
+
+                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
+                          ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
+                          $item->komprehensifmhs);
+
+                if (! $relasi) {
+                    return false;
+                }
+
+                return
+                    $item->id_moderator == $dosen->id ||
+                    ($relasi->id_pembimbing1 ?? null) == $dosen->id ||
+                    ($relasi->id_pembimbing2 ?? null) == $dosen->id ||
+                    ($item->id_penguji ?? null) == $dosen->id;
             })
             ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Kolokium';
-                $item->tanggal_ujian = $item->kolokiummhs->tanggal ?? null;
-                
-                // Determine dosen role
+
+                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
+                          ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
+                          $item->komprehensifmhs);
+
+                if (! $relasi) {
+                    return null;
+                }
+
+                $item->tanggal_ujian = $relasi->tanggal ?? null;
+
                 $peran = [];
                 if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Moderator';
+                    $peran[] = $item->jenis_ujian === 'komprehensif' ? 'Ketua Sidang' : 'Moderator';
                 }
-                if ($item->kolokiummhs && ($item->kolokiummhs->id_pembimbing1 == $dosen->id || $item->kolokiummhs->id_pembimbing2 == $dosen->id)) {
+                if (($relasi->id_pembimbing1 ?? null) == $dosen->id ||
+                    ($relasi->id_pembimbing2 ?? null) == $dosen->id) {
                     $peran[] = 'Pembimbing';
                 }
-
-                $item->current_penilaian = Penilaian::where('id_syarat_kolokiummhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
-                    })
-                    ->first();
-
-                $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
-
-        $seminar = SyaratSeminarmhs::with(['mahasiswa','seminarmhs', 'penilaian'])
-            ->where('status', 'disetujui')
-            ->get()
-            ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->seminarmhs->id_pembimbing1 == $dosen->id || 
-                       $item->seminarmhs->id_pembimbing2 == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Seminar Hasil';
-                $item->tanggal_ujian = $item->seminarmhs->tanggal ?? null;
-                
-                // Determine dosen role
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Moderator';
-                }
-                if ($item->seminarmhs && ($item->seminarmhs->id_pembimbing1 == $dosen->id || $item->seminarmhs->id_pembimbing2 == $dosen->id)) {
-                    $peran[] = 'Pembimbing';
-                }
-
-                $item->current_penilaian = Penilaian::where('id_syarat_seminarmhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
-                    })
-                    ->first();
-
-                $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
-
-        $kompre = SyaratKomprehensifmhs::with(['mahasiswa','komprehensifmhs', 'penilaian'])
-            ->where('status', 'disetujui')
-            ->get()
-            ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator, penguji, or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->id_penguji == $dosen->id ||
-                       $item->komprehensifmhs->id_pembimbing1 == $dosen->id || 
-                       $item->komprehensifmhs->id_pembimbing2 == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Komprehensif';
-                $item->tanggal_ujian = $item->komprehensifmhs->tanggal ?? null;
-                
-                // Determine dosen role
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Ketua Sidang';
-                }
-                if ($item->id_penguji == $dosen->id) {
+                if (($item->id_penguji ?? null) == $dosen->id) {
                     $peran[] = 'Penguji';
                 }
-                if ($item->komprehensifmhs && ($item->komprehensifmhs->id_pembimbing1 == $dosen->id || $item->komprehensifmhs->id_pembimbing2 == $dosen->id)) {
-                    $peran[] = 'Pembimbing';
-                }
 
-                $item->current_penilaian = Penilaian::where('id_syarat_komprehensifmhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_penguji', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
-                    })
-                    ->first();
-
+                $item->current_penilaian = $item->penilaian->where(function ($query) use ($dosen) {
+                    $query->where('id_moderator', $dosen->id)
+                        ->orWhere('id_pembimbing1', $dosen->id)
+                        ->orWhere('id_pembimbing2', $dosen->id)
+                        ->orWhere('id_penguji', $dosen->id);
+                })->first();
                 $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
 
-        $jadwal = $kolokium
-            ->concat($seminar)
-            ->concat($kompre)
+                return $item;
+            })
+            ->filter()
             ->sortByDesc('tanggal_ujian');
 
         return view('dashboarddosen.index', compact(
-            'notifications', 
-            'jadwal',            
+            'notifications',
+            'data',
         ));
     }
 

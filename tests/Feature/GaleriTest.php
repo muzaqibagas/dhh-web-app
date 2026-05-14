@@ -1,10 +1,12 @@
 <?php
+
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use App\Models\Galeri;
+use App\Models\Kategori;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GaleriTest extends TestCase
 {
@@ -24,12 +26,12 @@ class GaleriTest extends TestCase
 
     public function test_store_galeri()
     {
-        $user = \App\Models\User::factory()->create();
-        $kategori = \App\Models\Kategori::factory()->create();
+        $user = User::factory()->create();
+        $kategori = Kategori::factory()->create();
         $data = [
             'id_user' => $user->id,
             'id_kategori' => $kategori->id,
-            'judul' => 'Galeri Test',            
+            'judul' => 'Galeri Test',
             'tanggal' => now()->toDateString(),
             'tipe' => 'gambar',
             'video' => null,
@@ -44,33 +46,33 @@ class GaleriTest extends TestCase
     public function test_show_galeri()
     {
         $galeri = Galeri::factory()->create();
-        $response = $this->get('/galeri/' . $galeri->id);
+        $response = $this->get('/galeri/'.$galeri->id);
         $response->assertStatus(200);
     }
 
     public function test_edit_page_can_be_accessed()
     {
         $galeri = Galeri::factory()->create();
-        $response = $this->get('/galeri/' . $galeri->id . '/edit');
+        $response = $this->get('/galeri/'.$galeri->id.'/edit');
         $response->assertStatus(200);
     }
 
     public function test_update_galeri()
     {
         $galeri = Galeri::factory()->create();
-        $user = \App\Models\User::factory()->create();
-        $kategori = \App\Models\Kategori::factory()->create();
+        $user = User::factory()->create();
+        $kategori = Kategori::factory()->create();
         $data = [
             'id_user' => $user->id,
             'id_kategori' => $kategori->id,
-            'judul' => 'Galeri Updated',            
+            'judul' => 'Galeri Updated',
             'tanggal' => now()->toDateString(),
             'tipe' => 'gambar',
             'video' => null,
             'gambar' => 'gambar2.jpg',
             'deskripsi' => 'Deskripsi update',
         ];
-        $response = $this->put('/galeri/' . $galeri->id, $data);
+        $response = $this->put('/galeri/'.$galeri->id, $data);
         $response->assertStatus(302);
         $this->assertDatabaseHas('galeris', ['judul' => 'Galeri Updated']);
     }
@@ -78,7 +80,7 @@ class GaleriTest extends TestCase
     public function test_destroy_galeri()
     {
         $galeri = Galeri::factory()->create();
-        $response = $this->delete('/galeri/' . $galeri->id);
+        $response = $this->delete('/galeri/'.$galeri->id);
         $response->assertStatus(302);
         $this->assertDatabaseMissing('galeris', ['id' => $galeri->id]);
     }

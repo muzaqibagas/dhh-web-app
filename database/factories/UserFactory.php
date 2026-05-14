@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Jenjang;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
@@ -24,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_jenjang' => \App\Models\Jenjang::factory(),
+            'id_jenjang' => Jenjang::factory(),
             'nim' => fake()->unique()->numerify('20####'),
             'nama' => fake()->name(),
             'no_hp' => fake()->phoneNumber(),

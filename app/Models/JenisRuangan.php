@@ -10,6 +10,7 @@ class JenisRuangan extends Model
     use HasFactory;
 
     protected $table = 'jenis_ruangan';
+
     protected $fillable = ['ruangan_id', 'jenis'];
 
     public function ruangan()

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\jadwalTA;
-use App\Models\Notification;
 use App\Models\Kolokiummhs;
-use App\Models\Seminarmhs;
 use App\Models\Komprehensifmhs;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalTAController extends Controller
 {
@@ -18,21 +17,21 @@ class JadwalTAController extends Controller
     public function index(Request $request)
     {
         $dosenId = Auth::guard('staff')->id();
-        $search = $request->input('search');        
+        $search = $request->input('search');
 
-        $kolokium = Kolokiummhs::with(['mahasiswa','ruangan','syaratKolokium'])
+        $kolokium = Kolokiummhs::with(['mahasiswa', 'ruangan', 'syaratUjianKolokium'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_pembimbing1', $dosenId)
-                ->orWhere('id_pembimbing2', $dosenId)
-                ->orWhereHas('syaratKolokium', function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId);
-                });
+                    ->orWhere('id_pembimbing2', $dosenId)
+                    ->orWhereHas('syaratUjianKolokium', function ($q) use ($dosenId) {
+                        $q->where('id_moderator', $dosenId);
+                    });
             })
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('mahasiswa', function ($q) use ($search) {
                     $q->where(function ($q) use ($search) {
                         $q->whereRaw('LOWER(nama) LIKE ?', ["%{$search}%"])
-                        ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
+                            ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
                     });
                 });
             })
@@ -46,26 +45,26 @@ class JadwalTAController extends Controller
                     'mulai' => $item->waktu_mulai,
                     'selesai' => $item->waktu_selesai,
                     'ruangan' => $item->ruangan->nama ?? '-',
-                    'status' => $item->syaratKolokium->status ?? '-',                    
-                    'bap' => $item->syaratKolokium->bap ?? '-', 
+                    'status' => $item->syaratUjianKolokium?->status ?? '-',
+                    'bap' => $item->syaratUjianKolokium?->bap ?? '-',
                     'id' => $item->id,
-                    'route' => 'kolokium'
+                    'route' => 'kolokium',
                 ];
             });
 
-        $seminar = Seminarmhs::with(['mahasiswa','ruangan','syaratSeminar'])
+        $seminar = Seminarmhs::with(['mahasiswa', 'ruangan', 'syaratUjianSeminar'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_pembimbing1', $dosenId)
-                ->orWhere('id_pembimbing2', $dosenId)            
-                ->orWhereHas('syaratSeminar', function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId);
-                });
+                    ->orWhere('id_pembimbing2', $dosenId)
+                    ->orWhereHas('syaratUjianSeminar', function ($q) use ($dosenId) {
+                        $q->where('id_moderator', $dosenId);
+                    });
             })
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('mahasiswa', function ($q) use ($search) {
                     $q->where(function ($q) use ($search) {
                         $q->whereRaw('LOWER(nama) LIKE ?', ["%{$search}%"])
-                        ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
+                            ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
                     });
                 });
             })
@@ -79,26 +78,26 @@ class JadwalTAController extends Controller
                     'mulai' => $item->waktu_mulai,
                     'selesai' => $item->waktu_selesai,
                     'ruangan' => $item->ruangan->nama ?? '-',
-                    'status' => $item->syaratSeminar->status ?? '-',                    
-                    'bap' => $item->syaratSeminar->bap ?? '-', 
+                    'status' => $item->syaratUjianSeminar?->status ?? '-',
+                    'bap' => $item->syaratUjianSeminar?->bap ?? '-',
                     'id' => $item->id,
-                    'route' => 'seminar'
+                    'route' => 'seminar',
                 ];
             });
 
-        $kompre = Komprehensifmhs::with(['mahasiswa','ruangan','syaratKomprehensif'])
+        $kompre = Komprehensifmhs::with(['mahasiswa', 'syaratUjianKomprehensif'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_pembimbing1', $dosenId)
-                ->orWhere('id_pembimbing2', $dosenId)            
-                ->orWhereHas('syaratKomprehensif', function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId);
-                });
+                    ->orWhere('id_pembimbing2', $dosenId)
+                    ->orWhereHas('syaratUjianKomprehensif', function ($q) use ($dosenId) {
+                        $q->where('id_moderator', $dosenId);
+                    });
             })
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('mahasiswa', function ($q) use ($search) {
                     $q->where(function ($q) use ($search) {
                         $q->whereRaw('LOWER(nama) LIKE ?', ["%{$search}%"])
-                        ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
+                            ->orWhereRaw('LOWER(nim) LIKE ?', ["%{$search}%"]);
                     });
                 });
             })
@@ -111,18 +110,18 @@ class JadwalTAController extends Controller
                     'tanggal' => $item->tanggal,
                     'mulai' => $item->waktu_mulai,
                     'selesai' => $item->waktu_selesai,
-                    'ruangan' => $item->ruangan->nama ?? '-',
-                    'status' => $item->syaratKomprehensif->status ?? '-',                    
-                    'bap' => $item->syaratKomprehensif->bap ?? '-', 
+                    'ruangan' => $item->syaratUjianKomprehensif->ruangan ?? '-',
+                    'status' => $item->syaratUjianKomprehensif?->status ?? '-',
+                    'bap' => $item->syaratUjianKomprehensif?->bap ?? '-',
                     'id' => $item->id,
-                    'route' => 'komprehensif'
+                    'route' => 'komprehensif',
                 ];
-            });        
+            });
         $jadwals = $kolokium
             ->concat($seminar)
             ->concat($kompre)
             ->sortBy('tanggal')
-            ->values();        
+            ->values();
 
         return view('jadwalta.index', compact('jadwals'));
     }

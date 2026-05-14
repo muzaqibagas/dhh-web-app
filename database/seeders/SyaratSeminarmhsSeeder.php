@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use App\Models\StaffDept;
 use App\Models\SyaratSeminarmhs;
 use App\Models\User;
-use App\Models\StaffDept;   
+use Illuminate\Database\Seeder;
 
 class SyaratSeminarmhsSeeder extends Seeder
 {
@@ -48,10 +47,9 @@ class SyaratSeminarmhsSeeder extends Seeder
                 'alasan_bukti_kehadiran' => null,
 
                 // Status awal
-                'status' => 'disetujui',  
+                'status' => 'disetujui',
                 'bap' => 'ditolak',
 
-                
                 'created_at' => $randomDate,
                 'updated_at' => $randomDate,
             ]);

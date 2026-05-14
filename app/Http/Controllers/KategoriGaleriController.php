@@ -11,13 +11,14 @@ class KategoriGaleriController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {                    
-        $query = KategoriGaleri::query();        
-        if (request()->has('search')){
+    {
+        $query = KategoriGaleri::query();
+        if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama', 'like', "%$search%");
         }
         $kategoriGaleri = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+
         return view('kategorigaleri.index', compact('kategoriGaleri'));
     }
 
@@ -42,10 +43,11 @@ class KategoriGaleriController extends Controller
             'nama' => $request->nama,
         ]);
 
-        if ($insert)
+        if ($insert) {
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Disimpan.');
-        else
+        } else {
             return back()->with('error', 'Kategori Galeri Gagal Disimpan');
+        }
     }
 
     /**
@@ -67,27 +69,26 @@ class KategoriGaleriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-
     public function update(Request $request, KategoriGaleri $kategoriGaleri)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-        ]);        
-        
+        ]);
+
         $kategoriGaleri->fill([
             'nama' => $request->nama,
         ]);
 
-        if (!$kategoriGaleri->isDirty()) {
+        if (! $kategoriGaleri->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
-        if ($kategoriGaleri->save())
+        if ($kategoriGaleri->save()) {
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Diupdate.');
-        else
+        } else {
             return back()->with('error', 'Kategori Galeri Gagal Diupdate');
+        }
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -96,9 +97,10 @@ class KategoriGaleriController extends Controller
     {
         $delete = $kategoriGaleri->delete();
 
-        if ($delete)
+        if ($delete) {
             return redirect()->route('kategorigaleri.index')->with('success', 'Kategori Galeri Berhasil Dihapus');
-        else
+        } else {
             return back()->with('error', 'Kategori Galeri Gagal Dihapus');
+        }
     }
 }

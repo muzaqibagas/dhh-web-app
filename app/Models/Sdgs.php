@@ -12,7 +12,6 @@ class Sdgs extends Model
     // Nama tabel (opsional jika mengikuti konvensi laravel)
     protected $table = 'sdgs';
 
-    
     protected $fillable = [
         'nama_sdgs',
         'foto',

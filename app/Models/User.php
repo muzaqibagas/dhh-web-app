@@ -3,14 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -18,25 +19,25 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var list<string>
      */
-
     protected $table = 'users';
+
     protected $fillable = [
         'id_jenjang',
-        'nim', 
-        'nama', 
-        'no_hp', 
-        'alamat', 
-        'tanggal_lahir', 
+        'nim',
+        'nama',
+        'no_hp',
+        'alamat',
+        'tanggal_lahir',
         'angkatan',
-        'status', 
-        'username', 
-        'email', 
+        'status',
+        'username',
+        'email',
         'password',
-        'jenis_kelamin', 
-        'role', 
-        'foto',        
-        'tanda_tangan',         
-    ];    
+        'jenis_kelamin',
+        'role',
+        'foto',
+        'tanda_tangan',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -59,23 +60,25 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }    
+    }
 
     public function jenjang()
     {
         return $this->belongsTo(Jenjang::class, 'id_jenjang');
-    }    
+    }
 
-    public function kontenDept() {
+    public function kontenDept()
+    {
         return $this->hasMany(KontenDept::class, 'id_user');
     }
 
-    public function reviewAlumni() {
+    public function reviewAlumni()
+    {
         return $this->hasMany(ReviewAlumni::class, 'id_user');
     }
+
     public function staffDept()
     {
         return $this->hasOne(StaffDept::class, 'id_user');
     }
-
 }

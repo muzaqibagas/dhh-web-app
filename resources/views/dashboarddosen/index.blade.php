@@ -95,7 +95,7 @@
           <h4><i class="bi bi-megaphone"></i> Notifikasi</h4>
           <div class="overflow-auto" style="max-height: 300px;">
             @forelse($notifications as $notif)
-              <a href="{{ route('notification.open', $notif->id) }}" class="text-decoration-none text-dark">              
+              <a href="{{ route('staff-notification.open', $notif->id) }}" class="text-decoration-none text-dark">              
                 <div class="card text-start mb-2 p-2" @if(!$notif->is_read) style="background-color: #013880; color: #fff;" @endif>
                   <h6><b>{{ $notif->title }}</b><br></h6>
                   <h6>{!! $notif->message !!}</h6>
@@ -156,7 +156,7 @@
               </tr>
           </thead>
           <tbody>
-            @foreach($jadwal as $item)
+            @foreach($data as $item)
               <tr style="background-color:#ffffff;">
                   <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nama ?? '-' }}</td>
                   <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nim ?? '-' }}</td>

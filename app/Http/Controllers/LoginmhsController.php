@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Loginmhs;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use App\Models\StaffDept;
+use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginmhsController extends Controller
 {
@@ -65,7 +66,7 @@ class LoginmhsController extends Controller
     public function destroy(Loginmhs $loginmhs)
     {
         //
-    }    
+    }
 
     public function signin(Request $request)
     {
@@ -92,7 +93,7 @@ class LoginmhsController extends Controller
         // ========================
         // CEK STAFF / DOSEN
         // ========================
-        $staff = \App\Models\StaffDept::where('username', $request->username)->first();
+        $staff = StaffDept::where('username', $request->username)->first();
 
         if ($staff && Hash::check($request->password, $staff->password)) {
             Auth::guard('staff')->login($staff);
@@ -101,14 +102,13 @@ class LoginmhsController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'Username atau password salah.'
+            'username' => 'Username atau password salah.',
         ]);
     }
 
-
     public function verifyEmail(EmailVerificationRequest $request)
-    {        
-        if (!$request->user()->hasVerifiedEmail()) {
+    {
+        if (! $request->user()->hasVerifiedEmail()) {
             $request->fulfill();
         }
 
@@ -118,7 +118,6 @@ class LoginmhsController extends Controller
                 : route('profilemhs.edit')
         );
     }
-
 
     public function logout(Request $request)
     {
@@ -130,6 +129,4 @@ class LoginmhsController extends Controller
 
         return redirect()->route('login');
     }
-
-
 }

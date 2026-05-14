@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class KontenJenjang extends Model
 {
     protected $table = 'konten_jenjangs';
+
     protected $fillable = [
-        'id_jenjang', 
+        'id_jenjang',
         'profil',
         'foto',
         'visi',
@@ -26,11 +26,9 @@ class KontenJenjang extends Model
     {
         return $this->belongsTo(Jenjang::class, 'id_jenjang');
     }
-    
+
     public function leaflets()
     {
         return $this->hasMany(LeafletJenjang::class, 'id_kontenjenjang');
     }
-
 }
-

@@ -12,36 +12,36 @@ class GaleriController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {        
-        $query = Galeri::query();        
-        if (request()->has('search')){
+    {
+        $query = Galeri::query();
+        if (request()->has('search')) {
             $search = request()->search;
             $query->where('judul', 'like', "%$search%");
-        }        
+        }
         $galeris = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+
         return view('galeri.index', compact('galeris'));
     }
 
     public function Gallery()
-    {                
+    {
         $kategoriAktif = null;
 
         $videoTerbaru = Galeri::where('tipe', 'video')->latest()->first();
         $videoLainnya = Galeri::where('tipe', 'video')
-                            ->when($videoTerbaru, fn($q) => $q->where('id', '!=', $videoTerbaru->id))
-                            ->inRandomOrder()
-                            ->take(3)
-                            ->get();
+            ->when($videoTerbaru, fn ($q) => $q->where('id', '!=', $videoTerbaru->id))
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
         $kategoriGaleri = KategoriGaleri::all();
 
         $semuaFoto = Galeri::where('tipe', 'gambar')->get();
 
         $galeriFoto = Galeri::where('tipe', 'gambar')
-                    ->whereNotNull('gambar')
-                    ->orderBy('id', 'desc') // ⬅ tambahan
-                    ->paginate(10);
-
+            ->whereNotNull('gambar')
+            ->orderBy('id', 'desc') // ⬅ tambahan
+            ->paginate(10);
 
         return view('galeri.gallery', compact(
             'videoTerbaru',
@@ -53,14 +53,13 @@ class GaleriController extends Controller
         ));
     }
 
-
     public function filterByKategori($id)
     {
         $kategoriAktif = $id;
 
         $videoTerbaru = Galeri::where('tipe', 'video')->latest()->first();
         $videoLainnya = Galeri::where('tipe', 'video')
-            ->when($videoTerbaru, fn($q) => $q->where('id', '!=', $videoTerbaru->id))
+            ->when($videoTerbaru, fn ($q) => $q->where('id', '!=', $videoTerbaru->id))
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -70,10 +69,10 @@ class GaleriController extends Controller
 
         // FIX ⬇ kategori filter akhirnya diterapkan
         $galeriFoto = Galeri::where('tipe', 'gambar')
-                    ->where('id_kategorigaleri', $id)
-                    ->whereNotNull('gambar')
-                    ->orderBy('id', 'desc')
-                    ->paginate(10);
+            ->where('id_kategorigaleri', $id)
+            ->whereNotNull('gambar')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
         return view('galeri.gallery', compact(
             'videoTerbaru',
@@ -85,13 +84,13 @@ class GaleriController extends Controller
         ));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $kategorigaleri = KategoriGaleri::all();
+
         return view('galeri.create', compact('kategorigaleri'));
     }
 
@@ -105,30 +104,31 @@ class GaleriController extends Controller
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
-            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',            
-            'video_url' => 'nullable|url'
+            'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
+            'video_url' => 'nullable|url',
         ]);
 
         if ($request->tipe == 'gambar' && $request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time().'_'.$file->getClientOriginalName();
             $file->move(public_path('galeri_upload'), $filename);
-            $data['gambar'] = 'galeri_upload/' . $filename;
+            $data['gambar'] = 'galeri_upload/'.$filename;
             $data['video'] = null;
         }
 
         if ($request->tipe == 'video') {
-            $data['video'] = $request->video_url;  
+            $data['video'] = $request->video_url;
             $data['gambar'] = null;
         }
 
         $data['id_user'] = auth()->id();
 
         $insert = Galeri::create($data);
-        if ($insert)
+        if ($insert) {
             return redirect()->route('galeri.index')->with('success', 'Data berhasil disimpan!');
-        else
+        } else {
             return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
 
     /**
@@ -143,8 +143,9 @@ class GaleriController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Galeri $galeri)
-    {        
+    {
         $kategorigaleri = KategoriGaleri::all();
+
         return view('galeri.edit', compact('galeri', 'kategorigaleri'));
     }
 
@@ -158,7 +159,7 @@ class GaleriController extends Controller
             'judul' => 'nullable|string|max:255',
             'tanggal' => 'nullable|date',
             'tipe' => 'required|in:gambar,video',
-            'video_url' => 'nullable|string|max:255',            
+            'video_url' => 'nullable|string|max:255',
             'gambar' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
         ]);
 
@@ -168,34 +169,35 @@ class GaleriController extends Controller
                 unlink(public_path($galeri->gambar));
             }
             $file = $request->file('gambar');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = time().'_'.$file->getClientOriginalName();
             $file->move(public_path('galeri_upload'), $filename);
-            $data['gambar'] = 'galeri_upload/' . $filename;
+            $data['gambar'] = 'galeri_upload/'.$filename;
             $data['video'] = null;
         }
 
         // Handle video
         if ($request->tipe == 'video') {
-            if ($galeri->video && !filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
+            if ($galeri->video && ! filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
                 unlink(public_path($galeri->video));
             }
             $data['video'] = $request->video_url;
             $data['gambar'] = null;
         }
-    
+
         $data['id_user'] = auth()->id();
 
         $galeri->fill($data);
 
-        if (!$galeri->isDirty()) {
+        if (! $galeri->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan pada data.');
         }
 
         $update = $galeri->update($data);
-        if ($update)
+        if ($update) {
             return redirect()->route('galeri.index')->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
 
     /**
@@ -208,11 +210,12 @@ class GaleriController extends Controller
             unlink(public_path($galeri->gambar));
         }
         // Hapus file video jika ada dan bukan URL
-        if ($galeri->video && !filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
+        if ($galeri->video && ! filter_var($galeri->video, FILTER_VALIDATE_URL) && file_exists(public_path($galeri->video))) {
             unlink(public_path($galeri->video));
         }
 
         $galeri->delete();
+
         return redirect()->route('galeri.index');
     }
 }

@@ -24,7 +24,7 @@ class SyaratKomprehensifmhs extends Model
         'bukti_sks',
         'alasan_bukti_sks',
         'bukti_spp',
-        'alasan_bukti_spp',  
+        'alasan_bukti_spp',
         'bukti_kehadiran',
         'alasan_bukti_kehadiran',
         'status',
@@ -40,7 +40,7 @@ class SyaratKomprehensifmhs extends Model
     {
         return $this->belongsTo(StaffDept::class, 'id_moderator');
     }
-    
+
     public function penguji()
     {
         return $this->belongsTo(StaffDept::class, 'id_penguji');
@@ -60,5 +60,4 @@ class SyaratKomprehensifmhs extends Model
     {
         return $this->hasOne(Penilaian::class, 'id_syarat_komprehensifmhs');
     }
-
 }

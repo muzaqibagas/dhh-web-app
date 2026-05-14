@@ -1,6 +1,9 @@
 <?php
+
 namespace Database\Factories;
 
+use App\Models\Divisi;
+use App\Models\KategoriStaff;
 use App\Models\StaffDept;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,9 +13,9 @@ class StaffDeptFactory extends Factory
 
     public function definition()
     {
-        return [            
-            'id_kategoristaff' => \App\Models\KategoriStaff::factory(), 
-            'id_divisi' => \App\Models\Divisi::factory(),
+        return [
+            'id_kategoristaff' => KategoriStaff::factory(),
+            'id_divisi' => Divisi::factory(),
             'foto' => $this->faker->imageUrl(),
             'nama' => $this->faker->name(),
             'tanggal_lahir' => $this->faker->date('Y-m-d'),

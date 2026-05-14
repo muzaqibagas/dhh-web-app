@@ -2,10 +2,9 @@
 
 namespace App\Exports;
 
-use App\Exports\AdmRecapDataExport;
 use App\Models\Kolokiummhs;
-use App\Models\Seminarmhs;
 use App\Models\Komprehensifmhs;
+use App\Models\Seminarmhs;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class AdmRecapMultiSheetExport implements WithMultipleSheets
@@ -20,7 +19,7 @@ class AdmRecapMultiSheetExport implements WithMultipleSheets
         $tahunSemesterList = $tahunSemesterList
             ->merge(Kolokiummhs::with('semester')->get()->map(function ($item) {
                 return [
-                    'semester' => $item->semester?->semester ?? '-',                        
+                    'semester' => $item->semester?->semester ?? '-',
                     'tahun_ajaran' => $item->tahun_ajaran ?? null,
                 ];
             }))
@@ -39,9 +38,9 @@ class AdmRecapMultiSheetExport implements WithMultipleSheets
 
         // Hapus data duplikat dan kosong
         $tahunSemesterList = $tahunSemesterList
-            ->filter(fn($item) => !empty($item['tahun_ajaran']))
+            ->filter(fn ($item) => ! empty($item['tahun_ajaran']))
             ->unique(function ($item) {
-                return $item['semester'] . '_' . $item['tahun_ajaran'];
+                return $item['semester'].'_'.$item['tahun_ajaran'];
             });
 
         // Buat sheet hanya untuk kombinasi semester + tahun ajaran yang valid
@@ -51,7 +50,7 @@ class AdmRecapMultiSheetExport implements WithMultipleSheets
 
         // Jika tidak ada data sama sekali, buat 1 sheet default
         if (empty($sheets)) {
-            $sheets[] = new AdmRecapDataExport('Ganjil', date('Y') . '/' . (date('Y') + 1));
+            $sheets[] = new AdmRecapDataExport('Ganjil', date('Y').'/'.(date('Y') + 1));
         }
 
         return $sheets;

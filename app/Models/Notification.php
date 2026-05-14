@@ -11,9 +11,9 @@ class Notification extends Model
 
     protected $fillable = [
         'user_id',
-        'title', 
-        'message', 
-        'is_read', 
-        'redirect_url'        
+        'title',
+        'message',
+        'is_read',
+        'redirect_url',
     ];
 }

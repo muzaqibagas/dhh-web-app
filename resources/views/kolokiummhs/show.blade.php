@@ -43,24 +43,24 @@
           class="submenu-link {{ Request::is('kolokiummhs', 'kolokiummhs*', 'kolokiummhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-check2-circle"></i> Kolokium
         </a>
-        <a href="/syaratkolokiummhs/create"
-          class="submenu-link {{ Request::is('syaratkolokiummhs', 'syaratkolokiummhs/*') ? 'active-submenu' : '' }}">
+        <a href="{{ route('syaratujian.create', ['jenis' => 'kolokium']) }}"          
+          class="submenu-link {{ request()->routeIs('syaratujian.create') && request('jenis') == 'kolokium' ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Kolokium
         </a>
         <a href="/seminarmhs"
           class="submenu-link {{ Request::is('seminarmhs', 'seminarmhs*', 'seminarmhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-calendar-event"></i> Seminar
         </a>
-        <a href="/syaratseminarmhs/create"
-          class="submenu-link {{ Request::is('syaratseminarmhs', 'syaratseminarmhs/*', 'syaratseminarmhs/*') ? 'active-submenu' : '' }}">
+        <a href="{{ route('syaratujian.create', ['jenis' => 'seminar']) }}"                    
+          class="submenu-link {{ request()->routeIs('syaratujian.create') && request('jenis') == 'seminar' ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Seminar
         </a>
         <a href="/komprehensifmhs"
           class="submenu-link {{ Request::is('komprehensifmhs', 'komprehensifmhs*', 'komprehensifmhs/*/edit') ? 'active-submenu' : '' }}">
           <i class="bi bi-journal-text"></i> Komprehensif
         </a>
-        <a href="/syaratkomprehensifmhs/create"
-          class="submenu-link {{ Request::is('syaratkomprehensifmhs', 'syaratkomprehensifmhs/*') ? 'active-submenu' : '' }}">
+        <a href="{{ route('syaratujian.create', ['jenis' => 'komprehensif']) }}"  
+          class="submenu-link {{ request()->routeIs('syaratujian.create') && request('jenis') == 'komprehensif' ? 'active-submenu' : '' }}">
           <i class="bi bi-info-circle"></i> Syarat Komprehensif
         </a>
       </div>
@@ -196,7 +196,7 @@
 
             <div class="form-group">
                 <label>Dosen Moderator</label>
-                <input type="text" class="text-success fw-bold" value="{{ $kolokiummhs->syaratKolokium->moderator->nama ?? '[Diisi oleh akademik]' }}" readonly>
+                <input type="text" class="text-success fw-bold" value="{{ $kolokiummhs->syaratUjianKolokium?->moderator?->nama ?? '[Diisi oleh akademik]' }}" readonly>
             </div>
 
             <div class="form-actions mt-3 d-flex justify-content-end">                

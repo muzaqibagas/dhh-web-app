@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Artikel extends Model
 {
     use HasFactory;
 
     protected $table = 'artikels';
+
     protected $fillable = [
-        'id_user', 
-        'id_kategoriartikel',          
+        'id_user',
+        'id_kategoriartikel',
         'id_sdgs',
-        'foto', 
-        'judul', 
-        'tanggal', 
+        'foto',
+        'judul',
+        'tanggal',
         'deskripsi',
     ];
 
@@ -27,7 +28,7 @@ class Artikel extends Model
 
     public function kategoriartikel()
     {
-        return $this->belongsTo(KategoriArtikel::class, 'id_kategoriartikel');                                                         
+        return $this->belongsTo(KategoriArtikel::class, 'id_kategoriartikel');
     }
 
     public function sdgs()

@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Galeri extends Model
 {
     use HasFactory;
 
     protected $table = 'galeris';
+
     protected $fillable = [
-        'id_user', 
-        'id_kategorigaleri', 
-        'judul', 
-        'tanggal', 
-        'tipe', 
-        'video', 
+        'id_user',
+        'id_kategorigaleri',
+        'judul',
+        'tanggal',
+        'tipe',
+        'video',
         'gambar',
     ];
 
@@ -32,7 +33,9 @@ class Galeri extends Model
 
     public function getVideoAttribute($value)
     {
-        if (!$value) return null;
+        if (! $value) {
+            return null;
+        }
 
         if (str_contains($value, 'embed')) {
             return $value;
@@ -41,16 +44,17 @@ class Galeri extends Model
         // Convert https://www.youtube.com/watch?v=xxxx
         if (str_contains($value, 'watch?v=')) {
             $id = explode('v=', $value)[1];
-            return 'https://www.youtube.com/embed/' . $id;
+
+            return 'https://www.youtube.com/embed/'.$id;
         }
 
         // Convert https://youtu.be/xxxx
         if (str_contains($value, 'youtu.be')) {
             $id = explode('youtu.be/', $value)[1];
-            return 'https://www.youtube.com/embed/' . $id;
+
+            return 'https://www.youtube.com/embed/'.$id;
         }
 
         return $value;
     }
-
 }

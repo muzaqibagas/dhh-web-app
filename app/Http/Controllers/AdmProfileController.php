@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\AdmProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,14 +22,10 @@ class AdmProfileController extends Controller
         return view('admprofile.index', compact('user'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -54,6 +49,7 @@ class AdmProfileController extends Controller
     public function edit(AdmProfile $admProfile)
     {
         $user = Auth::user();
+
         return view('admprofile.edit', compact('user'));
     }
 

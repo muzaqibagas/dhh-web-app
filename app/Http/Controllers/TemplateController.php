@@ -13,8 +13,9 @@ class TemplateController extends Controller
     public function index()
     {
         $templates = template::all();
+
         return view('template.index', compact('templates'));
-    }    
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -33,10 +34,11 @@ class TemplateController extends Controller
             // Tidak ada field lain, hanya id dan timestamps
         ]);
         $insert = template::create($data);
-        if ($insert)
+        if ($insert) {
             return redirect()->route('template.index')->with('success', 'Data berhasil disimpan!');
-        else
+        } else {
             return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
 
     /**
@@ -64,10 +66,11 @@ class TemplateController extends Controller
             // Tidak ada field lain, hanya id dan timestamps
         ]);
         $update = $template->update($data);
-        if ($update)
+        if ($update) {
             return redirect()->route('template.index')->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
 
     /**
@@ -76,6 +79,7 @@ class TemplateController extends Controller
     public function destroy(template $template)
     {
         $template->delete();
+
         return redirect()->route('template.index');
     }
 }

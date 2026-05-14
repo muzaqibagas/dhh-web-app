@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisi;
+use App\Models\KetuaDHH;
 use App\Models\KontenDept;
 use App\Models\StaffDept;
-use App\Models\KetuaDHH;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class KontenDeptController extends Controller
 {
@@ -33,7 +33,7 @@ class KontenDeptController extends Controller
     {
         $existing = KontenDept::first();
 
-        if ($existing) {            
+        if ($existing) {
             return redirect()->route('konten-dept.show', $existing->id)
                 ->with('error', 'Konten Departemen sudah ada, silakan edit data yang ada.');
         }
@@ -45,14 +45,14 @@ class KontenDeptController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {        
+    {
         $existing = KontenDept::first();
 
         if ($existing) {
             return redirect()->route('konten-dept.show', $existing->id)->with('error', 'Konten Departemen sudah ada, silakan edit data yang ada.');
         }
 
-        $data = $request->validate([            
+        $data = $request->validate([
             'sejarah' => 'nullable|string',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
@@ -61,10 +61,11 @@ class KontenDeptController extends Controller
         ]);
 
         $insert = KontenDept::create($data);
-        if ($insert)
+        if ($insert) {
             return redirect()->route('konten-dept.show', $insert->id)->with('success', 'Data berhasil disimpan!');
-        else
+        } else {
             return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
 
     /**
@@ -80,19 +81,19 @@ class KontenDeptController extends Controller
         $kontenDept = KontenDept::first();
         $ketuadhh = KetuaDHH::orderBy('tahun_mulai', 'DESC')->get();
 
-        $struktur = StaffDept::whereHas('kategoristaff', function($strukturs){
+        $struktur = StaffDept::whereHas('kategoristaff', function ($strukturs) {
             $strukturs->where('nama', 'Struktur Organisasi');
         })->get();
 
-        $dosen = StaffDept::whereHas('kategoristaff', function($dosens){
+        $dosen = StaffDept::whereHas('kategoristaff', function ($dosens) {
             $dosens->where('nama', 'Tenaga Pendidik/Dosen');
         })->get();
 
-        $kependidikan = StaffDept::whereHas('kategoristaff', function($kependidikans){
+        $kependidikan = StaffDept::whereHas('kategoristaff', function ($kependidikans) {
             $kependidikans->where('nama', 'Tenaga Kependidikan');
         })->get();
 
-        $divisiList = \App\Models\Divisi::with('staff')->get();
+        $divisiList = Divisi::with('staff')->get();
 
         return view('konten-dept.sejarah', compact('kontenDept', 'struktur', 'dosen', 'kependidikan', 'divisiList', 'ketuadhh'));
     }
@@ -110,7 +111,7 @@ class KontenDeptController extends Controller
      */
     public function update(Request $request, KontenDept $kontenDept)
     {
-        $data = $request->validate([            
+        $data = $request->validate([
             'sejarah' => 'nullable|string',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',
@@ -119,15 +120,16 @@ class KontenDeptController extends Controller
         ]);
 
         $kontenDept->fill($data);
-        if (!$kontenDept->isDirty()) {
+        if (! $kontenDept->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $kontenDept->update($data);
-        if ($update)
+        if ($update) {
             return redirect()->route('konten-dept.show', $kontenDept->id)->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
 
     /**
@@ -136,6 +138,7 @@ class KontenDeptController extends Controller
     public function destroy(KontenDept $kontenDept)
     {
         $kontenDept->delete();
+
         return redirect()->route('konten-dept.index')->with('success', 'Data Konten Departemen berhasil dihapus!');
     }
 }

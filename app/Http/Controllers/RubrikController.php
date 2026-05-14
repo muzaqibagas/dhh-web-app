@@ -11,13 +11,14 @@ class RubrikController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $query = Rubrik::query();
         if (request()->has('search')) {
             $search = request()->search;
             $query->where('nama_kriteria', 'like', "%$search%");
-        }    
+        }
         $rubriks = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();
+
         return view('rubriks.index', compact('rubriks'));
     }
 
@@ -27,6 +28,7 @@ class RubrikController extends Controller
     public function create()
     {
         $rubriks = Rubrik::all();
+
         return view('rubriks.create', compact('rubriks'));
     }
 
@@ -87,7 +89,7 @@ class RubrikController extends Controller
             'jenis_sidang' => $request->jenis_sidang,
         ]);
 
-        if (!$rubrik->isDirty()) {
+        if (! $rubrik->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data.');
         }
 
@@ -104,6 +106,7 @@ class RubrikController extends Controller
     public function destroy(Rubrik $rubrik)
     {
         $rubrik->delete();
-        return redirect()->route('rubrik.index')->with('success', 'Data berhasil dihapus.');    
+
+        return redirect()->route('rubrik.index')->with('success', 'Data berhasil dihapus.');
     }
 }

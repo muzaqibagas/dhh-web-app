@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class ReviewAlumni extends Model
 {
     protected $table = 'review_alumnis';
+
     protected $fillable = [
-        'id_user', 
-        'nama', 
-        'angkatan', 
+        'id_user',
+        'nama',
+        'angkatan',
         'profesi',
-        'review', 
-        'foto'
+        'review',
+        'foto',
     ];
 
     public function user()

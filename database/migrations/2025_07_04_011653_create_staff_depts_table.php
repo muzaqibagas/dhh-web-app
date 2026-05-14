@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('staff_depts', function (Blueprint $table) {
-            $table->id('id');            
+            $table->id('id');
             $table->foreignId('id_kategoristaff')->nullable()->constrained('kategori_staffs')->onDelete('cascade');
-            $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null'); 
+            $table->foreignId('id_divisi')->nullable()->constrained('divisis')->onDelete('set null');
             $table->string('jabatan')->nullable();
             $table->string('foto')->nullable();
             $table->string('nama')->nullable();
-            $table->string('username')->unique()->nullable();          
+            $table->string('username')->unique()->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('nip')->nullable()->unique();
             $table->string('email')->nullable()->unique();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->text('keahlian')->nullable();
             $table->text('publikasi')->nullable();
             $table->text('riwayat_pendidikan')->nullable();
-            $table->string('password')->nullable();        
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dashboardmhs;
-use App\Models\SyaratKolokiummhs;
-use App\Models\SyaratSeminarmhs;
-use App\Models\SyaratKomprehensifmhs;
 use App\Models\Notification;
+use App\Models\SyaratUjian;
 use Illuminate\Http\Request;
 
 class DashboardmhsController extends Controller
@@ -16,16 +14,27 @@ class DashboardmhsController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
+        $userId = auth()->id();
+
+        $notifications = Notification::where('user_id', $userId)
+            ->latest()
             ->take(10)
             ->get();
 
-        $kolokium = SyaratKolokiummhs::where('id_mahasiswa', auth()->id())->first();
-        $seminar = SyaratSeminarmhs::where('id_mahasiswa', auth()->id())->first();
-        $komprehensif = SyaratKomprehensifmhs::where('id_mahasiswa', auth()->id())->first();
-            
-        return view('dashboardmhs.index', compact('kolokium', 'seminar', 'komprehensif', 'notifications'));
+        // 🔥 ambil semua syarat dalam 1 query
+        $syarat = SyaratUjian::where('id_mahasiswa', $userId)->get();
+
+        // 🔥 mapping berdasarkan jenis
+        $kolokium = $syarat->where('jenis_ujian', 'kolokium')->first();
+        $seminar = $syarat->where('jenis_ujian', 'seminar')->first();
+        $komprehensif = $syarat->where('jenis_ujian', 'komprehensif')->first();
+
+        return view('dashboardmhs.index', compact(
+            'kolokium',
+            'seminar',
+            'komprehensif',
+            'notifications'
+        ));
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,20 +13,18 @@ class KontenDeptSeeder extends Seeder
     public function run(): void
     {
         DB::table('konten_depts')->insert([
-            'sejarah' => "Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.",
+            'sejarah' => 'Departemen Hasil Hutan (DHH) yang sebelumnya bernama Departemen Teknologi Hasil Hutan berdiri pada tahun 1969. DHH adalah Departemen Hasil Hutan tertua di Indonesia dan memiliki fokus pada pengembangan bidang keilmuan dan teknologi hasil hutan yang mencakup kimia hasil hutan, biokomposit, teknologi peningkatan kualitas kayu, dan desain dan keteknikan struktur kayu.',
 
-            'visi' => "Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.",
+            'visi' => 'Menjadi lembaga pendidikan tinggi bertaraf internasional dalam menghasilkan SDM bermutu dan mengembangkan IPTEKS di bidang teknologi pemanfaatan hasil hutan.',
 
-            'misi' => "Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.",
+            'misi' => 'Menyelenggarakan program tri dharma untuk menghasilkan sumberdaya manusia berkualifikasi sarjana dengan kompetensi utama teknologi hasil hutan dan mengembangkan inovasi IPTEKS untuk berkontribusi terhadap peningkatan produktifitas dan efisiensi industri hasil hutan.',
 
-            'tujuan' => 
-"1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
+            'tujuan' => '1. Mengoptimalkan pengembangan kapasitas sumberdaya melalui kerjasama di bidang pendidikan, penelitian, dan publikasi ilmiah terakreditasi baik nasional maupun internasional.
 2. Mengoptimalkan pemberdayaan IPTEKS pemanfaatan hasil hutan melalui pengajaran, penelitian, publikasi, serta pelayanan pada masyarakat, yang dapat meningkatkan mutu departemen.
 3. Mewujudkan manajemen pengelolaan sumberdaya departemen yang bermutu, profesional dan terbuka dalam pelaksanaan Tri Dharma Perguruan Tinggi yang bermanfaat bagi kesejahteraan di lingkungan DHHT dan masyarakat.
-4. Menghasilkan lulusan PS THH yang mempunyai dasar keterampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.",
+4. Menghasilkan lulusan PS THH yang mempunyai dasar keterampilan, kemampuan analisis dan sintesis yang andal, serta profesionalisme dan kemandirian yang kuat pada bidang ilmu dan teknologi hasil hutan, dan berjiwa kewirausahaan.',
 
-            'kebijakanmutu' => 
-"Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:
+            'kebijakanmutu' => 'Untuk mendukung pengembangan IPB sebagai perguruan tinggi yang memiliki daya saing tinggi dan berkompetisi secara sehat dengan perguruan tinggi lainnya di dunia untuk menjadi perguruan tinggi berskala internasional, kebijakan mutu DHHT mengacu pada kebijakan mutu Fakultas Kehutanan, yaitu:
 
 1. Berpedoman pada aturan yang berlaku,
 2. Memonitor penerapan sistem manajemen mutu serta memperbaiki sistem dan pendidikan secara berkesinambungan,
@@ -46,8 +43,8 @@ Tugas GKM adalah membantu Ketua Departemen dalam hal:
 3. Melakukan evaluasi bersama Ketua Departemen untuk tindakan korektif yang lebih dini terhadap pelaksanaan seluruh aktivitas penyelenggaraan akademik dan non akademik dilingkup kerjanya
 4. Pengkoordinasian pembuatan laporan evaluasi diri mengikuti standar-standar dan parameter yang telah ditentukan.
 
-GKM dibentuk melalui SK Dekan. Dalam implementasi sistem penjamin mutu, Kantor Manajemen Mutu (KMM), Gusus Penjamin Mutu (GPM), dan GKM berkoordinasi untuk mencapai sasaran mutu yang ditetapkan.",
-            
+GKM dibentuk melalui SK Dekan. Dalam implementasi sistem penjamin mutu, Kantor Manajemen Mutu (KMM), Gusus Penjamin Mutu (GPM), dan GKM berkoordinasi untuk mencapai sasaran mutu yang ditetapkan.',
+
             'created_at' => now(),
             'updated_at' => now(),
         ]);

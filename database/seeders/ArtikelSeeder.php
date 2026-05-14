@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Artikel;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ArtikelSeeder extends Seeder
@@ -277,8 +275,8 @@ Untuk menyikapi kebijakan tersebut PS THH telah melakukan reorientasi kurikulum 
 Kuliah pembekalan PKL mengundang narasumber/praktisi berasal dari dosen DHH serta dari luar kampus. Secara detail jadwal kuliah pembekalan dapat dilihat pada link beirkut : https://ipb.link/pembekalanpkl-dhh-2024. Setelah melaksanakan kuliah pembekalan, para mahasiswa bersiap-siap untuk berangkat PKL ke berbagai lokasi industry hasil hutan (23 lokasi industry hasil hutan) yang tersebar di wilayan Propinsi Banten, Jawa Barat dan Jawa Tengah.',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],            
-        ]);    
-        
+            ],
+        ]);
+
     }
 }

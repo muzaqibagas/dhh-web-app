@@ -12,5 +12,4 @@ class Jenjang extends Model
     {
         return $this->hasOne(KontenJenjang::class, 'id_jenjang');
     }
-};
-
+}

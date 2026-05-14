@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\StaffDept;
 use App\Models\SyaratKolokiummhs;
 use App\Models\User;
-use App\Models\StaffDept;
+use Illuminate\Database\Seeder;
 
 class SyaratKolokiummhsSeeder extends Seeder
 {
@@ -44,7 +44,7 @@ class SyaratKolokiummhsSeeder extends Seeder
                 'alasan_bukti_kehadiran' => null,
 
                 // Status awal
-                'status' => 'disetujui',  
+                'status' => 'disetujui',
                 'bap' => 'diterima',
 
                 'created_at' => $randomDate,

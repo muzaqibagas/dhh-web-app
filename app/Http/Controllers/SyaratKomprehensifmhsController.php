@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SyaratKomprehensifmhs;
 use App\Models\Komprehensifmhs;
-use App\Models\StaffDept;
-use App\Models\User;
 use App\Models\Notification as AppNotification;
-use App\Models\StaffNotification;
+use App\Models\StaffDept;
+use App\Models\SyaratKomprehensifmhs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
-use setasign\Fpdf\Fpdf;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class SyaratKomprehensifmhsController extends Controller
 {
@@ -25,16 +21,17 @@ class SyaratKomprehensifmhsController extends Controller
         $search = $request->input('search');
 
         $pendaftar = SyaratKomprehensifmhs::with('mahasiswa')
-            ->where('status', '!=', 'ditolak') 
+            ->where('status', '!=', 'ditolak')
             ->where('bap', '!=', 'ditolak')
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('mahasiswa', function ($q) use ($search) {
                     $q->where('nama', 'like', "%{$search}%")
-                    ->orWhere('nim', 'like', "%{$search}%");
+                        ->orWhere('nim', 'like', "%{$search}%");
                 });
             })
             ->orderBy('id', 'DESC')
             ->paginate(10);
+
         return view('syaratkomprehensifmhs.index', compact('pendaftar', 'listModerator'));
     }
 
@@ -108,14 +105,14 @@ class SyaratKomprehensifmhsController extends Controller
             'Bukti Kartu Bimbingan' => $request->alasan_bukti_kehadiran,
         ];
 
-        $reasonMessage = "⚠️ Berkas persyaratan komprehensif anda perlu diperbaiki:<br><ul>";
+        $reasonMessage = '⚠️ Berkas persyaratan komprehensif anda perlu diperbaiki:<br><ul>';
         foreach ($reasons as $field => $msg) {
             if ($msg) {
                 $reasonMessage .= "<li><b>{$field}</b>: {$msg}</li>";
             }
         }
-        $reasonMessage .= "</ul>";
-        
+        $reasonMessage .= '</ul>';
+
         $this->sendNotification(
             $syarat->id_mahasiswa,
             '🔔 Perlu Revisi Berkas',
@@ -124,29 +121,30 @@ class SyaratKomprehensifmhsController extends Controller
         );
 
         return redirect()->back()->with('success', 'Syarat Komprehensif ditolak. Alasan penolakan telah disimpan.');
-    }    
+    }
 
     public function downloadPdf($id)
     {
         $syarat = SyaratKomprehensifmhs::with(['mahasiswa', 'moderator', 'penguji',  'penandatanganundangan'])->findOrFail($id);
         $komprehensif = Komprehensifmhs::with([
-            'mahasiswa',            
+            'mahasiswa',
             'semester',
             'pembimbing1',
             'pembimbing2',
         ])->where('id_mahasiswa', $syarat->id_mahasiswa)->first();
 
-        if (!$komprehensif) {
+        if (! $komprehensif) {
             return back()->with('error', 'Mahasiswa ini belum melakukan pendaftaran Komprehensif.');
         }
 
         $template = public_path('undangan/templateundangankomprehensif.pdf');
         $outputPath = public_path('undangan/undangankomprehensif');
-        if (!file_exists($outputPath))
+        if (! file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
-        $output = $outputPath . "/{$komprehensif->nim}_undangankomprehensif.pdf";
+        }
+        $output = $outputPath."/{$komprehensif->nim}_undangankomprehensif.pdf";
 
-        $pdf = new Fpdi();
+        $pdf = new Fpdi;
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
@@ -166,53 +164,53 @@ class SyaratKomprehensifmhsController extends Controller
         $jabatanPenandatangan = $syarat->penandatanganundangan->jabatan ?? '-';
         $nipPenandatangan = $syarat->penandatanganundangan->nip ?? '-';
 
-        $pdf->SetXY(99,71.5);
+        $pdf->SetXY(99, 71.5);
         $pdf->MultiCell(86, 5, $komprehensif->pembimbing1->nama ?? '-', 0, 'L');
 
-        
-        $pdf->SetXY(99,76.5);
+        $pdf->SetXY(99, 76.5);
         $pdf->MultiCell(86, 5, $komprehensif->pembimbing2->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(99,91);
+        $pdf->SetXY(99, 91);
         $pdf->MultiCell(86, 5.5, $penguji, 0, 'L');
 
-        $pdf->SetXY(99,96);
+        $pdf->SetXY(99, 96);
         $pdf->MultiCell(86, 5.5, $moderator, 0, 'L');
 
-        $pdf->SetXY(79,119);
+        $pdf->SetXY(79, 119);
         $pdf->MultiCell(106, 5.5, $komprehensif->mahasiswa->nama ?? '-', 0, 'L');
 
-        $pdf->SetXY(79,124);
+        $pdf->SetXY(79, 124);
         $pdf->MultiCell(106, 5.5, $komprehensif->nim ?? '-', 0, 'L');
 
-        $pdf->SetXY(79,129);
+        $pdf->SetXY(79, 129);
         $pdf->MultiCell(106, 5.5, $komprehensif->judul_tugasakhir, 0, 'L');
-        
-        $pdf->SetXY(79,150.3);
+
+        $pdf->SetXY(79, 150.3);
         $pdf->MultiCell(106, 5.5, "{$hari} / {$tanggal}", 0, 'L');
-        
-        $pdf->SetXY(79,156);
+
+        $pdf->SetXY(79, 156);
         $pdf->MultiCell(106, 5.5, "{$mulai} - {$selesai} WIB", 0, 'L');
-        
-        $pdf->SetXY(79,161);
+
+        $pdf->SetXY(79, 161);
         $pdf->MultiCell(106, 5.5, $tempat, 0, 'L');
 
-        $pdf->SetXY(113, 197);        
+        $pdf->SetXY(113, 197);
         $pdf->MultiCell(85, 6, $jabatanPenandatangan, 0, 'L');
 
-        $pdf->SetXY(113, 223);        
+        $pdf->SetXY(113, 223);
         $pdf->MultiCell(85, 6, $penandatanganundangan, 0, 'L');
 
-        $pdf->SetXY(113, 228);        
-        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');        
+        $pdf->SetXY(113, 228);
+        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');
 
         $pdf->SetXY(126, 192);
         $pdf->MultiCell(58, 5.5, now()->translatedFormat('d F Y'), 0, 'L');
 
         $pdf->Output($output, 'F');
+
         return response()->download($output);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -221,14 +219,15 @@ class SyaratKomprehensifmhsController extends Controller
         $mahasiswaId = auth()->id();
 
         $komprehensif = Komprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();
-        if (!$komprehensif){
+        if (! $komprehensif) {
             return redirect()
-            ->route('komprehensifmhs.create')
-            ->with('error', 'Anda belum mendaftar Komprehensif. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
+                ->route('komprehensifmhs.create')
+                ->with('error', 'Anda belum mendaftar Komprehensif. Silakan daftar terlebih dahulu sebelum mengisi persyaratan.');
         }
 
-        $syarat = SyaratKomprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();        
-        return view('syaratkomprehensifmhs.create', compact('syarat')); 
+        $syarat = SyaratKomprehensifmhs::where('id_mahasiswa', $mahasiswaId)->first();
+
+        return view('syaratkomprehensifmhs.create', compact('syarat'));
     }
 
     /**
@@ -243,7 +242,7 @@ class SyaratKomprehensifmhsController extends Controller
             return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
         }
 
-        if ($existing && $existing->bap === 'ditolak' && !$request->hasFile('formulir') ) {
+        if ($existing && $existing->bap === 'ditolak' && ! $request->hasFile('formulir')) {
             return redirect()->back()->with('error', 'Silakan unggah ulang formulir, anda belum melaksanakan seminar hasil.');
         }
 
@@ -262,59 +261,59 @@ class SyaratKomprehensifmhsController extends Controller
         ];
 
         $user = auth()->user();
-        $folderName = $user->nama . '_' . $user->nim;
+        $folderName = $user->nama.'_'.$user->nim;
 
-        $destinationPath = public_path('syarat_komprehensif/' . $folderName);
+        $destinationPath = public_path('syarat_komprehensif/'.$folderName);
 
-        if (!file_exists($destinationPath)) {
+        if (! file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
 
         $nim = $user->nim;
         if ($request->hasFile('formulir')) {
             $formulir = $request->file('formulir');
-            $formulirName = 'formulir_komprehensif_' . $nim . '.' . $formulir->getClientOriginalExtension();
+            $formulirName = 'formulir_komprehensif_'.$nim.'.'.$formulir->getClientOriginalExtension();
             $formulir->move($destinationPath, $formulirName);
-            $data['formulir'] = 'syarat_komprehensif/' . $folderName . '/' . $formulirName;
+            $data['formulir'] = 'syarat_komprehensif/'.$folderName.'/'.$formulirName;
         }
 
         if ($request->hasFile('makalah')) {
             $makalah = $request->file('makalah');
-            $makalahName = 'makalah_komprehensif_' . $nim . '.' . $makalah->getClientOriginalExtension();
+            $makalahName = 'makalah_komprehensif_'.$nim.'.'.$makalah->getClientOriginalExtension();
             $makalah->move($destinationPath, $makalahName);
-            $data['makalah'] = 'syarat_komprehensif/' . $folderName . '/' . $makalahName;
+            $data['makalah'] = 'syarat_komprehensif/'.$folderName.'/'.$makalahName;
         }
 
         if ($request->hasFile('bukti_sks')) {
             $buktiSks = $request->file('bukti_sks');
-            $buktiSksName = 'bukti_sks_' . $nim . '.' . $buktiSks->getClientOriginalExtension();
+            $buktiSksName = 'bukti_sks_'.$nim.'.'.$buktiSks->getClientOriginalExtension();
             $buktiSks->move($destinationPath, $buktiSksName);
-            $data['bukti_sks'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiSksName;
+            $data['bukti_sks'] = 'syarat_komprehensif/'.$folderName.'/'.$buktiSksName;
         }
 
         if ($request->hasFile('bukti_spp')) {
             $buktiSpp = $request->file('bukti_spp');
-            $buktiSppName = 'bukti_spp_' . $nim . '.' . $buktiSpp->getClientOriginalExtension();
+            $buktiSppName = 'bukti_spp_'.$nim.'.'.$buktiSpp->getClientOriginalExtension();
             $buktiSpp->move($destinationPath, $buktiSppName);
-            $data['bukti_spp'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiSppName;
+            $data['bukti_spp'] = 'syarat_komprehensif/'.$folderName.'/'.$buktiSppName;
         }
 
         if ($request->hasFile('bukti_kehadiran')) {
             $buktiKehadiran = $request->file('bukti_kehadiran');
-            $buktiKehadiranName = 'bukti_kehadiran_' . $nim . '.' . $buktiKehadiran->getClientOriginalExtension();
+            $buktiKehadiranName = 'bukti_kehadiran_'.$nim.'.'.$buktiKehadiran->getClientOriginalExtension();
             $buktiKehadiran->move($destinationPath, $buktiKehadiranName);
-            $data['bukti_kehadiran'] = 'syarat_komprehensif/' . $folderName . '/' . $buktiKehadiranName;
+            $data['bukti_kehadiran'] = 'syarat_komprehensif/'.$folderName.'/'.$buktiKehadiranName;
         }
 
-        SyaratKomprehensifmhs::create($data);        
+        SyaratKomprehensifmhs::create($data);
 
-        $this->sendNotification($mahasiswaId, 
-            '🔔 Berkas Komprehensif Diajukan', 
+        $this->sendNotification($mahasiswaId,
+            '🔔 Berkas Komprehensif Diajukan',
             'Berkas persyaratan komprehensif berhasil diunggah. Menunggu pengecekan admin.',
             route('syaratkomprehensifmhs.create')
         );
 
-        return redirect()->back()->with('success', 'Berkas pendaftaran komprehensif berhasil diajukan dan sedang menunggu persetujuan.');        
+        return redirect()->back()->with('success', 'Berkas pendaftaran komprehensif berhasil diajukan dan sedang menunggu persetujuan.');
     }
 
     public function reupload(Request $request, $id)
@@ -322,59 +321,59 @@ class SyaratKomprehensifmhsController extends Controller
         $syarat = SyaratKomprehensifmhs::findOrFail($id);
         $user = auth()->user();
         $nim = $user->nim;
-        $folderName = $user->nama . '_' . $user->nim;
-        $destinationPath = public_path('syarat_komprehensif/' . $folderName);
+        $folderName = $user->nama.'_'.$user->nim;
+        $destinationPath = public_path('syarat_komprehensif/'.$folderName);
 
-        if (!file_exists($destinationPath)) {
+        if (! file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
-        }   
+        }
 
         if ($request->hasfile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_komprehensif_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_komprehensif_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->formulir = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
-            $syarat->alasan_formulir = null;            
+            $syarat->formulir = 'syarat_komprehensif/'.$folderName.'/'.$fileName;
+            $syarat->alasan_formulir = null;
         }
 
         if ($request->hasfile('makalah')) {
             $file = $request->file('makalah');
-            $fileName = 'makalah_komprehensif_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'makalah_komprehensif_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->makalah = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
-            $syarat->alasan_makalah = null;            
+            $syarat->makalah = 'syarat_komprehensif/'.$folderName.'/'.$fileName;
+            $syarat->alasan_makalah = null;
         }
 
         if ($request->hasfile('bukti_sks')) {
             $file = $request->file('bukti_sks');
-            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_sks_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_sks = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
-            $syarat->alasan_bukti_sks = null;            
+            $syarat->bukti_sks = 'syarat_komprehensif/'.$folderName.'/'.$fileName;
+            $syarat->alasan_bukti_sks = null;
         }
 
         if ($request->hasfile('bukti_spp')) {
             $file = $request->file('bukti_spp');
-            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_spp_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_spp = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
-            $syarat->alasan_bukti_spp = null;            
+            $syarat->bukti_spp = 'syarat_komprehensif/'.$folderName.'/'.$fileName;
+            $syarat->alasan_bukti_spp = null;
         }
 
         if ($request->hasfile('bukti_kehadiran')) {
             $file = $request->file('bukti_kehadiran');
-            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_kehadiran_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_kehadiran = 'syarat_komprehensif/' . $folderName . '/' . $fileName;            
-            $syarat->alasan_bukti_kehadiran = null;            
+            $syarat->bukti_kehadiran = 'syarat_komprehensif/'.$folderName.'/'.$fileName;
+            $syarat->alasan_bukti_kehadiran = null;
         }
 
         if (
-            !$syarat->alasan_formulir &&
-            !$syarat->alasan_makalah &&
-            !$syarat->alasan_bukti_sks &&
-            !$syarat->alasan_bukti_spp &&
-            !$syarat->alasan_bukti_kehadiran
+            ! $syarat->alasan_formulir &&
+            ! $syarat->alasan_makalah &&
+            ! $syarat->alasan_bukti_sks &&
+            ! $syarat->alasan_bukti_spp &&
+            ! $syarat->alasan_bukti_kehadiran
         ) {
             $syarat->status = 'pending';
             $syarat->bap = 'belum_melaksanakan';
@@ -383,7 +382,7 @@ class SyaratKomprehensifmhsController extends Controller
         $syarat->save();
 
         $this->sendNotification($syarat->id_mahasiswa,
-            '🔔 Berkas Persyaratan Komprehensif Diunggah Ulang', 
+            '🔔 Berkas Persyaratan Komprehensif Diunggah Ulang',
             'Berkas perbaikan persyaratan komprehensif berhasil diunggah. Menunggu verifikasi ulang.',
             route('syaratkomprehensifmhs.create')
         );
@@ -401,7 +400,7 @@ class SyaratKomprehensifmhsController extends Controller
         ]);
 
         $this->sendNotification($syarat->id_mahasiswa,
-            '🔔 Komprehensif Selesai',        
+            '🔔 Komprehensif Selesai',
             'Selamat Anda telah berhasil menyelesaikan ujian komprehensif. Silakan melanjutkan ke tahap pengajuan SKL (Surat Keterangan Lulus).',
             route('dashboardmhs.index')
         );
@@ -464,28 +463,28 @@ class SyaratKomprehensifmhsController extends Controller
             'ruangan' => 'required|string|max:255',
         ]);
 
-        $nim = $syaratKomprehensifmhs->mahasiswa->nim;        
-        $nama = $syaratKomprehensifmhs->mahasiswa->nama;        
+        $nim = $syaratKomprehensifmhs->mahasiswa->nim;
+        $nama = $syaratKomprehensifmhs->mahasiswa->nama;
         $moderatorId = $request->moderator;
         $pengujiId = $request->penguji;
         $penandatanganundanganId = $request->penandatanganundangan;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
         $penguji = StaffDept::findOrFail($pengujiId)->nama;
-        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;        
+        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;
 
         $syaratKomprehensifmhs->update([
             'id_moderator' => $moderatorId,
             'id_penguji' => $pengujiId,
             'id_penandatanganundangan' => $penandatanganundanganId,
             'ruangan' => $request->ruangan,
-        ]); 
+        ]);
 
         $this->sendNotification($syaratKomprehensifmhs->id_mahasiswa,
-            '🔔 Ketua Sidang dan Dosen Penguji Ditentukan',            
+            '🔔 Ketua Sidang dan Dosen Penguji Ditentukan',
             "Ketua Sidang <strong>{$moderator}</strong> dan dosen penguji <strong>{$penguji}</strong> telah ditetapkan untuk kolokium Anda.<br>
             Ruangan Pelaksanaan: <strong>{$request->ruangan}</strong>",
-            route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)          
+            route('komprehensifmhs.show', $syaratKomprehensifmhs->komprehensifmhs->id)
         );
 
         $this->sendStaffNotification($syaratKomprehensifmhs->id_moderator,
@@ -493,9 +492,9 @@ class SyaratKomprehensifmhsController extends Controller
             "Anda ditunjuk sebagai moderator untuk kolokium mahasiswa {$nama}.",
             route('dashboarddosen.index', $syaratKomprehensifmhs->komprehensifmhs->id)
         );
-                
+
         return redirect()->back()->with('success', "Ketua Sidang <strong>{$moderator}</strong> dan Dosen Penguji <strong>{$penguji}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
-        
+
     }
 
     /**

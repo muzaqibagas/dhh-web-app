@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('leaflet_jenjangs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_kontenjenjang')->constrained('konten_jenjangs')->onDelete('cascade');
-            $table->string('gambar'); 
+            $table->string('gambar');
             $table->timestamps();
 
         });

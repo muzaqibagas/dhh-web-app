@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\StaffDept;
 use App\Models\SyaratKomprehensifmhs;
 use App\Models\User;
-use App\Models\StaffDept;   
+use Illuminate\Database\Seeder;
 
 class SyaratKomprehensifmhsSeeder extends Seeder
 {
@@ -35,8 +35,6 @@ class SyaratKomprehensifmhsSeeder extends Seeder
                 'id_moderator' => $moderator?->id,
                 'id_penguji' => $penguji?->id,
                 'id_penandatanganundangan' => $penandatangan?->id,
-
-                
 
                 // File dummy
                 'formulir' => 'uploads/syarat/formulir_dummy.pdf',

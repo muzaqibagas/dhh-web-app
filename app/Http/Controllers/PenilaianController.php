@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Penilaian;
-use App\Models\SyaratKolokiummhs;
-use App\Models\SyaratSeminarmhs;
-use App\Models\SyaratKomprehensifmhs;
-use App\Models\StaffDept;
 use App\Models\Rubrik;
+use App\Models\SyaratUjian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
 {
@@ -17,124 +14,95 @@ class PenilaianController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {       
+    {
         $dosen = Auth::guard('staff')->user();
 
-        $kolokium = SyaratKolokiummhs::with(['mahasiswa','kolokiummhs', 'penilaian'])
+        $jadwal = SyaratUjian::with([
+            'mahasiswa',
+            'kolokiummhs',
+            'seminarmhs',
+            'komprehensifmhs',
+        ])
             ->where('status', 'disetujui')
             ->get()
+
+            // 🔥 FILTER: hanya yg terkait dosen
             ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->kolokiummhs->id_pembimbing1 == $dosen->id || 
-                       $item->kolokiummhs->id_pembimbing2 == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Kolokium';
-                $item->tanggal_ujian = $item->kolokiummhs->tanggal ?? null;
-                
-                // Determine dosen role
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Moderator';
+
+                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
+                        ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
+                        $item->komprehensifmhs);
+
+                if (! $relasi) {
+                    return false;
                 }
-                if ($item->kolokiummhs && ($item->kolokiummhs->id_pembimbing1 == $dosen->id || $item->kolokiummhs->id_pembimbing2 == $dosen->id)) {
+
+                return
+                    $item->id_moderator == $dosen->id ||
+                    ($relasi->id_pembimbing1 ?? null) == $dosen->id ||
+                    ($relasi->id_pembimbing2 ?? null) == $dosen->id ||
+                    ($item->id_penguji ?? null) == $dosen->id;
+            })
+
+            // 🔥 MAP DATA
+            ->map(function ($item) use ($dosen) {
+
+                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
+                        ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
+                        $item->komprehensifmhs);
+
+                if (! $relasi) {
+                    return null;
+                }
+
+                // tanggal ujian
+                $item->tanggal_ujian = $relasi->tanggal ?? null;
+
+                // label jenis
+                $item->jenis_ujian_label = match ($item->jenis_ujian) {
+                    'kolokium' => 'Kolokium',
+                    'seminar' => 'Seminar Hasil',
+                    'komprehensif' => 'Komprehensif',
+                    default => '-'
+                };
+
+                // 🔥 tentukan peran dosen
+                $peran = [];
+
+                if ($item->id_moderator == $dosen->id) {
+                    $peran[] = $item->jenis_ujian === 'komprehensif'
+                        ? 'Ketua Sidang'
+                        : 'Moderator';
+                }
+
+                if (($relasi->id_pembimbing1 ?? null) == $dosen->id ||
+                    ($relasi->id_pembimbing2 ?? null) == $dosen->id) {
                     $peran[] = 'Pembimbing';
                 }
 
-                $item->current_penilaian = Penilaian::where('id_syarat_kolokiummhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
-                    })
-                    ->first();
-
-                $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
-
-        $seminar = SyaratSeminarmhs::with(['mahasiswa','seminarmhs', 'penilaian'])
-            ->where('status', 'disetujui')
-            ->get()
-            ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->seminarmhs->id_pembimbing1 == $dosen->id || 
-                       $item->seminarmhs->id_pembimbing2 == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Seminar Hasil';
-                $item->tanggal_ujian = $item->seminarmhs->tanggal ?? null;
-                
-                // Determine dosen role
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Moderator';
-                }
-                if ($item->seminarmhs && ($item->seminarmhs->id_pembimbing1 == $dosen->id || $item->seminarmhs->id_pembimbing2 == $dosen->id)) {
-                    $peran[] = 'Pembimbing';
-                }
-
-                $item->current_penilaian = Penilaian::where('id_syarat_seminarmhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
-                    })
-                    ->first();
-
-                $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
-
-        $kompre = SyaratKomprehensifmhs::with(['mahasiswa','komprehensifmhs', 'penilaian'])
-            ->where('status', 'disetujui')
-            ->get()
-            ->filter(function ($item) use ($dosen) {
-                // Check if dosen is moderator, penguji, or pembimbing
-                return $item->id_moderator == $dosen->id || 
-                       $item->id_penguji == $dosen->id ||
-                       $item->komprehensifmhs->id_pembimbing1 == $dosen->id || 
-                       $item->komprehensifmhs->id_pembimbing2 == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
-                $item->jenis_ujian = 'Komprehensif';
-                $item->tanggal_ujian = $item->komprehensifmhs->tanggal ?? null;
-                
-                // Determine dosen role
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = 'Ketua Sidang';
-                }
-                if ($item->id_penguji == $dosen->id) {
+                if (($item->id_penguji ?? null) == $dosen->id) {
                     $peran[] = 'Penguji';
                 }
-                if ($item->komprehensifmhs && ($item->komprehensifmhs->id_pembimbing1 == $dosen->id || $item->komprehensifmhs->id_pembimbing2 == $dosen->id)) {
-                    $peran[] = 'Pembimbing';
-                }
 
-                $item->current_penilaian = Penilaian::where('id_syarat_komprehensifmhs', $item->id)
-                    ->where(function ($query) use ($dosen) {
-                        $query->where('id_moderator', $dosen->id)
-                              ->orWhere('id_penguji', $dosen->id)
-                              ->orWhere('id_pembimbing1', $dosen->id)
-                              ->orWhere('id_pembimbing2', $dosen->id);
+                // 🔥 ambil penilaian dari tabel baru
+                $item->current_penilaian = Penilaian::where('id_syarat_ujian', $item->id)
+                    ->where(function ($q) use ($dosen) {
+                        $q->where('id_moderator', $dosen->id)
+                            ->orWhere('id_pembimbing1', $dosen->id)
+                            ->orWhere('id_pembimbing2', $dosen->id)
+                            ->orWhere('id_penguji', $dosen->id);
                     })
                     ->first();
 
                 $item->peran_dosen = implode(', ', $peran);
-                return $item;
-            });
 
-        $jadwal = $kolokium
-            ->concat($seminar)
-            ->concat($kompre)
+                return $item;
+            })
+
+            ->filter()
             ->sortByDesc('tanggal_ujian');
 
-        return view('penilaian.index', compact(            
-            'jadwal',            
-        ));
+        return view('penilaian.index', compact('jadwal'));
     }
 
     /**
@@ -142,38 +110,47 @@ class PenilaianController extends Controller
      */
     public function create(Request $request)
     {
-        $rawJenis = strtolower(trim($request->jenis ?? ''));
+        $jenis = strtolower(trim($request->jenis ?? ''));
+        $id = $request->id;
 
-        if (str_contains($rawJenis, 'kolokium')) {
-            $jenis = 'kolokium';
-        } elseif (str_contains($rawJenis, 'seminar')) {
-            $jenis = 'seminar';
-        } elseif (str_contains($rawJenis, 'komprehensif')) {
-            $jenis = 'komprehensif';
+        if (! $jenis || ! $id) {
+            abort(404, 'Parameter tidak lengkap');
+        }
+
+        $syarat = SyaratUjian::with([
+            'mahasiswa',
+            'kolokiummhs',
+            'seminarmhs',
+            'komprehensifmhs',
+        ])->findOrFail($id);
+
+        // ambil relasi sesuai jenis
+        if ($jenis === 'kolokium') {
+            $relasi = $syarat->kolokiummhs;
+            $judul = $relasi->judul_kolokium ?? '-';
+        } elseif ($jenis === 'seminar') {
+            $relasi = $syarat->seminarmhs;
+            $judul = $relasi->judul_seminar ?? '-';
+        } elseif ($jenis === 'komprehensif') {
+            $relasi = $syarat->komprehensifmhs;
+            $judul = $relasi->judul_tugasakhir ?? '-';
         } else {
             abort(404);
         }
 
-        $rubriks = Rubrik::where('jenis_sidang', $jenis)->get();
-        $id    = $request->id;
-
-        if ($jenis === 'kolokium') {
-            $data = SyaratKolokiummhs::with(['mahasiswa','kolokiummhs'])->findOrFail($id);
-            $judul = $data->kolokiummhs->judul_kolokium ?? '-';
-        } 
-        elseif ($jenis === 'seminar') {
-            $data = SyaratSeminarmhs::with(['mahasiswa','seminarmhs'])->findOrFail($id);
-            $judul = $data->seminarmhs->judul_seminar ?? '-';
-        } 
-        elseif ($jenis === 'komprehensif') {
-            $data = SyaratKomprehensifmhs::with(['mahasiswa','komprehensifmhs'])->findOrFail($id);
-            $judul = $data->komprehensifmhs->judul_komprehensif ?? '-';
-        } 
-        else {
-            abort(404);
+        if (! $relasi) {
+            abort(404, 'Data sidang tidak ditemukan');
         }
 
-        return view('penilaian.create', compact('data','jenis','judul', 'rubriks'));
+        $rubriks = Rubrik::where('jenis_sidang', $jenis)->get();
+
+        return view('penilaian.create', [
+            'data' => $syarat,
+            'relasi' => $relasi,
+            'jenis' => $jenis,
+            'judul' => $judul,
+            'rubriks' => $rubriks,
+        ]);
     }
 
     /**
@@ -182,57 +159,50 @@ class PenilaianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nilai' => 'required|array'
+            'nilai' => 'required|array',
         ]);
 
-        $id = $request->id;
-        $jenis = $request->jenis;
+        $id = $request->id; // ini ID syaratujian
+        $jenis = strtolower($request->jenis);
+        $dosenId = Auth::guard('staff')->id();
+
         $penilaianIds = [];
         $totalScore = 0;
 
-        $dosenId = Auth::guard('staff')->id();
+        $syarat = SyaratUjian::with([
+            'kolokiummhs',
+            'seminarmhs',
+            'komprehensifmhs',
+        ])->findOrFail($id);
 
-        // 🔥 Tentukan data sidang + role
         if ($jenis === 'kolokium') {
-            $dataSidang = SyaratKolokiummhs::with('kolokiummhs')->findOrFail($id);
-            $sidang = $dataSidang->kolokiummhs;
-
+            $sidang = $syarat->kolokiummhs;
         } elseif ($jenis === 'seminar') {
-            $dataSidang = SyaratSeminarmhs::with('seminarmhs')->findOrFail($id);
-            $sidang = $dataSidang->seminarmhs;
-
+            $sidang = $syarat->seminarmhs;
         } elseif ($jenis === 'komprehensif') {
-            $dataSidang = SyaratKomprehensifmhs::with('komprehensifmhs')->findOrFail($id);
-            $sidang = $dataSidang->komprehensifmhs;
-
+            $sidang = $syarat->komprehensifmhs;
         } else {
-            abort(404);
+            abort(404, 'Jenis ujian tidak valid');
         }
 
-        // 🔥 Tentukan role dosen
+        if (! $sidang) {
+            abort(404, 'Data sidang tidak ditemukan');
+        }
+
         $roleField = null;
 
-        // dd([
-        //     'dosen_login' => $dosenId,
-        //     'moderator' => $dataSidang->id_moderator,
-        //     'penguji' => $dataSidang->id_penguji,
-        //     'pembimbing1' => optional($sidang)->id_pembimbing1,
-        //     'pembimbing2' => optional($sidang)->id_pembimbing2,
-        // ]);
-
-        if ($dataSidang->id_moderator == $dosenId) {
+        if ($syarat->id_moderator == $dosenId) {
             $roleField = 'id_moderator';
-        } elseif ($dataSidang->id_penguji == $dosenId) {
-            $roleField = 'id_penguji';
-        } elseif (optional($sidang)->id_pembimbing1 == $dosenId) {
+        } elseif (($sidang->id_pembimbing1 ?? null) == $dosenId) {
             $roleField = 'id_pembimbing1';
-        } elseif (optional($sidang)->id_pembimbing2 == $dosenId) {
+        } elseif (($sidang->id_pembimbing2 ?? null) == $dosenId) {
             $roleField = 'id_pembimbing2';
+        } elseif (($syarat->id_penguji ?? null) == $dosenId) {
+            $roleField = 'id_penguji';
         } else {
             abort(403, 'Anda tidak punya akses sebagai penilai');
         }
 
-        // 🔁 Loop simpan nilai
         foreach ($request->nilai as $rubrikId => $nilai) {
 
             $rubrik = Rubrik::findOrFail($rubrikId);
@@ -241,31 +211,27 @@ class PenilaianController extends Controller
             $score = ($nilai / 4) * $bobot;
 
             $dataInsert = [
-                $roleField => $dosenId, // 🔥 sekarang sudah aman
+                'id_syarat_ujian' => $syarat->id,
+                $roleField => $dosenId,
                 'id_rubrik' => $rubrikId,
                 'nilai' => $nilai,
                 'score' => $score,
                 'catatan' => $request->catatan,
             ];
 
-            if ($jenis === 'kolokium') {
-                $dataInsert['id_syarat_kolokiummhs'] = $id;
-            } elseif ($jenis === 'seminar') {
-                $dataInsert['id_syarat_seminarmhs'] = $id;
-            } elseif ($jenis === 'komprehensif') {
-                $dataInsert['id_syarat_komprehensifmhs'] = $id;
-            }
-
             $penilaian = Penilaian::create($dataInsert);
+
             $penilaianIds[] = $penilaian->id;
             $totalScore += $score;
         }
 
-        // Simpan nilai akhir
         Penilaian::whereIn('id', $penilaianIds)
-            ->update(['nilai_akhir' => $totalScore]);
+            ->update([
+                'nilai_akhir' => $totalScore,
+            ]);
 
-        return redirect()->route('penilaian.show', $penilaianIds[0])
+        return redirect()
+            ->route('penilaian.show', $penilaianIds[0])
             ->with('success', 'Penilaian berhasil disimpan');
     }
 
@@ -274,94 +240,68 @@ class PenilaianController extends Controller
      */
     public function show(Penilaian $penilaian)
     {
-        $penilaian->load(['rubrik']);
-        $rubrik = $penilaian->rubrik;
-        $jenis = strtolower($rubrik->jenis_sidang);
-        
         $dosenId = Auth::guard('staff')->id();
 
-        // rubrik + data sidang
-        if ($jenis === 'kolokium') {
-            $data = SyaratKolokiummhs::with(['mahasiswa','kolokiummhs'])->findOrFail($penilaian->id_syarat_kolokiummhs);
-            $judul = $data->kolokiummhs->judul_kolokium ?? '-';
-            $penilaians = Penilaian::where('id_syarat_kolokiummhs', $penilaian->id_syarat_kolokiummhs)
-                ->where(function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId)
-                    ->orWhere('id_penguji', $dosenId)
-                    ->orWhere('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId);
-                })
-                ->with('rubrik')
-                ->get();
-        } 
-        elseif ($jenis === 'seminar') {
-            $data = SyaratSeminarmhs::with(['mahasiswa','seminarmhs'])->findOrFail($penilaian->id_syarat_seminarmhs);
-            $judul = $data->seminarmhs->judul_seminar ?? '-';
-            $penilaians = Penilaian::where('id_syarat_seminarmhs', $penilaian->id_syarat_seminarmhs)
-                ->where(function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId)
-                    ->orWhere('id_penguji', $dosenId)
-                    ->orWhere('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId);
-                })    
-                ->with('rubrik')
-                ->get();
-        } 
-        elseif ($jenis === 'komprehensif') {
-            $data = SyaratKomprehensifmhs::with(['mahasiswa','komprehensifmhs'])->findOrFail($penilaian->id_syarat_komprehensifmhs);
-            $judul = $data->komprehensifmhs->judul_komprehensif ?? '-';
-            $penilaians = Penilaian::where('id_syarat_komprehensifmhs', $penilaian->id_syarat_komprehensifmhs)
-                ->where(function ($q) use ($dosenId) {
-                    $q->where('id_moderator', $dosenId)
-                    ->orWhere('id_penguji', $dosenId)
-                    ->orWhere('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId);
-                })
-                ->with('rubrik')
-                ->get();
-        } 
-        else {
+        // 🔥 ambil syarat ujian utama
+        $syarat = SyaratUjian::with([
+            'mahasiswa',
+            'kolokiummhs',
+            'seminarmhs',
+            'komprehensifmhs',
+        ])->findOrFail($penilaian->id_syarat_ujian);
+
+        $jenis = $syarat->jenis_ujian;
+
+        // 🔥 ambil relasi sesuai jenis
+        $relasi = match ($jenis) {
+            'kolokium' => $syarat->kolokiummhs,
+            'seminar' => $syarat->seminarmhs,
+            'komprehensif' => $syarat->komprehensifmhs,
+            default => null
+        };
+
+        if (! $relasi) {
             abort(404);
         }
 
-        //penilaian untuk semua dosen
-        if ($jenis === 'kolokium') {
-            $allPenilaians = Penilaian::where('id_syarat_kolokiummhs', $penilaian->id_syarat_kolokiummhs)
-                ->whereNotNull('nilai_akhir')
-                ->get();
-        }
+        // 🔥 ambil judul
+        $judul = match ($jenis) {
+            'kolokium' => $relasi->judul_kolokium ?? '-',
+            'seminar' => $relasi->judul_seminar ?? '-',
+            'komprehensif' => $relasi->judul_tugasakhir ?? '-',
+            default => '-'
+        };
 
-        elseif ($jenis === 'seminar') {
-            $allPenilaians = Penilaian::where('id_syarat_seminarmhs', $penilaian->id_syarat_seminarmhs)
-                ->whereNotNull('nilai_akhir')
-                ->get();
-        }
-        elseif ($jenis === 'komprehensif') {
-            $allPenilaians = Penilaian::where('id_syarat_komprehensifmhs', $penilaian->id_syarat_komprehensifmhs)
-                ->whereNotNull('nilai_akhir')
-                ->get();
-        }        
-            else {
-            abort(404);
-        }        
+        // 🔥 penilaian dosen login
+        $penilaians = Penilaian::where('id_syarat_ujian', $syarat->id)
+            ->where(function ($q) use ($dosenId) {
+                $q->where('id_moderator', $dosenId)
+                    ->orWhere('id_penguji', $dosenId)
+                    ->orWhere('id_pembimbing1', $dosenId)
+                    ->orWhere('id_pembimbing2', $dosenId);
+            })
+            ->with('rubrik')
+            ->get();
 
+        // 🔥 semua penilaian (untuk rekap)
+        $allPenilaians = Penilaian::where('id_syarat_ujian', $syarat->id)
+            ->whereNotNull('nilai_akhir')
+            ->get();
+
+        // 🔥 GROUP NILAI PER DOSEN
         $nilaiPerDosen = $allPenilaians
             ->groupBy(function ($item) {
-
                 if ($item->id_moderator) {
-                    return 'moderator_' . $item->id_moderator;
+                    return 'moderator_'.$item->id_moderator;
                 }
-
                 if ($item->id_penguji) {
-                    return 'penguji_' . $item->id_penguji;
+                    return 'penguji_'.$item->id_penguji;
                 }
-
                 if ($item->id_pembimbing1) {
-                    return 'pembimbing1_' . $item->id_pembimbing1;
+                    return 'pembimbing1_'.$item->id_pembimbing1;
                 }
-
                 if ($item->id_pembimbing2) {
-                    return 'pembimbing2_' . $item->id_pembimbing2;
+                    return 'pembimbing2_'.$item->id_pembimbing2;
                 }
 
                 return 'unknown';
@@ -370,7 +310,6 @@ class PenilaianController extends Controller
 
                 $item = $items->first();
 
-                // tentukan role + ambil dosen
                 if ($item->id_moderator) {
                     $role = 'Moderator';
                     $dosen = $item->moderator;
@@ -396,24 +335,21 @@ class PenilaianController extends Controller
             })
             ->values();
 
+        // 🔥 HITUNG TOTAL
         $jumlahPenilai = $nilaiPerDosen->count();
-
         $totalNilai = $nilaiPerDosen->sum('nilai_akhir');
+        $rataRata = $jumlahPenilai > 0 ? $totalNilai / $jumlahPenilai : null;
 
-        $rataRata = $jumlahPenilai > 0 
-            ? $totalNilai / $jumlahPenilai 
-            : null;
-        
-        return view('penilaian.show', compact(
-            'data',
-            'jenis',
-            'judul',
-            'penilaians',
-            'nilaiPerDosen',
-            'jumlahPenilai',
-            'totalNilai',
-            'rataRata'
-        ));
+        return view('penilaian.show', [
+            'data' => $syarat,
+            'jenis' => $jenis,
+            'judul' => $judul,
+            'penilaians' => $penilaians,
+            'nilaiPerDosen' => $nilaiPerDosen,
+            'jumlahPenilai' => $jumlahPenilai,
+            'totalNilai' => $totalNilai,
+            'rataRata' => $rataRata,
+        ]);
     }
 
     /**

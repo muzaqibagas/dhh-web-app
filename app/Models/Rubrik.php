@@ -11,7 +11,7 @@ class Rubrik extends Model
     protected $fillable = [
         'nama_kriteria',
         'bobot',
-        'jenis_sidang'
+        'jenis_sidang',
     ];
 
     public function penilaians()

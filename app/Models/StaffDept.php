@@ -2,33 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class StaffDept extends Authenticatable
 {
     use HasFactory, Notifiable;
 
     protected $table = 'staff_depts';
-    
+
     protected $fillable = [
         'id_kategoristaff',
         'id_divisi',
         'jabatan',
-        'foto', 
+        'foto',
         'nama',
-        'username',         
+        'username',
         'tanggal_lahir',
-        'nip',     
+        'nip',
         'email',
-        'keahlian', 
-        'sinta', 
-        'google_scholar', 
-        'scopus', 
+        'keahlian',
+        'sinta',
+        'google_scholar',
+        'scopus',
         'researchgate',
-        'website',         
+        'website',
         'publikasi',
         'riwayat_pendidikan',
         'password',
@@ -42,7 +43,7 @@ class StaffDept extends Authenticatable
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => \Illuminate\Support\Facades\Hash::make($value),
+            set: fn ($value) => Hash::make($value),
         );
     }
 
@@ -60,16 +61,19 @@ class StaffDept extends Authenticatable
     {
         return $this->belongsTo(Divisi::class, 'id_divisi');
     }
+
     public function kolokium()
     {
         return $this->hasMany(SyaratKolokiummhs::class, 'id_moderator');
     }
+
     public function seminar()
     {
         return $this->hasMany(SyaratSeminarmhs::class, 'id_moderator');
     }
+
     public function komprehensif()
     {
         return $this->hasMany(SyaratKomprehensifmhs::class, 'id_moderator');
-    }   
+    }
 }

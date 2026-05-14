@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('konten_depts', function (Blueprint $table) {
-            $table->id('id');            
+            $table->id('id');
             $table->text('sejarah')->nullable();
             $table->text('visi')->nullable();
             $table->text('misi')->nullable();

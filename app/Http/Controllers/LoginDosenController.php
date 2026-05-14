@@ -21,13 +21,13 @@ class LoginDosenController extends Controller
 
         if (Auth::guard('staff')->attempt([
             'username' => $request->username,
-            'password' => $request->password
+            'password' => $request->password,
         ])) {
             return redirect()->route('dashboarddosen');
         }
 
         return back()->withErrors([
-            'username' => 'Username atau password salah.'
+            'username' => 'Username atau password salah.',
         ]);
     }
 

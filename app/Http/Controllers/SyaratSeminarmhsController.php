@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SyaratSeminarmhs;
+use App\Models\Notification as AppNotification;
 use App\Models\Seminarmhs;
 use App\Models\StaffDept;
-use App\Models\User;
-use App\Models\Notification as AppNotification;
 use App\Models\StaffNotification;
+use App\Models\SyaratSeminarmhs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use setasign\Fpdi\Fpdi;
-use setasign\Fpdf\Fpdf;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class SyaratSeminarmhsController extends Controller
 {
@@ -25,16 +22,17 @@ class SyaratSeminarmhsController extends Controller
         $search = $request->input('search');
 
         $pendaftar = SyaratSeminarmhs::with('mahasiswa')
-            ->where('status', '!=', 'ditolak') 
+            ->where('status', '!=', 'ditolak')
             ->where('bap', '!=', 'ditolak')
             ->when($search, function ($query) use ($search) {
                 $query->whereHas('mahasiswa', function ($q) use ($search) {
                     $q->where('nama', 'like', "%{$search}%")
-                    ->orWhere('nim', 'like', "%{$search}%");
+                        ->orWhere('nim', 'like', "%{$search}%");
                 });
             })
             ->orderBy('id', 'DESC')
             ->paginate(10);
+
         return view('syaratseminarmhs.index', compact('pendaftar', 'listModerator'));
     }
 
@@ -90,13 +88,13 @@ class SyaratSeminarmhsController extends Controller
         ) {
             return redirect()->back()->with('error', 'Minimal satu alasan penolakan harus diisi.');
         }
-        
+
         $syarat->update([
             'status' => 'ditolak',
             'alasan_formulir' => $request->alasan_formulir,
             'alasan_makalah' => $request->alasan_makalah,
             'alasan_bukti_sks' => $request->alasan_bukti_sks,
-            'alasan_bukti_spp' => $request->alasan_bukti_spp,            
+            'alasan_bukti_spp' => $request->alasan_bukti_spp,
             'alasan_bukti_kehadiran' => $request->alasan_bukti_kehadiran,
         ]);
 
@@ -108,14 +106,14 @@ class SyaratSeminarmhsController extends Controller
             'Bukti Kehadiran' => $request->alasan_bukti_kehadiran,
         ];
 
-        $reasonMessage = "⚠️ Berkas persyaratan seminar hasil anda perlu diperbaiki:<br><ul>";
+        $reasonMessage = '⚠️ Berkas persyaratan seminar hasil anda perlu diperbaiki:<br><ul>';
         foreach ($reasons as $field => $msg) {
             if ($msg) {
                 $reasonMessage .= "<li><b>{$field}</b>: {$msg}</li>";
             }
         }
-        $reasonMessage .= "</ul>";
-        
+        $reasonMessage .= '</ul>';
+
         $this->sendNotification(
             $syarat->id_mahasiswa,
             '🔔 Perlu Revisi Berkas',
@@ -129,25 +127,26 @@ class SyaratSeminarmhsController extends Controller
     public function downloadPdf($id)
     {
         $syarat = SyaratSeminarmhs::with(['mahasiswa', 'moderator', 'penandatanganundangan'])->findOrFail($id);
-        $seminar = seminarmhs:: with([
-            'mahasiswa', 
+        $seminar = Seminarmhs::with([
+            'mahasiswa',
             'ruangan',
             'semester',
-            'Pembimbing1', 
+            'Pembimbing1',
             'Pembimbing2',
         ])->where('id_mahasiswa', $syarat->id_mahasiswa)->first();
 
-        if (!$seminar) {
+        if (! $seminar) {
             return redirect()->back()->with('error', 'Mahasiswa ini belum melakukan pendaftaran Seminar.');
         }
 
         $template = public_path('undangan/templateundanganseminar.pdf');
         $outputPath = public_path('undangan/undanganseminar');
-        if (!file_exists($outputPath)) 
+        if (! file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
-        $ouput = $outputPath . "/{$seminar->nim}_undanganseminar.pdf";  
+        }
+        $ouput = $outputPath."/{$seminar->nim}_undanganseminar.pdf";
 
-        $pdf = new Fpdi();
+        $pdf = new Fpdi;
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
@@ -156,7 +155,7 @@ class SyaratSeminarmhsController extends Controller
 
         Carbon::setLocale('id');
         $tanggalCarbon = Carbon::parse($seminar->tanggal);
-        $hari = ucfirst($tanggalCarbon->translatedFormat('l')); 
+        $hari = ucfirst($tanggalCarbon->translatedFormat('l'));
         $tanggal = $tanggalCarbon->translatedFormat('d F Y');
         $mulai = Carbon::parse($seminar->waktu_mulai)->format('H.i');
         $selesai = Carbon::parse($seminar->waktu_selesai)->format('H.i');
@@ -183,27 +182,28 @@ class SyaratSeminarmhsController extends Controller
         $pdf->MultiCell(65, 6, $seminar->judul_seminar, 0, 'L');
 
         $pdf->SetXY(131, 145);
-        $pdf->MultiCell(65, 6, $seminar->pembimbing1?->nama ?? '-', 0, 'L');  
+        $pdf->MultiCell(65, 6, $seminar->pembimbing1?->nama ?? '-', 0, 'L');
 
         $pdf->SetXY(131, 163.8);
         $pdf->MultiCell(65, 6, $seminar->pembimbing2?->nama ?? '-', 0, 'L');
 
         $pdf->SetXY(131, 183.3);
-        $pdf->MultiCell(65, 6, $moderator, 0, 'L');   
-        
-        $pdf->SetXY(113, 223.5);        
+        $pdf->MultiCell(65, 6, $moderator, 0, 'L');
+
+        $pdf->SetXY(113, 223.5);
         $pdf->MultiCell(85, 6, $jabatanPenandatangan, 0, 'L');
 
-        $pdf->SetXY(113, 243);        
+        $pdf->SetXY(113, 243);
         $pdf->MultiCell(85, 6, $penandatanganundangan, 0, 'L');
 
-        $pdf->SetXY(113, 248);        
-        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');        
+        $pdf->SetXY(113, 248);
+        $pdf->MultiCell(85, 6, "NIP. {$nipPenandatangan}", 0, 'L');
 
         $pdf->SetXY(125, 219);
-        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');        
-        
+        $pdf->Cell(0, 6, now()->translatedFormat('d F Y'), 0, 1, 'L');
+
         $pdf->Output($ouput, 'F');
+
         return response()->download($ouput);
     }
 
@@ -215,13 +215,14 @@ class SyaratSeminarmhsController extends Controller
         $mahasiswaId = auth()->id();
 
         $seminar = Seminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
-        if (!$seminar) {
+        if (! $seminar) {
             return redirect()
-            ->route('seminarmhs.create')
-            ->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan seminar hasil.');            
+                ->route('seminarmhs.create')
+                ->with('error', 'Anda belum mendaftar Seminar Hasil. Silakan daftar terlebih dahulu sebelum mengisi persyaratan seminar hasil.');
         }
 
-        $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();        
+        $syarat = SyaratSeminarmhs::where('id_mahasiswa', $mahasiswaId)->first();
+
         return view('syaratseminarmhs.create', compact('syarat'));
     }
 
@@ -237,11 +238,11 @@ class SyaratSeminarmhsController extends Controller
             return redirect()->back()->with('error', 'Anda sudah memiliki pendaftaran yang disetujui. Tidak dapat mengajukan lagi.');
         }
 
-        if ($existing && $existing->bap === 'ditolak' && !$request->hasFile('formulir')) {
+        if ($existing && $existing->bap === 'ditolak' && ! $request->hasFile('formulir')) {
             return redirect()->back()->with('error', 'Silakan unggah ulang formulir, anda belum melaksanakan kolokium.');
         }
 
-        $data = $request->validate([            
+        $data = $request->validate([
             'formulir' => 'required|mimes:pdf|max:2048',
             'makalah' => 'required|mimes:pdf|max:2048',
             'bukti_sks' => 'required|mimes:pdf|max:2048',
@@ -256,54 +257,54 @@ class SyaratSeminarmhsController extends Controller
         ];
 
         $user = auth()->user();
-        $folderName = $user->nama . '_' . $user->nim;
+        $folderName = $user->nama.'_'.$user->nim;
 
-        $destinationPath = public_path('syarat_seminar/' . $folderName);
+        $destinationPath = public_path('syarat_seminar/'.$folderName);
 
-        if (!file_exists($destinationPath)) {
+        if (! file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
 
         $nim = $user->nim;
         if ($request->hasFile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_seminar_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $data['formulir'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $data['formulir'] = 'syarat_seminar/'.$folderName.'/'.$fileName;
         }
 
         if ($request->hasFile('makalah')) {
             $file = $request->file('makalah');
-            $fileName = 'makalah_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'makalah_seminar_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $data['makalah'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $data['makalah'] = 'syarat_seminar/'.$folderName.'/'.$fileName;
         }
 
         if ($request->hasFile('bukti_sks')) {
             $file = $request->file('bukti_sks');
-            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_sks_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $data['bukti_sks'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $data['bukti_sks'] = 'syarat_seminar/'.$folderName.'/'.$fileName;
         }
 
         if ($request->hasFile('bukti_spp')) {
             $file = $request->file('bukti_spp');
-            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_spp_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $data['bukti_spp'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $data['bukti_spp'] = 'syarat_seminar/'.$folderName.'/'.$fileName;
         }
 
         if ($request->hasFile('bukti_kehadiran')) {
             $file = $request->file('bukti_kehadiran');
-            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_kehadiran_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $data['bukti_kehadiran'] = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $data['bukti_kehadiran'] = 'syarat_seminar/'.$folderName.'/'.$fileName;
         }
 
         SyaratSeminarmhs::create($data);
 
-        $this->sendNotification($mahasiswaId, 
-            '🔔 Berkas Seminar Hasil Diajukan', 
+        $this->sendNotification($mahasiswaId,
+            '🔔 Berkas Seminar Hasil Diajukan',
             'Berkas persyaratan Seminar Hasil berhasil diunggah. Menunggu pengecekan admin.',
             route('syaratseminarmhs.create')
         );
@@ -316,59 +317,59 @@ class SyaratSeminarmhsController extends Controller
         $syarat = SyaratSeminarmhs::findOrFail($id);
         $user = auth()->user();
         $nim = $user->nim;
-        $folderName = $user->nama . '_' . $user->nim;
-        $destinationPath = public_path('syarat_seminar/' . $folderName);
+        $folderName = $user->nama.'_'.$user->nim;
+        $destinationPath = public_path('syarat_seminar/'.$folderName);
 
-        if (!file_exists($destinationPath)) {
+        if (! file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
 
         if ($request->hasFile('formulir')) {
             $file = $request->file('formulir');
-            $fileName = 'formulir_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'formulir_seminar_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->formulir = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->formulir = 'syarat_seminar/'.$folderName.'/'.$fileName;
             $syarat->alasan_formulir = null;
         }
 
         if ($request->hasFile('makalah')) {
             $file = $request->file('makalah');
-            $fileName = 'makalah_seminar_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'makalah_seminar_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->makalah = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->makalah = 'syarat_seminar/'.$folderName.'/'.$fileName;
             $syarat->alasan_makalah = null;
         }
 
         if ($request->hasFile('bukti_sks')) {
             $file = $request->file('bukti_sks');
-            $fileName = 'bukti_sks_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_sks_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_sks = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->bukti_sks = 'syarat_seminar/'.$folderName.'/'.$fileName;
             $syarat->alasan_bukti_sks = null;
         }
 
         if ($request->hasFile('bukti_spp')) {
             $file = $request->file('bukti_spp');
-            $fileName = 'bukti_spp_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_spp_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_spp = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->bukti_spp = 'syarat_seminar/'.$folderName.'/'.$fileName;
             $syarat->alasan_bukti_spp = null;
         }
 
         if ($request->hasFile('bukti_kehadiran')) {
             $file = $request->file('bukti_kehadiran');
-            $fileName = 'bukti_kehadiran_' . $nim . '.' . $file->getClientOriginalExtension();
+            $fileName = 'bukti_kehadiran_'.$nim.'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $fileName);
-            $syarat->bukti_kehadiran = 'syarat_seminar/' . $folderName . '/' . $fileName;
+            $syarat->bukti_kehadiran = 'syarat_seminar/'.$folderName.'/'.$fileName;
             $syarat->alasan_bukti_kehadiran = null;
         }
 
         if (
-            !$syarat->alasan_formulir &&
-            !$syarat->alasan_makalah &&
-            !$syarat->alasan_bukti_sks &&
-            !$syarat->alasan_bukti_spp &&
-            !$syarat->alasan_bukti_kehadiran
+            ! $syarat->alasan_formulir &&
+            ! $syarat->alasan_makalah &&
+            ! $syarat->alasan_bukti_sks &&
+            ! $syarat->alasan_bukti_spp &&
+            ! $syarat->alasan_bukti_kehadiran
         ) {
             $syarat->status = 'pending';
             $syarat->bap = 'belum_melaksanakan';
@@ -377,7 +378,7 @@ class SyaratSeminarmhsController extends Controller
         $syarat->save();
 
         $this->sendNotification($syarat->id_mahasiswa,
-            '🔔 Berkas Persyaratan Seminar Hasil Diunggah Ulang', 
+            '🔔 Berkas Persyaratan Seminar Hasil Diunggah Ulang',
             'Berkas perbaikan persyaratan Seminar Hasil berhasil diunggah. Menunggu verifikasi ulang.',
             route('syaratseminarmhs.create')
         );
@@ -437,21 +438,21 @@ class SyaratSeminarmhsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SyaratSeminarmhs $syaratSeminarmhs)    
+    public function show(SyaratSeminarmhs $syaratSeminarmhs)
     {
         $nim = $syaratSeminarmhs->mahasiswa?->nim ?? '-';
         $listModerator = StaffDept::all();
-        
+
         $formulirPath = $syaratSeminarmhs->formulir;
-        $ext = pathinfo($formulirPath, PATHINFO_EXTENSION); 
+        $ext = pathinfo($formulirPath, PATHINFO_EXTENSION);
 
         return view('syaratseminarmhs.moderator', compact('syaratSeminarmhs', 'nim', 'formulirPath', 'ext', 'listModerator'));
     }
 
     public function tambahModerator(Request $request, SyaratSeminarmhs $syaratSeminarmhs)
-    {        
+    {
         $request->validate([
-            'moderator' => 'required|string|max:255'
+            'moderator' => 'required|string|max:255',
         ]);
 
         $nim = $syaratSeminarmhs->mahasiswa->nim;
@@ -460,17 +461,17 @@ class SyaratSeminarmhsController extends Controller
         $penandatanganundanganId = $request->penandatanganundangan;
 
         $moderator = StaffDept::findOrFail($moderatorId)->nama;
-        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;        
+        $penandatanganundangan = StaffDept::findOrFail($penandatanganundanganId)->nama;
 
         $syaratSeminarmhs->update([
             'id_moderator' => $moderatorId,
             'id_penandatanganundangan' => $penandatanganundanganId,
-        ]);      
-        
+        ]);
+
         $this->sendNotification($syaratSeminarmhs->id_mahasiswa,
-            '🔔 Moderator Ditentukan',            
+            '🔔 Moderator Ditentukan',
             "Moderator <strong>{$moderator}</strong> telah ditetapkan untuk seminar hasil Anda.",
-            route('seminarmhs.show', $syaratSeminarmhs->seminarmhs->id)          
+            route('seminarmhs.show', $syaratSeminarmhs->seminarmhs->id)
         );
 
         $this->sendStaffNotification($syaratSeminarmhs->id_moderator,
@@ -478,17 +479,14 @@ class SyaratSeminarmhsController extends Controller
             "Anda ditunjuk sebagai moderator untuk seminar hasil mahasiswa {$nama}.",
             route('dashboarddosen.index', $syaratSeminarmhs->seminarmhs->id)
         );
-                
+
         return redirect()->back()->with('success', "Moderator <strong>{$moderator}</strong> berhasil ditambahkan untuk mahasiswa <strong>{$nama}</strong> (<strong>{$nim}</strong>).");
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SyaratSeminarmhs $syaratSeminarmhs)
-    {
-        
-    }
+    public function edit(SyaratSeminarmhs $syaratSeminarmhs) {}
 
     /**
      * Update the specified resource in storage.

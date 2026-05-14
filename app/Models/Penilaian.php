@@ -13,15 +13,13 @@ class Penilaian extends Model
         'id_penguji',
         'id_pembimbing1',
         'id_pembimbing2',
-        'id_syarat_kolokiummhs',
-        'id_syarat_seminarmhs',
-        'id_syarat_komprehensifmhs',
+        'id_syarat_ujian',
         'kualitas_penulisan_laporan',
         'id_rubrik',
         'nilai',
         'score',
         'nilai_akhir',
-        'catatan'
+        'catatan',
     ];
 
     protected $casts = [

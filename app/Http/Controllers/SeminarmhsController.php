@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Seminarmhs;
-use App\Models\Ruangan;
-use App\Models\User;
-use App\Models\StaffDept;
-use App\Models\Semester;
 use App\Models\KetuaDHH;
-use App\Models\SyaratKolokiummhs;
 use App\Models\Kolokiummhs;
+use App\Models\Ruangan;
+use App\Models\Semester;
+use App\Models\Seminarmhs;
+use App\Models\StaffDept;
+use App\Models\StaffNotification;
+use App\Models\SyaratUjian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 use setasign\Fpdi\Fpdi;
-use setasign\Fpdf\Fpdf;
 
 class SeminarmhsController extends Controller
 {
@@ -39,41 +38,43 @@ class SeminarmhsController extends Controller
     {
         $mahasiswaId = auth()->id();
 
-        $syaratKolokium = SyaratKolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
+        $syaratKolokium = SyaratUjian::where('id_mahasiswa', $mahasiswaId)
+            ->Where('jenis_ujian', 'kolokium')
+            ->first();
         $kolokium = Kolokiummhs::where('id_mahasiswa', $mahasiswaId)->first();
 
-        if (!$kolokium) {            
+        if (! $kolokium) {
             return redirect()
                 ->route('kolokiummhs.create')
                 ->with('error', 'Anda tidak dapat mendaftar seminar karena belum mendaftar kolokium.<br>Silakan daftar kolokium terlebih dahulu sebelum mengisi persyaratan.');
         }
 
-        if (!$syaratKolokium) {
+        if (! $syaratKolokium) {
             return redirect()
-                ->route('syaratkolokiummhs.create')
+                ->route('syaratujian.create', ['jenis' => 'kolokium'])
                 ->with('error', 'Anda tidak dapat mendaftar seminar karena belum memenuhi persyarat kolokium.<br>Silahkan lengkapi persyaratan kolokium terlebih dahulu dan melaksanakan kolokium');
         }
-        
+
         if ($syaratKolokium->bap === 'ditolak') {
-        
+
             $syaratKolokium->update([
                 'status' => 'ditolak',
                 'bap' => 'ditolak',
                 'alasan_formulir' => 'Anda belum melaksanakan kolokium, silahkan upload ulang formulir dengan jadwal baru',
-                'alasan_makalah' => 'Anda belum melaksanakan kolokium, silahkan upload ulang makalah',            
+                'alasan_makalah' => 'Anda belum melaksanakan kolokium, silahkan upload ulang makalah',
                 'alasan_bukti_sks' => 'Anda belum melaksanakan kolokium, silahkan upload ulang transkrip nilai',
                 'alasan_bukti_spp' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti SPP',
                 'alasan_bukti_kehadiran' => 'Anda belum melaksanakan kolokium, silahkan upload ulang bukti kehadiran',
             ]);
 
             return redirect()
-                ->route('syaratkolokiummhs.create')
+                ->route('syaratujian.create', ['jenis' => 'kolokium'])
                 ->with('error', 'Anda belum melaksanakan kolokium. Silakan unggah ulang seluruh persyaratan kolokium dengan jadwal terbaru.');
         }
 
         if ($syaratKolokium->bap !== 'diterima') {
             return redirect()
-                ->route('syaratkolokiummhs.create')
+                ->route('syaratujian.create', ['jenis' => 'kolokium'])
                 ->with('error', 'Anda tidak dapat mendaftar seminar hasil karena belum melaksanakan kolokium.<br>Silahkan menghubungi admin bahwa anda sudah melaksanakan kolokium');
         }
 
@@ -86,9 +87,10 @@ class SeminarmhsController extends Controller
         $seminarmhs = Seminarmhs::all();
         $listDosen = StaffDept::all();
         $semesters = Semester::all();
-        $ruanganSeminar = Ruangan::whereHas('jenis', function($q) {
+        $ruanganSeminar = Ruangan::whereHas('jenis', function ($q) {
             $q->where('jenis', 'seminar');
         })->get();
+
         return view('seminarmhs.create', compact('seminarmhs', 'listDosen', 'semesters', 'ruanganSeminar'));
     }
 
@@ -130,20 +132,44 @@ class SeminarmhsController extends Controller
         $data['nim'] = Str::upper($data['nim']);
         $data['alamat'] = Str::title($data['alamat']);
         $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai', 'dalam', 'oleh', 'seperti', 'karena',
-                       'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun',
-                       'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
+            'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun',
+            'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
         $words = explode(' ', Str::lower($data['judul_seminar']));
         foreach ($words as $i => $word) {
-            if ($i === 0 || !in_array($word, $lowerWords)) {
+            if ($i === 0 || ! in_array($word, $lowerWords)) {
                 $words[$i] = Str::ucfirst($word);
             }
         }
         $data['judul_seminar'] = implode(' ', $words);
-        if (!$request->id_ruangan && !$request->link_meeting) {
+        if (! $request->id_ruangan && ! $request->link_meeting) {
             return back()->withInput()->with('error', 'Pilih ruangan atau isi link meeting.');
         }
-        
+
         $insert = Seminarmhs::create($data);
+
+        if ($insert) {
+            $nama = $insert->nama;
+            $judul = $insert->judul_seminar;
+
+            // notif pembimbing 1
+            $this->sendStaffNotification(
+                $insert->id_pembimbing1,
+                '📢 Mahasiswa Bimbingan Mengajukan Seminar',
+                "Mahasiswa {$nama} mengajukan seminar dengan judul: {$judul}.",
+                route('dashboarddosen.index')
+            );
+
+            // notif pembimbing 2 (kalau ada)
+            if ($insert->id_pembimbing2) {
+                $this->sendStaffNotification(
+                    $insert->id_pembimbing2,
+                    '📢 Mahasiswa Bimbingan Mengajukan Seminar',
+                    "Mahasiswa {$nama} mengajukan seminar dengan judul: {$judul}.",
+                    route('dashboarddosen.index')
+                );
+            }
+        }
+
         if ($insert) {
             return redirect()->route('seminarmhs.show', $insert->id)->with('success', 'Data seminar berhasil disimpan! Kumpulkan persyaratan sebelum tanggal pelaksanaan seminar.');
         } else {
@@ -156,7 +182,8 @@ class SeminarmhsController extends Controller
      */
     public function show(Seminarmhs $seminarmhs)
     {
-        $seminarmhs->load(['syaratSeminar.moderator']);
+        $seminarmhs->load(['syaratUjian.moderator']);
+
         return view('seminarmhs.show', compact('seminarmhs'));
     }
 
@@ -166,11 +193,11 @@ class SeminarmhsController extends Controller
         $template = public_path('pdf/templateseminar.pdf');
         $ketuaDhh = KetuaDHH::orderByDesc('tahun_mulai')->first();
         $outputPath = public_path('pdf/ditandatangani_seminar');
-        if (!file_exists($outputPath)) {
+        if (! file_exists($outputPath)) {
             mkdir($outputPath, 0777, true);
         }
-        $output = $outputPath . "/{$seminarmhs->nim}_draftseminar.pdf";
-        $pdf = new Fpdi();
+        $output = $outputPath."/{$seminarmhs->nim}_draftseminar.pdf";
+        $pdf = new Fpdi;
         $pdf->AddPage();
         $pdf->setSourceFile($template);
         $tpl = $pdf->importPage(1);
@@ -179,7 +206,7 @@ class SeminarmhsController extends Controller
         $labelWidth = 40;
         $valueWidth = 120;
         $lineHeight = 6.5;
-        //nama
+        // nama
         $pdf->SetXY(32, 60);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->nama, 0, 'L');
@@ -187,15 +214,15 @@ class SeminarmhsController extends Controller
         $pdf->SetXY(32, 68);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->nim, 0, 'L');
-        //semester
+        // semester
         $pdf->SetXY(32, 75);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->semester->semester ?? '-', 0, 'L');
-        //no hp
+        // no hp
         $pdf->SetXY(32, 82);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->mahasiswa->no_hp ?? '-', 0, 'L');
-        //alamat
+        // alamat
         $pdf->SetXY(32, 89);
         $pdf->Cell($labelWidth, $lineHeight);
         $pdf->MultiCell($valueWidth, $lineHeight, $seminarmhs->alamat, 0, 'L');
@@ -207,17 +234,17 @@ class SeminarmhsController extends Controller
         $pdf->MultiCell($valueWidth, $lineHeight, $hariTanggal, 0, 'L');
         // Waktu
         $pdf->SetXY(32, 126);
-        $pdf->Cell($labelWidth, $lineHeight);        
-        $waktuMulai = \Carbon\Carbon::parse($seminarmhs->waktu_mulai)->format('H:i');
-        $waktuSelesai = \Carbon\Carbon::parse($seminarmhs->waktu_selesai)->format('H:i');
-        $pdf->MultiCell($valueWidth, $lineHeight, $waktuMulai . ' s/d ' . $waktuSelesai, 0, 'L');
+        $pdf->Cell($labelWidth, $lineHeight);
+        $waktuMulai = Carbon::parse($seminarmhs->waktu_mulai)->format('H:i');
+        $waktuSelesai = Carbon::parse($seminarmhs->waktu_selesai)->format('H:i');
+        $pdf->MultiCell($valueWidth, $lineHeight, $waktuMulai.' s/d '.$waktuSelesai, 0, 'L');
         // Tempat offline
         $pdf->SetXY(32, 132.5);
         $pdf->Cell($labelWidth, $lineHeight);
         $tempat = '-';
-        if (!empty($seminarmhs->ruangan?->nama)) {
+        if (! empty($seminarmhs->ruangan?->nama)) {
             $tempat = $seminarmhs->ruangan->nama;
-        } elseif (!empty($seminarmhs->link_meeting)) {
+        } elseif (! empty($seminarmhs->link_meeting)) {
             $tempat = $seminarmhs->link_meeting;
         }
         $pdf->MultiCell($valueWidth, $lineHeight, $tempat, 0, 'L');
@@ -231,43 +258,45 @@ class SeminarmhsController extends Controller
         $xEnd = 110;
         $width = $xEnd - $xStart;
         $pdf->SetXY($xStart, $yMhs);
-        $pdf->Cell($width, $lineHeight, "(" . ($seminarmhs->nama ?? '-') . ")", 0, 0, 'C');
-        //dosen pembimbing 1
+        $pdf->Cell($width, $lineHeight, '('.($seminarmhs->nama ?? '-').')', 0, 0, 'C');
+        // dosen pembimbing 1
         $yPemb1 = 223;
         $xStart = 5;
         $xEnd = 110;
         $width = $xEnd - $xStart;
         $pdf->SetXY($xStart, $yPemb1);
-        $pdf->Cell($width, $lineHeight, "(" . ($seminarmhs->pembimbing1->nama ?? '-') . ")", 0, 0, 'C');
-        //dosen pembimbing 2
+        $pdf->Cell($width, $lineHeight, '('.($seminarmhs->pembimbing1->nama ?? '-').')', 0, 0, 'C');
+        // dosen pembimbing 2
         $yPemb2 = 223;
         $xStart2 = 103;
         $xEnd2 = 215;
         $width2 = $xEnd2 - $xStart2;
         $pdf->SetXY($xStart2, $yPemb2);
-        $pdf->Cell($width2, $lineHeight, "(" . ($seminarmhs->pembimbing2->nama ?? '..................................') . ")", 0, 0, 'C');
-        //komisi pendidikan
-        $yKetua = 263; 
-        $xStart3 = 52; 
-        $xEnd3   = 160;
-        $width3  = $xEnd3 - $xStart3;
+        $pdf->Cell($width2, $lineHeight, '('.($seminarmhs->pembimbing2->nama ?? '..................................').')', 0, 0, 'C');
+        // komisi pendidikan
+        $yKetua = 263;
+        $xStart3 = 52;
+        $xEnd3 = 160;
+        $width3 = $xEnd3 - $xStart3;
         $pdf->SetXY($xStart3, $yKetua);
-        $pdf->Cell($width3, $lineHeight, "(" . ($seminarmhs->komisipendidikan->nama ?? '..................................') . ")",0, 0, 'C');        
+        $pdf->Cell($width3, $lineHeight, '('.($seminarmhs->komisipendidikan->nama ?? '..................................').')', 0, 0, 'C');
 
         $pdf->Output('F', $output);
-        return response()->download($output);                
+
+        return response()->download($output);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Seminarmhs $seminarmhs)
-    {        
+    {
         $semesters = Semester::all();
         $listDosen = StaffDept::all();
-        $ruanganSeminar = Ruangan::whereHas('jenis', function($q) {
+        $ruanganSeminar = Ruangan::whereHas('jenis', function ($q) {
             $q->where('jenis', 'seminar');
         })->get();
+
         return view('seminarmhs.edit', compact('seminarmhs', 'ruanganSeminar', 'semesters', 'listDosen'));
     }
 
@@ -302,11 +331,11 @@ class SeminarmhsController extends Controller
         $data['nim'] = Str::upper($data['nim']);
         $data['alamat'] = Str::title($data['alamat']);
         $lowerWords = ['dan', 'atau', 'ke', 'dari', 'di', 'pada', 'dengan', 'untuk', 'yang', 'sebagai', 'dalam', 'oleh', 'seperti', 'karena',
-                       'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun',
-                       'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
+            'tetapi', 'jika', 'bahwa', 'adalah', 'ini', 'itu', 'saat', 'sebelum', 'sesudah', 'hingga', 'meskipun', 'walaupun',
+            'supaya', 'agar', 'sementara', 'selama', 'antara', 'tanpa', 'hanya', 'maka', 'sedang'];
         $words = explode(' ', Str::lower($data['judul_seminar']));
         foreach ($words as $i => $word) {
-            if ($i === 0 || !in_array($word, $lowerWords)) {
+            if ($i === 0 || ! in_array($word, $lowerWords)) {
                 $words[$i] = Str::ucfirst($word);
             }
         }
@@ -315,6 +344,27 @@ class SeminarmhsController extends Controller
         $data['waktu_selesai'] = Carbon::parse($data['waktu_selesai'])->format('H:i');
         $update = $seminarmhs->update($data);
         if ($update) {
+            $nama = $seminarmhs->nama;
+            $judul = $seminarmhs->judul_seminar;
+
+            // notif pembimbing 1
+            $this->sendStaffNotification(
+                $seminarmhs->id_pembimbing1,
+                '✏️ Data Seminar Diperbarui',
+                "Mahasiswa {$nama} memperbarui data seminar dengan judul: {$judul}.",
+                route('dashboarddosen.index')
+            );
+
+            // notif pembimbing 2
+            if ($seminarmhs->id_pembimbing2) {
+                $this->sendStaffNotification(
+                    $seminarmhs->id_pembimbing2,
+                    '✏️ Data Seminar Diperbarui',
+                    "Mahasiswa {$nama} memperbarui data seminar dengan judul: {$judul}.",
+                    route('syaratujian.index')
+                );
+            }
+
             return redirect()->route('seminarmhs.show', $seminarmhs->id)->with('success', 'Data seminar berhasil diperbarui!');
         } else {
             return back()->with('error', 'Gagal memperbarui data seminar. Silakan coba lagi.');
@@ -327,6 +377,21 @@ class SeminarmhsController extends Controller
     public function destroy(Seminarmhs $seminarmhs)
     {
         $seminarmhs->delete();
+
         return redirect()->route('seminarmhs.index')->with('success', 'Data seminar berhasil dihapus!');
+    }
+
+    private function sendStaffNotification($staffId, $title, $message, $redirect = null)
+    {
+        if (! $staffId) {
+            return;
+        }
+
+        StaffNotification::create([
+            'staff_id' => $staffId,
+            'title' => $title,
+            'message' => $message,
+            'redirect_url' => $redirect,
+        ]);
     }
 }

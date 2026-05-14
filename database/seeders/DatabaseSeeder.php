@@ -21,36 +21,36 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            JenjangSeeder::class,                        
-            UserSeeder::class,                                         
-            DivisiSeeder::class,                
-            RuanganSeeder::class,  
-            KategoriStaffSeeder::class,   
+            JenjangSeeder::class,
+            UserSeeder::class,
+            DivisiSeeder::class,
+            RuanganSeeder::class,
+            KategoriStaffSeeder::class,
             SemesterSeeder::class,
-            StaffDeptSeeder::class,     
-            KategoriGaleriSeeder::class,            
-            GaleriSeeder::class, 
+            StaffDeptSeeder::class,
+            KategoriGaleriSeeder::class,
+            GaleriSeeder::class,
             KategoriArtikelSeeder::class,
             SdgsSeeder::class,
             ArtikelSeeder::class,
             KontenDeptSeeder::class,
             KontenJenjangSeeder::class,
             LeafletJenjangSeeder::class,
-            MitraSeeder::class,            
-            KetuaDHHSSeeder::class,            
+            MitraSeeder::class,
+            KetuaDHHSSeeder::class,
             ReviewAlumniSeeder::class,
             RubrikSeeder::class,
             // SyaratKolokiummhsSeeder::class,
             // SyaratSeminarmhsSeeder::class,
-            // SyaratKomprehensifmhsSeeder::class,            
+            // SyaratKomprehensifmhsSeeder::class,
 
-            // seederbuatan 
+            // seederbuatan
             // 1. Syaratkolokiummhs
             // 2. Syaratseminarmhs
             // 3. Syaratkomprehensifmhs
             // 4. kategori galeri, kategori galeri jadi dosen dan mahasiswa saja
             // 5. Galeri
-            // 6. kategori artikel, kategori artikel jadi dosen dan mahasiswa saja                   
+            // 6. kategori artikel, kategori artikel jadi dosen dan mahasiswa saja
             // 7. Artikel
             // 8. Review Alumni
             // 9. Mitra

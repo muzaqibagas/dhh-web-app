@@ -59,8 +59,14 @@ class Seminarmhs extends Model
         return $this->belongsTo(StaffDept::class, 'id_komisipendidikan');
     }
 
-    public function syaratSeminar()
+    public function syaratUjian()
     {
-        return $this->hasOne(SyaratSeminarmhs::class, 'id_mahasiswa', 'id_mahasiswa');
-    }    
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa');
+    }
+
+    public function syaratUjianSeminar()
+    {
+        return $this->hasOne(SyaratUjian::class, 'id_mahasiswa', 'id_mahasiswa')
+            ->where('jenis_ujian', 'seminar');
+    }
 }

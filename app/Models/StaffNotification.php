@@ -22,5 +22,3 @@ class StaffNotification extends Model
         return $this->belongsTo(StaffDept::class, 'staff_id');
     }
 }
-
-

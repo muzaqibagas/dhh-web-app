@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Galeri;
 use App\Models\User;
-use App\Models\KategoriGaleri;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class GaleriSeeder extends Seeder
@@ -175,7 +173,7 @@ class GaleriSeeder extends Seeder
                 'tanggal' => now()->format('Y-m-d'),
                 'tipe' => 'gambar',
                 'video' => null,
-                'gambar' => 'galeri_upload/12.png',                                                  
+                'gambar' => 'galeri_upload/12.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -237,7 +235,7 @@ class GaleriSeeder extends Seeder
 
             // -------------------------------
             // 4. MAHASISWA - VIDEO YouTube
-            // -------------------------------            
+            // -------------------------------
             [
                 'id_user' => 1,
                 'id_kategorigaleri' => 2, // kategori MAHASISWA

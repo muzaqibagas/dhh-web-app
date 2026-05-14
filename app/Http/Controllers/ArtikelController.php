@@ -14,27 +14,28 @@ class ArtikelController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {                  
-        $query = Artikel::query();        
-        if (request()->has('search')){
+    {
+        $query = Artikel::query();
+        if (request()->has('search')) {
             $search = request()->search;
             $query->where('judul', 'like', "%$search%");
         }
 
-        $artikels = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();                
+        $artikels = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
         $sdgs = Sdgs::all();
+
         return view('artikel.index', compact('artikels', 'sdgs'));
     }
 
     public function artikel(Request $request)
-    {                          
+    {
         $query = Artikel::with('kategoriartikel', 'user')
-                ->orderBy('tanggal', 'DESC')
-                ->orderBy('created_at', 'DESC');                
+            ->orderBy('tanggal', 'DESC')
+            ->orderBy('created_at', 'DESC');
 
         if ($request->has('q') && $request->q != '') {
             $query->where(function ($q) use ($request) {
-                $q->where('judul', 'LIKE', "%" . $request->q . "%");                
+                $q->where('judul', 'LIKE', '%'.$request->q.'%');
             });
         }
 
@@ -59,23 +60,24 @@ class ArtikelController extends Controller
         );
 
         $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
-                        ->orderBy('created_at', 'DESC')
-                        ->take(5)
-                        ->get();
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+            ->get();
 
         $kategoris = KategoriArtikel::whereHas('artikel')->get();
         $sdgs = Sdgs::all();
         $keyword = $request->q ?? null;
+
         return view('artikel.artikels', compact('artikels', 'kategoris', 'keyword', 'latestArtikels', 'sdgs', 'featured', 'pagination'));
     }
 
     public function filterByKategori($kategoriId)
     {
         $artikels = Artikel::with('kategoriartikel', 'user')
-                            ->where('id_kategoriartikel', $kategoriId)
-                            ->orderBy('tanggal', 'DESC')
-                            ->orderBy('created_at', 'DESC')
-                            ->get();
+            ->where('id_kategoriartikel', $kategoriId)
+            ->orderBy('tanggal', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         // Sisanya (acak)
         $random = $artikels->skip(4)->shuffle();
@@ -97,16 +99,15 @@ class ArtikelController extends Controller
         $sdgs = Sdgs::all();
 
         $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
-                            ->orderBy('created_at', 'DESC')
-                            ->take(5)
-                            ->get();
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+            ->get();
 
         $keyword = null;
         $isKategori = true;
 
         return view('artikel.artikels', compact('artikels', 'kategoris', 'latestArtikels', 'sdgs', 'keyword', 'isKategori', 'pagination'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -115,6 +116,7 @@ class ArtikelController extends Controller
     {
         $kategoriartikel = KategoriArtikel::all();
         $sdgs = Sdgs::all();
+
         return view('artikel.create', compact('kategoriartikel', 'sdgs'));
     }
 
@@ -129,40 +131,42 @@ class ArtikelController extends Controller
             'id_sdgs' => 'nullable|exists:sdgs,id',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
-            'tanggal' => 'nullable|date',            
+            'tanggal' => 'nullable|date',
             'deskripsi' => 'nullable|string|max:5000',
-        ]);            
+        ]);
 
         $kataHubung = [
-            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun'
+            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun',
         ];
 
-        if (!empty($data['judul'])) {
-            $data['judul'] = implode(' ', array_map(function($word, $idx) use ($kataHubung) {
+        if (! empty($data['judul'])) {
+            $data['judul'] = implode(' ', array_map(function ($word, $idx) use ($kataHubung) {
                 $word = strtolower($word);
                 if ($idx !== 0 && in_array($word, $kataHubung)) {
                     return $word;
                 }
+
                 return ucfirst($word);
             }, explode(' ', $data['judul']), array_keys(explode(' ', $data['judul']))));
         }
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            
+            $filename = time().'.'.$file->getClientOriginalExtension();
+
             $file->move(public_path('foto_artikel'), $filename);
-            
-            $data['foto'] = 'foto_artikel/' . $filename;
+
+            $data['foto'] = 'foto_artikel/'.$filename;
         }
 
-        $data['id_user'] = auth()->id();        
+        $data['id_user'] = auth()->id();
 
         $insert = Artikel::create($data);
-        if ($insert)
+        if ($insert) {
             return redirect()->route('artikel.index')->with('success', 'Data berhasil disimpan!');
-        else
+        } else {
             return back()->with('error', 'Gagal menyimpan data!');
+        }
     }
 
     /**
@@ -170,16 +174,16 @@ class ArtikelController extends Controller
      */
     public function show(Artikel $artikel)
     {
-        
+
         $latestArtikels = Artikel::orderBy('tanggal', 'DESC')
-                        ->orderBy('created_at', 'DESC')
-                        ->take(5)
-                        ->get();
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+            ->get();
 
         $kategoris = KategoriArtikel::whereHas('artikel')->get();
-        $sdgs = Sdgs::all();                  
+        $sdgs = Sdgs::all();
 
-        return view('artikel.show', compact('artikel', 'kategoris','latestArtikels', 'sdgs'));
+        return view('artikel.show', compact('artikel', 'kategoris', 'latestArtikels', 'sdgs'));
     }
 
     /**
@@ -189,6 +193,7 @@ class ArtikelController extends Controller
     {
         $kategoriartikel = KategoriArtikel::all();
         $sdgs = Sdgs::all();
+
         return view('artikel.edit', compact('artikel', 'kategoriartikel', 'sdgs'));
     }
 
@@ -198,8 +203,8 @@ class ArtikelController extends Controller
     public function update(Request $request, Artikel $artikel)
     {
         $data = $request->validate([
-            'id_user' => 'nullable|exists:users,id',                   
-            'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',             
+            'id_user' => 'nullable|exists:users,id',
+            'id_kategoriartikel' => 'nullable|exists:kategori_artikels,id',
             'id_sdgs' => 'nullable|exists:sdgs,id',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'judul' => 'nullable|string|max:255',
@@ -210,15 +215,16 @@ class ArtikelController extends Controller
         $data['id_user'] = auth()->id();
 
         $kataHubung = [
-            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun'
+            'dan', 'atau', 'tetapi', 'serta', 'dengan', 'ke', 'di', 'dari', 'untuk', 'pada', 'yang', 'dalam', 'agar', 'karena', 'sebagai', 'oleh', 'hingga', 'sehingga', 'supaya', 'bahwa', 'jika', 'bila', 'walaupun', 'meskipun', 'namun',
         ];
 
-        if (!empty($data['judul'])) {
-            $data['judul'] = implode(' ', array_map(function($word, $idx) use ($kataHubung) {
+        if (! empty($data['judul'])) {
+            $data['judul'] = implode(' ', array_map(function ($word, $idx) use ($kataHubung) {
                 $word = strtolower($word);
                 if ($idx !== 0 && in_array($word, $kataHubung)) {
                     return $word;
                 }
+
                 return ucfirst($word);
             }, explode(' ', $data['judul']), array_keys(explode(' ', $data['judul']))));
         }
@@ -226,25 +232,26 @@ class ArtikelController extends Controller
         if ($request->hasFile('foto')) {
             if ($artikel->foto && file_exists(public_path($artikel->foto))) {
                 unlink(public_path($artikel->foto));
-            }   
+            }
 
             $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filename = time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('foto_artikel'), $filename);
-            $data['foto'] = 'foto_artikel/' . $filename;
-        }        
-        
+            $data['foto'] = 'foto_artikel/'.$filename;
+        }
+
         $artikel->fill($data);
-        
-        if (!$artikel->isDirty()) {
+
+        if (! $artikel->isDirty()) {
             return back()->with('info', 'Tidak ada perubahan data yang dilakukan!');
         }
 
         $update = $artikel->update($data);
-        if ($update)
+        if ($update) {
             return redirect()->route('artikel.index')->with('success', 'Data berhasil diperbarui!');
-        else
+        } else {
             return back()->with('error', 'Gagal memperbarui data!');
+        }
     }
 
     /**
@@ -255,8 +262,9 @@ class ArtikelController extends Controller
         if ($artikel->foto && file_exists(public_path($artikel->foto))) {
             unlink(public_path($artikel->foto));
         }
-        
+
         $artikel->delete();
+
         return redirect()->route('artikel.index');
     }
 }

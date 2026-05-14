@@ -48,10 +48,9 @@ class SyaratKolokiummhs extends Model
     {
         return $this->belongsTo(Kolokiummhs::class, 'id_mahasiswa', 'id_mahasiswa');
     }
-    
+
     public function penilaian()
     {
         return $this->hasOne(Penilaian::class, 'id_syarat_kolokiummhs');
     }
-
 }

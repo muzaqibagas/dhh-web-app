@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfilemhsController extends Controller
 {
@@ -17,6 +16,7 @@ class ProfilemhsController extends Controller
         if ($user->role !== 'Mahasiswa') {
             abort(403, 'Unauthorized');
         }
+
         return view('profilemhs.index', compact('user'));
     }
 
@@ -50,6 +50,7 @@ class ProfilemhsController extends Controller
     public function edit()
     {
         $user = Auth::user();
+
         return view('profilemhs.edit', compact('user'));
     }
 

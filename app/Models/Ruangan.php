@@ -14,22 +14,24 @@ class Ruangan extends Model
     protected $fillable = [
         'nama',
     ];
-    
+
     public function kolokiums()
     {
         return $this->hasMany(Kolokium::class, 'id_ruangan');
     }
+
     public function seminars()
     {
         return $this->hasMany(Seminar::class, 'id_ruangan');
     }
+
     public function sidangs()
     {
         return $this->hasMany(Sidangs::class, 'id_ruangan');
     }
+
     public function jenis()
     {
         return $this->hasMany(JenisRuangan::class);
     }
-
 }

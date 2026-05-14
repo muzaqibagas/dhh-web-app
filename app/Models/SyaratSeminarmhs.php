@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SyaratSeminarmhs extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'syarat_seminarmhs';
 
     protected $fillable = [
@@ -22,7 +22,7 @@ class SyaratSeminarmhs extends Model
         'bukti_sks',
         'alasan_bukti_sks',
         'bukti_spp',
-        'alasan_bukti_spp',            
+        'alasan_bukti_spp',
         'bukti_kehadiran',
         'alasan_bukti_kehadiran',
         'status',
@@ -53,5 +53,4 @@ class SyaratSeminarmhs extends Model
     {
         return $this->hasOne(Penilaian::class, 'id_syarat_seminarmhs');
     }
-
 }
