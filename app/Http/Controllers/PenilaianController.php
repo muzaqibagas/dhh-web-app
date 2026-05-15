@@ -144,6 +144,18 @@ class PenilaianController extends Controller
 
         $rubriks = Rubrik::where('jenis_sidang', $jenis)->get();
 
+        $totalBobot = Rubrik::where('jenis_sidang', $jenis)
+            ->sum('bobot');
+
+        if ($totalBobot != 100) {
+            return redirect()
+                ->route('penilaian.index')
+                ->with(
+                    'error',
+                    'Penilaian tidak dapat dilakukan karena total bobot rubrik '.$jenis.' belum mencapai 100%.'
+                );
+        }
+
         return view('penilaian.create', [
             'data' => $syarat,
             'relasi' => $relasi,
@@ -164,6 +176,17 @@ class PenilaianController extends Controller
 
         $id = $request->id; // ini ID syaratujian
         $jenis = strtolower($request->jenis);
+
+        $totalBobot = Rubrik::where('jenis_sidang', $jenis)
+            ->sum('bobot');
+
+        if ($totalBobot != 100) {
+            return back()->with(
+                'error',
+                'Penilaian gagal disimpan karena total bobot rubrik belum 100%.'
+            );
+        }
+        
         $dosenId = Auth::guard('staff')->id();
 
         $penilaianIds = [];

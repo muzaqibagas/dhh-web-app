@@ -212,46 +212,51 @@
                 </form>
             </div>
         </aside>
-        
+
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
                     <h2 class="adm-title">Rubriks</h2>
                     <div class="d-flex justify-content-end align-items-center gap-2">
-                    <form action="{{ route('rubrik.index') }}" method="GET" class="d-flex align-items-center gap-2 w-50">
-                        <input type="text" name="search" class="form-control" placeholder="Cari Rubrik..." value="{{ request('search') }}">
-                        <button type="submit" class="btn btn-primary px-3">
-                        <i class="bi bi-search"></i>
-                        </button>
-                    </form>
-                    <a href="{{ route('rubrik.create') }}" class="adm-btn-add text-decoration-none">
-                        <i class="bi bi-plus"></i> Tambah Data
-                    </a>
+                        <form action="{{ route('rubrik.index') }}" method="GET"
+                            class="d-flex align-items-center gap-2 w-50">
+                            <input type="text" name="search" class="form-control" placeholder="Cari Rubrik..."
+                                value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary px-3">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                        <a href="{{ route('rubrik.create') }}" class="adm-btn-add text-decoration-none">
+                            <i class="bi bi-plus"></i> Tambah Data
+                        </a>
                     </div>
                 </div>
+
                 {{-- Alert Success --}}
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
                 @endif
                 {{-- Alert Error --}}
-                @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                </div>
-                @endif     
-                {{-- Alert Info --}}
-                @if(session('info'))
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                    {{ session('info') }}
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
                     </div>
-                @endif    
-            </div>            
-            <table style="
+                @endif
+                {{-- Alert Info --}}
+                @if (session('info'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                        {{ session('info') }}
+                    </div>
+                @endif
+
+            </div>
+            <table
+                style="
                 width:100%;
                 border-collapse:collapse;
                 background-color:#ffffff;
@@ -261,62 +266,72 @@
             ">
                 <thead style="background-color:#1e3a8a; color:#ffffff;">
                     <tr>
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">No</th>                        
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Nama Rubrik</th>                        
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Bobot</th>                        
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Jenis Kegiatan</th>                        
-                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Aksi</th>                        
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">No</th>
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Nama Rubrik</th>
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Bobot</th>
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Jenis Kegiatan</th>
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">Aksi</th>
                     </tr>
                     @php
                         $no = 1;
                     @endphp
-                    <tbody>
-                        @forelse($rubriks as $rubrik)
-                            <tr style="background-color:#ffffff;">
-                                <td style="padding:12px 14px;">{{ $no++ }}</td>
-                                <td style="padding:12px 14px;">{{ $rubrik->nama_kriteria }}</td>
-                                <td style="padding:12px 14px;">{{ $rubrik->bobot }}%</td>
-                                <td style="padding:12px 14px;">{{ $rubrik->jenis_sidang }}</td>
-                                <td style="padding:12px 14px;">
-                                    <a href="{{ route('rubrik.edit', $rubrik->id) }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
-                                    <a href="{{ route('rubrik.destroy', $rubrik->id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus rubrik ini?')"><i class="bi bi-trash"></i></a>
-                                </td>
-                            </tr>
-                        @empty
-                         <tr>
+                <tbody>
+                    @forelse($rubriks as $rubrik)
+                        <tr style="background-color:#ffffff;">
+                            <td style="padding:12px 14px;">{{ $no++ }}</td>
+                            <td style="padding:12px 14px;">{{ $rubrik->nama_kriteria }}</td>
+                            <td style="padding:12px 14px;">{{ $rubrik->bobot }}%</td>
+                            <td style="padding:12px 14px;">{{ $rubrik->jenis_sidang }}</td>
+                            <td style="padding:12px 14px;">
+                                <a href="{{ route('rubrik.edit', $rubrik->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="bi bi-pencil"></i></a>
+                                <form action="{{ route('rubrik.destroy', $rubrik->id) }}" method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus rubrik ini?')">
+
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
                             <td colspan="3" class="text-center text-muted py-4">Belum ada rubriks.</td>
                         </tr>
-                        @endforelse
-                    </tbody>                
+                    @endforelse
+                </tbody>
                 </thead>
-            </table>        
+            </table>
             <div class="d-flex justify-content-end mt-3">
                 {{ $rubriks->onEachSide(1)->links('pagination::bootstrap-5') }}
-            </div>    
-        </main>        
+            </div>
+        </main>
     </div>
-@push('script')
-<script>
-  document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-    toggle.addEventListener('click', function(e) {
-      e.preventDefault();
+    @push('script')
+        <script>
+            document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
 
-      const target = this.getAttribute('data-dropdown');
-      const menu = document.querySelector(`[data-menu="${target}"]`);
-      const arrow = document.querySelector(`[data-arrow="${target}"]`);
-      const isOpen = menu.style.display === 'flex';
+                    const target = this.getAttribute('data-dropdown');
+                    const menu = document.querySelector(`[data-menu="${target}"]`);
+                    const arrow = document.querySelector(`[data-arrow="${target}"]`);
+                    const isOpen = menu.style.display === 'flex';
 
-      // Tutup semua dulu
-      document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-      document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+                    // Tutup semua dulu
+                    document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+                    document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-      // Kalau belum terbuka, buka
-      if (!isOpen) {
-        menu.style.display = 'flex';
-        arrow.innerHTML = '&#9660;';
-      }
-    });
-  });
-</script>
-@endpush
+                    // Kalau belum terbuka, buka
+                    if (!isOpen) {
+                        menu.style.display = 'flex';
+                        arrow.innerHTML = '&#9660;';
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection

@@ -1,10 +1,11 @@
 <head>
-  <meta charset="UTF-8">
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <meta charset="UTF-8">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
 </head>
+
 <body>
     <section>
         <form action="{{ route('login.signin') }}" method="POST">
@@ -19,7 +20,7 @@
             @endif
 
             @csrf
-            <h1>Login</h1>            
+            <h1>Login</h1>
             <div class="inputbox">
                 <ion-icon name="person-outline"></ion-icon>
                 <input type="text" name="username" required>
@@ -35,8 +36,8 @@
               <a href="#">Forget Password</a> -->
             </div>
             <button>Log in</button>
-            <div class="register">                                                  
-                <p>Don't have a account? <a href="{{route('register.index')}}">Register</a></p>                                         
+            <div class="register">
+                <p>Don't have a account? <a href="{{ route('register.index') }}">Register</a></p>
             </div>
         </form>
     </section>

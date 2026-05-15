@@ -217,10 +217,106 @@
                 <div class="adm-header">
                     <h2 class="adm-title">Ubah Rubrik</h2>
                 </div>
+                <div class="row mb-4">
+
+                    {{-- Kolokium --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Kolokium</h6>
+
+                                    @if ($totalKolokium == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalKolokium }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalKolokium == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Seminar --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Seminar Hasil</h6>
+
+                                    @if ($totalSeminar == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalSeminar }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalSeminar == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Komprehensif --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Komprehensif</h6>
+
+                                    @if ($totalKomprehensif == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalKomprehensif }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalKomprehensif == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 @if (session('info'))
                     <div class="alert alert-info alert-dismissible fade show" role="alert">
                         {{ session('info') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
                     </div>
                 @endif
                 <div class="card shadow-sm">

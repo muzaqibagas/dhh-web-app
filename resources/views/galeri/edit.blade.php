@@ -1,415 +1,442 @@
 @extends('layouts.apps')
 
 @section('content')
-<!-- SIDEBAR -->
-<div class="main-container">
-  <aside class="sidebar">
-    <a href="" class="menu-image-only">
-    <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
-    </a>
-    <!-- Untuk aktifin button sub menu ========================= -->
-    @php
-    $isDashboardActive = Request::is('dashboardadm');
-    
-    $isRecapdataActive = Request::is('recapdata*');
+    <!-- SIDEBAR -->
+    <div class="main-container">
+        <aside class="sidebar">
+            <a href="" class="menu-image-only">
+                <img src="{{ asset('img/logodashboardadmn.png') }}" alt="Layanan Akademik" class="menu-img">
+            </a>
+            <!-- Untuk aktifin button sub menu ========================= -->
+            @php
+                $isDashboardActive = Request::is('dashboardadm');
 
-    $isAdminProfileActive = Request::is('admprofile') || Request::is('user/*/edit') || Request::is('editpassadm') || Request::is('logoutadmprofile');
+                $isRecapdataActive = Request::is('recapdata*');
 
-    
-    $isTingkatAkhirActive = 
-        Request::is('syaratkolokiummhs') || Request::is('syaratkolokiummhs*') ||
-        Request::is('syaratseminarmhs') || Request::is('syaratseminarmhs*') ||
-        Request::is('syaratkomprehensifmhs') || Request::is('syaratkomprehensifmhs*');
+                $isAdminProfileActive =
+                    Request::is('admprofile') ||
+                    Request::is('user/*/edit') ||
+                    Request::is('editpassadm') ||
+                    Request::is('logoutadmprofile');
 
-    $isKontenActive = 
-        Request::is('kategorigaleri*') ||
-        Request::is('galeri*') ||
-        Request::is('kategoriartikel*') ||
-        Request::is('artikel*') ||
-        Request::is('review-alumni*') ||
-        Request::is('konten-dept*') ||
-        Request::is('kontenjenjang*') ||
-        Request::is('mitra*');
+                $isRubrikActive = Request::is('rubrik*');
 
-    $isStaffDeptActive = 
-        Request::is('kategoristaff*') ||
-        Request::is('staff-dept*') ||
-        Request::is('ketuadhh*');
-    @endphp
+                $isTingkatAkhirActive =
+                    Request::is('syaratkolokiummhs') ||
+                    Request::is('syaratkolokiummhs*') ||
+                    Request::is('syaratseminarmhs') ||
+                    Request::is('syaratseminarmhs*') ||
+                    Request::is('syaratkomprehensifmhs') ||
+                    Request::is('syaratkomprehensifmhs*');
 
-    <!-- BTN Dashboard ===================== -->
-    <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
-    <div class="menu-left">
-        <i class="bi bi-graph-up"></i> <span> Dashboard </span>
-    </div>
-    <span class="dropdownArrow"></span>
-    </a>
+                $isKontenActive =
+                    Request::is('kategorigaleri*') ||
+                    Request::is('galeri*') ||
+                    Request::is('kategoriartikel*') ||
+                    Request::is('artikel*') ||
+                    Request::is('review-alumni*') ||
+                    Request::is('konten-dept*') ||
+                    Request::is('kontenjenjang*') ||
+                    Request::is('mitra*');
 
-    <!-- BTN RECAP DATA ===================== -->
-    <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
-    <div class="menu-left">
-        <i class="bi bi-database-check"></i> <span> Recap Data </span>
-    </div>
-    <span class="dropdownArrow"></span>
-    </a>
+                $isStaffDeptActive =
+                    Request::is('kategoristaff*') || Request::is('staff-dept*') || Request::is('ketuadhh*');
+            @endphp
 
-    <!-- BTN PENILAIAN ===================== -->
-    <a href="{{ route('penilaianadm.index') }}" class="menu {{ Request::is('penilaianadm*') ? 'active' : '' }}">
-    <div class="menu-left">
-        <i class="bi bi-file-earmark-bar-graph-fill"></i> <span> Penilaian </span>
-    </div>
-    <span class="dropdownArrow"></span>
-    </a>
-
-    <!-- BTN TINGKAT AKHIR===================== -->
-    <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
-    <div class="menu-left">
-        <i class="bi bi-mortarboard"></i>
-        <span> Tingkat Akhir </span>
-    </div>
-    <span class="dropdownArrow" data-arrow="tingkatakhir">
-        {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
-    </span>
-    </a>
-    <div data-menu="tingkatakhir"
-    style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
-
-    {{-- KOLOKIUM --}}
-    <a href="{{ route('syaratujian.index', ['jenis' => 'kolokium']) }}"
-        class="submenu-link {{ request('jenis') == 'kolokium' ? 'active-submenu' : '' }}">
-        <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
-    </a>
-
-    {{-- SEMINAR --}}
-    <a href="{{ route('syaratujian.index', ['jenis' => 'seminar']) }}"
-        class="submenu-link {{ request('jenis') == 'seminar' ? 'active-submenu' : '' }}">
-        <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
-    </a>
-
-    {{-- KOMPRE --}}
-    <a href="{{ route('syaratujian.index', ['jenis' => 'komprehensif']) }}"
-        class="submenu-link {{ request('jenis') == 'komprehensif' ? 'active-submenu' : '' }}">
-        <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
-    </a>
-    </div>
-
-    <!-- BTN KONTEN ===================== -->
-    <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
-    <div class="menu-left">
-        <i class="bi bi-collection"></i>
-        <span> Konten </span>
-    </div>
-    <span class="dropdownArrow" data-arrow="konten">
-        {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
-    </span>
-    </a>
-    <div data-menu="konten"
-    style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
-    <a href="/kategorigaleri"
-        class="submenu-link {{ Request::is('kategorigaleri', 'kategorigaleri/create', 'kategorigaleri/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-clipboard-check"></i> Kategori Galeri
-    </a>
-    <a href="/galeri"
-        class="submenu-link {{ Request::is('galeri', 'galeri/create', 'galeri/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-images"></i> Galeri
-    </a>
-    <a href="/kategoriartikel"
-        class="submenu-link {{ Request::is('kategoriartikel', 'kategoriartikel/create', 'kategoriartikel/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-clipboard-check"></i> Kategori Artikel
-    </a>
-    <a href="/artikel"
-        class="submenu-link {{ Request::is('artikel', 'artikel/create', 'artikel/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-layout-text-window"></i> Artikel
-    </a>
-    <a href="/review-alumni"
-        class="submenu-link {{ Request::is('review-alumni', 'review-alumni/create', 'review-alumni/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-star"></i>  Review Alumni
-    </a>
-    <a href="/konten-dept"
-        class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
-        <i class="bi bi-laptop"></i> Konten Departemen
-    </a>
-    <a href="/kontenjenjang"
-        class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit', 'kontenjenjang/create') ? 'active-submenu' : '' }}">
-        <i class="bi bi-house-door"></i> Konten Jenjang
-    </a>
-    <a href="/mitra"
-        class="submenu-link {{ Request::is('mitra', 'mitra/create', 'mitra/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-person-check"></i> Mitra
-    </a>
-    </div>
-
-    <!-- BTN SDM ===================== -->
-    <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
-    <div class="menu-left">
-        <i class="bi bi-people-fill"></i>
-        <span> Sumber Daya Manusia </span>
-    </div>
-    <span class="dropdownArrow" data-arrow="staffdept">
-        {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
-    </span>
-    </a>
-    <div data-menu="staffdept"
-    style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
-    <a href="/kategoristaff"
-        class="submenu-link {{ Request::is('kategoristaff', 'kategoristaff/create', 'kategoristaff/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
-    </a>
-    <a href="/staff-dept"
-        class="submenu-link {{ Request::is('staff-dept', 'staff-dept/create', 'staff-dept/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-check2-circle"></i> Staff Departemen
-    </a>
-    <a href="/ketuadhh"
-        class="submenu-link {{ Request::is('ketuadhh', 'ketuadhh/create', 'ketuadhh/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-calendar-event"></i> Ketua DHH
-    </a>
-    </div>
-    
-    <!-- PEMBATAS EMAS ===================== -->
-    <a href="" class="menu-image-only">
-    <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
-    </a>
-
-    <!-- BTN ADMIN ===================== -->
-    <a href="#" class="menu {{ $isAdminProfileActive ? 'active' : '' }}" data-dropdown="admprofile">
-    <div class="menu-left">
-        <i class="bi bi-person-badge"></i>
-        <span> Profil Admin </span>
-    </div>
-    <span class="dropdownArrow" data-arrow="admprofile">
-        {!! $isAdminProfileActive ? '&#9660;' : '&#9650;' !!}
-    </span>
-    </a>
-    <div data-menu="admprofile"
-    style="margin-left:24px; flex-direction:column; {{ $isAdminProfileActive ? 'display:flex;' : 'display:none;' }}">
-    <a href="/admprofile"
-        class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
-        <i class="bi bi-person-workspace"></i> Detail Profil Admin
-    </a>
-    <a href="/editpassadm"
-        class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
-        <i class="bi bi-gear-wide-connected"></i> Edit Password
-    </a>
-    <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
-        @csrf
-        <button type="submit" class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
-            <i class="bi bi-box-arrow-right"></i> Log Out
-        </button>
-    </form>        
-  </aside>
-
-  <main class="content">
-    <div class="container-fluid mt-4">
-      <div class="adm-header">
-        <h2 class="adm-title">Edit Data Galeri</h2>
-      </div>
-      @if(session('info'))
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-          {{ session('info') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      @endif
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card shadow-sm p-4">
-            <form action="{{ route('galeri.update', $galeri->id) }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              @method('PUT')
-
-              <div class="row mb-3">
-                <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
-                <div class="col-sm-10">
-                  <input type="text" name="judul" id="judul" class="form-control" value="{{ old('judul', $galeri->judul) }}" placeholder="Judul..." required>
+            <!-- BTN Dashboard ===================== -->
+            <a href="/dashboardadm" class="menu {{ $isDashboardActive ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-graph-up"></i> <span> Dasbor </span>
                 </div>
-              </div>
+                <span class="dropdownArrow"></span>
+            </a>
 
-              <div class="row mb-3">
-                <label for="tipe" class="text-start col-sm-2 col-form-label">Tipe</label>
-                <div class="col-sm-10">
-                  <select name="tipe" id="tipe" class="form-select" required>
-                    <option value="">Pilih tipe</option>
-                    <option value="gambar" {{ $galeri->tipe == 'gambar' ? 'selected' : '' }}>Gambar</option>
-                    <option value="video" {{ $galeri->tipe == 'video' ? 'selected' : '' }}>Video</option>
-                  </select>
+            <!-- BTN RECAP DATA ===================== -->
+            <a href="/recapdata" class="menu {{ $isRecapdataActive ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-database-check"></i> <span> Rekapitulasi Data </span>
                 </div>
-              </div>
+                <span class="dropdownArrow"></span>
+            </a>
 
-              <div class="row mb-3">
-                <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
-                <div class="col-sm-10">
-                  <select name="id_kategorigaleri" id="kategori" class="form-select" required>
-                    <option value="">Pilih kategori</option>
-                    @foreach ($kategorigaleri as $kategori)
-                      <option value="{{ $kategori->id }}"
-                        {{ $galeri->id_kategorigaleri == $kategori->id ? 'selected' : '' }}>
-                        {{ $kategori->nama }}
-                      </option>
-                    @endforeach
-                  </select>
+            <!-- BTN RUBRIK ===================== -->
+            <a href="{{ route('rubrik.index') }}" class="menu {{ $isRubrikActive ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-journal-check"></i><span> Rubrik </span>
                 </div>
-              </div>
+                <span class="dropdownArrow"></span>
+            </a>
 
-              <div class="row mb-3">
-                <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
-                <div class="col-sm-10">
-                  <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal', $galeri->tanggal) }}" required>
+            <!-- BTN PENILAIAN ===================== -->
+            <a href="{{ route('penilaianadm.index') }}" class="menu {{ Request::is('penilaianadm*') ? 'active' : '' }}">
+                <div class="menu-left">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i> <span> Penilaian </span>
                 </div>
-              </div>
+                <span class="dropdownArrow"></span>
+            </a>
 
-              {{-- Upload Gambar --}}
-              <div class="row mb-3" id="gambar-upload-wrapper" style="display:none;">
-                <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
-                <div class="col-sm-10">
-                  <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
-                  @if($galeri->tipe == 'gambar' && $galeri->gambar)
-                    <div class="mt-3" id="old-gambar-preview">
-                      <img src="{{ asset($galeri->gambar) }}" class="img-thumbnail" style="max-height:200px;">
+            <!-- BTN TINGKAT AKHIR===================== -->
+            <a href="#" class="menu {{ $isTingkatAkhirActive ? 'active' : '' }}" data-dropdown="tingkatakhir">
+                <div class="menu-left">
+                    <i class="bi bi-mortarboard"></i>
+                    <span> Tingkat Akhir </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="tingkatakhir">
+                    {!! $isTingkatAkhirActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="tingkatakhir"
+                style="margin-left:24px; flex-direction:column; {{ $isTingkatAkhirActive ? 'display:flex;' : 'display:none;' }}">
+
+                {{-- KOLOKIUM --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'kolokium']) }}"
+                    class="submenu-link {{ request('jenis') == 'kolokium' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-check2-circle"></i> Data Pendaftar Kolokium
+                </a>
+
+                {{-- SEMINAR --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'seminar']) }}"
+                    class="submenu-link {{ request('jenis') == 'seminar' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-calendar-event"></i> Data Pendaftar Seminar
+                </a>
+
+                {{-- KOMPRE --}}
+                <a href="{{ route('syaratujian.index', ['jenis' => 'komprehensif']) }}"
+                    class="submenu-link {{ request('jenis') == 'komprehensif' ? 'active-submenu' : '' }}">
+                    <i class="bi bi-journal-text"></i> Data Pendaftar Sidang
+                </a>
+            </div>
+
+            <!-- BTN KONTEN ===================== -->
+            <a href="#" class="menu {{ $isKontenActive ? 'active' : '' }}" data-dropdown="konten">
+                <div class="menu-left">
+                    <i class="bi bi-collection"></i>
+                    <span> Konten </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="konten">
+                    {!! $isKontenActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="konten"
+                style="margin-left:24px; flex-direction:column; {{ $isKontenActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/kategorigaleri"
+                    class="submenu-link {{ Request::is('kategorigaleri', 'kategorigaleri/create', 'kategorigaleri/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Kategori Galeri
+                </a>
+                <a href="/galeri"
+                    class="submenu-link {{ Request::is('galeri', 'galeri/create', 'galeri/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-images"></i> Galeri
+                </a>
+                <a href="/kategoriartikel"
+                    class="submenu-link {{ Request::is('kategoriartikel', 'kategoriartikel/create', 'kategoriartikel/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Kategori Artikel
+                </a>
+                <a href="/artikel"
+                    class="submenu-link {{ Request::is('artikel', 'artikel/create', 'artikel/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-layout-text-window"></i> Artikel
+                </a>
+                <a href="/review-alumni"
+                    class="submenu-link {{ Request::is('review-alumni', 'review-alumni/create', 'review-alumni/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-star"></i> Review Alumni
+                </a>
+                <a href="/konten-dept"
+                    class="submenu-link {{ Request::is('konten-dept', 'konten-dept/show', 'konten-dept/*/edit', 'konten-dept/create') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-laptop"></i> Konten Departemen
+                </a>
+                <a href="/kontenjenjang"
+                    class="submenu-link {{ Request::is('kontenjenjang', 'kontenjenjang/show', 'kontenjenjang/*/edit', 'kontenjenjang/create') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-house-door"></i> Konten Jenjang
+                </a>
+                <a href="/mitra"
+                    class="submenu-link {{ Request::is('mitra', 'mitra/create', 'mitra/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-person-check"></i> Mitra
+                </a>
+            </div>
+
+            <!-- BTN SDM ===================== -->
+            <a href="#" class="menu {{ $isStaffDeptActive ? 'active' : '' }}" data-dropdown="staffdept">
+                <div class="menu-left">
+                    <i class="bi bi-people-fill"></i>
+                    <span> Sumber Daya Manusia </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="staffdept">
+                    {!! $isStaffDeptActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="staffdept"
+                style="margin-left:24px; flex-direction:column; {{ $isStaffDeptActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/kategoristaff"
+                    class="submenu-link {{ Request::is('kategoristaff', 'kategoristaff/create', 'kategoristaff/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-envelope-open"></i> Kategori Staff Departemen
+                </a>
+                <a href="/staff-dept"
+                    class="submenu-link {{ Request::is('staff-dept', 'staff-dept/create', 'staff-dept/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-check2-circle"></i> Staff Departemen
+                </a>
+                <a href="/ketuadhh"
+                    class="submenu-link {{ Request::is('ketuadhh', 'ketuadhh/create', 'ketuadhh/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-calendar-event"></i> Ketua DHH
+                </a>
+            </div>
+
+            <!-- PEMBATAS EMAS ===================== -->
+            <a href="" class="menu-image-only">
+                <img src="{{ asset('img/batasgold.png') }}" alt="Layanan Akademik" class="menu-img">
+            </a>
+
+            <!-- BTN ADMIN ===================== -->
+            <a href="#" class="menu {{ $isAdminProfileActive ? 'active' : '' }}" data-dropdown="admprofile">
+                <div class="menu-left">
+                    <i class="bi bi-person-badge"></i>
+                    <span> Profil Admin </span>
+                </div>
+                <span class="dropdownArrow" data-arrow="admprofile">
+                    {!! $isAdminProfileActive ? '&#9660;' : '&#9650;' !!}
+                </span>
+            </a>
+            <div data-menu="admprofile"
+                style="margin-left:24px; flex-direction:column; {{ $isAdminProfileActive ? 'display:flex;' : 'display:none;' }}">
+                <a href="/admprofile"
+                    class="submenu-link {{ Request::is('admprofile', 'user/*/edit') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-person-workspace"></i> Detail Profil Admin
+                </a>
+                <a href="/editpassadm" class="submenu-link {{ Request::is('editpassadm') ? 'active-submenu' : '' }}">
+                    <i class="bi bi-gear-wide-connected"></i> Ubah Kata Sandi
+                </a>
+                <form action="{{ route('login.logout') }}" method="POST" id="logout-form">
+                    @csrf
+                    <button type="submit"
+                        class="submenu-link w-100 text-start{{ Request::is('logoutadmprofile') ? 'active-submenu' : '' }}">
+                        <i class="bi bi-box-arrow-right"></i> Keluar
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="container-fluid mt-4">
+                <div class="adm-header">
+                    <h2 class="adm-title">Edit Data Galeri</h2>
+                </div>
+                @if (session('info'))
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        {{ session('info') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                  @endif
-                  <div id="preview-gambar" class="mt-3"></div>
+                @endif
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm p-4">
+                            <form action="{{ route('galeri.update', $galeri->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="row mb-3">
+                                    <label for="judul" class="text-start col-sm-2 col-form-label">Judul</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="judul" id="judul" class="form-control"
+                                            value="{{ old('judul', $galeri->judul) }}" placeholder="Judul..." required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="tipe" class="text-start col-sm-2 col-form-label">Tipe</label>
+                                    <div class="col-sm-10">
+                                        <select name="tipe" id="tipe" class="form-select" required>
+                                            <option value="">Pilih tipe</option>
+                                            <option value="gambar" {{ $galeri->tipe == 'gambar' ? 'selected' : '' }}>
+                                                Gambar</option>
+                                            <option value="video" {{ $galeri->tipe == 'video' ? 'selected' : '' }}>Video
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="kategori" class="text-start col-sm-2 col-form-label">Kategori</label>
+                                    <div class="col-sm-10">
+                                        <select name="id_kategorigaleri" id="kategori" class="form-select" required>
+                                            <option value="">Pilih kategori</option>
+                                            @foreach ($kategorigaleri as $kategori)
+                                                <option value="{{ $kategori->id }}"
+                                                    {{ $galeri->id_kategorigaleri == $kategori->id ? 'selected' : '' }}>
+                                                    {{ $kategori->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="tanggal" class="text-start col-sm-2 col-form-label">Tanggal</label>
+                                    <div class="col-sm-10">
+                                        <input type="date" name="tanggal" id="tanggal" class="form-control"
+                                            value="{{ old('tanggal', $galeri->tanggal) }}" required>
+                                    </div>
+                                </div>
+
+                                {{-- Upload Gambar --}}
+                                <div class="row mb-3" id="gambar-upload-wrapper" style="display:none;">
+                                    <label for="gambar" class="text-start col-sm-2 col-form-label">Upload Gambar</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" name="gambar" id="gambar" class="form-control"
+                                            accept="image/*">
+                                        @if ($galeri->tipe == 'gambar' && $galeri->gambar)
+                                            <div class="mt-3" id="old-gambar-preview">
+                                                <img src="{{ asset($galeri->gambar) }}" class="img-thumbnail"
+                                                    style="max-height:200px;">
+                                            </div>
+                                        @endif
+                                        <div id="preview-gambar" class="mt-3"></div>
+                                    </div>
+                                </div>
+
+                                {{-- URL Video --}}
+                                <div class="row mb-3" id="url-upload-wrapper" style="display:none;">
+                                    <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
+                                    <div class="col-sm-10">
+                                        <input type="url" name="video_url" id="video_url" class="form-control"
+                                            value="" placeholder="https://youtube.com/...">
+                                        @if (isset($galeri) && $galeri->tipe == 'video' && $galeri->video)
+                                            @php
+                                                preg_match(
+                                                    '/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/',
+                                                    $galeri->video,
+                                                    $matches,
+                                                );
+                                                $youtubeId = $matches[1] ?? null;
+                                            @endphp
+
+                                            @if ($youtubeId)
+                                                <div class="mt-3" id="old-url-preview">
+                                                    <iframe width="300" height="180"
+                                                        src="https://www.youtube.com/embed/{{ $youtubeId }}"
+                                                        frameborder="0" allowfullscreen></iframe>
+                                                </div>
+                                            @else
+                                                <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
+                                            @endif
+                                        @endif
+
+                                        <div id="preview-url" class="mt-3"></div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              {{-- URL Video --}}
-              <div class="row mb-3" id="url-upload-wrapper" style="display:none;">
-                <label for="video_url" class="text-start col-sm-2 col-form-label">URL Video</label>
-                <div class="col-sm-10">
-                  <input type="url" name="video_url" id="video_url" class="form-control" value="" placeholder="https://youtube.com/...">                                    
-                  @if(isset($galeri) && $galeri->tipe == 'video' && $galeri->video)
-                    @php
-                      preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_\-]+)/', $galeri->video, $matches);
-                      $youtubeId = $matches[1] ?? null;
-                    @endphp
-
-                    @if($youtubeId)
-                    <div class="mt-3" id="old-url-preview">
-                      <iframe width="300" height="180" src="https://www.youtube.com/embed/{{ $youtubeId }}" frameborder="0" allowfullscreen></iframe>                          
-                    </div>                          
-                    @else
-                      <a href="{{ $galeri->video }}" target="_blank">Lihat Video</a>
-                    @endif
-                  @endif
-
-                  <div id="preview-url" class="mt-3"></div>
-                </div>
-              </div>
-
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+            </div>
+        </main>
     </div>
-  </main>
-</div>
-@push('script')
-<script>
-  document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-    toggle.addEventListener('click', function(e) {
-      e.preventDefault();
+    @push('script')
+        <script>
+            document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
 
-      const target = this.getAttribute('data-dropdown');
-      const menu = document.querySelector(`[data-menu="${target}"]`);
-      const arrow = document.querySelector(`[data-arrow="${target}"]`);
-      const isOpen = menu.style.display === 'flex';
+                    const target = this.getAttribute('data-dropdown');
+                    const menu = document.querySelector(`[data-menu="${target}"]`);
+                    const arrow = document.querySelector(`[data-arrow="${target}"]`);
+                    const isOpen = menu.style.display === 'flex';
 
-      // Tutup semua dulu
-      document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-      document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+                    // Tutup semua dulu
+                    document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+                    document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-      // Kalau belum terbuka, buka
-      if (!isOpen) {
-        menu.style.display = 'flex';
-        arrow.innerHTML = '&#9660;';
-      }
-    });
-  });
-</script>
-<script>
-  const tipeSelect = document.getElementById('tipe');
+                    // Kalau belum terbuka, buka
+                    if (!isOpen) {
+                        menu.style.display = 'flex';
+                        arrow.innerHTML = '&#9660;';
+                    }
+                });
+            });
+        </script>
+        <script>
+            const tipeSelect = document.getElementById('tipe');
 
-  const gambarInput = document.getElementById('gambar');
-  const videoUrlInput = document.getElementById('video_url');
+            const gambarInput = document.getElementById('gambar');
+            const videoUrlInput = document.getElementById('video_url');
 
-  const gambarWrapper = document.getElementById('gambar-upload-wrapper');
-  const urlWrapper = document.getElementById('url-upload-wrapper');
+            const gambarWrapper = document.getElementById('gambar-upload-wrapper');
+            const urlWrapper = document.getElementById('url-upload-wrapper');
 
-  const previewGambar = document.getElementById('preview-gambar');
-  const previewUrl = document.getElementById('preview-url');
+            const previewGambar = document.getElementById('preview-gambar');
+            const previewUrl = document.getElementById('preview-url');
 
-  function updateInputState() {
-    const tipe = tipeSelect.value;
+            function updateInputState() {
+                const tipe = tipeSelect.value;
 
-    if (tipe === 'gambar') {
-      gambarWrapper.style.display = 'flex';
-      urlWrapper.style.display = 'none';
-    } 
-    else if (tipe === 'video') {
-      gambarWrapper.style.display = 'none';
-      urlWrapper.style.display = 'flex';
-    } 
-    else {
-      gambarWrapper.style.display = 'none';
-      urlWrapper.style.display = 'none';
-    }
-  }
+                if (tipe === 'gambar') {
+                    gambarWrapper.style.display = 'flex';
+                    urlWrapper.style.display = 'none';
+                } else if (tipe === 'video') {
+                    gambarWrapper.style.display = 'none';
+                    urlWrapper.style.display = 'flex';
+                } else {
+                    gambarWrapper.style.display = 'none';
+                    urlWrapper.style.display = 'none';
+                }
+            }
 
-  tipeSelect.addEventListener('change', updateInputState);
-  updateInputState();
+            tipeSelect.addEventListener('change', updateInputState);
+            updateInputState();
 
-  // Preview gambar
-  gambarInput.addEventListener('change', function(e) {
-    previewGambar.innerHTML = '';
-    const oldPreview = document.getElementById('old-gambar-preview');
-    if (oldPreview) oldPreview.style.display = 'none';
+            // Preview gambar
+            gambarInput.addEventListener('change', function(e) {
+                previewGambar.innerHTML = '';
+                const oldPreview = document.getElementById('old-gambar-preview');
+                if (oldPreview) oldPreview.style.display = 'none';
 
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = document.createElement('img');
-        img.src = event.target.result;
-        img.className = 'img-thumbnail';
-        img.style.maxHeight = '200px';
-        previewGambar.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.className = 'img-thumbnail';
+                        img.style.maxHeight = '200px';
+                        previewGambar.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
 
-  // Preview URL video
-  videoUrlInput.addEventListener('input', function(e) {
-    previewUrl.innerHTML = '';
-    const oldPreview = document.getElementById('old-url-preview');
-    if (oldPreview) oldPreview.style.display = 'none';
+            // Preview URL video
+            videoUrlInput.addEventListener('input', function(e) {
+                previewUrl.innerHTML = '';
+                const oldPreview = document.getElementById('old-url-preview');
+                if (oldPreview) oldPreview.style.display = 'none';
 
-    const url = e.target.value;
-    if (!url) return;
+                const url = e.target.value;
+                if (!url) return;
 
-    let embedUrl = url;
-    let videoId = null;
+                let embedUrl = url;
+                let videoId = null;
 
-    if (url.includes('youtube.com/watch?v=')) {
-      videoId = url.split('v=')[1].split('&')[0];
-    } else if (url.includes('youtu.be/')) {
-      videoId = url.split('youtu.be/')[1].split('?')[0];
-    }
+                if (url.includes('youtube.com/watch?v=')) {
+                    videoId = url.split('v=')[1].split('&')[0];
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                }
 
-    if (videoId) {
-      embedUrl = 'https://www.youtube.com/embed/' + videoId;
-    }
+                if (videoId) {
+                    embedUrl = 'https://www.youtube.com/embed/' + videoId;
+                }
 
-    const iframe = document.createElement('iframe');
-    iframe.width = '320';
-    iframe.height = '180';
-    iframe.src = embedUrl;
-    iframe.frameBorder = '0';
-    iframe.allowFullscreen = true;
+                const iframe = document.createElement('iframe');
+                iframe.width = '320';
+                iframe.height = '180';
+                iframe.src = embedUrl;
+                iframe.frameBorder = '0';
+                iframe.allowFullscreen = true;
 
-    previewUrl.appendChild(iframe);
-  });
-</script>
-@endpush
+                previewUrl.appendChild(iframe);
+            });
+        </script>
+    @endpush
 @endsection

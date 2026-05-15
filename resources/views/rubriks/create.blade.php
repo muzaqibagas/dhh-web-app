@@ -211,80 +211,179 @@
                     </button>
                 </form>
             </div>
-        </aside>            
+        </aside>
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
                     <h2 class="adm-title">Tambah Rubrik</h2>
-                </div> 
+                </div>
+                <div class="row mb-4">
+
+                    {{-- Kolokium --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Kolokium</h6>
+
+                                    @if ($totalKolokium == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalKolokium }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalKolokium == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Seminar --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Seminar Hasil</h6>
+
+                                    @if ($totalSeminar == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalSeminar }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalSeminar == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Komprehensif --}}
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="mb-0 fw-bold">Komprehensif</h6>
+
+                                    @if ($totalKomprehensif == 100)
+                                        <span class="badge bg-success">Siap</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Belum Valid</span>
+                                    @endif
+                                </div>
+
+                                <h3 class="fw-bold text-primary">
+                                    {{ $totalKomprehensif }}%
+                                </h3>
+
+                                <small class="text-muted">
+                                    @if ($totalKomprehensif == 100)
+                                        Bobot rubrik sudah lengkap dan dapat digunakan untuk penilaian.
+                                    @else
+                                        Total bobot harus tepat 100% sebelum digunakan untuk penilaian.
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
+                @endif
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
 
-                        <form action="{{route('rubrik.store')}}" method="POST">
-                        @csrf
-                        <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                            <div class="col-sm-2">
-                                <label for="nama_kriteria" class="col-form-label">Nama Kriteria</label>
-                            </div>
-                            <div class="col-sm-10">
-                                <input type="text" name="nama_kriteria" class="form-control shadow-sm" id="nama_kriteria" placeholder="Nama Kriteria..." required>
-                            </div>
+                            <form action="{{ route('rubrik.store') }}" method="POST">
+                                @csrf
+                                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                                    <div class="col-sm-2">
+                                        <label for="nama_kriteria" class="col-form-label">Nama Kriteria</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama_kriteria" class="form-control shadow-sm"
+                                            id="nama_kriteria" placeholder="Nama Kriteria..." required>
+                                    </div>
+                                </div>
+                                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                                    <div class="col-sm-2">
+                                        <label for="bobot" class="col-form-label">Bobot (%)</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="number" name="bobot" class="form-control shadow-sm"
+                                            id="bobot" placeholder="Bobot..." required>
+                                    </div>
+                                </div>
+                                <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
+                                    <div class="col-sm-2">
+                                        <label for="jenis_sidang" class="col-form-label">Jenis Kegiatan</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <select name="jenis_sidang" class="form-control shadow-sm" id="jenis_sidang"
+                                            required>
+                                            <option value="kolokium">Kolokium</option>
+                                            <option value="seminar">Seminar Hasil</option>
+                                            <option value="komprehensif">Komprehensif</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Tombol simpan -->
+                                <div class="row">
+                                    <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                            <div class="col-sm-2">
-                                <label for="bobot" class="col-form-label">Bobot (%)</label>
-                            </div>
-                            <div class="col-sm-10">
-                                <input type="number" name="bobot" class="form-control shadow-sm" id="bobot" placeholder="Bobot..." required>
-                            </div>
-                        </div>
-                        <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
-                            <div class="col-sm-2">
-                                <label for="jenis_sidang" class="col-form-label">Jenis Kegiatan</label>
-                            </div>
-                            <div class="col-sm-10">
-                                <select name="jenis_sidang" class="form-control shadow-sm" id="jenis_sidang" required>
-                                    <option value="kolokium">Kolokium</option>
-                                    <option value="seminar">Seminar Hasil</option>
-                                    <option value="komprehensif">Komprehensif</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Tombol simpan -->
-                        <div class="row">
-                            <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-success">Simpan</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-            </div>
         </main>
     </div>
-@push('script')
-<script>
-  document.querySelectorAll('[data-dropdown]').forEach(toggle => {
-    toggle.addEventListener('click', function(e) {
-      e.preventDefault();
+    @push('script')
+        <script>
+            document.querySelectorAll('[data-dropdown]').forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
 
-      const target = this.getAttribute('data-dropdown');
-      const menu = document.querySelector(`[data-menu="${target}"]`);
-      const arrow = document.querySelector(`[data-arrow="${target}"]`);
-      const isOpen = menu.style.display === 'flex';
+                    const target = this.getAttribute('data-dropdown');
+                    const menu = document.querySelector(`[data-menu="${target}"]`);
+                    const arrow = document.querySelector(`[data-arrow="${target}"]`);
+                    const isOpen = menu.style.display === 'flex';
 
-      // Tutup semua dulu
-      document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
-      document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
+                    // Tutup semua dulu
+                    document.querySelectorAll('[data-menu]').forEach(m => m.style.display = 'none');
+                    document.querySelectorAll('[data-arrow]').forEach(a => a.innerHTML = '&#9650;');
 
-      // Kalau belum terbuka, buka
-      if (!isOpen) {
-        menu.style.display = 'flex';
-        arrow.innerHTML = '&#9660;';
-      }
-    });
-  });
-</script>
-@endpush
+                    // Kalau belum terbuka, buka
+                    if (!isOpen) {
+                        menu.style.display = 'flex';
+                        arrow.innerHTML = '&#9660;';
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection

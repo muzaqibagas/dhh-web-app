@@ -17,9 +17,18 @@ class RubrikController extends Controller
             $search = request()->search;
             $query->where('nama_kriteria', 'like', "%$search%");
         }
-        $rubriks = $query->orderBy('id', 'ASC')->paginate(10)->withQueryString();
+        $rubriks = $query->orderBy('id', 'DESC')->paginate(10)->withQueryString();
 
-        return view('rubriks.index', compact('rubriks'));
+        $totalKolokium = Rubrik::where('jenis_sidang', 'kolokium')->sum('bobot');
+        $totalSeminar = Rubrik::where('jenis_sidang', 'seminar')->sum('bobot');
+        $totalKomprehensif = Rubrik::where('jenis_sidang', 'komprehensif')->sum('bobot');
+
+        return view('rubriks.index', compact(
+            'rubriks', 
+            'totalKolokium', 
+            'totalSeminar', 
+            'totalKomprehensif'
+        ));
     }
 
     /**
@@ -29,7 +38,16 @@ class RubrikController extends Controller
     {
         $rubriks = Rubrik::all();
 
-        return view('rubriks.create', compact('rubriks'));
+        $totalKolokium = Rubrik::where('jenis_sidang', 'kolokium')->sum('bobot');
+        $totalSeminar = Rubrik::where('jenis_sidang', 'seminar')->sum('bobot');
+        $totalKomprehensif = Rubrik::where('jenis_sidang', 'komprehensif')->sum('bobot');
+
+        return view('rubriks.create', compact(
+            'rubriks',
+            'totalKolokium',
+            'totalSeminar',
+            'totalKomprehensif'
+            ));
     }
 
     /**
@@ -42,6 +60,33 @@ class RubrikController extends Controller
             'bobot' => 'required|integer',
             'jenis_sidang' => 'required|in:kolokium,seminar,komprehensif',
         ]);
+
+        $totalBobot = Rubrik::where('jenis_sidang', $request->jenis_sidang)->sum('bobot');
+
+        if ($totalBobot >= 100) {
+            return redirect()->back()
+                ->with('error', "Total bobot untuk kegiatan {$request->jenis_sidang} ini sudah 100%. Tidak dapat menambah rubrik lagi.");
+        }
+
+        if ($totalBobot == 100) {
+            return redirect(route('rubrik.index'))
+                ->with('success', "Total bobot rubrik untuk kegiatan {$request->jenis_sidang} ini sudah 100% dan siap digunakan");                                   
+        }                 
+
+        if ($request->bobot == 0) {
+            return redirect()->back()
+                ->with('error', 'Bobot tidak boleh 0%.');
+        }
+
+        if ($request->bobot < 0) {
+            return redirect()->back()
+                ->with('error', 'Bobot tidak boleh negatif.');
+        }        
+
+        if (($totalBobot + $request->bobot) > 100) {
+            return redirect()->back()
+                ->with('error', 'Total bobot melebihi 100%.');
+        }
 
         $insert = Rubrik::create([
             'nama_kriteria' => $request->nama_kriteria,
@@ -69,7 +114,16 @@ class RubrikController extends Controller
      */
     public function edit(Rubrik $rubrik)
     {
-        return view('rubriks.edit', compact('rubrik'));
+        $totalKolokium = Rubrik::where('jenis_sidang', 'kolokium')->sum('bobot');
+        $totalSeminar = Rubrik::where('jenis_sidang', 'seminar')->sum('bobot');
+        $totalKomprehensif = Rubrik::where('jenis_sidang', 'komprehensif')->sum('bobot');
+
+        return view('rubriks.edit', compact(
+            'rubrik',
+            'totalKolokium',
+            'totalSeminar',
+            'totalKomprehensif'
+            ));
     }
 
     /**
@@ -82,6 +136,35 @@ class RubrikController extends Controller
             'bobot' => 'required|integer',
             'jenis_sidang' => 'required|in:kolokium,seminar,komprehensif',
         ]);
+
+        $totalBobot = Rubrik::where('jenis_sidang', $request->jenis_sidang)
+            ->where('id', '!=', $rubrik->id)
+            ->sum('bobot');        
+
+        if ($totalBobot >= 100) {
+            return redirect()->back()
+                ->with('error', "Total bobot untuk kegiatan {$request->jenis_sidang} ini sudah 100%. Tidak dapat menambah rubrik lagi.");
+        }
+
+        if ($totalBobot == 100) {
+            return redirect(route('rubrik.index'))
+                ->with('success', "Total bobot rubrik untuk kegiatan {$request->jenis_sidang} ini sudah 100% dan siap digunakan");                                   
+        }                 
+
+        if ($request->bobot == 0) {
+            return redirect()->back()
+                ->with('error', 'Bobot tidak boleh 0%.');
+        }
+
+        if ($request->bobot < 0) {
+            return redirect()->back()
+                ->with('error', 'Bobot tidak boleh negatif.');
+        }        
+
+        if (($totalBobot + $request->bobot) > 100) {
+            return redirect()->back()
+                ->with('error', 'Total bobot melebihi 100%.');
+        }    
 
         $rubrik->fill([
             'nama_kriteria' => $request->nama_kriteria,
