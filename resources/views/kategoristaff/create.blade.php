@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Create Kategori Staff</h2>
+                    <h2 class="adm-title text-dark mb-0">Create Kategori Staff</h2>
                 </div>
                 <div class="card shadow-sm">
                     <div class="card-body">

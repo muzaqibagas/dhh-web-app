@@ -216,7 +216,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Rubriks</h2>
+                    <h2 class="adm-title text-dark mb-0">Rubriks</h2>
                     <div class="d-flex justify-content-end align-items-center gap-2">
                         <form action="{{ route('rubrik.index') }}" method="GET"
                             class="d-flex align-items-center gap-2 w-50">
@@ -282,7 +282,7 @@
                             <td style="padding:12px 14px;">{{ $rubrik->nama_kriteria }}</td>
                             <td style="padding:12px 14px;">{{ $rubrik->bobot }}%</td>
                             <td style="padding:12px 14px;">{{ $rubrik->jenis_sidang }}</td>
-                            <td style="padding:12px 14px;">
+                            <td class="d-flex gap-2" style="padding:12px 14px;">
                                 <a href="{{ route('rubrik.edit', $rubrik->id) }}" class="btn btn-sm btn-primary"><i
                                         class="bi bi-pencil"></i></a>
                                 <form action="{{ route('rubrik.destroy', $rubrik->id) }}" method="POST"
@@ -299,7 +299,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center text-muted py-4">Belum ada rubriks.</td>
+                            <td colspan="3" class="text-center text-muted py-4">Belum ada rubriks penilaian.</td>
                         </tr>
                     @endforelse
                 </tbody>

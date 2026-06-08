@@ -40,10 +40,12 @@ class DatabaseSeeder extends Seeder
             KetuaDHHSSeeder::class,
             ReviewAlumniSeeder::class,
             RubrikSeeder::class,
+            UjianMahasiswaSeeder::class,
+            SyaratUjianSeeder::class,
+            PenilaianSeeder::class,
             // SyaratKolokiummhsSeeder::class,
             // SyaratSeminarmhsSeeder::class,
             // SyaratKomprehensifmhsSeeder::class,
-
             // seederbuatan
             // 1. Syaratkolokiummhs
             // 2. Syaratseminarmhs

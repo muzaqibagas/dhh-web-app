@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Kategori Galeri</h2>
+                    <h2 class="adm-title text-dark">Kategori Galeri</h2>
                     <div class="d-flex justify-content-end align-items-center gap-2">
                         <form action="{{ route('kategorigaleri.index') }}" method="GET"
                             class="d-flex align-items-center gap-2 w-50">

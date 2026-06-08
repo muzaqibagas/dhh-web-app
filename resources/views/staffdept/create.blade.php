@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Create Staff Departemen</h2>
+                    <h2 class="adm-title text-dark mb-0">Create Staff Departemen</h2>
                     {{-- Alert Success --}}
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">

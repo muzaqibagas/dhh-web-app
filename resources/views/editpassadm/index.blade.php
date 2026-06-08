@@ -216,7 +216,7 @@
         <!-- MAIN KONTEN -->
         <main class="content">
             <div class="container-fluid mt-4">
-                <h2 class="page-title">Ubah Kata Sandi Akun</h2>
+                <h2 class="page-title text-dark mb-0">Ubah Kata Sandi Akun</h2>
             </div>
             <div class="d-flex justify-content-center align-items-center w-100 mt-4">
                 <div class="card p-4 shadow-sm w-75 border-2" style="border:solid #1b2a6d">

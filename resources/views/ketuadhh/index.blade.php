@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Pimpinan DHH dari Masa ke Masa</h2>
+                    <h2 class="adm-title text-dark mb-0">Pimpinan DHH dari Masa ke Masa</h2>
                     <div class="d-flex justify-content-end align-items-center gap-2">
                         <form action="{{ route('ketuadhh.index') }}" method="GET"
                             class="d-flex align-items-center gap-2 w-50">

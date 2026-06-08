@@ -216,11 +216,18 @@
         <main class="content overflow-x-auto">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Daftar Rekapitulasi Data</h2>
-                    <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
-                        <i class="bi bi-download"></i>Download Excel
-                    </a>
-                </div>
+                    <h2 class="adm-title text-dark">Daftar Rekapitulasi Data</h2>
+                    <div class="d-flex align-items-center gap-3">
+                        <form class="d-flex my-3" method="GET" action="{{ route('recapdata.index') }}">
+                            <input type="text" name="search" class="form-control me-2" placeholder="Cari nama atau NIM..."
+                                value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">Cari</button>
+                        </form>
+                        <a href="{{ route('admrecapdata.export') }}" class="adm-btn-add text-decoration-none">
+                            <i class="bi bi-download"></i>Download Excel
+                        </a>
+                    </div>
+                </div>    
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
@@ -251,7 +258,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($recap as $i => $row)
+                                    @forelse ($recap as $i => $row)
                                         <tr>
                                             <td>{{ $i + 1 }}</td>
                                             <td class="text-start text-truncate" style="max-width: 200px;">
@@ -276,9 +283,17 @@
                                             </td>
                                             <td class="status-genap">{{ $row['status'] }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center text-muted py-4">Tidak ada data mahasiswa yang ditemukan.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-end mt-3">
+                                {{ $admRecapData->onEachSide(1)->links('pagination::bootstrap-5') }}
+                            </div>
+
                             <!-- Modal Konfirmasi SKL -->
                             <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
                                 aria-hidden="true">

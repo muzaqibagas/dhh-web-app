@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kolokiummhs;
 use App\Models\StaffDept;
 use App\Models\SyaratKolokiummhs;
 use App\Models\User;
@@ -11,8 +12,10 @@ class SyaratKolokiummhsSeeder extends Seeder
 {
     public function run(): void
     {
-        // Ambil semua mahasiswa yang ada
-        $mahasiswaList = User::where('role', 'Mahasiswa')->get();
+        // Ambil mahasiswa yang sudah terdaftar di kolokium
+        $kolokiumMahasiswaIds = Kolokiummhs::pluck('id_mahasiswa')->unique()->toArray();
+
+        $mahasiswaList = User::whereIn('id', $kolokiumMahasiswaIds)->get();
 
         // Ambil staff untuk moderator dan penandatangan undangan
         $moderator = StaffDept::inRandomOrder()->first();

@@ -2,9 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Kolokiummhs;
-use App\Models\Komprehensifmhs;
-use App\Models\Seminarmhs;
+use App\Models\SyaratUjian;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class AdmRecapMultiSheetExport implements WithMultipleSheets
@@ -14,27 +12,34 @@ class AdmRecapMultiSheetExport implements WithMultipleSheets
         $sheets = [];
 
         // Ambil semua tahun dan semester dari ketiga tabel
-        $tahunSemesterList = collect();
+        $tahunSemesterList = SyaratUjian::with(['kolokiummhs.semester', 'seminarmhs.semester', 'komprehensifmhs.semester'])
+            ->get()
+            ->flatMap(function ($item) {
+                $entries = [];
 
-        $tahunSemesterList = $tahunSemesterList
-            ->merge(Kolokiummhs::with('semester')->get()->map(function ($item) {
-                return [
-                    'semester' => $item->semester?->semester ?? '-',
-                    'tahun_ajaran' => $item->tahun_ajaran ?? null,
-                ];
-            }))
-            ->merge(Seminarmhs::with('semester')->get()->map(function ($item) {
-                return [
-                    'semester' => $item->semester->semester ?? '-',
-                    'tahun_ajaran' => $item->tahun_ajaran ?? null,
-                ];
-            }))
-            ->merge(Komprehensifmhs::with('semester')->get()->map(function ($item) {
-                return [
-                    'semester' => $item->semester->semester ?? '-',
-                    'tahun_ajaran' => $item->tahun_ajaran ?? null,
-                ];
-            }));
+                if ($item->kolokiummhs?->semester?->semester && $item->kolokiummhs->tahun_ajaran) {
+                    $entries[] = [
+                        'semester' => $item->kolokiummhs->semester->semester,
+                        'tahun_ajaran' => $item->kolokiummhs->tahun_ajaran,
+                    ];
+                }
+
+                if ($item->seminarmhs?->semester?->semester && $item->seminarmhs->tahun_ajaran) {
+                    $entries[] = [
+                        'semester' => $item->seminarmhs->semester->semester,
+                        'tahun_ajaran' => $item->seminarmhs->tahun_ajaran,
+                    ];
+                }
+
+                if ($item->komprehensifmhs?->semester?->semester && $item->komprehensifmhs->tahun_ajaran) {
+                    $entries[] = [
+                        'semester' => $item->komprehensifmhs->semester->semester,
+                        'tahun_ajaran' => $item->komprehensifmhs->tahun_ajaran,
+                    ];
+                }
+
+                return $entries;
+            });
 
         // Hapus data duplikat dan kosong
         $tahunSemesterList = $tahunSemesterList

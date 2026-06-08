@@ -102,7 +102,7 @@
                     <tr>
                         <td>Judul Tugas Akhir</td>
                         <td>:</td>
-                        <td>{{ $data->judul ?? '-' }}</td>
+                        <td>{{ $judul ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Jenis Ujian</td>

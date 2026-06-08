@@ -214,7 +214,7 @@
         </aside>
 
         <main class="content px-4 py-4">
-            <h2 class="text-center fw-bold mb-4" style="color:#6b1414;">Dasbor Admin</h2>
+            <h2 class="text-center fw-bold mb-4" style="color:#00000;">Dasbor Admin</h2>
             <!-- FILTER TAHUN AJARAN -->
             <div class="mb-4 d-flex justify-content-end">
                 <form method="GET" action="{{ route('dashboardadm.index') }}" class="d-flex align-items-center gap-2">
@@ -239,22 +239,22 @@
             <div class="d-flex gap-2 mb-4">
                 <div class="col-md-4">
                     <div class="card shadow-sm text-center">
-                        <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Kolokium</h5>
-                        <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahKolokium }}</h2>
+                        <h5 class="fw-bold" style="color:#000000;">Pendaftar Kolokium</h5>
+                        <h2 class="fw-bold mb-0" style="color:#000000;">{{ $jumlahKolokium }}</h2>
                         <p class="text-secondary mb-0">Mahasiswa</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card shadow-sm text-center">
-                        <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Seminar Hasil</h5>
-                        <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahSeminar }}</h2>
+                        <h5 class="fw-bold" style="color:#000000;">Pendaftar Seminar Hasil</h5>
+                        <h2 class="fw-bold mb-0" style="color:#000000;">{{ $jumlahSeminar }}</h2>
                         <p class="text-secondary mb-0">Mahasiswa</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card shadow-sm text-center">
-                        <h5 class="fw-bold" style="color:#6b1414;">Pendaftar Komprehensif</h5>
-                        <h2 class="fw-bold mb-0" style="color:#6b1414;">{{ $jumlahKompre }}</h2>
+                        <h5 class="fw-bold" style="color:#000000;">Pendaftar Komprehensif</h5>
+                        <h2 class="fw-bold mb-0" style="color:#000000;">{{ $jumlahKompre }}</h2>
                         <p class="text-secondary mb-0">Mahasiswa</p>
                     </div>
                 </div>
@@ -266,7 +266,7 @@
                     {{-- Grafik Tren Pendaftar --}}
                     <div class="col-12 col-lg-6">
                         <div class="card shadow-sm p-3 h-100">
-                            <h5 class="fw-bold mb-3" style="color:#6b1414;">Grafik Tren Pendaftar</h5>
+                            <h5 class="fw-bold mb-3" style="color:#000000;">Grafik Tren Pendaftar</h5>
                             <canvas id="trendChart" height="200"></canvas>
                         </div>
                     </div>
@@ -274,7 +274,7 @@
                     {{-- Verifikasi Tingkat Akhir --}}
                     <div class="col-12 col-lg-6">
                         <div class="card shadow-sm p-3 h-100">
-                            <h5 class="fw-bold mb-3" style="color:#6b1414;">Verifikasi Tingkat Akhir</h5>
+                            <h5 class="fw-bold mb-3" style="color:#000000;">Verifikasi Tingkat Akhir</h5>
                             <div class="d-flex justify-content-around flex-wrap">
                                 <div class="text-center my-2">
                                     <canvas id="verifKolokium" width="100" height="100"></canvas>
@@ -314,7 +314,7 @@
                     {{-- Artikel per Kategori --}}
                     <div class="col-12 col-lg-6">
                         <div class="card shadow-sm p-3 h-100">
-                            <h5 class="fw-bold mb-3" style="color:#6b1414;">Artikel per SDGs</h5>
+                            <h5 class="fw-bold mb-3" style="color:#000000;">Artikel per SDGs</h5>
                             <div class="chart-kategori-wrapper">
                                 <div class="chart-container">
                                     <canvas id="kategoriChart"></canvas>
@@ -327,7 +327,7 @@
                     {{-- Status Tingkat Akhir --}}
                     <div class="col-12 col-lg-6">
                         <div class="card shadow-sm p-3 h-100">
-                            <h5 class="fw-bold mb-3" style="color:#6b1414;">Status Tingkat Akhir</h5>
+                            <h5 class="fw-bold mb-3" style="color:#000000;">Status Tingkat Akhir</h5>
                             <canvas id="statusChart" height="200"></canvas>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = Faker::create('id_ID');
         DB::table('users')->insert([
             // dosen
             // [
@@ -35,6 +37,25 @@ class UserSeeder extends Seeder
             //     'updated_at'       => now(),
             // ],
             // Admin
+            // [
+            //     'id_jenjang' => null,
+            //     'nim' => 'ADMIN01',
+            //     'nama' => 'Admin Sistem',
+            //     'no_hp' => '081380716742',
+            //     'alamat' => 'Jl. Admin Pusat No. 1',
+            //     'tanggal_lahir' => '2000-01-01',
+            //     'angkatan' => null,
+            //     'status' => 'aktif',
+            //     'username' => 'Hasilhutan',
+            //     'email' => 'dhht@apps.ipb.ac.id',
+            //     'email_verified_at' => now(), // sudah diverifikasi agar bisa login langsung
+            //     'password' => Hash::make('Hasilhutan1P8'),
+            //     'jenis_kelamin' => 'Laki-laki',
+            //     'role' => 'Admin',
+            //     'foto' => null,
+            //     'created_at' => now(),
+            //     'updated_at' => now(),
+            // ],
             [
                 'id_jenjang' => null,
                 'nim' => 'ADMIN01',
@@ -44,10 +65,10 @@ class UserSeeder extends Seeder
                 'tanggal_lahir' => '2000-01-01',
                 'angkatan' => null,
                 'status' => 'aktif',
-                'username' => 'Hasilhutan',
+                'username' => 'AdminAkademik',
                 'email' => 'dhht@apps.ipb.ac.id',
                 'email_verified_at' => now(), // sudah diverifikasi agar bisa login langsung
-                'password' => Hash::make('Hasilhutan1P8'),
+                'password' => Hash::make('adminAkademik123'),
                 'jenis_kelamin' => 'Laki-laki',
                 'role' => 'Admin',
                 'foto' => null,
@@ -95,5 +116,43 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+        for ($i = 1; $i <= 200; $i++) { 
+            DB::table('users')->insert([ 
+                'id_jenjang' => 3, 
+                'nim' => 
+                    'J04' . 
+                    $faker->unique()->numerify('########'), 
+                'nama' => 
+                    $faker->name(), 
+                'no_hp' => '08' . 
+                    $faker->numerify('##########'), 
+                'alamat' => $faker->address(), 
+                'tanggal_lahir' => 
+                    $faker->dateTimeBetween( '2000-01-01', '2005-12-31' ), 
+                'angkatan' => 
+                    $faker->randomElement([ 
+                        '2020', 
+                        '2021', 
+                        '2022', 
+                        '2023', 
+                    ]), 
+                'status' => 'aktif', 
+                'username' => 
+                    'mhs' . 
+                    $faker->unique()->numerify('####'), 
+                'email' => $faker->unique()->safeEmail(), 
+                'email_verified_at' => now(), 
+                'password' => Hash::make('password123'), 
+                'jenis_kelamin' => 
+                    $faker->randomElement([ 
+                        'Laki-laki', 
+                        'Perempuan', 
+                    ]), 
+                'role' => 'Mahasiswa', 
+                'foto' => null, 
+                'created_at' => now(), 
+                'updated_at' => now(), 
+            ]); 
+        }
     }
 }

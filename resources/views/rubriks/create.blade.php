@@ -215,7 +215,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Tambah Rubrik</h2>
+                    <h2 class="adm-title text-dark">Tambah Rubrik</h2>
                 </div>
                 <div class="row mb-4">
 

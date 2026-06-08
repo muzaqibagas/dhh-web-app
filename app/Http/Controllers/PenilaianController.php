@@ -5,104 +5,232 @@ namespace App\Http\Controllers;
 use App\Models\Penilaian;
 use App\Models\Rubrik;
 use App\Models\SyaratUjian;
+use App\Models\jadwalTA;
+use App\Models\Kolokiummhs;
+use App\Models\Komprehensifmhs;
+use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PenilaianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dosen = Auth::guard('staff')->user();
+        $dosenId = Auth::guard('staff')->id();
+        $search = $request->input('search', '');
 
-        $jadwal = SyaratUjian::with([
-            'mahasiswa',
-            'kolokiummhs',
-            'seminarmhs',
-            'komprehensifmhs',
-        ])
-            ->where('status', 'disetujui')
-            ->get()
+        // ============================================
+        // KOLOKIUM - Query untuk penilaian kolokium
+        // ============================================
+        $kolokiumQuery = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->with(['mahasiswa', 'kolokiummhs', 'penilaian'])
+            ->where(function ($q) use ($dosenId) {
+                $q->where('id_moderator', $dosenId)
+                    ->orWhere(function ($subQ) use ($dosenId) {
+                        $subQ->whereHas('kolokiummhs', function ($builder) use ($dosenId) {
+                            $builder->where('id_pembimbing1', $dosenId)
+                                ->orWhere('id_pembimbing2', $dosenId);                                
+                        });
+                    });
+            });
 
-            // 🔥 FILTER: hanya yg terkait dosen
-            ->filter(function ($item) use ($dosen) {
+        // ============================================
+        // SEMINAR - Query untuk penilaian seminar
+        // ============================================
+        $seminarQuery = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->with(['mahasiswa', 'seminarmhs', 'penilaian'])
+            ->where(function ($q) use ($dosenId) {
+                $q->where('id_moderator', $dosenId)
+                    ->orWhere(function ($subQ) use ($dosenId) {
+                        $subQ->whereHas('seminarmhs', function ($builder) use ($dosenId) {
+                            $builder->where('id_pembimbing1', $dosenId)
+                                ->orWhere('id_pembimbing2', $dosenId);
+                        });
+                    });
+            });
 
-                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
-                        ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
-                        $item->komprehensifmhs);
+        // ============================================
+        // KOMPREHENSIF - Query untuk penilaian komprehensif
+        // ============================================
+        $komprehensifQuery = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->with(['mahasiswa', 'komprehensifmhs', 'penilaian'])
+            ->where(function ($q) use ($dosenId) {
+                $q->where('id_moderator', $dosenId)
+                    ->orWhere('id_penguji', $dosenId)
+                    ->orWhere(function ($subQ) use ($dosenId) {
+                        $subQ->whereHas('komprehensifmhs', function ($builder) use ($dosenId) {
+                            $builder->where('id_pembimbing1', $dosenId)
+                                ->orWhere('id_pembimbing2', $dosenId);
+                        });
+                    });
+            });
 
-                if (! $relasi) {
-                    return false;
-                }
+        // ============================================
+        // COMBINE & SEARCH
+        // ============================================
+        if ($search) {
+            $search = trim($search);
+            $kolokiumQuery->whereHas('mahasiswa', function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
+            });
+            $seminarQuery->whereHas('mahasiswa', function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
+            });
+            $komprehensifQuery->whereHas('mahasiswa', function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nim', 'like', "%{$search}%");
+            });
+        }
 
-                return
-                    $item->id_moderator == $dosen->id ||
-                    ($relasi->id_pembimbing1 ?? null) == $dosen->id ||
-                    ($relasi->id_pembimbing2 ?? null) == $dosen->id ||
-                    ($item->id_penguji ?? null) == $dosen->id;
+        // Get data dari ketiga query
+        $kolokiumData = $kolokiumQuery->get();
+        $seminarData = $seminarQuery->get();
+        $komprehensifData = $komprehensifQuery->get();
+
+        // ============================================
+        // FORMAT DATA UNTUK DISPLAY
+        // ============================================
+        $jadwal = collect();
+
+        // Format Kolokium
+        foreach ($kolokiumData as $syarat) {
+            $peranDosen = $this->getPeranDosen($syarat, $dosenId, 'kolokium');
+            $penilaianDosen = $this->getPenilaianDosen($syarat, $dosenId);
+
+            $jadwal->push((object) [
+                'id' => $syarat->id,
+                'mahasiswa' => $syarat->mahasiswa,
+                'nim' => $syarat->mahasiswa->nim ?? '-',
+                'nama' => $syarat->mahasiswa->nama ?? '-',
+                'jenis_ujian' => 'kolokium',
+                'jenis_ujian_label' => 'Kolokium',
+                'peran_dosen' => $peranDosen,
+                'tanggal_ujian' => $syarat->kolokiummhs->tanggal ?? '-',
+                'current_penilaian' => $penilaianDosen,
+            ]);
+        }
+
+        // Format Seminar
+        foreach ($seminarData as $syarat) {
+            $peranDosen = $this->getPeranDosen($syarat, $dosenId, 'seminar');
+            $penilaianDosen = $this->getPenilaianDosen($syarat, $dosenId);
+
+            $jadwal->push((object) [
+                'id' => $syarat->id,
+                'mahasiswa' => $syarat->mahasiswa,
+                'nim' => $syarat->mahasiswa->nim ?? '-',
+                'nama' => $syarat->mahasiswa->nama ?? '-',
+                'jenis_ujian' => 'seminar',
+                'jenis_ujian_label' => 'Seminar Hasil',
+                'peran_dosen' => $peranDosen,
+                'tanggal_ujian' => $syarat->seminarmhs->tanggal ?? '-',
+                'current_penilaian' => $penilaianDosen,
+            ]);
+        }
+
+        // Format Komprehensif
+        foreach ($komprehensifData as $syarat) {
+            $peranDosen = $this->getPeranDosen($syarat, $dosenId, 'komprehensif');
+            $penilaianDosen = $this->getPenilaianDosen($syarat, $dosenId);
+
+            $jadwal->push((object) [
+                'id' => $syarat->id,
+                'mahasiswa' => $syarat->mahasiswa,
+                'nim' => $syarat->mahasiswa->nim ?? '-',
+                'nama' => $syarat->mahasiswa->nama ?? '-',
+                'jenis_ujian' => 'komprehensif',
+                'jenis_ujian_label' => 'Komprehensif',
+                'peran_dosen' => $peranDosen,
+                'tanggal_ujian' => $syarat->komprehensifmhs->tanggal ?? '-',
+                'current_penilaian' => $penilaianDosen,
+            ]);
+        }
+
+        // Sort by tanggal_ujian (terbaru dulu)
+        $jadwal = $jadwal->sortByDesc('tanggal_ujian')->values();
+
+        $perPage = 10;
+        $page = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = $jadwal->forPage($page, $perPage)->values();
+
+        $paginatedJadwal = new LengthAwarePaginator(
+            $currentItems,
+            $jadwal->count(),
+            $perPage,
+            $page,
+            [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
+
+        return view('penilaian.index', [
+            'jadwal' => $paginatedJadwal,
+        ]);
+    }
+
+    /**
+     * Helper: Tentukan peran dosen dalam sidang tertentu
+     */
+    private function getPeranDosen($syarat, $dosenId, $jenis)
+    {
+        $roles = [];
+
+        // Cek moderator/penguji (dari SyaratUjian)
+        if ($syarat->id_moderator == $dosenId) {
+            $roles[] = 'Moderator';
+        }
+        if ($syarat->id_penguji == $dosenId) {
+            $roles[] = 'Penguji';
+        }
+
+        // Cek pembimbing (dari relasi jenis ujian)
+        if ($jenis === 'kolokium' && $syarat->kolokiummhs) {
+            if ($syarat->kolokiummhs->id_pembimbing1 == $dosenId) {
+                $roles[] = 'Pembimbing 1';
+            }
+            if ($syarat->kolokiummhs->id_pembimbing2 == $dosenId) {
+                $roles[] = 'Pembimbing 2';
+            }            
+        } elseif ($jenis === 'seminar' && $syarat->seminarmhs) {
+            if ($syarat->seminarmhs->id_pembimbing1 == $dosenId) {
+                $roles[] = 'Pembimbing 1';
+            }
+            if ($syarat->seminarmhs->id_pembimbing2 == $dosenId) {
+                $roles[] = 'Pembimbing 2';
+            }            
+        } elseif ($jenis === 'komprehensif' && $syarat->komprehensifmhs) {
+            if ($syarat->komprehensifmhs->id_pembimbing1 == $dosenId) {
+                $roles[] = 'Pembimbing 1';
+            }
+            if ($syarat->komprehensifmhs->id_pembimbing2 == $dosenId) {
+                $roles[] = 'Pembimbing 2';
+            }            
+        }
+
+        return !empty($roles) ? implode(', ', $roles) : '-';
+    }
+
+    /**
+     * Helper: Ambil penilaian dosen login untuk sidang tertentu
+     */
+    private function getPenilaianDosen($syarat, $dosenId)
+    {
+        return $syarat->penilaian()
+            ->where(function ($q) use ($dosenId) {
+                $q->where('id_moderator', $dosenId)
+                    ->orWhere('id_penguji', $dosenId)
+                    ->orWhere('id_pembimbing1', $dosenId)
+                    ->orWhere('id_pembimbing2', $dosenId);
             })
-
-            // 🔥 MAP DATA
-            ->map(function ($item) use ($dosen) {
-
-                $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
-                        ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
-                        $item->komprehensifmhs);
-
-                if (! $relasi) {
-                    return null;
-                }
-
-                // tanggal ujian
-                $item->tanggal_ujian = $relasi->tanggal ?? null;
-
-                // label jenis
-                $item->jenis_ujian_label = match ($item->jenis_ujian) {
-                    'kolokium' => 'Kolokium',
-                    'seminar' => 'Seminar Hasil',
-                    'komprehensif' => 'Komprehensif',
-                    default => '-'
-                };
-
-                // 🔥 tentukan peran dosen
-                $peran = [];
-
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = $item->jenis_ujian === 'komprehensif'
-                        ? 'Ketua Sidang'
-                        : 'Moderator';
-                }
-
-                if (($relasi->id_pembimbing1 ?? null) == $dosen->id ||
-                    ($relasi->id_pembimbing2 ?? null) == $dosen->id) {
-                    $peran[] = 'Pembimbing';
-                }
-
-                if (($item->id_penguji ?? null) == $dosen->id) {
-                    $peran[] = 'Penguji';
-                }
-
-                // 🔥 ambil penilaian dari tabel baru
-                $item->current_penilaian = Penilaian::where('id_syarat_ujian', $item->id)
-                    ->where(function ($q) use ($dosen) {
-                        $q->where('id_moderator', $dosen->id)
-                            ->orWhere('id_pembimbing1', $dosen->id)
-                            ->orWhere('id_pembimbing2', $dosen->id)
-                            ->orWhere('id_penguji', $dosen->id);
-                    })
-                    ->first();
-
-                $item->peran_dosen = implode(', ', $peran);
-
-                return $item;
-            })
-
-            ->filter()
-            ->sortByDesc('tanggal_ujian');
-
-        return view('penilaian.index', compact('jadwal'));
+            ->first();
     }
 
     /**

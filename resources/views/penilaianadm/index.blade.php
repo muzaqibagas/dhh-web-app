@@ -214,25 +214,20 @@
         </aside>
 
         <main class="content">
-            <h4 class="mb-4">Penilaian Mahasiswa</h4>
-
-            <!-- Filter Jenis Ujian -->
-            <form method="GET" action="{{ route('penilaianadm.index') }}" class="mb-4">
-                <div class="row">
-                    <div class="col-md-4">
-                        <select name="jenis" class="form-select">
-                            <option value="">Semua Jenis Ujian</option>
-                            <option value="kolokium" {{ $jenis == 'kolokium' ? 'selected' : '' }}>Kolokium</option>
-                            <option value="seminar" {{ $jenis == 'seminar' ? 'selected' : '' }}>Seminar Hasil</option>
-                            <option value="komprehensif" {{ $jenis == 'komprehensif' ? 'selected' : '' }}>Komprehensif
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                    </div>
+            <div class="container-fluid mt-4">
+                <div class="adm-header">
+                    <h2 class="adm-title text-dark mb-0">Penilaian Mahasiswa</h2>
+                    <!-- Search Mahasiswa -->
+                    <form method="GET" action="{{ route('penilaianadm.index') }}" 
+                        class="d-flex align-items-center gap-2 w-25">                             
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Cari mahasiswa atau NIM..." value="{{ $search ?? '' }}">                                                                
+                        <button type="submit" class="btn btn-primary px-3">
+                            <i class="bi bi-search"></i>
+                        </button>                                                            
+                    </form>                     
                 </div>
-            </form>
+            </div>
 
             <table
                 style="
@@ -246,6 +241,7 @@
       ">
                 <thead style="background-color:#1e3a8a; color:#ffffff;">
                     <tr>
+                        <th style="padding:12px 14px; text-align:left; font-size:14px;">No.</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">NIM</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">Nama Mahasiswa</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">Kolokium</th>
@@ -255,8 +251,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($mahasiswa as $item)
+                    @forelse ($mahasiswa as $item)                    
                         <tr style="background-color:#ffffff;">
+                            <td style="padding:12px 14px; font-size:14px;">{{ $loop->iteration }}</td>
                             <td style="padding:12px 14px; font-size:14px;">{{ $item['nim'] }}</td>
                             <td style="padding:12px 14px; font-size:14px;">{{ $item['nama'] }}</td>
                             <td style="padding:12px 14px; font-size:14px;">
@@ -285,9 +282,16 @@
                                 @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" style="padding:12px 14px; text-align:center; color:#6b7280;">Tidak ada data penilaian; mahasiswa.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end">
+                {{ $penilaianadm->onEachSide(1)->links('pagination::bootstrap-5') }}
+            </div>
         </main>
     </div>
 @endsection

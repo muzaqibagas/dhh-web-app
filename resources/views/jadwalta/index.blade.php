@@ -107,6 +107,7 @@
         ">
                 <thead style="background-color:#1e3a8a; color:#ffffff;">
                     <tr>
+                        <th style="padding:12px 14px; font-size:14px; text-align:left;">No.</th>
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">Nama Mahasiswa</th>
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">NIM</th>
                         <th style="padding:12px 14px; font-size:14px; text-align:left;">Jenis Ujian</th>
@@ -118,8 +119,9 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($jadwals as $i => $item)
+                        @forelse ($jadwals as $item)
                         <tr style="background-color:#ffffff;">
+                            <td style="padding:12px 14px;">{{ $jadwals->firstItem() + $loop->index }}</td>
                             <td style="padding:12px 14px;">{{ $item['nama'] }}</td>
                             <td style="padding:12px 14px;">{{ $item['nim'] }}</td>
                             <td style="padding:12px 14px;">{{ $item['jenis'] }}</td>
@@ -178,8 +180,17 @@
                                 @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" style="padding:12px 14px; text-align:center;">Tidak ada jadwal kegiatan mahasiswa yang ditemukan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
             </table>
+
+            <div class="d-flex justify-content-end mt-3">
+                {{ $jadwals->onEachSide(1)->links('pagination::bootstrap-5') }}
+            </div>
         </main>
     </div>
     @push('script')

@@ -81,20 +81,38 @@
             </form>
         </aside>
 
-        <main class="content">
-
+        <main class="content">            
+            <div class="d-flex adm-header justify-content-end">
+                <div class="d-flex justify-content-end align-items-center gap-2">
+                    <form action="{{ route('penilaian.index') }}" method="GET"
+                        class="d-flex justify-content-end align-items-center gap-2 w-100">
+                        <input type="text" name="search" class="form-control w-100" placeholder="Cari Mahasiswa..."
+                            value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary px-3">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+            @endif
             <table
                 style="
-          width:100%;
-          border-collapse:collapse;
-          background-color:#ffffff;
-          border-radius:8px;
-          overflow:hidden;
-          box-shadow:0 2px 6px rgba(0,0,0,0.08);
-          margin-top:20px;
-      ">
+                width:100%;
+                border-collapse:collapse;
+                background-color:#ffffff;
+                border-radius:8px;
+                overflow:hidden;
+                box-shadow:0 2px 6px rgba(0,0,0,0.08);
+                margin-top:20px;
+            ">
                 <thead style="background-color:#1e3a8a; color:#ffffff;">
                     <tr>
+                        <th style="padding:12px 14px; text-align:left; font-size:14px;">No.</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">Nama Mahasiswa</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">NIM</th>
                         <th style="padding:12px 14px; text-align:left; font-size:14px;">Jenis Ujian</th>
@@ -105,8 +123,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($jadwal as $item)
+                    @forelse ($jadwal as $item)
                         <tr style="background-color:#ffffff;">
+                            <td style="padding:12px 14px; font-size:14px;">{{ $jadwal->firstItem() + $loop->index }}</td>
                             <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nama ?? '-' }}</td>
                             <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nim ?? '-' }}</td>
                             <td style="padding:12px 14px; font-size:14px;">{{ $item->jenis_ujian_label ?? '-' }}</td>
@@ -170,9 +189,17 @@
                                 @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" style="padding:12px 14px; text-align:center;">Tidak ada penilaian mahasiswa yang ditemukan.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+
+            <div class="d-flex justify-content-end mt-3">
+                {{ $jadwal->onEachSide(1)->links('pagination::bootstrap-5') }}
+            </div>
         </main>
     </div>
     @push('script')

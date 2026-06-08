@@ -215,7 +215,7 @@
 
         <!-- MAIN KONTEN -->
         <main class="content">
-            <h2 class="page-title">Biodata Admin</h2>
+            <h2 class="page-title text-dark mb-0">Biodata Admin</h2>
             <div class="col-md-9 px-2 d-flex justify-content-center align-items-center gap-5 w-100 mt-4">
                 <div class="d-flex flex-column align-items-center align-self-start">
                     <div class="rounded-circle overflow-hidden mb-3"

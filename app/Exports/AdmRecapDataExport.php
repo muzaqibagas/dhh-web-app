@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Models\Kolokiummhs;
 use App\Models\Komprehensifmhs;
 use App\Models\Seminarmhs;
+use App\Models\SyaratUjian;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -19,29 +20,45 @@ class AdmRecapDataExport implements FromCollection, ShouldAutoSize, WithEvents, 
 {
     public function collection()
     {
-        $kolokium = Kolokiummhs::all()->keyBy('nim');
-        $seminar = Seminarmhs::all()->keyBy('nim');
-        $kompre = Komprehensifmhs::all()->keyBy('nim');
+        $kolokium = Kolokiummhs::all()->keyBy('id_mahasiswa');
+        $seminar = Seminarmhs::all()->keyBy('id_mahasiswa');
+        $kompre = Komprehensifmhs::all()->keyBy('id_mahasiswa');
 
-        $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
+        $syaratUjians = SyaratUjian::with('mahasiswa')->get()->groupBy('id_mahasiswa');
         $recap = collect();
 
-        foreach ($nims as $nim) {
-            $kolokiumData = $kolokium[$nim] ?? null;
-            $seminarData = $seminar[$nim] ?? null;
-            $kompreData = $kompre[$nim] ?? null;
+        foreach ($syaratUjians as $idMahasiswa => $group) {
+            $mahasiswa = $group->first()->mahasiswa;
+            $nama = $mahasiswa?->nama ?? '-';
+            $nim = $mahasiswa?->nim ?? '-';
+
+            $kolokiumData = $kolokium[$idMahasiswa] ?? null;
+            $seminarData = $seminar[$idMahasiswa] ?? null;
+            $kompreData = $kompre[$idMahasiswa] ?? null;
             $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
 
             if (! $identitas) {
+                $recap->push([
+                    'Nama' => $nama,
+                    'NIM' => $nim,
+                    'Pembimbing 1' => '-',
+                    'Pembimbing 2' => '-',
+                    'Semester' => '-',
+                    'Tanggal Kolokium' => '-',
+                    'Tanggal Seminar' => '-',
+                    'Tanggal Ujian' => '-',
+                    'Tanggal SKL' => '-',
+                    'Tahun Lulus' => '-',
+                ]);
                 continue;
             }
+
             $pembimbing1 = $this->decodePembimbing($identitas->pembimbing1 ?? '-');
             $pembimbing2 = $this->decodePembimbing($identitas->pembimbing2 ?? '-');
-
             $semester = $kolokiumData?->semester?->semester ?? '-';
 
             $recap->push([
-                'Nama' => $identitas?->nama ?? '-',
+                'Nama' => $nama,
                 'NIM' => $nim,
                 'Pembimbing 1' => $pembimbing1,
                 'Pembimbing 2' => $pembimbing2,

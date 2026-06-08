@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Komprehensifmhs;
 use App\Models\StaffDept;
 use App\Models\SyaratKomprehensifmhs;
 use App\Models\User;
@@ -14,8 +15,10 @@ class SyaratKomprehensifmhsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil semua mahasiswa yang ada
-        $mahasiswaList = User::where('role', 'Mahasiswa')->get();
+        // Ambil mahasiswa yang sudah terdaftar di komprehensif
+        $komprehensifMahasiswaIds = Komprehensifmhs::pluck('id_mahasiswa')->unique()->toArray();
+
+        $mahasiswaList = User::whereIn('id', $komprehensifMahasiswaIds)->get();
 
         // Ambil random staff untuk moderator, penguji, dan penandatangan
         $moderator = StaffDept::inRandomOrder()->first();

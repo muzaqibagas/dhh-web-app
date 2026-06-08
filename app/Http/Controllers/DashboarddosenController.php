@@ -7,6 +7,7 @@ use App\Models\StaffNotification;
 use App\Models\SyaratUjian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class DashboarddosenController extends Controller
 {
@@ -22,8 +23,8 @@ class DashboarddosenController extends Controller
             ->take(10)
             ->get();
 
-        $data = SyaratUjian::with([
-            'mahasiswa',
+        // Ambil pendaftar yang relevan untuk dosen (tanpa memetakan properti untuk tabel)
+        $items = SyaratUjian::with([
             'kolokiummhs',
             'seminarmhs',
             'komprehensifmhs',
@@ -39,7 +40,6 @@ class DashboarddosenController extends Controller
             ->where('status', 'disetujui')
             ->get()
             ->filter(function ($item) use ($dosen) {
-
                 $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
                           ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
                           $item->komprehensifmhs);
@@ -53,48 +53,45 @@ class DashboarddosenController extends Controller
                     ($relasi->id_pembimbing1 ?? null) == $dosen->id ||
                     ($relasi->id_pembimbing2 ?? null) == $dosen->id ||
                     ($item->id_penguji ?? null) == $dosen->id;
-            })
-            ->map(function ($item) use ($dosen) {
+            });
 
+            // Hitung statistik untuk kartu status
+            // `scheduledCount` = jumlah pendaftar untuk kegiatan yang sudah memiliki
+            // tanggal pelaksanaan dan jadwalnya berada di masa depan (upcoming)
+            $scheduledCount = 0;
+            $pendingCount = 0;
+            $completedCount = 0;
+
+            foreach ($items as $item) {
                 $relasi = $item->jenis_ujian === 'kolokium' ? $item->kolokiummhs :
                           ($item->jenis_ujian === 'seminar' ? $item->seminarmhs :
                           $item->komprehensifmhs);
 
-                if (! $relasi) {
-                    return null;
+                $tanggal = $relasi->tanggal ?? null;
+                if ($tanggal) {
+                    try {
+                        if (Carbon::parse($tanggal)->isFuture()) {
+                            $scheduledCount++;
+                        }
+                    } catch (\Exception $e) {
+                        // lewati tanggal yang tidak valid
+                    }
                 }
 
-                $item->tanggal_ujian = $relasi->tanggal ?? null;
-
-                $peran = [];
-                if ($item->id_moderator == $dosen->id) {
-                    $peran[] = $item->jenis_ujian === 'komprehensif' ? 'Ketua Sidang' : 'Moderator';
+                $pen = $item->penilaian->first();
+                if (! $pen || $pen->nilai_akhir === null) {
+                    $pendingCount++;
+                } else {
+                    $completedCount++;
                 }
-                if (($relasi->id_pembimbing1 ?? null) == $dosen->id ||
-                    ($relasi->id_pembimbing2 ?? null) == $dosen->id) {
-                    $peran[] = 'Pembimbing';
-                }
-                if (($item->id_penguji ?? null) == $dosen->id) {
-                    $peran[] = 'Penguji';
-                }
+            }
 
-                $item->current_penilaian = $item->penilaian->where(function ($query) use ($dosen) {
-                    $query->where('id_moderator', $dosen->id)
-                        ->orWhere('id_pembimbing1', $dosen->id)
-                        ->orWhere('id_pembimbing2', $dosen->id)
-                        ->orWhere('id_penguji', $dosen->id);
-                })->first();
-                $item->peran_dosen = implode(', ', $peran);
-
-                return $item;
-            })
-            ->filter()
-            ->sortByDesc('tanggal_ujian');
-
-        return view('dashboarddosen.index', compact(
-            'notifications',
-            'data',
-        ));
+            return view('dashboarddosen.index', compact(
+                    'notifications',
+                    'scheduledCount',
+                    'pendingCount',
+                    'completedCount'
+                ));
     }
 
     /**

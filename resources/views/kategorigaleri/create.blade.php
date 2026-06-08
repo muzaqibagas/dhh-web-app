@@ -216,7 +216,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Create Kategori Galeri</h2>
+                    <h2 class="adm-title text-dark">Create Kategori Galeri</h2>
                 </div>
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -243,6 +243,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </main>
     </div>
     @push('script')

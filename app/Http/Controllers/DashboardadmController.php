@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use App\Models\Dashboardadm;
 use App\Models\Sdgs;
-use App\Models\SyaratKolokiummhs;
-use App\Models\SyaratKomprehensifmhs;
-use App\Models\SyaratSeminarmhs;
+use App\Models\SyaratUjian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -37,17 +35,51 @@ class DashboardadmController extends Controller
         $between = fn ($query) => $query->whereBetween('created_at', [$start, $end]);
 
         // data pendaftar (menggunakan whereBetween)
-        $jumlahKolokium = SyaratKolokiummhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
-        $jumlahSeminar = SyaratSeminarmhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
-        $jumlahKompre = SyaratKomprehensifmhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
+        $jumlahKolokium = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $jumlahSeminar = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $jumlahKompre = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
 
         // Status Lulus / Belum Lulus
-        $lulusKolokium = SyaratKolokiummhs::where('bap', 'diterima')->whereBetween('created_at', [$start, $end])->count();
-        $belumKolokium = SyaratKolokiummhs::whereIn('bap', ['belum_melaksanakan', 'ditolak'])->whereBetween('created_at', [$start, $end])->count();
-        $lulusSeminar = SyaratSeminarmhs::where('bap', 'diterima')->whereBetween('created_at', [$start, $end])->count();
-        $belumSeminar = SyaratSeminarmhs::whereIn('bap', ['belum_melaksanakan', 'ditolak'])->whereBetween('created_at', [$start, $end])->count();
-        $lulusKompre = SyaratKomprehensifmhs::where('bap', 'diterima')->whereBetween('created_at', [$start, $end])->count();
-        $belumLulusKompre = SyaratKomprehensifmhs::whereIn('bap', ['belum_melaksanakan', 'ditolak'])->whereBetween('created_at', [$start, $end])->count();
+        $lulusKolokium = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('bap', 'diterima')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $belumKolokium = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->whereIn('bap', ['belum_melaksanakan', 'ditolak'])
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $lulusSeminar = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('bap', 'diterima')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $belumSeminar = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->whereIn('bap', ['belum_melaksanakan', 'ditolak'])
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $lulusKompre = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('bap', 'diterima')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $belumLulusKompre = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->whereIn('bap', ['belum_melaksanakan', 'ditolak'])
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
 
         // grafik line per 12 bulan dimulai dari $start (iterasi 12 bulan)
         $trendKolokium = [];
@@ -58,23 +90,67 @@ class DashboardadmController extends Controller
             $mStart = $start->copy()->addMonths($i)->startOfMonth();
             $mEnd = $mStart->copy()->endOfMonth();
 
-            $trendKolokium[] = SyaratKolokiummhs::where('status', 'disetujui')->whereBetween('created_at', [$mStart, $mEnd])->count();
-            $trendSeminar[] = SyaratSeminarmhs::where('status', 'disetujui')->whereBetween('created_at', [$mStart, $mEnd])->count();
-            $trendKompre[] = SyaratKomprehensifmhs::where('status', 'disetujui')->whereBetween('created_at', [$mStart, $mEnd])->count();
+            $trendKolokium[] = SyaratUjian::where('jenis_ujian', 'kolokium')
+                ->where('status', 'disetujui')
+                ->whereBetween('created_at', [$mStart, $mEnd])
+                ->count();
+
+            $trendSeminar[] = SyaratUjian::where('jenis_ujian', 'seminar')
+                ->where('status', 'disetujui')
+                ->whereBetween('created_at', [$mStart, $mEnd])
+                ->count();
+
+            $trendKompre[] = SyaratUjian::where('jenis_ujian', 'komprehensif')
+                ->where('status', 'disetujui')
+                ->whereBetween('created_at', [$mStart, $mEnd])
+                ->count();
         }
 
         // grafik donut
-        $kolokiumDisetujui = SyaratKolokiummhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
-        $kolokiumDitolak = SyaratKolokiummhs::where('status', 'ditolak')->whereBetween('created_at', [$start, $end])->count();
-        $kolokiumPending = SyaratKolokiummhs::where('status', 'pending')->whereBetween('created_at', [$start, $end])->count();
+        $kolokiumDisetujui = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
 
-        $seminarDisetujui = SyaratSeminarmhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
-        $seminarDitolak = SyaratSeminarmhs::where('status', 'ditolak')->whereBetween('created_at', [$start, $end])->count();
-        $seminarPending = SyaratSeminarmhs::where('status', 'pending')->whereBetween('created_at', [$start, $end])->count();
+        $kolokiumDitolak = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('status', 'ditolak')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
 
-        $kompreDisetujui = SyaratKomprehensifmhs::where('status', 'disetujui')->whereBetween('created_at', [$start, $end])->count();
-        $kompreDitolak = SyaratKomprehensifmhs::where('status', 'ditolak')->whereBetween('created_at', [$start, $end])->count();
-        $komprePending = SyaratKomprehensifmhs::where('status', 'pending')->whereBetween('created_at', [$start, $end])->count();
+        $kolokiumPending = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('status', 'pending')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $seminarDisetujui = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $seminarDitolak = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('status', 'ditolak')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $seminarPending = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('status', 'pending')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $kompreDisetujui = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('status', 'disetujui')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $kompreDitolak = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('status', 'ditolak')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+
+        $komprePending = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('status', 'pending')
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
 
         // ==== Artikel per SDGs ====
         $sdgsList = Sdgs::all();

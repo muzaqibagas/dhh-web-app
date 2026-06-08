@@ -7,7 +7,9 @@ use App\Models\Kolokiummhs;
 use App\Models\Komprehensifmhs;
 use App\Models\Seminarmhs;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class JadwalTAController extends Controller
 {
@@ -16,15 +18,21 @@ class JadwalTAController extends Controller
      */
     public function index(Request $request)
     {
-        $dosenId = Auth::guard('staff')->id();
+        $dosen = Auth::guard('staff')->user();
         $search = $request->input('search');
 
+        Log::warning('Percobaan search', [
+            'user' => $dosen->nama ?? 'Unknown',
+            'search' => $search,
+            'ip' => $request->ip(),
+        ]);
+
         $kolokium = Kolokiummhs::with(['mahasiswa', 'ruangan', 'syaratUjianKolokium'])
-            ->where(function ($q) use ($dosenId) {
-                $q->where('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId)
-                    ->orWhereHas('syaratUjianKolokium', function ($q) use ($dosenId) {
-                        $q->where('id_moderator', $dosenId);
+            ->where(function ($q) use ($dosen) {
+                $q->where('id_pembimbing1', $dosen->id)
+                    ->orWhere('id_pembimbing2', $dosen->id)
+                    ->orWhereHas('syaratUjianKolokium', function ($q) use ($dosen) {
+                        $q->where('id_moderator', $dosen->id);
                     });
             })
             ->when($search, function ($query) use ($search) {
@@ -53,11 +61,11 @@ class JadwalTAController extends Controller
             });
 
         $seminar = Seminarmhs::with(['mahasiswa', 'ruangan', 'syaratUjianSeminar'])
-            ->where(function ($q) use ($dosenId) {
-                $q->where('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId)
-                    ->orWhereHas('syaratUjianSeminar', function ($q) use ($dosenId) {
-                        $q->where('id_moderator', $dosenId);
+            ->where(function ($q) use ($dosen) {
+                $q->where('id_pembimbing1', $dosen->id)
+                    ->orWhere('id_pembimbing2', $dosen->id)
+                    ->orWhereHas('syaratUjianSeminar', function ($q) use ($dosen) {
+                        $q->where('id_moderator', $dosen->id);
                     });
             })
             ->when($search, function ($query) use ($search) {
@@ -86,11 +94,11 @@ class JadwalTAController extends Controller
             });
 
         $kompre = Komprehensifmhs::with(['mahasiswa', 'syaratUjianKomprehensif'])
-            ->where(function ($q) use ($dosenId) {
-                $q->where('id_pembimbing1', $dosenId)
-                    ->orWhere('id_pembimbing2', $dosenId)
-                    ->orWhereHas('syaratUjianKomprehensif', function ($q) use ($dosenId) {
-                        $q->where('id_moderator', $dosenId);
+            ->where(function ($q) use ($dosen) {
+                $q->where('id_pembimbing1', $dosen->id)
+                    ->orWhere('id_pembimbing2', $dosen->id)
+                    ->orWhereHas('syaratUjianKomprehensif', function ($q) use ($dosen) {
+                        $q->where('id_moderator', $dosen->id);
                     });
             })
             ->when($search, function ($query) use ($search) {
@@ -123,7 +131,22 @@ class JadwalTAController extends Controller
             ->sortBy('tanggal')
             ->values();
 
-        return view('jadwalta.index', compact('jadwals'));
+        $perPage = 10;
+        $page = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = $jadwals->forPage($page, $perPage)->values();
+
+        $paginatedJadwals = new LengthAwarePaginator(
+            $currentItems,
+            $jadwals->count(),
+            $perPage,
+            $page,
+            [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
+
+        return view('jadwalta.index', ['jadwals' => $paginatedJadwals]);
     }
 
     /**

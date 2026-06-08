@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid">
                 <div class="adm-header">
-                    <h2 class="adm-title">Tambah Data Artikel</h2>
+                    <h2 class="adm-title text-dark mb-0">Tambah Data Artikel</h2>
                 </div>
                 <div class="container mt-4">
                     <div class="card shadow-sm">

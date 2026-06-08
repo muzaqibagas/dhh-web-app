@@ -215,7 +215,7 @@
 
         <!-- MAIN KONTEN -->
         <main class="content">
-            <h2 class="page-title">Ubah Biodata Admin</h2>
+            <h2 class="page-title text-dark mb-0">Ubah Biodata Admin</h2>
             <form action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data"
                 class="col-md-9 px-2 d-flex justify-content-center align-items-start gap-5 w-100 mt-4">
                 @csrf

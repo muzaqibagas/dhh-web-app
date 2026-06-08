@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid mt-4">
                 <div class="adm-header">
-                    <h2 class="adm-title">Data Pendaftar {{ ucfirst($jenis) }}</h2>
+                    <h2 class="adm-title text-dark">Data Pendaftar {{ ucfirst($jenis) }}</h2>
                     <div class="d-flex justify-content-end align-items-center gap-2">
                         <form action="{{ route('syaratujian.index') }}" method="GET"
                             class="d-flex justify-content-end align-items-center gap-2 w-100">
@@ -229,6 +229,18 @@
                         </form>
                     </div>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {!! session('error') !!}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
+                @endif
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -312,6 +324,27 @@
                                                     </button>
                                                 @elseif ($pendaftars->status == 'disetujui')
                                                     <span class="text-success fw-bold">Disetujui</span>
+                                                @elseif ($pendaftars->status == 'ditolak')
+                                                    <span class="text-danger fw-bold">Ditolak</span>
+                                                    @php
+                                                        $rejectReasons = array_filter([
+                                                            'Formulir' => $pendaftars->alasan_formulir,
+                                                            'Makalah' => $pendaftars->alasan_makalah,
+                                                            'Bukti Transkrip Nilai' => $pendaftars->alasan_bukti_sks,
+                                                            'Bukti SPP' => $pendaftars->alasan_bukti_spp,
+                                                            'Bukti Kehadiran' => $pendaftars->alasan_bukti_kehadiran,
+                                                        ]);
+                                                    @endphp
+                                                    @if (! empty($rejectReasons))
+                                                        <button type="button" class="btn btn-outline-danger btn-sm mt-1"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#rejectReasons{{ $pendaftars->id }}"
+                                                            aria-expanded="false"
+                                                            aria-controls="rejectReasons{{ $pendaftars->id }}"
+                                                            style="width: auto; min-width: 90px;">
+                                                            Lihat Alasan
+                                                        </button>
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>
@@ -348,6 +381,19 @@
                                                 @endif
                                             </td>
                                         </tr>
+
+                                        @if ($pendaftars->status == 'ditolak')
+                                            <tr class="collapse" id="rejectReasons{{ $pendaftars->id }}">
+                                                <td colspan="9" class="bg-light text-danger">
+                                                    <strong>Alasan Penolakan:</strong>
+                                                    <ul class="mb-0">
+                                                        @foreach ($rejectReasons as $label => $reason)
+                                                            <li><strong>{{ $label }}:</strong> {{ $reason }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        @endif
 
                                         <!-- Modal verifikasi disetujui -->
                                         <div class="modal fade" id="modalSetujui{{ $pendaftars->id }}" tabindex="-1"

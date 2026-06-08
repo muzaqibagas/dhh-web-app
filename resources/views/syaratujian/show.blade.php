@@ -224,7 +224,7 @@
                         };
                     @endphp
 
-                    <h2 class="adm-title">
+                    <h2 class="adm-title text-dark">
                         Preview PDF {{ $labelUjian }} Ditandatangani
                     </h2>
                 </div>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AdmRecapMultiSheetExport;
-use App\Models\AdmRecapData;
 use App\Models\Kolokiummhs;
 use App\Models\Komprehensifmhs;
 use App\Models\Seminarmhs;
+use App\Models\SyaratUjian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdmRecapDataController extends Controller
@@ -18,18 +20,31 @@ class AdmRecapDataController extends Controller
      */
     public function index()
     {
-        $kolokium = Kolokiummhs::all()->keyBy('nim');
-        $seminar = Seminarmhs::all()->keyBy('nim');
-        $kompre = Komprehensifmhs::all()->keyBy('nim');
+        $kolokium = Kolokiummhs::all()->keyBy('id_mahasiswa');
+        $seminar = Seminarmhs::all()->keyBy('id_mahasiswa');
+        $kompre = Komprehensifmhs::all()->keyBy('id_mahasiswa');
 
-        $nims = $kolokium->keys()->merge($seminar->keys())->merge($kompre->keys())->unique();
+        $query = SyaratUjian::with('mahasiswa');
+        if (request()->filled('search')) {
+            $search = request()->search;
+            $query->whereHas('mahasiswa', function ($q) use ($search) {
+                $q->where('nim', 'like', "%$search%")
+                    ->orWhere('nama', 'like', "%$search%");
+            });
+        }
+
+        $syaratUjians = $query->get()->groupBy('id_mahasiswa');
 
         $recap = [];
-        foreach ($nims as $nim) {
+        foreach ($syaratUjians as $idMahasiswa => $group) {
+            $mahasiswa = $group->first()->mahasiswa;
+            $nim = $mahasiswa?->nim ?? ($kolokium[$idMahasiswa]->nim ?? $seminar[$idMahasiswa]->nim ?? $kompre[$idMahasiswa]->nim ?? '-');
+            $nama = $mahasiswa?->nama ?? ($kolokium[$idMahasiswa]->nama ?? $seminar[$idMahasiswa]->nama ?? $kompre[$idMahasiswa]->nama ?? '-');
+
             // Ambil data jika ada
-            $kolokiumData = $kolokium[$nim] ?? null;
-            $seminarData = $seminar[$nim] ?? null;
-            $kompreData = $kompre[$nim] ?? null;
+            $kolokiumData = $kolokium[$idMahasiswa] ?? null;
+            $seminarData = $seminar[$idMahasiswa] ?? null;
+            $kompreData = $kompre[$idMahasiswa] ?? null;
 
             // Ambil identitas prioritas: kolokium > seminar > kompre
             $identitas = $kolokiumData ?? $seminarData ?? $kompreData ?? null;
@@ -80,7 +95,8 @@ class AdmRecapDataController extends Controller
             $genap_2024_2025 = $kompreData->status ?? '-';
 
             $recap[] = [
-                'nama' => $identitas?->nama ?? '-',
+                'id' => $idMahasiswa,
+                'nama' => $nama,
                 'nim' => $nim,
                 'pembimbing1' => $pembimbing1,
                 'pembimbing2' => $pembimbing2,
@@ -94,7 +110,37 @@ class AdmRecapDataController extends Controller
             ];
         }
 
-        return view('recapdata.index', compact('recap'));
+        // Buat paginator untuk array $recap agar pagination tampil pada view
+        $perPage = 10;
+        $page = request()->get('page', 1);
+        $collection = collect($recap)->sortByDesc('id')->values(); // Sortir berdasarkan id jika ada, atau berdasarkan nama/nim jika ingin alternatif lain
+
+        // Jika ada parameter pencarian, filter koleksi recap berdasarkan nama atau nim
+        if (request()->has('search')) {
+            $search = strtolower(request()->search);
+            $collection = $collection->filter(function ($item) use ($search) {
+                return str_contains(strtolower($item['nim'] ?? ''), $search) || str_contains(strtolower($item['nama'] ?? ''), $search);
+            })->values();
+        }
+
+        $currentItems = $collection->slice(($page - 1) * $perPage, $perPage)->values();
+
+        $paginatedRecap = new LengthAwarePaginator(
+            $currentItems,
+            $collection->count(),
+            $perPage,
+            $page,
+            [
+                'path' => Paginator::resolveCurrentPath(),
+                'query' => request()->query(),
+            ]
+        );
+
+        // Supaya view tetap menggunakan variable yang ada untuk links, set juga $admRecapData
+        $admRecapData = $paginatedRecap;
+        $recap = $paginatedRecap;
+
+        return view('recapdata.index', compact('recap', 'admRecapData'));
     }
 
     private function isJson($string)

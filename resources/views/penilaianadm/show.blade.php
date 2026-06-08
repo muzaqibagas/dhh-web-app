@@ -234,29 +234,7 @@
                 </table>
             </div>
 
-            @forelse($ujians as $ujian)
-                @php
-                    $hasModerator = $ujian->penilaian->whereNotNull('id_moderator')->isNotEmpty();
-
-                    $hasPembimbing1 = $ujian->penilaian->whereNotNull('id_pembimbing1')->isNotEmpty();
-
-                    $hasPembimbing2 = $ujian->penilaian->whereNotNull('id_pembimbing2')->isNotEmpty();
-
-                    $hasPenguji = $ujian->penilaian->whereNotNull('id_penguji')->isNotEmpty();
-
-                    $groupedRubrik = $ujian->penilaian->groupBy('id_rubrik');
-
-                    $judul = match ($ujian->jenis_ujian) {
-                        'kolokium' => $ujian->kolokiummhs->judul_kolokium ?? '-',
-
-                        'seminar' => $ujian->seminarmhs->judul_seminar ?? '-',
-
-                        'komprehensif' => $ujian->komprehensifmhs->judul_komprehensif ?? '-',
-
-                        default => '-',
-                    };
-                @endphp
-
+            @forelse($ujians as $ujian)                
                 <div class="card text-start mb-4 p-4">
                     <div
                         style="
@@ -275,8 +253,14 @@
                             @endif
                         </h4>
 
-                        <strong style="color:#475569;">Judul TA :</strong>
-                        <strong style="color:#475569;">{{ $judul }}</strong>
+                        <div>
+                            <strong style="color:#475569;">Judul TA :</strong>
+                            <strong style="color:#475569;">{{ $ujian->judul }}</strong>
+                        </div>
+                        <div>
+                            <strong style="color:#475569;">Tanggal Pelaksanaan :</strong>
+                            <strong style="color:#475569;">{{ $ujian->tanggalPelaksanaan }}</strong>
+                        </div>                        
                     </div>
 
                     <table
@@ -294,35 +278,46 @@
                                 <th style="padding:12px 14px; text-align:left;">Komponen Penilaian</th>
                                 <th style="padding:12px 14px; text-align:left;">Bobot</th>
 
-                                @if ($hasModerator)
+                                @if ($ujian->hasModerator)
                                     <th style="padding:12px 14px; text-align:left;">
-                                        {{ $ujian->jenis_ujian == 'komprehensif' ? 'Ketua Sidang' : 'Moderator' }}
+                                        {{ $ujian->jenis_ujian == 'komprehensif'
+                                            ? 'Ketua Sidang'
+                                            : 'Moderator' }}
                                     </th>
                                 @endif
 
-                                @if ($hasPembimbing1)
-                                    <th style="padding:12px 14px; text-align:left;">Pembimbing 1</th>
+                                @if ($ujian->hasPembimbing1)
+                                    <th style="padding:12px 14px; text-align:left;">
+                                        Pembimbing 1
+                                    </th>
                                 @endif
 
-                                {{-- PEMBIMBING 2 --}}
-                                @if ($hasPembimbing2)
-                                    <th style="padding:12px 14px; text-align:left;">Pembimbing 2</th>
+                                @if ($ujian->hasPembimbing2)
+                                    <th style="padding:12px 14px; text-align:left;">
+                                        Pembimbing 2
+                                    </th>
                                 @endif
 
-                                {{-- PENGUJI --}}
-                                @if ($hasPenguji)
-                                    <th style="padding:12px 14px; text-align:left;">Penguji</th>
+                                @if ($ujian->hasPenguji)
+                                    <th style="padding:12px 14px; text-align:left;">
+                                        Penguji
+                                    </th>
                                 @endif
-                            </tr>
                         </thead>
                         <tbody>
-                            @foreach ($groupedRubrik as $index => $items)
+                            @foreach ($ujian->groupedRubrik as $items)
+
                                 @php
                                     $first = $items->first();
+
                                     $moderator = $items->firstWhere('id_moderator', '!=', null);
+
                                     $pembimbing1 = $items->firstWhere('id_pembimbing1', '!=', null);
+
                                     $pembimbing2 = $items->firstWhere('id_pembimbing2', '!=', null);
+
                                     $penguji = $items->firstWhere('id_penguji', '!=', null);
+
                                     $nilaiMap = [
                                         1 => '1 - Kurang',
                                         2 => '2 - Cukup',
@@ -332,67 +327,47 @@
                                 @endphp
 
                                 <tr style="border-bottom:1px solid #e5e7eb;">
+
                                     <td style="padding:12px 14px;">
                                         {{ $loop->iteration }}
                                     </td>
-                                    <td style="padding:12px 14px;">{{ $first->rubrik->nama_kriteria ?? '-' }}</td>
-                                    <td style="padding:12px 14px;">{{ $first->rubrik->bobot ?? '-' }}%</td>
-                                    @if ($hasModerator)
+
+                                    <td style="padding:12px 14px;">
+                                        {{ $first->rubrik->nama_kriteria ?? '-' }}
+                                    </td>
+
+                                    <td style="padding:12px 14px;">
+                                        {{ $first->rubrik->bobot ?? '-' }}%
+                                    </td>
+
+                                    @if ($ujian->hasModerator)
                                         <td style="padding:12px 14px;">
-                                            {{ $moderator ? $nilaiMap[$moderator->nilai] ?? '-' : '-' }}</td>
+                                            {{ $moderator ? $nilaiMap[$moderator->nilai] ?? '-' : '-' }}
+                                        </td>
                                     @endif
 
-                                    @if ($hasPembimbing1)
+                                    @if ($ujian->hasPembimbing1)
                                         <td style="padding:12px 14px;">
-                                            {{ $pembimbing1 ? $nilaiMap[$pembimbing1->nilai] ?? '-' : '-' }}</td>
+                                            {{ $pembimbing1 ? $nilaiMap[$pembimbing1->nilai] ?? '-' : '-' }}
+                                        </td>
                                     @endif
 
-                                    @if ($hasPembimbing2)
+                                    @if ($ujian->hasPembimbing2)
                                         <td style="padding:12px 14px;">
-                                            {{ $pembimbing2 ? $nilaiMap[$pembimbing2->nilai] ?? '-' : '-' }}</td>
+                                            {{ $pembimbing2 ? $nilaiMap[$pembimbing2->nilai] ?? '-' : '-' }}
+                                        </td>
                                     @endif
 
-                                    @if ($hasPenguji)
+                                    @if ($ujian->hasPenguji)
                                         <td style="padding:12px 14px;">
-                                            {{ $penguji ? $nilaiMap[$penguji->nilai] ?? '-' : '-' }}</td>
+                                            {{ $penguji ? $nilaiMap[$penguji->nilai] ?? '-' : '-' }}
+                                        </td>
                                     @endif
+
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
-
-                    @php
-                        $nilaiModerator = $ujian->penilaian
-                            ->whereNotNull('id_moderator')
-                            ->pluck('nilai_akhir')
-                            ->filter()
-                            ->first();
-                        $nilaiPembimbing1 = $ujian->penilaian
-                            ->whereNotNull('id_pembimbing1')
-                            ->pluck('nilai_akhir')
-                            ->filter()
-                            ->first();
-                        $nilaiPembimbing2 = $ujian->penilaian
-                            ->whereNotNull('id_pembimbing2')
-                            ->pluck('nilai_akhir')
-                            ->filter()
-                            ->first();
-                        $nilaiPenguji = $ujian->penilaian
-                            ->whereNotNull('id_penguji')
-                            ->pluck('nilai_akhir')
-                            ->filter()
-                            ->first();
-
-                        $semuaNilai = collect([
-                            $nilaiModerator,
-                            $nilaiPembimbing1,
-                            $nilaiPembimbing2,
-                            $nilaiPenguji,
-                        ])->filter();
-
-                        $rataRata = $semuaNilai->isNotEmpty() ? $semuaNilai->avg() : null;
-
-                    @endphp
+                    </table>                    
 
                     <div
                         style="
@@ -403,62 +378,48 @@
                             font-size:14px;
                         ">
 
-                        {{-- MODERATOR --}}
-                        @if ($nilaiModerator)
+                        @if ($ujian->nilaiModerator)
                             <div class="mb-2">
-
                                 <strong>
-                                    {{ $ujian->jenis_ujian == 'komprehensif' ? 'Nilai Ketua Sidang' : 'Nilai Moderator' }}
+                                    {{ $ujian->jenis_ujian == 'komprehensif'
+                                        ? 'Nilai Ketua Sidang'
+                                        : 'Nilai Moderator' }}
                                     :
                                 </strong>
 
-                                {{ number_format($nilaiModerator, 2) }}
-
+                                {{ number_format($ujian->nilaiModerator, 2) }}
                             </div>
                         @endif
 
-                        {{-- PEMBIMBING 1 --}}
-                        @if ($nilaiPembimbing1)
+                        @if ($ujian->nilaiPembimbing1)
                             <div class="mb-2">
-
                                 <strong>Nilai Pembimbing 1 :</strong>
-
-                                {{ number_format($nilaiPembimbing1, 2) }}
-
+                                {{ number_format($ujian->nilaiPembimbing1, 2) }}
                             </div>
                         @endif
 
-                        {{-- PEMBIMBING 2 --}}
-                        @if ($nilaiPembimbing2)
+                        @if ($ujian->nilaiPembimbing2)
                             <div class="mb-2">
-
                                 <strong>Nilai Pembimbing 2 :</strong>
-
-                                {{ number_format($nilaiPembimbing2, 2) }}
-
+                                {{ number_format($ujian->nilaiPembimbing2, 2) }}
                             </div>
                         @endif
 
-                        {{-- PENGUJI --}}
-                        @if ($nilaiPenguji)
+                        @if ($ujian->nilaiPenguji)
                             <div class="mb-2">
-
                                 <strong>Nilai Penguji :</strong>
-
-                                {{ number_format($nilaiPenguji, 2) }}
-
+                                {{ number_format($ujian->nilaiPenguji, 2) }}
                             </div>
                         @endif
 
-                        {{-- RATA-RATA --}}
                         <hr>
 
                         <div>
-
                             <strong>Rata-rata Nilai :</strong>
 
-                            {{ $rataRata ? number_format($rataRata, 2) : '-' }}
-
+                            {{ $ujian->rataRata
+                                ? number_format($ujian->rataRata, 2)
+                                : '-' }}
                         </div>
 
                     </div>

@@ -126,19 +126,19 @@
                 </table>
 
                 <!-- Button -->
-                <button
-                    style="
-                background:#2563eb;
-                color:#fff;
-                padding:10px 20px;
-                border:none;
-                border-radius:6px;
-                cursor:pointer;
-                font-size:14px;
-                margin-top:20px;
-            ">
+                <!-- <button
+                        style="
+                    background:#2563eb;
+                    color:#fff;
+                    padding:10px 20px;
+                    border:none;
+                    border-radius:6px;
+                    cursor:pointer;
+                    font-size:14px;
+                    margin-top:20px;
+                ">
                     Edit Profil
-                </button>
+                </button> -->
             </div>
         </main>
     </div>

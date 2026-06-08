@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Seminarmhs;
 use App\Models\StaffDept;
 use App\Models\SyaratSeminarmhs;
 use App\Models\User;
@@ -14,8 +15,10 @@ class SyaratSeminarmhsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil semua mahasiswa yang ada
-        $mahasiswaList = User::where('role', 'Mahasiswa')->get();
+        // Ambil mahasiswa yang sudah terdaftar di seminar
+        $seminarMahasiswaIds = Seminarmhs::pluck('id_mahasiswa')->unique()->toArray();
+
+        $mahasiswaList = User::whereIn('id', $seminarMahasiswaIds)->get();
 
         // Ambil staff untuk moderator dan penandatangan undangan
         $moderator = StaffDept::inRandomOrder()->first();

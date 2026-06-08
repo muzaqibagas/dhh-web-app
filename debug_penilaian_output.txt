@@ -1,0 +1,1336 @@
+total syarat: 170
+total penilaian: 2394
+kolokium: 100
+seminar: 50
+komprehensif: 20
+with penilaian kolokium: 54
+with penilaian seminar: 24
+with penilaian komprehensif: 12
+
+First 30 with penilaian query results:
+id=170, mahasiswa=198, jenis=komprehensif, created_at=2026-06-22 09:41:57, penilaian_count=0
+id=169, mahasiswa=193, jenis=komprehensif, created_at=2026-05-30 15:12:54, penilaian_count=24
+id=168, mahasiswa=192, jenis=komprehensif, created_at=2026-03-04 13:41:50, penilaian_count=24
+id=167, mahasiswa=190, jenis=komprehensif, created_at=2026-04-19 15:13:18, penilaian_count=0
+id=166, mahasiswa=182, jenis=komprehensif, created_at=2026-03-21 09:29:11, penilaian_count=0
+id=165, mahasiswa=178, jenis=komprehensif, created_at=2026-06-19 10:16:37, penilaian_count=24
+id=164, mahasiswa=152, jenis=komprehensif, created_at=2026-05-13 16:43:27, penilaian_count=0
+id=163, mahasiswa=138, jenis=komprehensif, created_at=2026-05-17 09:37:14, penilaian_count=24
+id=162, mahasiswa=135, jenis=komprehensif, created_at=2026-06-29 10:35:12, penilaian_count=24
+id=161, mahasiswa=98, jenis=komprehensif, created_at=2026-02-06 08:57:12, penilaian_count=24
+id=160, mahasiswa=83, jenis=komprehensif, created_at=2026-02-01 10:02:02, penilaian_count=24
+id=159, mahasiswa=68, jenis=komprehensif, created_at=2026-01-12 13:40:20, penilaian_count=0
+id=158, mahasiswa=65, jenis=komprehensif, created_at=2026-06-01 12:12:07, penilaian_count=24
+id=157, mahasiswa=59, jenis=komprehensif, created_at=2026-04-08 13:20:20, penilaian_count=0
+id=156, mahasiswa=58, jenis=komprehensif, created_at=2026-02-17 16:05:13, penilaian_count=0
+id=155, mahasiswa=27, jenis=komprehensif, created_at=2026-05-20 11:03:46, penilaian_count=24
+id=154, mahasiswa=26, jenis=komprehensif, created_at=2026-02-20 16:55:40, penilaian_count=24
+id=153, mahasiswa=15, jenis=komprehensif, created_at=2026-06-01 08:48:15, penilaian_count=0
+id=152, mahasiswa=13, jenis=komprehensif, created_at=2026-02-13 08:20:37, penilaian_count=24
+id=151, mahasiswa=7, jenis=komprehensif, created_at=2026-05-30 08:26:04, penilaian_count=24
+id=150, mahasiswa=202, jenis=seminar, created_at=2026-04-04 14:30:26, penilaian_count=27
+id=149, mahasiswa=198, jenis=seminar, created_at=2026-05-31 14:06:18, penilaian_count=27
+id=148, mahasiswa=193, jenis=seminar, created_at=2026-06-19 15:24:26, penilaian_count=27
+id=147, mahasiswa=192, jenis=seminar, created_at=2026-05-18 15:30:20, penilaian_count=27
+id=146, mahasiswa=190, jenis=seminar, created_at=2026-03-07 11:05:28, penilaian_count=27
+id=145, mahasiswa=182, jenis=seminar, created_at=2026-03-16 12:19:05, penilaian_count=27
+id=144, mahasiswa=178, jenis=seminar, created_at=2026-02-04 14:57:51, penilaian_count=27
+id=143, mahasiswa=176, jenis=seminar, created_at=2026-06-05 14:07:59, penilaian_count=0
+id=142, mahasiswa=175, jenis=seminar, created_at=2026-03-11 15:10:30, penilaian_count=0
+id=141, mahasiswa=167, jenis=seminar, created_at=2026-01-02 12:24:36, penilaian_count=0
+mahasiswa 2 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 3 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 71.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 6 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 7 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 76.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 77.5
+        )
+
+)
+mahasiswa 12 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 13 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 70.625
+        )
+
+)
+mahasiswa 15 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 24 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 26 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 70
+        )
+
+)
+mahasiswa 27 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 71.666666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 70.625
+        )
+
+)
+mahasiswa 40 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 65
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 43 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 78.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 59 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 61 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 63 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 64 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 65 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 72.5
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 72.5
+        )
+
+)
+mahasiswa 67 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 76.666666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 77 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 78 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 80 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 81 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 83 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 72.5
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 76.666666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 71.25
+        )
+
+)
+mahasiswa 94 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 71.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 98 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 78.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 85
+        )
+
+)
+mahasiswa 99 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 107 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 116 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 119 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 68.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 120 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 66.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 125 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 130 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 132 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 135 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 71.875
+        )
+
+)
+mahasiswa 136 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 73.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 85.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 138 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 81.25
+        )
+
+)
+mahasiswa 139 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 71.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 141 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 78.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 142 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 78.333333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 145 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 86.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 160 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 76.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 72.5
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 166 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 74.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 167 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 177 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 77.5
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 178 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 76.666666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 69.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 81.25
+        )
+
+)
+mahasiswa 182 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 68.333333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 183 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 184 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 187 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 190 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 192 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 73.125
+        )
+
+)
+mahasiswa 193 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 75.833333333333
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 70.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 24
+            [avg] => 73.75
+        )
+
+)
+mahasiswa 198 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80.833333333333
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)
+mahasiswa 202 Array
+(
+    [kolokium] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 80
+        )
+
+    [seminar] => Array
+        (
+            [syarat] => 1
+            [penilaian] => 27
+            [avg] => 79.166666666667
+        )
+
+    [komprehensif] => Array
+        (
+            [syarat] => 
+            [penilaian] => 0
+            [avg] => 
+        )
+
+)

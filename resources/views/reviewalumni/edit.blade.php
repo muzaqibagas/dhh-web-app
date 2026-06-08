@@ -217,7 +217,7 @@
         <main class="content">
             <div class="container-fluid">
                 <div class="adm-header">
-                    <h2 class="adm-title">Edit Data Review Alumni</h2>
+                    <h2 class="adm-title text-dark mb-0">Edit Data Review Alumni</h2>
                 </div>
                 @if (session('info'))
                     <div class="alert alert-info alert-dismissible fade show" role="alert">

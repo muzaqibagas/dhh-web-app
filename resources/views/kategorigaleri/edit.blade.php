@@ -216,7 +216,7 @@
     <main class="content">
         <div class="container-fluid mt-4">
             <div class="adm-header">
-                <h2 class="adm-title">Edit Kategori Galeri</h2>
+                <h2 class="adm-title text-dark">Edit Kategori Galeri</h2>
             </div>
             @if (session('info'))
                 <div class="alert alert-info alert-dismissible fade show" role="alert">

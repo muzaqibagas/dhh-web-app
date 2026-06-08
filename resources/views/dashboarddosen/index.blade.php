@@ -121,7 +121,7 @@
                         <i class="bi bi-journal-check"></i>
                         <h5>Mahasiswa Dijadwalkan</h5>
                         <p class="status">
-                            <span class="#">5</span>
+                            <span>{{ $scheduledCount ?? 0 }}</span>
                         </p>
                     </div>
 
@@ -129,109 +129,19 @@
                         <i class="bi bi-calendar-event"></i>
                         <h5>Penilaian Belum Selesai</h5>
                         <p class="status">
-                            <span class="#">6</span>
+                            <span>{{ $pendingCount ?? 0 }}</span>
                         </p>
                     </div>
                     <div class="card sidang-full">
                         <i class="bi bi-file-earmark-text"></i>
                         <h5>Penilaian Selesai</h5>
                         <p class="status">
-                            <span class="#">3</span>
+                            <span>{{ $completedCount ?? 0 }}</span>
                         </p>
                     </div>
                 </div>
             </div>
-
-            <table
-                style="
-          width:100%;
-          border-collapse:collapse;
-          background-color:#ffffff;
-          border-radius:8px;
-          overflow:hidden;
-          box-shadow:0 2px 6px rgba(0,0,0,0.08);
-          margin-top:20px;
-      ">
-                <thead style="background-color:#1e3a8a; color:#ffffff;">
-                    <tr>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Nama Mahasiswa</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">NIM</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Jenis Ujian</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Peran Anda</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Tanggal</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Status</th>
-                        <th style="padding:12px 14px; text-align:left; font-size:14px;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $item)
-                        <tr style="background-color:#ffffff;">
-                            <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nama ?? '-' }}</td>
-                            <td style="padding:12px 14px; font-size:14px;">{{ $item->mahasiswa->nim ?? '-' }}</td>
-                            <td style="padding:12px 14px; font-size:14px;">{{ $item->jenis_ujian ?? '-' }}</td>
-                            <td style="padding:12px 14px; font-size:14px;">
-                                <span
-                                    style="padding:4px 10px;border-radius:4px;font-size:12px;font-weight:bold;background:#e0e7ff;color:#3730a3; display:inline-block;">
-                                    {{ $item->peran_dosen ?? '-' }}
-                                </span>
-                            </td>
-                            <td style="padding:12px 14px; font-size:14px;">{{ $item->tanggal_ujian ?? '-' }}</td>
-                            <td style="padding:12px 14px;">
-                                @if (optional($item->current_penilaian)->nilai_akhir !== null)
-                                    <span
-                                        style="padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold;background:#bbf7d0;color:#166534; display:inline-block;">
-                                        Selesai
-                                    </span>
-                                @else
-                                    <span
-                                        style="padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold;background:#fde68a;color:#92400e; display:inline-block;">
-                                        Belum Dinilai
-                                    </span>
-                                @endif
-                            </td>
-                            <!--
-                      jika belum dinilai maka diarahkan ke halaman penilaian
-                      jika sudah dinilai maka diarahkan ke halaman detail penilaian-->
-                            <td style="padding:12px 14px;">
-                                @if (optional($item->current_penilaian)->nilai_akhir !== null)
-                                    <a href="{{ route('penilaian.show', $item->current_penilaian->id) }}">
-                                        <button
-                                            style="padding:6px 12px;
-                          background-color:#2563eb;
-                          color:#ffffff;
-                          border:none;
-                          border-radius:4px;
-                          cursor:pointer;
-                          font-size:12px;
-                        ">
-                                            Detail Nilai
-                                        </button>
-                                    </a>
-                                @else
-                                    <a
-                                        href="{{ route('penilaian.create', [
-                                            'jenis' => $item->jenis_ujian,
-                                            'id' => $item->id,
-                                        ]) }}">
-                                        <button
-                                            style="
-                          padding:6px 12px;
-                          background-color:#2563eb;
-                          color:#ffffff;
-                          border:none;
-                          border-radius:4px;
-                          cursor:pointer;
-                          font-size:12px;
-                        ">
-                                            Nilai
-                                        </button>
-                                    </a>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            
         </main>
     </div>
     @push('script')
