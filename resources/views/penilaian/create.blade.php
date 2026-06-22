@@ -112,11 +112,11 @@
                 </table>
             </div>
             <div class="card text-start mb-4 p-4">
-                <form action="{{ route('penilaian.store') }}" method="POST">
+                <form id="penilaian_form" action="{{ route('penilaian.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{ $data->id }}">
                     <input type="hidden" name="jenis" value="{{ $jenis }}">
-
+                    <input type="hidden" name="fill_started_at" id="fill_started_at" value="">
                     @if ($errors->any())
                         <div
                             style="margin-bottom:16px; padding:12px; background:#f8d7da; color:#842029; border-radius:8px;">
@@ -131,13 +131,13 @@
 
                     <table
                         style="
-            width:100%;
-            border-collapse:collapse;
-            background-color:#ffffff;              
-            border-radius:0.375rem;
-            overflow:hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);              
-          ">
+                        width:100%;
+                        border-collapse:collapse;
+                        background-color:#ffffff;              
+                        border-radius:0.375rem;
+                        overflow:hidden;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.08);              
+                    ">
                         <thead style="background-color:#1e3a8a; color:#ffffff;">
                             <tr>
                                 <th style="padding:12px 14px; font-size:14px; text-align:left;">No</th>
@@ -225,6 +225,30 @@
     </div>
     @push('script')
         <script>
+            const fillStartField = document.getElementById('fill_started_at');
+            const penilaianForm = document.getElementById('penilaian_form');
+            let fillStarted = false;
+
+            const markFillStarted = () => {
+                if (!fillStarted) {
+                    fillStarted = true;
+                    fillStartField.value = Date.now();
+                }
+            };
+
+            if (penilaianForm) {
+                penilaianForm.addEventListener('submit', () => {
+                    if (!fillStartField.value) {
+                        fillStartField.value = Date.now();
+                    }
+                });
+
+                penilaianForm.querySelectorAll('select[name^="nilai"], textarea[name="catatan"]').forEach(element => {
+                    element.addEventListener('focus', markFillStarted);
+                    element.addEventListener('change', markFillStarted);
+                });
+            }
+
             document.querySelectorAll('[data-dropdown]').forEach(toggle => {
                 toggle.addEventListener('click', function(e) {
                     e.preventDefault();

@@ -10,7 +10,7 @@ use App\Http\Controllers\EditPasswordAdmController;
 use App\Http\Controllers\EditPasswordMhsController;
 use App\Http\Controllers\FormulirlayananakademikmhsController;
 use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\jadwalTAController;
+use App\Http\Controllers\JadwalTAController;
 use App\Http\Controllers\KategoriArtikelController;
 use App\Http\Controllers\KategoriGaleriController;
 use App\Http\Controllers\KategoriStaffController;
@@ -131,7 +131,7 @@ Route::get('formulirlayananakademikmhs', [FormulirlayananakademikmhsController::
 Route::get('profiledosen', [ProfileDosenController::class, 'index'])->name('profiledosen.index');
 
 // JADWAL TA
-Route::get('jadwalta', [jadwalTAController::class, 'index'])->name('jadwalta.index');
+Route::get('jadwalta', [JadwalTAController::class, 'index'])->name('jadwalta.index');
 
 // PENILAIAN
 Route::get('penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');

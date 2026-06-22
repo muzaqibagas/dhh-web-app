@@ -78,8 +78,12 @@ class DashboarddosenController extends Controller
                     }
                 }
 
-                $pen = $item->penilaian->first();
-                if (! $pen || $pen->nilai_akhir === null) {
+                // Hitung penilaian untuk dosen yang sedang login saja
+                // Relasi penilaian sudah difilter berdasarkan dosen yang login.
+                $penilaianDosen = $item->penilaian;
+                $hasCompleted = $penilaianDosen->whereNotNull('nilai_akhir')->isNotEmpty();
+
+                if ($penilaianDosen->isEmpty() || ! $hasCompleted) {
                     $pendingCount++;
                 } else {
                     $completedCount++;

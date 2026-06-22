@@ -32,7 +32,11 @@ class JadwalTAController extends Controller
                 $q->where('id_pembimbing1', $dosen->id)
                     ->orWhere('id_pembimbing2', $dosen->id)
                     ->orWhereHas('syaratUjianKolokium', function ($q) use ($dosen) {
-                        $q->where('id_moderator', $dosen->id);
+                        $q->where('status', 'disetujui')
+                            ->where(function ($q) use ($dosen) {
+                                $q->where('id_moderator', $dosen->id)
+                                    ->orWhere('id_penguji', $dosen->id);
+                            });
                     });
             })
             ->when($search, function ($query) use ($search) {
@@ -65,7 +69,11 @@ class JadwalTAController extends Controller
                 $q->where('id_pembimbing1', $dosen->id)
                     ->orWhere('id_pembimbing2', $dosen->id)
                     ->orWhereHas('syaratUjianSeminar', function ($q) use ($dosen) {
-                        $q->where('id_moderator', $dosen->id);
+                        $q->where('status', 'disetujui')
+                            ->where(function ($q) use ($dosen) {
+                                $q->where('id_moderator', $dosen->id)
+                                    ->orWhere('id_penguji', $dosen->id);
+                            });
                     });
             })
             ->when($search, function ($query) use ($search) {
@@ -98,7 +106,11 @@ class JadwalTAController extends Controller
                 $q->where('id_pembimbing1', $dosen->id)
                     ->orWhere('id_pembimbing2', $dosen->id)
                     ->orWhereHas('syaratUjianKomprehensif', function ($q) use ($dosen) {
-                        $q->where('id_moderator', $dosen->id);
+                        $q->where('status', 'disetujui')
+                            ->where(function ($q) use ($dosen) {
+                                $q->where('id_moderator', $dosen->id)
+                                    ->orWhere('id_penguji', $dosen->id);
+                            });
                     });
             })
             ->when($search, function ($query) use ($search) {

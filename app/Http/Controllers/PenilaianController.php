@@ -28,9 +28,11 @@ class PenilaianController extends Controller
         // KOLOKIUM - Query untuk penilaian kolokium
         // ============================================
         $kolokiumQuery = SyaratUjian::where('jenis_ujian', 'kolokium')
+            ->where('status', 'disetujui')
             ->with(['mahasiswa', 'kolokiummhs', 'penilaian'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_moderator', $dosenId)
+                    ->orWhere('id_penguji', $dosenId)
                     ->orWhere(function ($subQ) use ($dosenId) {
                         $subQ->whereHas('kolokiummhs', function ($builder) use ($dosenId) {
                             $builder->where('id_pembimbing1', $dosenId)
@@ -43,9 +45,11 @@ class PenilaianController extends Controller
         // SEMINAR - Query untuk penilaian seminar
         // ============================================
         $seminarQuery = SyaratUjian::where('jenis_ujian', 'seminar')
+            ->where('status', 'disetujui')
             ->with(['mahasiswa', 'seminarmhs', 'penilaian'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_moderator', $dosenId)
+                    ->orWhere('id_penguji', $dosenId)
                     ->orWhere(function ($subQ) use ($dosenId) {
                         $subQ->whereHas('seminarmhs', function ($builder) use ($dosenId) {
                             $builder->where('id_pembimbing1', $dosenId)
@@ -58,6 +62,7 @@ class PenilaianController extends Controller
         // KOMPREHENSIF - Query untuk penilaian komprehensif
         // ============================================
         $komprehensifQuery = SyaratUjian::where('jenis_ujian', 'komprehensif')
+            ->where('status', 'disetujui')
             ->with(['mahasiswa', 'komprehensifmhs', 'penilaian'])
             ->where(function ($q) use ($dosenId) {
                 $q->where('id_moderator', $dosenId)
@@ -300,8 +305,10 @@ class PenilaianController extends Controller
     {
         $request->validate([
             'nilai' => 'required|array',
+            'fill_started_at' => 'nullable|numeric',
         ]);
 
+        $serverStart = microtime(true);
         $id = $request->id; // ini ID syaratujian
         $jenis = strtolower($request->jenis);
 
@@ -380,6 +387,25 @@ class PenilaianController extends Controller
             ->update([
                 'nilai_akhir' => $totalScore,
             ]);
+
+        $fillStartedAt = $request->input('fill_started_at');
+        $clientDurationMs = null;
+
+        if ($fillStartedAt) {
+            $clientDurationMs = max(0, (int) round(microtime(true) * 1000 - (float) $fillStartedAt));
+        }
+
+        $serverDurationMs = (int) round((microtime(true) - $serverStart) * 1000);
+
+        Log::info('Penilaian duration', [
+            'id_syarat_ujian' => $syarat->id,
+            'jenis' => $jenis,
+            'dosen_id' => $dosenId,
+            'penilaian_count' => count($penilaianIds),
+            'client_fill_duration_ms' => $clientDurationMs,
+            'server_processing_duration_ms' => $serverDurationMs,
+            'remote_ip' => $request->ip(),
+        ]);
 
         return redirect()
             ->route('penilaian.show', $penilaianIds[0])
