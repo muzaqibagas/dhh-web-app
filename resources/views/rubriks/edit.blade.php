@@ -332,7 +332,7 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <input type="text" name="nama_kriteria" class="form-control shadow-sm"
-                                            id="nama_kriteria" value="{{ $rubrik->nama_kriteria }}"
+                                            id="nama_kriteria" value="{{ old('nama_kriteria', $rubrik->nama_kriteria) }}"
                                             placeholder="Nama Kriteria..." required>
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <input type="number" name="bobot" class="form-control shadow-sm"
-                                            id="bobot" value="{{ $rubrik->bobot }}" placeholder="Bobot..." required>
+                                            id="bobot" value="{{ old('bobot', $rubrik->bobot) }}" placeholder="Bobot..." required>
                                     </div>
                                 </div>
                                 <div class="text-start row row-cols-1 row-cols-sm-2 align-items-center mb-3">
@@ -351,10 +351,10 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <select name="jenis_sidang" class="form-control shadow-sm" id="jenis_sidang"
-                                            value="{{ $rubrik->jenis_sidang }}" required>
-                                            <option value="kolokium">Kolokium</option>
-                                            <option value="seminar">Seminar Hasil</option>
-                                            <option value="komprehensif">Komprehensif</option>
+                                            required>
+                                            <option value="kolokium" {{ old('jenis_sidang', $rubrik->jenis_sidang) == 'kolokium' ? 'selected' : '' }}>Kolokium</option>
+                                            <option value="seminar" {{ old('jenis_sidang', $rubrik->jenis_sidang) == 'seminar' ? 'selected' : '' }}>Seminar Hasil</option>
+                                            <option value="komprehensif" {{ old('jenis_sidang', $rubrik->jenis_sidang) == 'komprehensif' ? 'selected' : '' }}>Komprehensif</option>
                                         </select>
                                     </div>
                                 </div>
