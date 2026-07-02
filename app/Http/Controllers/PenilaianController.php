@@ -372,6 +372,8 @@ class PenilaianController extends Controller
                 'id_syarat_ujian' => $syarat->id,
                 $roleField => $dosenId,
                 'id_rubrik' => $rubrikId,
+                'rubrik_nama_kriteria' => $rubrik->nama_kriteria,
+                'rubrik_bobot' => $rubrik->bobot,
                 'nilai' => $nilai,
                 'score' => $score,
                 'catatan' => $request->catatan,

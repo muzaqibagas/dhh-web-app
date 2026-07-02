@@ -333,11 +333,11 @@
                                     </td>
 
                                     <td style="padding:12px 14px;">
-                                        {{ $first->rubrik->nama_kriteria ?? '-' }}
+                                        {{ $first->rubrik_nama_kriteria ?? $first->rubrik->nama_kriteria ?? '-' }}
                                     </td>
 
                                     <td style="padding:12px 14px;">
-                                        {{ $first->rubrik->bobot ?? '-' }}%
+                                        {{ $first->rubrik_bobot ?? $first->rubrik->bobot ?? '-' }}%
                                     </td>
 
                                     @if ($ujian->hasModerator)

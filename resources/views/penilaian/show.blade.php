@@ -146,8 +146,8 @@
                             @foreach ($penilaians as $index => $penilaian)
                                 <tr style="background-color:#ffffff;">
                                     <td style="padding:12px 14px;">{{ $index + 1 }}</td>
-                                    <td style="padding:12px 14px;">{{ $penilaian->rubrik->nama_kriteria ?? '-' }}</td>
-                                    <td style="padding:12px 14px;">{{ $penilaian->rubrik->bobot ?? '-' }}</td>
+                                    <td style="padding:12px 14px;">{{ $penilaian->rubrik_nama_kriteria ?? $penilaian->rubrik->nama_kriteria ?? '-' }}</td>
+                                    <td style="padding:12px 14px;">{{ $penilaian->rubrik_bobot ?? $penilaian->rubrik->bobot ?? '-' }}</td>
                                     <td style="padding:12px 14px;">
                                         @php
                                             $nilaiMap = [

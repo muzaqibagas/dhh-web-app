@@ -15,6 +15,8 @@ class Penilaian extends Model
         'id_pembimbing2',
         'id_syarat_ujian',        
         'id_rubrik',
+        'rubrik_nama_kriteria',
+        'rubrik_bobot',
         'nilai',
         'score',
         'nilai_akhir',
