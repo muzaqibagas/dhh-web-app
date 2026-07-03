@@ -137,13 +137,7 @@ Route::get('/staff-notification/resolve/{syaratUjian}/{staffId}', function (Syar
 })->name('staff-notification.resolve');
 
 Route::get('/staff-notification/{id}', function ($id) {
-    $notif = StaffNotification::findOrFail($id);
-
-    $dosen = Auth::guard('staff')->user();
-
-    if ($notif->staff_id !== $dosen->id) {
-        abort(403, 'Akses tidak diizinkan');
-    }
+    $notif = StaffNotification::findOrFail($id);    
 
     $notif->update(['is_read' => true]);
 
