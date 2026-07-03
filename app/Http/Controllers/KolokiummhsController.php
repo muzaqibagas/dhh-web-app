@@ -124,7 +124,7 @@ class KolokiummhsController extends Controller
                 $insert->id_pembimbing1,
                 '📢 Mahasiswa Bimbingan Mengajukan Kolokium',
                 "Mahasiswa {$nama} mengajukan kolokium dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2 (kalau ada)
@@ -133,7 +133,7 @@ class KolokiummhsController extends Controller
                     $insert->id_pembimbing2,
                     '📢 Mahasiswa Bimbingan Mengajukan Kolokium',
                     "Mahasiswa {$nama} mengajukan kolokium dengan judul: {$judul}.",
-                    route('dashboarddosen.index')
+                    route('jadwalta.index')
                 );
             }
         }
@@ -339,7 +339,7 @@ class KolokiummhsController extends Controller
                 $kolokiummhs->id_pembimbing1,
                 '✏️ Data Kolokium Diperbarui',
                 "Mahasiswa {$nama} memperbarui data kolokium dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2
@@ -348,7 +348,7 @@ class KolokiummhsController extends Controller
                     $kolokiummhs->id_pembimbing2,
                     '✏️ Data Kolokium Diperbarui',
                     "Mahasiswa {$nama} memperbarui data kolokium dengan judul: {$judul}.",
-                    route('syaratujian.index')
+                    route('jadwalta.index')
                 );
             }
 

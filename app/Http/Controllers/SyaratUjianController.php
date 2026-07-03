@@ -472,7 +472,7 @@ class SyaratUjianController extends Controller
             $moderatorId,
             "📢 Anda Ditunjuk Sebagai {$roleKetua}",
             "Anda telah ditunjuk sebagai {$roleKetua} untuk ujian {$jenisLabel} mahasiswa {$nama} ({$nim}).",
-            route('dashboarddosen.index')
+            route('staff-notification.resolve', ['syaratUjian' => $syaratUjian->id, 'staffId' => $moderatorId])
         );
 
         if ($pengujiId) {
@@ -480,7 +480,7 @@ class SyaratUjianController extends Controller
                 $pengujiId,
                 '📢 Anda Ditunjuk Sebagai Penguji',
                 "Anda telah ditunjuk sebagai penguji untuk ujian {$jenisLabel} mahasiswa {$nama} ({$nim}).",
-                route('dashboarddosen.index')
+                route('staff-notification.resolve', ['syaratUjian' => $syaratUjian->id, 'staffId' => $pengujiId])
             );
         }
 

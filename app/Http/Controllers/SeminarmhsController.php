@@ -156,7 +156,7 @@ class SeminarmhsController extends Controller
                 $insert->id_pembimbing1,
                 '📢 Mahasiswa Bimbingan Mengajukan Seminar',
                 "Mahasiswa {$nama} mengajukan seminar dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2 (kalau ada)
@@ -165,7 +165,7 @@ class SeminarmhsController extends Controller
                     $insert->id_pembimbing2,
                     '📢 Mahasiswa Bimbingan Mengajukan Seminar',
                     "Mahasiswa {$nama} mengajukan seminar dengan judul: {$judul}.",
-                    route('dashboarddosen.index')
+                    route('jadwalta.index')
                 );
             }
         }
@@ -352,7 +352,7 @@ class SeminarmhsController extends Controller
                 $seminarmhs->id_pembimbing1,
                 '✏️ Data Seminar Diperbarui',
                 "Mahasiswa {$nama} memperbarui data seminar dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2
@@ -361,7 +361,7 @@ class SeminarmhsController extends Controller
                     $seminarmhs->id_pembimbing2,
                     '✏️ Data Seminar Diperbarui',
                     "Mahasiswa {$nama} memperbarui data seminar dengan judul: {$judul}.",
-                    route('syaratujian.index')
+                    route('jadwalta.index')
                 );
             }
 

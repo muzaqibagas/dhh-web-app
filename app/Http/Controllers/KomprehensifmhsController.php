@@ -144,7 +144,7 @@ class KomprehensifmhsController extends Controller
                 $insert->id_pembimbing1,
                 '📢 Mahasiswa Bimbingan Mengajukan Komprehensif',
                 "Mahasiswa {$nama} mengajukan komprehensif dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2 (kalau ada)
@@ -153,7 +153,7 @@ class KomprehensifmhsController extends Controller
                     $insert->id_pembimbing2,
                     '📢 Mahasiswa Bimbingan Mengajukan Komprehensif',
                     "Mahasiswa {$nama} mengajukan komprehensif dengan judul: {$judul}.",
-                    route('dashboarddosen.index')
+                    route('jadwalta.index')
                 );
             }
 
@@ -329,7 +329,7 @@ class KomprehensifmhsController extends Controller
                 $komprehensifmhs->id_pembimbing1,
                 '✏️ Data Komprehensif Diperbarui',
                 "Mahasiswa {$nama} memperbarui data komprehensif dengan judul: {$judul}.",
-                route('dashboarddosen.index')
+                route('jadwalta.index')
             );
 
             // notif pembimbing 2
@@ -338,7 +338,7 @@ class KomprehensifmhsController extends Controller
                     $komprehensifmhs->id_pembimbing2,
                     '✏️ Data Komprehensif Diperbarui',
                     "Mahasiswa {$nama} memperbarui data komprehensif dengan judul: {$judul}.",
-                    route('syaratujian.index')
+                    route('jadwalta.index')
                 );
             }
 

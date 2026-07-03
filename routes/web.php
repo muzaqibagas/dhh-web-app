@@ -36,6 +36,8 @@ use App\Http\Controllers\SyaratUjianController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Models\Notification as AppNotification;
+use App\Models\Penilaian;
+use App\Models\SyaratUjian;
 // use App\Http\Controllers\SyaratKolokiummhsController;
 use App\Models\StaffNotification;
 // use App\Http\Controllers\SyaratSeminarmhsController;
@@ -106,6 +108,33 @@ Route::get('/notification/open/{id}', function ($id) {
 
     return redirect($notif->redirect_url ?? '/'); // redirect ke url tujuan
 })->name('notification.open');
+
+Route::get('/staff-notification/resolve/{syaratUjian}/{staffId}', function (SyaratUjian $syaratUjian, $staffId) {
+    $dosen = Auth::guard('staff')->user();
+
+    if (! $dosen || $dosen->id !== (int) $staffId) {
+        abort(403, 'Akses tidak diizinkan');
+    }
+
+    $penilaian = Penilaian::where('id_syarat_ujian', $syaratUjian->id)
+        ->where(function ($q) use ($staffId) {
+            $q->where('id_moderator', $staffId)
+                ->orWhere('id_penguji', $staffId)
+                ->orWhere('id_pembimbing1', $staffId)
+                ->orWhere('id_pembimbing2', $staffId);
+        })
+        ->whereNotNull('nilai_akhir')
+        ->first();
+
+    if ($penilaian) {
+        return redirect()->route('penilaian.show', $penilaian->id);
+    }
+
+    return redirect()->route('penilaian.create', [
+        'jenis' => $syaratUjian->jenis_ujian,
+        'id' => $syaratUjian->id,
+    ]);
+})->name('staff-notification.resolve');
 
 Route::get('/staff-notification/{id}', function ($id) {
     $notif = StaffNotification::findOrFail($id);
